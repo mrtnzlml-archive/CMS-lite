@@ -1,6 +1,7 @@
 <?php
 
-interface IMainMenuProvider {
+interface IMainMenuProvider
+{
 
 	function getMenuItems();
 

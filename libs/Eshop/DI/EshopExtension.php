@@ -7,9 +7,11 @@ use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 use Nette\Application\IPresenterFactory;
 
-class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, \IMainMenuProvider {
+class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, \IMainMenuProvider
+{
 
-	public function loadConfiguration() {
+	public function loadConfiguration()
+	{
 		$config = $this->loadFromFile(__DIR__ . '/config.neon');
 		$containerBuilder = $this->getContainerBuilder();
 		$this->compiler->parseServices($containerBuilder, $config);
@@ -24,13 +26,14 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 		}
 	}
 
-	public function beforeCompile() {
+	public function beforeCompile()
+	{
 		$container = $this->getContainerBuilder();
 
 		// presenter mapping configuration
 		$container
 			->getDefinition($container->getByType(IPresenterFactory::class) ?: 'nette.presenterFactory')
-			->addSetup('setMapping', array(array('Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter')));
+			->addSetup('setMapping', [['Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter']]);
 
 		// presenter registration
 		$robotLoader = new Nette\Loaders\RobotLoader();
@@ -60,11 +63,11 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 
 		// router setup (prepend)
 		$router = $container->getDefinition($container->getByType(Nette\Application\IRouter::class) ?: 'router');
-		$tmp = new Nette\Application\Routers\Route('eshop[/<presenter>[/<action>[/<id>]]]', array(
+		$tmp = new Nette\Application\Routers\Route('eshop[/<presenter>[/<action>[/<id>]]]', [
 			'module' => 'Eshop',
 			'presenter' => 'Category',
 			'action' => 'default',
-		));
+		]);
 		$router->addSetup('\App\RouterFactory::prependTo($service, ?)', [$tmp]);
 	}
 
@@ -73,13 +76,15 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 	 *
 	 * @return array
 	 */
-	public function getEntityMappings() {
+	public function getEntityMappings()
+	{
 		return [
 			'Eshop' => __DIR__ . '/..',
 		];
 	}
 
-	public function getMenuItems() {
+	public function getMenuItems()
+	{
 		//TODO: SplPriorityQueue
 		return [
 			(new \MainMenuItem)

@@ -1,8 +1,10 @@
 <?php
 
-class CoreExtension extends Nette\DI\CompilerExtension {
+class CoreExtension extends Nette\DI\CompilerExtension
+{
 
-	public function beforeCompile() {
+	public function beforeCompile()
+	{
 		$cb = $this->getContainerBuilder();
 
 		/** @var IMainMenuProvider $extension */

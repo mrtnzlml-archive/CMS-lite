@@ -9,7 +9,8 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 /**
  * @ORM\Entity
  */
-class Product extends BaseEntity {
+class Product extends BaseEntity
+{
 
 	use Identifier;
 

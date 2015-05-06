@@ -9,7 +9,8 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 /**
  * @ORM\Entity
  */
-class Order extends BaseEntity {
+class Order extends BaseEntity
+{
 
 	use Identifier;
 

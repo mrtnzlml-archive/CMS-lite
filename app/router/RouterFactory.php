@@ -7,12 +7,14 @@ use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 
-class RouterFactory {
+class RouterFactory
+{
 
 	/**
 	 * @return Nette\Application\IRouter
 	 */
-	public static function createRouter() {
+	public static function createRouter()
+	{
 		$router = new RouteList();
 //		Route::$defaultFlags = Route::SECURED;
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
@@ -22,9 +24,11 @@ class RouterFactory {
 	/**
 	 * @param IRouter $router
 	 * @param IRouter $newRouter
+	 *
 	 * @throws Nette\Utils\AssertionException
 	 */
-	public static function prependTo(IRouter &$router, IRouter $newRouter) {
+	public static function prependTo(IRouter &$router, IRouter $newRouter)
+	{
 		if (!$router instanceof RouteList) {
 			throw new Nette\Utils\AssertionException(
 				'If you want to prepend route then your main router ' .
