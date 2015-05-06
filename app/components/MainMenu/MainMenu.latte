@@ -1,0 +1,6 @@
+<div n:if="$items" class="main-menu">
+	{foreach $items as $item}
+		<a href="{plink $item->link}">{$item->title}</a>
+		{sep} | {/sep}
+	{/foreach}
+</div>

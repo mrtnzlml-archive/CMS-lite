@@ -1,0 +1,33 @@
+{block |strip}
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+
+		<title>{ifset title}{include title|striptags} | {/ifset}Nette Sandbox</title>
+
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{$basePath}/css/style.css">
+		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	</head>
+
+	<body>
+
+	<div class="container">
+		<h1>Header</h1>
+		{control mainMenu}
+		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+		<div class="content">
+			{include content}
+		</div>
+	</div>
+
+	{block scripts}
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+		<script src="{$basePath}/js/main.js"></script>
+	{/block}
+	</body>
+	</html>
+{/block}

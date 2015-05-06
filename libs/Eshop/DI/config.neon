@@ -1,0 +1,6 @@
+console:
+	commands:
+		- Eshop\Cli\HeurekaExport
+
+
+services:

@@ -1,0 +1,35 @@
+{
+  "name": "nette/web-project",
+  "description": "Nette: Standard Web Project",
+  "type": "project",
+  "license": [
+    "MIT",
+    "BSD-3-Clause",
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "require": {
+    "php": ">= 5.4.0",
+    "nette/application": "~2.3",
+    "nette/bootstrap": "~2.3",
+    "nette/caching": "~2.3",
+    "nette/di": "~2.3",
+    "nette/finder": "~2.3",
+    "nette/forms": "~2.3",
+    "nette/http": "~2.3",
+    "nette/mail": "~2.3",
+    "nette/robot-loader": "~2.3",
+    "nette/safe-stream": "~2.3",
+    "nette/security": "~2.3",
+    "nette/utils": "~2.3",
+    "latte/latte": "~2.3",
+    "tracy/tracy": "~2.3",
+    "kdyby/doctrine": "~2.3",
+    "kdyby/annotations": "~2.2",
+    "kdyby/console": "~2.3",
+    "kdyby/events": "~2.4"
+  },
+  "require-dev": {
+    "nette/tester": "~1.4"
+  }
+}
