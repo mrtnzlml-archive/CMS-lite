@@ -3,6 +3,10 @@
 class CoreExtension extends Nette\DI\CompilerExtension
 {
 
+	private $defaultConfiguration = [
+		'https' => TRUE,
+	];
+
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
@@ -13,6 +17,17 @@ class CoreExtension extends Nette\DI\CompilerExtension
 			foreach ($extension->getMenuItems() as $menuItem) {
 				$definition->addSetup('addMainMenuItem', [$menuItem]);
 			}
+		}
+	}
+
+	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)
+	{
+		$config = $this->getConfig($this->defaultConfiguration);
+		if ($config['https']) {
+			//FIXME: takto to funguje jen pro systémové routy (je to problém?)
+			$generatedContainer
+				->getMethod('initialize')
+				->addBody('Nette\Application\Routers\Route::$defaultFlags = ?;', [Nette\Application\Routers\Route::SECURED]);
 		}
 	}
 
