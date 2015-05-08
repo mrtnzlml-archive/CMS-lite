@@ -86,13 +86,16 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 	public function getMenuItems()
 	{
 		//TODO: SplPriorityQueue
+		$menuItem1 = new \MainMenuItem;
+		$menuItem1->setTitle('Eshop Menu Item 1');
+		$menuItem1->setLink(':Homepage:default');
+
+		$menuItem2 = clone $menuItem1;
+		$menuItem2->setTitle('Eshop Menu Item 2');
+		$menuItem2->setLink(':Eshop:Category:default');
 		return [
-			(new \MainMenuItem)
-				->setTitle('Eshop Menu Item 1')
-				->setLink(':Homepage:default'),
-			(new \MainMenuItem)
-				->setTitle('Eshop Menu Item 2')
-				->setLink(':Eshop:Category:default'),
+			$menuItem1,
+			$menuItem2,
 		];
 	}
 

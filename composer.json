@@ -28,7 +28,7 @@
     "kdyby/annotations": "~2.2",
     "kdyby/console": "~2.3",
     "kdyby/events": "~2.4",
-    "mrtnzlml/testbench": "dev-master"
+    "mrtnzlml/testbench": "~1.1"
   },
   "require-dev": {
     "nette/tester": "~1.4"
