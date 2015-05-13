@@ -39,6 +39,7 @@ extensions:
     events: Kdyby\Events\DI\EventsExtension
     core: CoreExtension
     - Nette\DI\Extensions\InjectExtension
+    - Drym\DI\DrymExtension
 
 
 core:

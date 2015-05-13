@@ -30,6 +30,12 @@ class CoreExtension extends Nette\DI\CompilerExtension
 				$router->addSetup('\App\RouterFactory::prependTo($service, ?)', [$routerDefinition]);
 			}
 		}
+
+		/** @var ITemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(ITemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IMainMenuFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getTemplate()]);
+		}
 	}
 
 	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)
