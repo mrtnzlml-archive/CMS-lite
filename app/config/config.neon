@@ -27,19 +27,21 @@ constants:
 
 
 services:
-	router: App\RouterFactory::createRouter
-	- IMainMenuFactory
+	router: App\Router\RouterFactory::createRouter
+	- App\Components\MainMenu\IMainMenuFactory
 
 
 extensions:
+    - Eshop\DI\EshopExtension
+    - Drym\DI\DrymExtension
+
+    ##### core extensions #####
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     console: Kdyby\Console\DI\ConsoleExtension
+    core: App\Extensions\CoreExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
-    eshop: Eshop\DI\EshopExtension
     events: Kdyby\Events\DI\EventsExtension
-    core: CoreExtension
     - Nette\DI\Extensions\InjectExtension
-    - Drym\DI\DrymExtension
 
 
 core:

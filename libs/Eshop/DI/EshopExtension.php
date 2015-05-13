@@ -2,12 +2,15 @@
 
 namespace Eshop\DI;
 
+use App\Components\MainMenu\MainMenuItem;
+use App\Components\MainMenu\Providers\IMainMenuProvider;
+use App\Router\IRouterProvider;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 use Nette\Application\IPresenterFactory;
 
-class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, \IMainMenuProvider, \IRouterProvider
+class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IMainMenuProvider, IRouterProvider
 {
 
 	public function loadConfiguration()
@@ -88,7 +91,7 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 	public function getMenuItems()
 	{
 		//TODO: SplPriorityQueue
-		$menuItem1 = new \MainMenuItem;
+		$menuItem1 = new MainMenuItem();
 		$menuItem1->setTitle('Eshop Menu Item 1');
 		$menuItem1->setLink(':Homepage:default');
 

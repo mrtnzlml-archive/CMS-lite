@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Components\MainMenu;
+
+use Nette;
+
 class MainMenu extends Nette\Application\UI\Control
 {
 

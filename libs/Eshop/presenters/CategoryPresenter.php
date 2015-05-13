@@ -2,6 +2,7 @@
 
 namespace Eshop\Presenters;
 
+use App\Components\MainMenu\IMainMenuFactory;
 use Nette;
 
 class CategoryPresenter extends Nette\Application\UI\Presenter
@@ -9,7 +10,7 @@ class CategoryPresenter extends Nette\Application\UI\Presenter
 
 	//TODO: nějaký společný předek, který to vše pořeší
 
-	/** @var \IMainMenuFactory @inject */
+	/** @var IMainMenuFactory @inject */
 	public $mainMenuFactory;
 
 	public function createComponentMainMenu()

@@ -1,5 +1,13 @@
 <?php
 
+namespace App\Extensions;
+
+use App\Components\MainMenu\IMainMenuFactory;
+use App\Components\MainMenu\Providers\IMainMenuProvider;
+use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
+use App\Router\IRouterProvider;
+use Nette;
+
 class CoreExtension extends Nette\DI\CompilerExtension
 {
 
@@ -27,14 +35,14 @@ class CoreExtension extends Nette\DI\CompilerExtension
 			}
 			$router = $cb->getDefinition($cb->getByType(Nette\Application\IRouter::class) ?: 'router');
 			foreach ($extension->getRouter() as $routerDefinition) {
-				$router->addSetup('\App\RouterFactory::prependTo($service, ?)', [$routerDefinition]);
+				$router->addSetup('App\Router\RouterFactory::prependTo($service, ?)', [$routerDefinition]);
 			}
 		}
 
-		/** @var ITemplateProvider $extension */
-		foreach ($this->compiler->getExtensions(ITemplateProvider::class) as $extension) {
+		/** @var IMainMenuTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IMainMenuTemplateProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IMainMenuFactory::class));
-			$definition->addSetup('changeTemplate', [$extension->getTemplate()]);
+			$definition->addSetup('changeTemplate', [$extension->getMainMenuTemplate()]);
 		}
 	}
 

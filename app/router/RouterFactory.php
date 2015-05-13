@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Router;
 
 use Nette;
 use Nette\Application\IRouter;
@@ -16,6 +16,11 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
+		$router[] = new Route('auth/<presenter>/<action>[/<id>]', [
+			'module' => 'Auth',
+			'presenter' => 'Sign',
+			'action' => 'in',
+		]);
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}
