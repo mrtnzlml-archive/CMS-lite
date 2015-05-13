@@ -3,6 +3,6 @@
 interface IMainMenuProvider
 {
 
-	function getMenuItems();
+	public function getMenuItems();
 
 }

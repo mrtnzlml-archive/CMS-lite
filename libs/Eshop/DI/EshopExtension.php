@@ -7,7 +7,7 @@ use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 use Nette\Application\IPresenterFactory;
 
-class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, \IMainMenuProvider
+class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, \IMainMenuProvider, \IRouterProvider
 {
 
 	public function loadConfiguration()
@@ -60,15 +60,17 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 				continue;
 			}
 		}
+	}
 
-		// router setup (prepend)
-		$router = $container->getDefinition($container->getByType(Nette\Application\IRouter::class) ?: 'router');
-		$tmp = new Nette\Application\Routers\Route('eshop[/<presenter>[/<action>[/<id>]]]', [
-			'module' => 'Eshop',
-			'presenter' => 'Category',
-			'action' => 'default',
-		]);
-		$router->addSetup('\App\RouterFactory::prependTo($service, ?)', [$tmp]);
+	public function getRouter()
+	{
+		return [
+			new Nette\Application\Routers\Route('eshop[/<presenter>[/<action>[/<id>]]]', [
+				'module' => 'Eshop',
+				'presenter' => 'Category',
+				'action' => 'default',
+			]),
+		];
 	}
 
 	/**
