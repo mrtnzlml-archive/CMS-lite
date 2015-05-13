@@ -1,0 +1,3 @@
+doctrine:
+	user: REPLACE
+	dbname: REPLACE

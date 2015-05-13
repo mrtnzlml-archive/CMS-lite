@@ -43,4 +43,4 @@ extensions:
 
 
 core:
-    https: TRUE
+    https: yes
