@@ -2,9 +2,10 @@
 
 namespace App\Components\MainMenu;
 
+use App\Components\ITemplateProvider;
 use Nette;
 
-class MainMenu extends Nette\Application\UI\Control
+class MainMenu extends Nette\Application\UI\Control implements ITemplateProvider
 {
 
 	private $items = [];
@@ -33,8 +34,6 @@ class MainMenu extends Nette\Application\UI\Control
 
 interface IMainMenuFactory
 {
-
 	/** @return MainMenu */
 	public function create();
-
 }
