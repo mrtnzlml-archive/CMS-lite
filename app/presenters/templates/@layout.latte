@@ -4,11 +4,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
-
-		<title>{ifset title}{include title|striptags} | {/ifset}Nette Sandbox</title>
-
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{$basePath}/css/style.css">
+		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS</title>
+		{control css}
 		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	</head>
 
@@ -24,9 +21,7 @@
 	</div>
 
 	{block scripts}
-		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-		<script src="{$basePath}/js/main.js"></script>
+		{control js}
 	{/block}
 	</body>
 	</html>

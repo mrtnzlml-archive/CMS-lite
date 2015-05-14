@@ -3,9 +3,10 @@
 namespace Eshop\Presenters;
 
 use App\Components\MainMenu\IMainMenuFactory;
+use App\Presenters\BasePresenter;
 use Nette;
 
-class CategoryPresenter extends Nette\Application\UI\Presenter
+class CategoryPresenter extends BasePresenter
 {
 
 	//TODO: nějaký společný předek, který to vše pořeší

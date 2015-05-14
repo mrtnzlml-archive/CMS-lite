@@ -25,6 +25,7 @@ session:
 
 constants:
     APP_DIR: %appDir%
+    WWW_DIR: %appDir%/../www
 
 
 core:

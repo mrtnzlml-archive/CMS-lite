@@ -1,10 +1,9 @@
 Instalace
 =========
 - Nainstalovat GIT (http://git-scm.com/)
-- `https://github.com/mrtnzlml/ANT.git`
+- `https://github.com/antstudiocz/CMS.git`
 - Nainstalovat Composer (http://getcomposer.org/)
 - `composer install`
-- Vytvořit složky (v rootu webu) `log` a `temp` s možností zápisu
 - Přejmenovat `config.local.neon.dist` (v app/config) na `config.local.neon` a nastavit
 
 Idea
