@@ -20,6 +20,7 @@ di:
 
 session:
 	expiration: 14 days
+	debugger: yes
 
 
 constants:

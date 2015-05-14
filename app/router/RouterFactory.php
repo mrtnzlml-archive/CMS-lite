@@ -21,6 +21,11 @@ class RouterFactory
 			'presenter' => 'Sign',
 			'action' => 'in',
 		]);
+		$router[] = new Route('[<locale=cs cs|en>/]administrace[/<presenter>[/<action>[/<id>]]]', [
+			'module' => 'Admin',
+			'presenter' => 'Dashboard',
+			'action' => 'default',
+		]);
 		$router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}
