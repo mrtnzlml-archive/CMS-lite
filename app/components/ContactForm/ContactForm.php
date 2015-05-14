@@ -12,6 +12,7 @@ class ContactForm extends Nette\Application\UI\Control implements ITemplateProvi
 
 	private $templatePath = NULL;
 
+	//TODO: interface pro render s custom parametry (?)
 	public function render(array $parameters = NULL)
 	{
 		if ($parameters) {

@@ -6,12 +6,9 @@ interface ITemplateProvider
 {
 
 	/**
-	 * @param array $parameters
-	 */
-	public function render(array $parameters = NULL);
-
-	/**
-	 * @param string $templatePath realPath of template file
+	 * @param @param string $templatePath realPath of template file
+	 *
+	 * @return string
 	 */
 	public function changeTemplate($templatePath);
 
