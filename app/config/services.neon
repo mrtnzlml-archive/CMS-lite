@@ -1,3 +1,6 @@
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# http://nette.org/security-warning
+
 services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Components\ContactForm\IContactFormFactory
