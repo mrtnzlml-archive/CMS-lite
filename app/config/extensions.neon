@@ -13,3 +13,4 @@ extensions:
     events: Kdyby\Events\DI\EventsExtension
     translation: Kdyby\Translation\DI\TranslationExtension
     - Nette\DI\Extensions\InjectExtension
+    - App\Extensions\CoreTemplateExtension
