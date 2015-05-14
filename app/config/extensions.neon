@@ -1,0 +1,12 @@
+extensions:
+    - Eshop\DI\EshopExtension
+    - Drym\DI\DrymExtension
+
+    ##### core extensions #####
+    annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    console: Kdyby\Console\DI\ConsoleExtension
+    core: App\Extensions\CoreExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+    events: Kdyby\Events\DI\EventsExtension
+    translation: Kdyby\Translation\DI\TranslationExtension
+    - Nette\DI\Extensions\InjectExtension

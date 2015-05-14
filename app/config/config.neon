@@ -26,24 +26,15 @@ constants:
     APP_DIR: %appDir%
 
 
-services:
-	router: App\Router\RouterFactory::createRouter
-	- App\Components\ContactForm\IContactFormFactory
-	- App\Components\MainMenu\IMainMenuFactory
-
-
-extensions:
-    - Eshop\DI\EshopExtension
-    - Drym\DI\DrymExtension
-
-    ##### core extensions #####
-    annotations: Kdyby\Annotations\DI\AnnotationsExtension
-    console: Kdyby\Console\DI\ConsoleExtension
-    core: App\Extensions\CoreExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
-    events: Kdyby\Events\DI\EventsExtension
-    - Nette\DI\Extensions\InjectExtension
-
-
 core:
     https: yes
+
+
+translation:
+    default: cs
+    fallback: [cs_CZ, cs]
+
+
+includes:
+    - extensions.neon
+    - services.neon

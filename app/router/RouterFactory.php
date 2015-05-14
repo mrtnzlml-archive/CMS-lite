@@ -16,12 +16,12 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('auth[/<presenter>[/<action>[/<id>]]]', [
+		$router[] = new Route('[<locale=cs cs|en>/]auth[/<presenter>[/<action>[/<id>]]]', [
 			'module' => 'Auth',
 			'presenter' => 'Sign',
 			'action' => 'in',
 		]);
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+		$router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}
 

@@ -29,7 +29,8 @@
     "kdyby/console": "~2.3",
     "kdyby/events": "~2.4",
     "mrtnzlml/testbench": "~1.1",
-    "texy/texy": "~2.6"
+    "texy/texy": "~2.6",
+    "kdyby/translation": "~2.2"
   },
   "require-dev": {
     "nette/tester": "~1.4"

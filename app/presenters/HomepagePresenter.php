@@ -10,6 +10,10 @@ use Nette;
 class HomepagePresenter extends Nette\Application\UI\Presenter
 {
 
+	//TODO: persistence napříč celou aplikací?
+	/** @persistent */
+	public $locale;
+
 	/** @var IMainMenuFactory @inject */
 	public $mainMenuFactory;
 

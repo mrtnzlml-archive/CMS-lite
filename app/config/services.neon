@@ -1,0 +1,4 @@
+services:
+	router: App\Router\RouterFactory::createRouter
+	- App\Components\ContactForm\IContactFormFactory
+	- App\Components\MainMenu\IMainMenuFactory

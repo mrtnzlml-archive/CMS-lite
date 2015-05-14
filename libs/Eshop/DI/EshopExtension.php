@@ -68,7 +68,8 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 	public function getRouter()
 	{
 		return [
-			new Nette\Application\Routers\Route('eshop[/<presenter>[/<action>[/<id>]]]', [
+			//TODO: dynamic language routing
+			new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<presenter>[/<action>[/<id>]]]', [
 				'module' => 'Eshop',
 				'presenter' => 'Category',
 				'action' => 'default',
