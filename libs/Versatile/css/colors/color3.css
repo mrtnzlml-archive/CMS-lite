@@ -1,0 +1,154 @@
+::selection {background: #d3a2f5;}
+::-moz-selection {background: #d3a2f5;}
+
+
+a:hover, a:focus {color:#d3a2f5;}
+
+.color_text {color:#d3a2f5;}
+
+.color_bg {background-color:#d3a2f5;}
+
+
+/* __________ Buttons __________ */
+.stylereset:hover {background-color:#d3a2f5 !important;}
+
+
+
+/* _________ //Buttons _________ */
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+.logo a {border:3px solid #d3a2f5;}
+.logo a:before {color:#d3a2f5;}
+
+
+.social li a:hover {background-color:#d3a2f5;}
+
+
+.navbar-nav li:hover a, .navbar-nav li a:focus, .navbar-nav li.active a {color:#d3a2f5;}
+.sub-menu ul li.active a, .sub-menu ul li a:hover {background:#d3a2f5 !Important;}
+.sub-menu ul.mega_menu li.active a, .sub-menu ul.mega_menu li a:hover {color:#d3a2f5 !important;}
+
+
+.service_item a:hover {border-color:#d3a2f5;}
+.service_item a:hover i:before {border-color:#d3a2f5;}
+.service_item a:hover i {background-color:#d3a2f5;}
+
+
+.latest_news_item .recent_post:before {background-color:#d3a2f5;}
+
+
+.project_item .proj_descr {background-color: rgba(211,162,245,0.7);}
+.project_item .proj_descr a {color:#d3a2f5;}
+
+
+.copyright span {color:#d3a2f5;}
+
+
+.foot_links li span {color:#d3a2f5;}
+
+
+.contact_btn:hover {color:#d3a2f5; border-color: #d3a2f5;}
+
+
+.FlickrImages li a {background-color:#d3a2f5;}
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	//INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+
+
+.navbar-toggle:hover span {color:#d3a2f5;}
+
+
+
+/* __________ Blog __________ */
+#sidebar .tags a:hover, .tags a:hover {background: #d3a2f5;}
+
+.FlickrImages li a {background-color:#d3a2f5;}
+
+footer .tweet_module .tweet_time a {color:#d3a2f5;}
+
+.tweet_module.index_page {background-color:#d3a2f5;}
+/* _________ //Blog _________ */
+
+
+/* __________ About __________ */
+/* __________ Skills __________ */
+.skill-bar:hover {border-left-color:#d3a2f5;}
+.skill-bar:hover span {color:#d3a2f5;}
+/* _________ //About _________ */
+
+
+/* __________ Portfolio __________ */
+#filter li a.selected {background-color:#d3a2f5;}
+.portfolio_block .project .hover_img {background-color:#d3a2f5;}
+.portfolio_block .project:hover .project_descr {border-bottom-color:#d3a2f5;}
+/* _________ //Portfolio _________ */
+
+
+/* __________ Shop __________ */
+.product_sort #filter li a:hover, .product_sort #filter li a.selected {color:#d3a2f5;}
+
+#price-range .ui-widget-header {background: #d3a2f5;}
+
+.product_item2:hover {border-color:#d3a2f5;}
+
+.product_inf .btn:hover {background-color:#d3a2f5; border-color:#d3a2f5;}
+
+.variable-sizes .product_item .item_btn_in a.btn:hover {background-color:#d3a2f5;}
+
+.sale {background-color:#d3a2f5;}
+
+.type2 .product_price {color:#d3a2f5;}
+.quantity_block .product_inf .btn.add_cart {border-color:#d3a2f5; color:#d3a2f5;}
+.quantity_block .product_inf .btn.add_cart:hover {border-color:#d3a2f5; background-color:#d3a2f5;}
+/* _________ //Shop _________ */
+
+
+/* __________ Shortcodes __________ */
+#accordion .ui-accordion-header:hover, #accordion .ui-accordion-header.ui-accordion-header-active, .shortcode_toggles_item_title:hover, .shortcode_toggles_item_title .ui-state-active {background:#d3a2f5;}
+.nav-tabs li a:hover {color:#d3a2f5;}
+.divider_colored {border-color:#d3a2f5;}
+
+.most_popular .price_item_btn a, .price_item_btn a:hover {background:#d3a2f5;}
+.most_popular .price_item_title {background:#d3a2f5;}
+
+blockquote.type3:before {background-color:#d3a2f5;}
+/* _________ //Shortcodes _________ */
+
+
+/* __________ Footer __________ */
+footer h3 {color:#d3a2f5;}
+/* _________ //Footer _________ */
+
+
+.search_form input.search_btn {background-color:#d3a2f5 !important;}
+
+
+.jCarousel_pagination a:hover {background-color:#d3a2f5;}
+
+
+.most_popular .price_item_cost h2,
+.most_popular .price_item_cost h2 span {
+	color:#d3a2f5;
+}
+
+
+
+
+
+
+
+
+
+
+
+

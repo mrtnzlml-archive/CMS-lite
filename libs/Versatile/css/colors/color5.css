@@ -1,0 +1,154 @@
+::selection {background: #8adeb7;}
+::-moz-selection {background: #8adeb7;}
+
+
+a:hover, a:focus {color:#8adeb7;}
+
+.color_text {color:#8adeb7;}
+
+.color_bg {background-color:#8adeb7;}
+
+
+/* __________ Buttons __________ */
+.stylereset:hover {background-color:#8adeb7 !important;}
+
+
+
+/* _________ //Buttons _________ */
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+.logo a {border:3px solid #8adeb7;}
+.logo a:before {color:#8adeb7;}
+
+
+.social li a:hover {background-color:#8adeb7;}
+
+
+.navbar-nav li:hover a, .navbar-nav li a:focus, .navbar-nav li.active a {color:#8adeb7;}
+.sub-menu ul li.active a, .sub-menu ul li a:hover {background:#8adeb7 !Important;}
+.sub-menu ul.mega_menu li.active a, .sub-menu ul.mega_menu li a:hover {color:#8adeb7 !important;}
+
+
+.service_item a:hover {border-color:#8adeb7;}
+.service_item a:hover i:before {border-color:#8adeb7;}
+.service_item a:hover i {background-color:#8adeb7;}
+
+
+.latest_news_item .recent_post:before {background-color:#8adeb7;}
+
+
+.project_item .proj_descr {background-color: rgba(138,222,183,0.7);}
+.project_item .proj_descr a {color:#8adeb7;}
+
+
+.copyright span {color:#8adeb7;}
+
+
+.foot_links li span {color:#8adeb7;}
+
+
+.contact_btn:hover {color:#8adeb7; border-color: #8adeb7;}
+
+
+.FlickrImages li a {background-color:#8adeb7;}
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	//INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+
+
+.navbar-toggle:hover span {color:#8adeb7;}
+
+
+
+/* __________ Blog __________ */
+#sidebar .tags a:hover, .tags a:hover {background: #8adeb7;}
+
+.FlickrImages li a {background-color:#8adeb7;}
+
+footer .tweet_module .tweet_time a {color:#8adeb7;}
+
+.tweet_module.index_page {background-color:#8adeb7;}
+/* _________ //Blog _________ */
+
+
+/* __________ About __________ */
+/* __________ Skills __________ */
+.skill-bar:hover {border-left-color:#8adeb7;}
+.skill-bar:hover span {color:#8adeb7;}
+/* _________ //About _________ */
+
+
+/* __________ Portfolio __________ */
+#filter li a.selected {background-color:#8adeb7;}
+.portfolio_block .project .hover_img {background-color:#8adeb7;}
+.portfolio_block .project:hover .project_descr {border-bottom-color:#8adeb7;}
+/* _________ //Portfolio _________ */
+
+
+/* __________ Shop __________ */
+.product_sort #filter li a:hover, .product_sort #filter li a.selected {color:#8adeb7;}
+
+#price-range .ui-widget-header {background: #8adeb7;}
+
+.product_item2:hover {border-color:#8adeb7;}
+
+.product_inf .btn:hover {background-color:#8adeb7; border-color:#8adeb7;}
+
+.variable-sizes .product_item .item_btn_in a.btn:hover {background-color:#8adeb7;}
+
+.sale {background-color:#8adeb7;}
+
+.type2 .product_price {color:#8adeb7;}
+.quantity_block .product_inf .btn.add_cart {border-color:#8adeb7; color:#8adeb7;}
+.quantity_block .product_inf .btn.add_cart:hover {border-color:#8adeb7; background-color:#8adeb7;}
+/* _________ //Shop _________ */
+
+
+/* __________ Shortcodes __________ */
+#accordion .ui-accordion-header:hover, #accordion .ui-accordion-header.ui-accordion-header-active, .shortcode_toggles_item_title:hover, .shortcode_toggles_item_title .ui-state-active {background:#8adeb7;}
+.nav-tabs li a:hover {color:#8adeb7;}
+.divider_colored {border-color:#8adeb7;}
+
+.most_popular .price_item_btn a, .price_item_btn a:hover {background:#8adeb7;}
+.most_popular .price_item_title {background:#8adeb7;}
+
+blockquote.type3:before {background-color:#8adeb7;}
+/* _________ //Shortcodes _________ */
+
+
+/* __________ Footer __________ */
+footer h3 {color:#8adeb7;}
+/* _________ //Footer _________ */
+
+
+.search_form input.search_btn {background-color:#8adeb7 !important;}
+
+
+.jCarousel_pagination a:hover {background-color:#8adeb7;}
+
+
+.most_popular .price_item_cost h2,
+.most_popular .price_item_cost h2 span {
+	color:#8adeb7;
+}
+
+
+
+
+
+
+
+
+
+
+
+

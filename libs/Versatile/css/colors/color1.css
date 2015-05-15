@@ -1,0 +1,154 @@
+::selection {background: #79bbe9;}
+::-moz-selection {background: #79bbe9;}
+
+
+a:hover, a:focus {color:#79bbe9;}
+
+.color_text {color:#79bbe9;}
+
+.color_bg {background-color:#79bbe9;}
+
+
+/* __________ Buttons __________ */
+.stylereset:hover {background-color:#79bbe9 !important;}
+
+
+
+/* _________ //Buttons _________ */
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+.logo a {border:3px solid #79bbe9;}
+.logo a:before {color:#79bbe9;}
+
+
+.social li a:hover {background-color:#79bbe9;}
+
+
+.navbar-nav li:hover a, .navbar-nav li a:focus, .navbar-nav li.active a {color:#79bbe9;}
+.sub-menu ul li.active a, .sub-menu ul li a:hover {background:#79bbe9 !Important;}
+.sub-menu ul.mega_menu li.active a, .sub-menu ul.mega_menu li a:hover {color:#79bbe9 !important;}
+
+
+.service_item a:hover {border-color:#79bbe9;}
+.service_item a:hover i:before {border-color:#79bbe9;}
+.service_item a:hover i {background-color:#79bbe9;}
+
+
+.latest_news_item .recent_post:before {background-color:#79bbe9;}
+
+
+.project_item .proj_descr {background-color: rgba(121,187,233,0.7);}
+.project_item .proj_descr a {color:#79bbe9;}
+
+
+.copyright span {color:#79bbe9;}
+
+
+.foot_links li span {color:#79bbe9;}
+
+
+.contact_btn:hover {color:#79bbe9; border-color: #79bbe9;}
+
+
+.FlickrImages li a {background-color:#79bbe9;}
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	//INDEX PAGE
+/*-----------------------------------------------------------------------------------*/
+
+
+.navbar-toggle:hover span {color:#79bbe9;}
+
+
+
+/* __________ Blog __________ */
+#sidebar .tags a:hover, .tags a:hover {background: #79bbe9;}
+
+.FlickrImages li a {background-color:#79bbe9;}
+
+footer .tweet_module .tweet_time a {color:#79bbe9;}
+
+.tweet_module.index_page {background-color:#79bbe9;}
+/* _________ //Blog _________ */
+
+
+/* __________ About __________ */
+/* __________ Skills __________ */
+.skill-bar:hover {border-left-color:#79bbe9;}
+.skill-bar:hover span {color:#79bbe9;}
+/* _________ //About _________ */
+
+
+/* __________ Portfolio __________ */
+#filter li a.selected {background-color:#79bbe9;}
+.portfolio_block .project .hover_img {background-color:#79bbe9;}
+.portfolio_block .project:hover .project_descr {border-bottom-color:#79bbe9;}
+/* _________ //Portfolio _________ */
+
+
+/* __________ Shop __________ */
+.product_sort #filter li a:hover, .product_sort #filter li a.selected {color:#79bbe9;}
+
+#price-range .ui-widget-header {background: #79bbe9;}
+
+.product_item2:hover {border-color:#79bbe9;}
+
+.product_inf .btn:hover {background-color:#79bbe9; border-color:#79bbe9;}
+
+.variable-sizes .product_item .item_btn_in a.btn:hover {background-color:#79bbe9;}
+
+.sale {background-color:#79bbe9;}
+
+.type2 .product_price {color:#79bbe9;}
+.quantity_block .product_inf .btn.add_cart {border-color:#79bbe9; color:#79bbe9;}
+.quantity_block .product_inf .btn.add_cart:hover {border-color:#79bbe9; background-color:#79bbe9;}
+/* _________ //Shop _________ */
+
+
+/* __________ Shortcodes __________ */
+#accordion .ui-accordion-header:hover, #accordion .ui-accordion-header.ui-accordion-header-active, .shortcode_toggles_item_title:hover, .shortcode_toggles_item_title .ui-state-active {background:#79bbe9;}
+.nav-tabs li a:hover {color:#79bbe9;}
+.divider_colored {border-color:#79bbe9;}
+
+.most_popular .price_item_btn a, .price_item_btn a:hover {background:#79bbe9;}
+.most_popular .price_item_title {background:#79bbe9;}
+
+blockquote.type3:before {background-color:#79bbe9;}
+/* _________ //Shortcodes _________ */
+
+
+/* __________ Footer __________ */
+footer h3 {color:#79bbe9;}
+/* _________ //Footer _________ */
+
+
+.search_form input.search_btn {background-color:#79bbe9 !important;}
+
+
+.jCarousel_pagination a:hover {background-color:#79bbe9;}
+
+
+.most_popular .price_item_cost h2,
+.most_popular .price_item_cost h2 span {
+	color:#79bbe9;
+}
+
+
+
+
+
+
+
+
+
+
+
+

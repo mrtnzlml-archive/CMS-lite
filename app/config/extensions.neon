@@ -3,7 +3,7 @@
 
 extensions:
     - Eshop\DI\EshopExtension
-    - Drym\DI\DrymExtension
+    - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
@@ -14,3 +14,5 @@ extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
     - Nette\DI\Extensions\InjectExtension
     - App\Extensions\CoreTemplateExtension
+    - App\Extensions\JavascriptExtension
+    - App\Extensions\StylesheetExtension
