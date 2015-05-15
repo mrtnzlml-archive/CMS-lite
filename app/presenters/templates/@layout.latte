@@ -1,6 +1,6 @@
 {block |strip}
 	<!DOCTYPE html>
-	<html>
+	<html lang="{$locale}">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
@@ -11,12 +11,15 @@
 
 	<body>
 
-	<div class="container">
-		<h1>Header</h1>
-		{control mainMenu}
-		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-		<div class="content">
-			{include content}
+	<div id="page">
+		<div class="container">
+			{* TODO: control header, zanořené menu? *}
+			{control mainMenu}
+			{* TODO: flash control *}
+			<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+			<div class="content">
+				{include content}
+			</div>
 		</div>
 	</div>
 

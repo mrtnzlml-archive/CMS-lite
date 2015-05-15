@@ -1,6 +1,76 @@
-<div n:if="$items" class="main-menu">
-	{foreach $items as $item}
-		<a href="{plink $item->link}" style="color: red">{$item->title}</a>
-		{sep} # {/sep}
-	{/foreach}
+{*<div n:if="$items" class="main-menu">*}
+	{*{foreach $items as $item}*}
+		{*<a href="{plink $item->link}" style="color: red">{$item->title}</a>*}
+		{*{sep} # {/sep}*}
+	{*{/foreach}*}
+{*</div>*}
+
+<div class="menu_block clearfix">
+	<div class="logo">
+		<a href="{plink :Homepage:}" alt="">Versatile</a>
+	</div>
+
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="glyphicon glyphicon-align-justify"></span>
+		</button>
+	</div>
+
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			<li class="first active"><a href="{plink :Homepage:}" title="">Home</a></li>
+			<li class="sub-menu"><a href="javascript:void(0);" title="">Features</a>
+				<!-- Mega Menu -->
+				<ul class="mega_menu left">
+					<h4>Two columns and paragraph</h4>
+					<li class="col">
+						<h5>Page Layouts</h5>
+						<ol>
+							<li><a href="#"><span>-</span>Typography</a></li>
+							<li><a href="#"><span>-</span>Shortcodes</a></li>
+							<li><a href="#"><span>-</span>Full Width</a></li>
+						</ol>
+					</li>
+					<li class="col">
+						<h5>Other Pages</h5>
+						<ol>
+							<li><a href="#"><span>-</span>404 Page</a></li>
+							<li><a href="#"><span>-</span>Shop</a></li>
+							<li><a href="#"><span>-</span>Product Page</a></li>
+						</ol>
+					</li>
+					<li class="col">
+						<h5>Paragraph</h5>
+						<p>This <span class="color_text">Mega Menu</span> can handle everything. Lists, paragraphs, forms...</p>
+					</li>
+					<div class="clear"></div>
+				</ul><!-- //Mega Menu -->
+			</li>
+			<li class="sub-menu menu_middle"><a href="javascript:void(0);" title="">Pages</a>
+				<ul>
+					<li><a href="#"><span>-</span>About</a></li>
+					<li><a href="#"><span>-</span>Shop</a></li>
+					<li><a href="#"><span>-</span>Product Page</a></li>
+					<li><a href="#"><span>-</span>Full Width</a></li>
+					<li><a href="#"><span>-</span>404 Page</a></li>
+				</ul>
+			</li>
+			<li class="sub-menu"><a href="javascript:void(0);" title="">Portfolio</a>
+				<ul>
+					<li><a href="#"><span>-</span>1 Column</a></li>
+					<li><a href="#"><span>-</span>2 Column</a></li>
+					<li><a href="#"><span>-</span>3 Column</a></li>
+					<li><a href="#"><span>-</span>4 Column</a></li>
+					<li><a href="#"><span>-</span>Portfolio Post</a></li>
+				</ul>
+			</li>
+			<li class="sub-menu"><a href="javascript:void(0);" title="">Blog</a>
+				<ul>
+					<li><a href="#"><span>-</span>Blog with sidebar</a></li>
+					<li><a href="#"><span>-</span>Blog Post</a></li>
+				</ul>
+			</li>
+			<li class="last"><a href="#" title="">Contacts</a></li>
+		</ul>
+	</div>
 </div>

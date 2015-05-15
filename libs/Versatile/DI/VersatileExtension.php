@@ -8,6 +8,8 @@ use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use Nette;
 
+//TODO: IFaviconProvider, IFontProvider, IImageProvider(?)
+//TODO: externí styly a scripty
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
 	ICssProvider, IJsProvider
 {

@@ -11,13 +11,7 @@ class CategoryPresenter extends BasePresenter
 
 	//TODO: nějaký společný předek, který to vše pořeší
 
-	/** @var IMainMenuFactory @inject */
-	public $mainMenuFactory;
-
-	public function createComponentMainMenu()
-	{
-		return $this->mainMenuFactory->create();
-	}
+	use \ComponentsTrait;
 
 	public function formatLayoutTemplateFiles()
 	{

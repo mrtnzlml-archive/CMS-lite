@@ -1,38 +1,50 @@
 <?php
 
+use App\Components;
+
 trait ComponentsTrait
 {
 
-	/** @var \App\Components\MainMenu\IMainMenuFactory @inject */
-	public $mainMenuFactory;
+	use Kdyby\Autowired\AutowireComponentFactories;
 
-	protected function createComponentMainMenu()
+	/**
+	 * @param Components\MainMenu\IMainMenuFactory $factory
+	 *
+	 * @return Components\MainMenu\MainMenu
+	 */
+	protected function createComponentMainMenu(Components\MainMenu\IMainMenuFactory $factory)
 	{
-		return $this->mainMenuFactory->create();
+		return $factory->create();
 	}
 
-	/** @var \App\Components\ContactForm\IContactFormFactory @inject */
-	public $contactFormFactory;
-
-	protected function createComponentContactForm()
+	/**
+	 * @param Components\ContactForm\IContactFormFactory $factory
+	 *
+	 * @return Components\ContactForm\ContactForm
+	 */
+	protected function createComponentContactForm(Components\ContactForm\IContactFormFactory $factory)
 	{
-		return $this->contactFormFactory->create();
+		return $factory->create();
 	}
 
-	/** @var \App\Components\Css\ICssFactory @inject */
-	public $cssFactory;
-
-	protected function createComponentCss()
+	/**
+	 * @param Components\Css\ICssFactory $factory
+	 *
+	 * @return Components\Css\Css
+	 */
+	protected function createComponentCss(Components\Css\ICssFactory $factory)
 	{
-		return $this->cssFactory->create();
+		return $factory->create();
 	}
 
-	/** @var \App\Components\Js\IJsFactory @inject */
-	public $jsFactory;
-
-	protected function createComponentJs()
+	/**
+	 * @param Components\Js\IJsFactory $factory
+	 *
+	 * @return Components\Js\Js
+	 */
+	protected function createComponentJs(Components\Js\IJsFactory $factory)
 	{
-		return $this->jsFactory->create();
+		return $factory->create();
 	}
 
 }

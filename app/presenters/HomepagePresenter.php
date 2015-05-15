@@ -8,10 +8,6 @@ use Nette;
 class HomepagePresenter extends BasePresenter
 {
 
-	//TODO: persistence napříč celou aplikací?
-	/** @persistent */
-	public $locale;
-
 	/** @var Nette\Bridges\ApplicationLatte\ILatteFactory @inject */
 	public $latteFactory;
 
