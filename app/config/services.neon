@@ -4,6 +4,8 @@
 services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Components\ContactForm\IContactFormFactory
-	- App\Components\Css\ICssFactory
-	- App\Components\Js\IJsFactory
+	- implement: App\Components\Css\ICssFactory
+	  arguments: [%wwwDir%]
+	- implement: App\Components\Js\IJsFactory
+	  arguments: [%wwwDir%]
 	- App\Components\MainMenu\IMainMenuFactory

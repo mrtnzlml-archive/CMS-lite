@@ -14,6 +14,14 @@ class Js extends Nette\Application\UI\Control
 
 	private $scripts = [];
 
+	private $dir;
+
+	public function __construct($dir)
+	{
+		parent::__construct();
+		$this->dir = $dir;
+	}
+
 	public function render()
 	{
 		$this->template->render(__DIR__ . '/templates/Js.latte');
@@ -21,17 +29,17 @@ class Js extends Nette\Application\UI\Control
 
 	protected function createComponentJs()
 	{
-		$files = new WebLoader\FileCollection(WWW_DIR . '/js');
+		$files = new WebLoader\FileCollection($this->dir . '/js');
 		$files->addFiles($this->scripts);
 		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js');
 		$files->addFile('main.js');
-		$compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/temp');
+		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\JS;
 			$minifier->add($code);
 			return $minifier->minify();
 		});
-		$control = new WebLoader\Nette\JavaScriptLoader($compiler, '/temp');
+		$control = new WebLoader\Nette\JavaScriptLoader($compiler, 'temp');
 		return $control;
 	}
 

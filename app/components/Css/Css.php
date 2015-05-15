@@ -17,6 +17,14 @@ class Css extends Nette\Application\UI\Control
 
 	private $styles = [];
 
+	private $dir;
+
+	public function __construct($dir)
+	{
+		parent::__construct();
+		$this->dir = $dir;
+	}
+
 	public function render()
 	{
 		$this->template->render(__DIR__ . '/templates/Css.latte');
@@ -24,16 +32,16 @@ class Css extends Nette\Application\UI\Control
 
 	protected function createComponentCss()
 	{
-		$files = new WebLoader\FileCollection(WWW_DIR . '/css');
+		$files = new WebLoader\FileCollection($this->dir . '/css');
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
-		$compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/temp');
+		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;
 			$minifier->add($code);
 			return $minifier->minify();
 		});
-		$control = new WebLoader\Nette\CssLoader($compiler, '/temp');
+		$control = new WebLoader\Nette\CssLoader($compiler, 'temp');
 		$control->setMedia($this->media);
 		return $control;
 	}
