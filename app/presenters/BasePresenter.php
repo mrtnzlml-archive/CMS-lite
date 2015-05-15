@@ -2,29 +2,13 @@
 
 namespace App\Presenters;
 
-use App\Components\ContactForm\IContactFormFactory;
-use App\Components\MainMenu\IMainMenuFactory;
 use Nette;
 use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	/** @var IMainMenuFactory @inject */
-	public $mainMenuFactory;
-
-	/** @var IContactFormFactory @inject */
-	public $contactFormFactory;
-
-	protected function createComponentMainMenu()
-	{
-		return $this->mainMenuFactory->create();
-	}
-
-	protected function createComponentContactForm()
-	{
-		return $this->contactFormFactory->create();
-	}
+	use \ComponentsTrait;
 
 	protected function createComponentCss()
 	{
