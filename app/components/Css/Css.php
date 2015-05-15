@@ -2,6 +2,7 @@
 
 namespace App\Components\Css;
 
+use MatthiasMullie\Minify;
 use Nette;
 use WebLoader;
 
@@ -27,7 +28,11 @@ class Css extends Nette\Application\UI\Control
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/temp');
-		//TODO: minify
+		$compiler->addFilter(function ($code) {
+			$minifier = new Minify\CSS;
+			$minifier->add($code);
+			return $minifier->minify();
+		});
 		$control = new WebLoader\Nette\CssLoader($compiler, '/temp');
 		$control->setMedia($this->media);
 		return $control;

@@ -2,6 +2,7 @@
 
 namespace App\Components\Js;
 
+use MatthiasMullie\Minify;
 use Nette;
 use WebLoader;
 
@@ -25,7 +26,11 @@ class Js extends Nette\Application\UI\Control
 		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js');
 		$files->addFile('main.js');
 		$compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/temp');
-		//TODO: minify
+		$compiler->addFilter(function ($code) {
+			$minifier = new Minify\JS;
+			$minifier->add($code);
+			return $minifier->minify();
+		});
 		$control = new WebLoader\Nette\JavaScriptLoader($compiler, '/temp');
 		return $control;
 	}
