@@ -26,7 +26,7 @@ class Js extends Nette\Application\UI\Control
 		$files->addFile('main.js');
 		$compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/temp');
 		//TODO: minify
-		$control = new WebLoader\Nette\JavaScriptLoader($compiler, 'temp');
+		$control = new WebLoader\Nette\JavaScriptLoader($compiler, '/temp');
 		return $control;
 	}
 

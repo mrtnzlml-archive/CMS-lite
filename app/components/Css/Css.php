@@ -28,7 +28,7 @@ class Css extends Nette\Application\UI\Control
 		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/temp');
 		//TODO: minify
-		$control = new WebLoader\Nette\CssLoader($compiler, 'temp');
+		$control = new WebLoader\Nette\CssLoader($compiler, '/temp');
 		$control->setMedia($this->media);
 		return $control;
 	}
