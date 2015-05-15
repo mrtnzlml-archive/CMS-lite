@@ -4,4 +4,6 @@
 services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Components\ContactForm\IContactFormFactory
+	- App\Components\Css\ICssFactory
+	- App\Components\Js\IJsFactory
 	- App\Components\MainMenu\IMainMenuFactory
