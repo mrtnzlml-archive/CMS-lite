@@ -23,6 +23,10 @@ session:
 	debugger: yes
 
 
+constants:
+    APP_DIR: %appDir%
+
+
 core:
     https: yes
 
