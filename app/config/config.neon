@@ -14,13 +14,8 @@ application:
 		*: App\*Module\Presenters\*Presenter
 
 
-di:
-    debugger: TRUE
-
-
 session:
 	expiration: 14 days
-	debugger: yes
 
 
 constants:
