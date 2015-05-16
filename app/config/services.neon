@@ -6,6 +6,7 @@ services:
 	- App\Components\ContactForm\IContactFormFactory
 	- implement: App\Components\Css\ICssFactory
 	  arguments: [%wwwDir%]
+	- App\Components\Doctype\IDoctypeFactory
 	- implement: App\Components\Js\IJsFactory
 	  arguments: [%wwwDir%]
 	- App\Components\MainMenu\IMainMenuFactory

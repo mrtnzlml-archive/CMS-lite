@@ -27,4 +27,9 @@ trait ComponentsTrait
 		return $factory->create();
 	}
 
+	protected function createComponentDoctype(Components\Doctype\IDoctypeFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }
