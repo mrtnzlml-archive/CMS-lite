@@ -16,7 +16,14 @@ class StylesheetExtension extends Nette\DI\CompilerExtension
 		/** @var ICssProvider $extension */
 		foreach ($this->compiler->getExtensions(ICssProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(ICssFactory::class));
-			$definition->addSetup('setStyles', [$extension->getCssStyles()]);
+			$styles = $extension->getCssStyles();
+			if ($styles instanceof \Generator) {
+				foreach ($extension->getCssStyles() as $style) {
+					$definition->addSetup('addStyle', [$style]);
+				}
+			} else {
+				$definition->addSetup('setScripts', [$styles]);
+			}
 		}
 	}
 

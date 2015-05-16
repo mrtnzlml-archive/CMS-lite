@@ -7,7 +7,8 @@ use Nette;
 use WebLoader;
 
 /**
- * @method setScripts(array);
+ * @method setScripts(array)
+ * @method addScript(string)
  */
 class Js extends Nette\Application\UI\Control
 {

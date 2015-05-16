@@ -16,7 +16,14 @@ class JavascriptExtension extends Nette\DI\CompilerExtension
 		/** @var IJsProvider $extension */
 		foreach ($this->compiler->getExtensions(IJsProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IJsFactory::class));
-			$definition->addSetup('setScripts', [$extension->getJsScripts()]);
+			$scripts = $extension->getJsScripts();
+			if ($scripts instanceof \Generator) {
+				foreach ($extension->getJsScripts() as $style) {
+					$definition->addSetup('addScript', [$style]);
+				}
+			} else {
+				$definition->addSetup('setScripts', [$scripts]);
+			}
 		}
 	}
 

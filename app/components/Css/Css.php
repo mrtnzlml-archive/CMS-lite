@@ -8,7 +8,8 @@ use WebLoader;
 
 /**
  * @method getMedia
- * @method setStyles(array);
+ * @method setStyles(array)
+ * @method addStyle(string)
  */
 class Css extends Nette\Application\UI\Control
 {
