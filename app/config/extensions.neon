@@ -16,3 +16,4 @@ extensions:
     - App\Extensions\CoreTemplateExtension
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
+    - Users\DI\UsersExtension
