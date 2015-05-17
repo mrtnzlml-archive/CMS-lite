@@ -32,4 +32,9 @@ trait ComponentsTrait
 		return $factory->create();
 	}
 
+	protected function createComponentSignInForm(Components\SignInForm\ISignInFormFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }

@@ -10,3 +10,4 @@ services:
 	- implement: App\Components\Js\IJsFactory
 	  arguments: [%wwwDir%]
 	- App\Components\MainMenu\IMainMenuFactory
+	- App\Components\SignInForm\ISignInFormFactory
