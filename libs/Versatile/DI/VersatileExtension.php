@@ -6,12 +6,13 @@ use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
 use App\Components\Css\Providers\ICssProvider;
 use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
+use App\Extensions\IImageProvider;
 use Nette;
 
-//TODO: IFaviconProvider, IFontProvider, IImageProvider(?)
+//TODO: IFaviconProvider, IFontProvider
 //TODO: externí styly a scripty
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
-	ICssProvider, IJsProvider
+	ICssProvider, IJsProvider, IImageProvider
 {
 
 	public function getMainMenuTemplate()
@@ -36,6 +37,11 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 		foreach (Nette\Utils\Finder::findFiles('*.js')->from(__DIR__ . '/../js') as $key => $file) {
 			yield $key;
 		}
+	}
+
+	public function getImagesFolder()
+	{
+		return realpath(__DIR__ . '/../images');
 	}
 
 }
