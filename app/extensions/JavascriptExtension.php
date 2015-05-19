@@ -17,12 +17,12 @@ class JavascriptExtension extends Nette\DI\CompilerExtension
 		foreach ($this->compiler->getExtensions(IJsProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IJsFactory::class));
 			$scripts = $extension->getJsScripts();
-			if ($scripts instanceof \Generator) {
-				foreach ($extension->getJsScripts() as $style) {
-					$definition->addSetup('addScript', [$style]);
+			if ($scripts instanceof \Traversable || is_array($scripts)) {
+				foreach ($extension->getJsScripts() as $script) {
+					$definition->addSetup('addScript', [$script]);
 				}
 			} else {
-				$definition->addSetup('setScripts', [$scripts]);
+				throw new Nette\InvalidArgumentException(sprintf('Scripts must be in array or traversable object, %s given.', gettype($scripts)));
 			}
 		}
 	}

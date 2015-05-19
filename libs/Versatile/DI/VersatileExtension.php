@@ -10,7 +10,7 @@ use App\Extensions\IImageProvider;
 use Nette;
 
 //TODO: IFaviconProvider, IFontProvider
-//TODO: externí styly a scripty
+//TODO: externí styly, scripty a fonty
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
 	ICssProvider, IJsProvider, IImageProvider
 {

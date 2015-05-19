@@ -17,12 +17,12 @@ class StylesheetExtension extends Nette\DI\CompilerExtension
 		foreach ($this->compiler->getExtensions(ICssProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(ICssFactory::class));
 			$styles = $extension->getCssStyles();
-			if ($styles instanceof \Generator) {
+			if ($styles instanceof \Traversable || is_array($styles)) {
 				foreach ($extension->getCssStyles() as $style) {
 					$definition->addSetup('addStyle', [$style]);
 				}
 			} else {
-				$definition->addSetup('setScripts', [$styles]);
+				throw new Nette\InvalidArgumentException(sprintf('Styles must be in array or traversable object, %s given.', gettype($styles)));
 			}
 		}
 	}

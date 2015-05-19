@@ -16,8 +16,6 @@ class ImageExtension extends Nette\DI\CompilerExtension
 
 	public function beforeCompile()
 	{
-		$cb = $this->getContainerBuilder();
-
 		/** @var IImageProvider $extension */
 		foreach ($this->compiler->getExtensions(IImageProvider::class) as $extension) {
 			$this->purge($this->imagesCacheFolder);
