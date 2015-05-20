@@ -56,7 +56,7 @@ EOT
 			}
 
 			$loader = new Loader();
-			$loader->addFixture(new \UsersFixture()); //FIXME: načítat automaticky (?)
+			$loader->loadFromDirectory(__DIR__ . '/../');
 			$fixtures = $loader->getFixtures();
 
 			$purger = new ORMPurger($this->em);

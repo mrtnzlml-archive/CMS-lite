@@ -8,6 +8,7 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="products")
  */
 class Product extends BaseEntity
 {

@@ -8,7 +8,7 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="`order`")
+ * @ORM\Table(name="orders")
  */
 class Order extends BaseEntity
 {

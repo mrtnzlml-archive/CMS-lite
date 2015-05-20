@@ -2,6 +2,7 @@
 
 namespace Users;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
@@ -9,6 +10,9 @@ use Nette\Security\IRole;
 
 /**
  * @ORM\Entity(readOnly=TRUE)
+ * @ORM\Table(name="roles")
+ *
+ * @method setName(string)
  */
 class Role extends BaseEntity implements IRole
 {
@@ -20,6 +24,12 @@ class Role extends BaseEntity implements IRole
 	use Identifier;
 
 	/**
+	 * @ORM\Column(type="string", options={"comment":"Identifier of the role"})
+	 * @var string
+	 */
+	protected $name;
+
+	/**
 	 * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="role")},
@@ -28,6 +38,11 @@ class Role extends BaseEntity implements IRole
 	 * @var Role[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $inherits;
+
+	public function __construct()
+	{
+		$this->inherits = new ArrayCollection();
+	}
 
 	/**
 	 * Returns a string identifier of the Role.

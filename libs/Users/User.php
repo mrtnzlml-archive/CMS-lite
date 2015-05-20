@@ -10,6 +10,7 @@ use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="users")
  *
  * @method string getEmail()
  * @method string getPassword()
