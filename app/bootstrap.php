@@ -8,6 +8,7 @@ $configurator->setTempDirectory(__DIR__ . '/../temp');
 
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
+	->addDirectory(__DIR__ . '/../custom')
 	->addDirectory(__DIR__ . '/../libs')
 	->register();
 
