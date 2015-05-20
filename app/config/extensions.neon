@@ -5,6 +5,11 @@ extensions:
     - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
+    - Articles\DI\ArticlesExtension
+    - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
+    - Eshop\DI\EshopExtension
+    - Users\DI\UsersExtension
+
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     console: Kdyby\Console\DI\ConsoleExtension
     core: App\Extensions\CoreExtension
@@ -16,8 +21,3 @@ extensions:
     - App\Extensions\ImageExtension
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
-
-    - Articles\DI\ArticlesExtension
-    - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
-    - Eshop\DI\EshopExtension
-    - Users\DI\UsersExtension
