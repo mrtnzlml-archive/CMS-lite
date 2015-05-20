@@ -9,6 +9,11 @@ use Nette\Application\UI;
 class DashboardPresenter extends Nette\Application\UI\Presenter
 {
 
+	use \ComponentsTrait;
+
+	/** @persistent */
+	public $locale;
+
 	public function startup()
 	{
 		parent::startup();
@@ -21,6 +26,11 @@ class DashboardPresenter extends Nette\Application\UI\Presenter
 			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', 'danger');
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}*/
+	}
+
+	public function beforeRender()
+	{
+		$this->template->locale = $this->locale;
 	}
 
 }

@@ -2,7 +2,6 @@
 # http://nette.org/security-warning
 
 extensions:
-    - Eshop\DI\EshopExtension
     - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
@@ -17,6 +16,8 @@ extensions:
     - App\Extensions\ImageExtension
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
-    - Users\DI\UsersExtension
 
+    - Articles\DI\ArticlesExtension
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
+    - Eshop\DI\EshopExtension
+    - Users\DI\UsersExtension
