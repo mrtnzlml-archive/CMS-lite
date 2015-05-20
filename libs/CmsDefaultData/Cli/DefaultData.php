@@ -25,11 +25,13 @@ class DefaultData extends Command
 			->setName('cms:demo-data:load')
 			->setDescription('Load data fixtures to your database.')
 			->addOption('append', NULL, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
+			->addOption('demo', NULL, InputOption::VALUE_NONE, 'Include also demo data.')
 			->addOption('purge-with-truncate', NULL, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
 			->setHelp(<<<EOT
 The <info>cms:demo-data:load</info> command loads data fixtures from your bundles:
 
-  <info>php index.php cms:demo-data:load</info>
+  <info>php index.php cms:demo-data:load</info> (everything you need without demo data)
+  <info>php index.php cms:demo-data:load --demo</info> (everything including demo data)
 
 If you want to append the fixtures instead of flushing the database first you can use the <info>--append</info> option:
 
@@ -56,7 +58,10 @@ EOT
 			}
 
 			$loader = new Loader();
-			$loader->loadFromDirectory(__DIR__ . '/../');
+			$loader->loadFromDirectory(__DIR__ . '/../basic');
+			if ($input->getOption('demo')) {
+				$loader->loadFromDirectory(__DIR__ . '/../demo');
+			}
 			$fixtures = $loader->getFixtures();
 
 			$purger = new ORMPurger($this->em);

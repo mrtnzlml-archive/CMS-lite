@@ -34,7 +34,7 @@ class User extends BaseEntity
 	protected $password;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="\Users\Role", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="user_id", onDelete="cascade")},
 	 *        inverseJoinColumns={@ORM\JoinColumn(name="role")}

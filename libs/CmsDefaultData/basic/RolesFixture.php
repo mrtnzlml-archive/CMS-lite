@@ -2,7 +2,7 @@
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-class RoleFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class RolesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
 	public function load(ObjectManager $manager)
