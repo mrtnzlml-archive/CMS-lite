@@ -18,3 +18,5 @@ extensions:
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
     - Users\DI\UsersExtension
+
+    - CmsDefaultDataExtension\DI\CmsDefaultDataExtension

@@ -2,13 +2,21 @@
 
 namespace Users;
 
+use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Security\AuthenticationException;
 use Nette\Security\Passwords;
-use Nette\Utils\Strings;
 
 class Manager extends Nette\Object implements Nette\Security\IAuthenticator
 {
+
+	/** @var EntityManager */
+	private $em;
+
+	public function __construct(EntityManager $em)
+	{
+		$this->em = $em;
+	}
 
 	/**
 	 * Performs an authentication against database. and returns IIdentity on success or throws AuthenticationException
@@ -22,20 +30,20 @@ class Manager extends Nette\Object implements Nette\Security\IAuthenticator
 	{
 		$username = $credentials[self::USERNAME];
 		$password = $credentials[self::PASSWORD];
-		$password = $password === Strings::upper($password) ? Strings::lower($password) : $password;
 
-		$user = new \stdClass(); //TODO: find $username in database
+		/** @var User $user */
+		$user = $this->em->getRepository(User::class)->findOneBy(['email eq' => $username]);
 
 		if (!$user) {
 			throw new Nette\Security\AuthenticationException('Uživatelské jméno není správné.', self::IDENTITY_NOT_FOUND);
 		} elseif (!Passwords::verify($password, $user->password)) {
 			throw new Nette\Security\AuthenticationException('Zadané heslo není správné.', self::INVALID_CREDENTIAL);
-//		} elseif (Passwords::needsRehash($user->password)) {
-//			$user->password = Passwords::hash($password);
-//			$this->users->save($user);
-		} else {
-			return new Nette\Security\Identity($user->getId(), $user->role);
+		} elseif (Passwords::needsRehash($user->password)) {
+			$user->password = Passwords::hash($password);
+			$this->em->persist($user);
+			$this->em->flush($user);
 		}
+		return new Nette\Security\Identity($user->getId(), $user->roles, $user);
 	}
 
 }

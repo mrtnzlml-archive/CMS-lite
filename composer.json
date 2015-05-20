@@ -36,6 +36,7 @@
   },
   "require-dev": {
     "mrtnzlml/testbench": "~1.1",
-    "nette/tester": "~1.4"
+    "nette/tester": "~1.4",
+    "doctrine/data-fixtures": "~1.1"
   }
 }

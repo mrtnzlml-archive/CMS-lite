@@ -11,7 +11,9 @@ use Nette\Utils\Strings;
 /**
  * @ORM\Entity
  *
- * @method getEmail
+ * @method string getEmail()
+ * @method string getPassword()
+ * @method setPassword(string)
  */
 class User extends BaseEntity
 {
@@ -23,6 +25,12 @@ class User extends BaseEntity
 	 * @var string
 	 */
 	private $email;
+
+	/**
+	 * @ORM\Column(type="string", options={"comment":"User's password"})
+	 * @var string
+	 */
+	protected $password;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="\Users\Role", cascade={"persist"})
@@ -47,7 +55,7 @@ class User extends BaseEntity
 		$this->createdAt = new \DateTime();
 	}
 
-	protected function setEmail($email)
+	public function setEmail($email)
 	{
 		$this->email = Strings::lower($email);
 		return $this;

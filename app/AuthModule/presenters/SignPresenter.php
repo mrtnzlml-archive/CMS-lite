@@ -20,6 +20,14 @@ class SignPresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
+	public function startup()
+	{
+		parent::startup();
+		if ($this->action != 'out' && $this->user->isLoggedIn()) {
+			$this->redirect(':Admin:Dashboard:');
+		}
+	}
+
 	public function beforeRender()
 	{
 		$this->template->locale = $this->locale;

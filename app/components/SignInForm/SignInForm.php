@@ -10,6 +10,9 @@ use Nette\Utils\ArrayHash;
 class SignInForm extends Nette\Application\UI\Control implements ITemplateProvider
 {
 
+	/** @persistent */
+	public $backlink = '';
+
 	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
@@ -51,7 +54,7 @@ class SignInForm extends Nette\Application\UI\Control implements ITemplateProvid
 		}
 
 		$this->presenter->restoreRequest($this->backlink);
-		$this->presenter->redirect('???'); //FIXME
+		$this->presenter->redirect(':Admin:Dashboard:');
 	}
 
 	public function changeTemplate($templatePath)
