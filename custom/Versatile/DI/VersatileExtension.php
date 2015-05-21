@@ -4,17 +4,21 @@ namespace Versatile\DI;
 
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
 use App\Components\Css\Providers\ICssProvider;
+use App\Components\Favicon\Providers\IFaviconProvider;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use App\Extensions\IImageProvider;
 use Nette;
 
-//TODO: IFaviconProvider, IFontProvider
-//TODO: externí styly, scripty a fonty
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
-	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider
+	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider
 {
+
+	public function getFaviconPath()
+	{
+		return realpath(__DIR__ . '/../images/favicon.ico');
+	}
 
 	public function getMainMenuTemplate()
 	{

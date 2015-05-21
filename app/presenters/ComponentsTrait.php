@@ -42,4 +42,9 @@ trait ComponentsTrait
 		return $factory->create();
 	}
 
+	protected function createComponentFavicon(Components\Favicon\IFaviconFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }

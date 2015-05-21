@@ -2,16 +2,19 @@
 
 namespace App\Extensions;
 
+use App\Components\Favicon\Providers\IFaviconProvider;
 use Nette;
 
 class ImageExtension extends Nette\DI\CompilerExtension
 {
 
 	private $imagesCacheFolder;
+	private $wwwDir;
 
-	public function __construct()
+	public function __construct($wwwDir)
 	{
-		$this->imagesCacheFolder = __DIR__ . '/../../www/images';
+		$this->wwwDir = $wwwDir;
+		$this->imagesCacheFolder = $wwwDir . DIRECTORY_SEPARATOR . 'images';
 	}
 
 	public function beforeCompile()
@@ -21,6 +24,12 @@ class ImageExtension extends Nette\DI\CompilerExtension
 			$this->purge($this->imagesCacheFolder);
 			$this->copy($extension->getImagesFolder(), $this->imagesCacheFolder);
 			file_put_contents($this->imagesCacheFolder . DIRECTORY_SEPARATOR . '.gitignore', "*\n!.gitignore");
+		}
+
+		/** @var IFaviconProvider $extension */
+		foreach ($this->compiler->getExtensions(IFaviconProvider::class) as $extension) {
+			copy($extension->getFaviconPath(), $this->wwwDir . DIRECTORY_SEPARATOR . 'favicon.ico');
+			break; //One is enough...
 		}
 	}
 

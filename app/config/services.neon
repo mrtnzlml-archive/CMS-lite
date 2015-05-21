@@ -7,6 +7,7 @@ services:
 	- implement: App\Components\Css\ICssFactory
 	  arguments: [%wwwDir%]
 	- App\Components\Doctype\IDoctypeFactory
+	- App\Components\Favicon\IFaviconFactory
 	- App\Components\Footer\IFooterFactory
 	- implement: App\Components\Js\IJsFactory
 	  arguments: [%wwwDir%]

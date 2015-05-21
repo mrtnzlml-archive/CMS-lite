@@ -18,6 +18,6 @@ extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
     - Nette\DI\Extensions\InjectExtension
     - App\Extensions\CoreTemplateExtension
-    - App\Extensions\ImageExtension
+    - App\Extensions\ImageExtension(%appDir%/../www)
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension

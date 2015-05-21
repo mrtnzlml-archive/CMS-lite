@@ -5,10 +5,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
 		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS</title>
-		{control css}
-		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+		{block styles}
+			{control css}
+		{/block}
+		{control favicon}
 	</head>
-
 	<body>
 
 	<div id="page">
