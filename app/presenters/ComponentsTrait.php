@@ -37,4 +37,9 @@ trait ComponentsTrait
 		return $factory->create();
 	}
 
+	protected function createComponentFooter(Components\Footer\IFooterFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }

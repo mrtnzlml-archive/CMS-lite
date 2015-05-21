@@ -4,6 +4,8 @@ namespace App\Extensions;
 
 use App\Components\ContactForm\IContactFormFactory;
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
+use App\Components\Footer\IFooterFactory;
+use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\MainMenu\IMainMenuFactory;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use Nette;
@@ -25,6 +27,12 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 		foreach ($this->compiler->getExtensions(IContactFormTemplateProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IContactFormFactory::class));
 			$definition->addSetup('changeTemplate', [$extension->getContactFormTemplate()]);
+		}
+
+		/** @var IFooterTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IFooterTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IFooterFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getFooterTemplate()]);
 		}
 	}
 

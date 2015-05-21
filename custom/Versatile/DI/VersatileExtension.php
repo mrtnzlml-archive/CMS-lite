@@ -4,6 +4,7 @@ namespace Versatile\DI;
 
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
 use App\Components\Css\Providers\ICssProvider;
+use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use App\Extensions\IImageProvider;
@@ -12,7 +13,7 @@ use Nette;
 //TODO: IFaviconProvider, IFontProvider
 //TODO: externí styly, scripty a fonty
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
-	ICssProvider, IJsProvider, IImageProvider
+	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider
 {
 
 	public function getMainMenuTemplate()
@@ -42,6 +43,11 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 	public function getImagesFolder()
 	{
 		return realpath(__DIR__ . '/../images');
+	}
+
+	public function getFooterTemplate()
+	{
+		return realpath(__DIR__ . '/../VersatileFooter.latte');
 	}
 
 }
