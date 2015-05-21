@@ -35,8 +35,20 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 
 	public function getJsScripts()
 	{
-		foreach (Nette\Utils\Finder::findFiles('*.js')->from(__DIR__ . '/../js') as $key => $file) {
-			yield $key;
+		//Keep order!
+		$scripts = [
+			'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
+			__DIR__ . '/../js/bootstrap.min.js',
+			__DIR__ . '/../js/jquery.prettyPhoto.js',
+			__DIR__ . '/../js/jquery-ui.min.js',
+			__DIR__ . '/../js/jquery.twitter.js',
+			__DIR__ . '/../js/superfish.min.js',
+			__DIR__ . '/../js/jquery.flexslider-min.js',
+			__DIR__ . '/../js/animate.js',
+			__DIR__ . '/../js/myscript.js',
+		];
+		foreach ($scripts as $script) {
+			yield $script;
 		}
 	}
 

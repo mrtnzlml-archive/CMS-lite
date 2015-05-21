@@ -19,7 +19,11 @@ class JavascriptExtension extends Nette\DI\CompilerExtension
 			$scripts = $extension->getJsScripts();
 			if ($scripts instanceof \Traversable || is_array($scripts)) {
 				foreach ($extension->getJsScripts() as $script) {
-					$definition->addSetup('addScript', [$script]);
+					if (Nette\Utils\Validators::isUrl($script)) {
+						$definition->addSetup('addExternalScript', [$script]);
+					} else {
+						$definition->addSetup('addScript', [$script]);
+					}
 				}
 			} else {
 				throw new Nette\InvalidArgumentException(sprintf('Scripts must be in array or traversable object, %s given.', gettype($scripts)));

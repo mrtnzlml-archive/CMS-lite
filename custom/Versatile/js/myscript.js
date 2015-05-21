@@ -229,7 +229,7 @@ jQuery(document).ready(function() {
 /*	FLICKR
 /*-----------------------------------------------------------------------------------*/
 jQuery(document).ready(function() {
-	$.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=90412460@N00&lang=en-us&format=json&jsoncallback=?", function(data){
+	$.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?id=90412460@N00&lang=en-us&format=json&jsoncallback=?", function(data){
 		$.each(data.items, function(i,item){
 			if(i<=5){ // <— change this number to display more or less images
 				$("<img/>").attr("src", item.media.m.replace('_m', '_s')).appendTo(".FlickrImages ul")

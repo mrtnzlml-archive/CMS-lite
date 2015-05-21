@@ -7,13 +7,14 @@ use Nette;
 use WebLoader;
 
 /**
- * @method setScripts(array)
  * @method addScript(string)
+ * @method addExternalScript(string)
  */
 class Js extends Nette\Application\UI\Control
 {
 
 	private $scripts = [];
+	private $externalScripts = [];
 
 	private $dir;
 
@@ -31,8 +32,9 @@ class Js extends Nette\Application\UI\Control
 	protected function createComponentJs()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/js');
+		$files->addRemoteFiles($this->externalScripts);
+		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js'); //FIXME
 		$files->addFiles($this->scripts);
-		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js');
 		$files->addFile('main.js');
 		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {

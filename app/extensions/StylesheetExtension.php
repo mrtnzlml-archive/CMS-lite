@@ -19,7 +19,11 @@ class StylesheetExtension extends Nette\DI\CompilerExtension
 			$styles = $extension->getCssStyles();
 			if ($styles instanceof \Traversable || is_array($styles)) {
 				foreach ($extension->getCssStyles() as $style) {
-					$definition->addSetup('addStyle', [$style]);
+					if (Nette\Utils\Validators::isUrl($style)) {
+						$definition->addSetup('addExternalStyle', [$style]);
+					} else {
+						$definition->addSetup('addStyle', [$style]);
+					}
 				}
 			} else {
 				throw new Nette\InvalidArgumentException(sprintf('Styles must be in array or traversable object, %s given.', gettype($styles)));
