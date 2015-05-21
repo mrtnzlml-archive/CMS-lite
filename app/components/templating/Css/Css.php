@@ -17,7 +17,7 @@ class Css extends Nette\Application\UI\Control
 	private $media = 'screen'; //'screen,projection,tv,print'
 
 	private $styles = [];
-	private $externalsStyles = [];
+	private $externalStyles = [];
 
 	private $dir;
 
@@ -35,7 +35,7 @@ class Css extends Nette\Application\UI\Control
 	protected function createComponentCss()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/css');
-		$files->addRemoteFiles($this->externalsStyles);
+		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
