@@ -53,7 +53,7 @@ class Article extends BaseEntity
 	/**
 	 * @ORM\ManyToMany(targetEntity="Users\User", cascade={"persist"})
 	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="article_id"},
+	 *        joinColumns={@ORM\JoinColumn(name="article_id")},
 	 *        inverseJoinColumns={@ORM\JoinColumn(name="role")}
 	 * )
 	 * @var \Users\User[]|ArrayCollection
