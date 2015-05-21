@@ -2,32 +2,32 @@
 	{control doctype}
 	<html lang="{$locale}">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS</title>
-		{block styles}
-			{control css}
-		{/block}
+		<meta charset="utf-8">{* TODO: component:meta *}
+		<meta name="viewport" content="width=device-width">{* TODO: component:meta *}
+		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS</title>{* TODO: component:title *}
+		{block styles}{control css}{/block}
 		{control favicon}
 	</head>
 	<body>
 
+	<img id="preloader" src="images/preloader.gif" alt=""/>
+
 	<div id="page">
-		<div class="container">
-			{* TODO: control header, zanořené menu? *}
-			{control mainMenu}
-			{* TODO: flash control *}
-			<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-			<div class="content">
-				{include content}
+		<div class="container page_block">
+			<div class="wrapper">
+				{* TODO: control header, zanořené menu? *}
+				{control mainMenu}
+				{* TODO: flash control *}
+				<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+				<div class="content">
+					{include content}
+				</div>
+				{control footer}
 			</div>
-			{control footer}
 		</div>
 	</div>
 
-	{block scripts}
-		{control js}
-	{/block}
+	{block scripts}{control js}{/block}
 	</body>
 	</html>
 {/block}
