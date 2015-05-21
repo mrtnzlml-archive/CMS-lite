@@ -8,6 +8,8 @@ use App\Components\Footer\IFooterFactory;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\MainMenu\IMainMenuFactory;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
+use App\Components\SignInForm\ISignInFormFactory;
+use App\Components\SignInForm\Providers\ISignInFormTemplateProvider;
 use Nette;
 
 class CoreTemplateExtension extends Nette\DI\CompilerExtension
@@ -27,6 +29,12 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 		foreach ($this->compiler->getExtensions(IContactFormTemplateProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IContactFormFactory::class));
 			$definition->addSetup('changeTemplate', [$extension->getContactFormTemplate()]);
+		}
+
+		/** @var ISignInFormTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(ISignInFormTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(ISignInFormFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getSignInFormTemplate()]);
 		}
 
 		/** @var IFooterTemplateProvider $extension */
