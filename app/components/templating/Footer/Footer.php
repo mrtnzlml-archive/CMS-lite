@@ -8,6 +8,8 @@ use Nette;
 class Footer extends Nette\Application\UI\Control implements ITemplateProvider
 {
 
+	use \ComponentsTrait; //FIXME: je toto dobrý nápad?
+
 	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)

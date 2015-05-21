@@ -12,7 +12,6 @@ class ContactForm extends Nette\Application\UI\Control implements ITemplateProvi
 
 	private $templatePath = NULL;
 
-	//TODO: interface pro render s custom parametry (?)
 	public function render(array $parameters = NULL)
 	{
 		if ($parameters) {
@@ -24,7 +23,14 @@ class ContactForm extends Nette\Application\UI\Control implements ITemplateProvi
 	public function createComponentForm()
 	{
 		$form = new UI\Form;
-		$form->addText('text');
+		$form->addText('name');
+		$form
+			->addText('email')
+			->setType('email')
+			->addRule(UI\Form::EMAIL);
+		$form
+			->addTextArea('message')
+			->setRequired();
 		$form->addSubmit('submit');
 		$form->onSuccess[] = function (UI\Form $form, ArrayHash $values) {
 			$this->presenter->flashMessage(json_encode($values));

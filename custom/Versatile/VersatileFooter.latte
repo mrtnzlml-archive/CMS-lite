@@ -43,14 +43,7 @@
 
 		<div class="col-lg-3 col-md-3 col-sm-6 padbot20">
 			<h2>Get in Touch</h2>
-
-			<!-- CONTACT FORM -->
-			<form id="contact-form-false" action="">
-				<input type="text" name="name" value="Name" onFocus="if (this.value == 'Name') this.value = '';" onBlur="if (this.value == '') this.value = 'Name';" />
-				<input type="text" name="email" value="Email" onFocus="if (this.value == 'Email') this.value = '';" onBlur="if (this.value == '') this.value = 'Email';" />
-				<textarea name="message" onFocus="if (this.value == 'Message') this.value = '';" onBlur="if (this.value == '') this.value = 'Message';">Message</textarea>
-				<input class="contact_btn" type="submit" value="send" />
-			</form><!-- //CONTACT FORM -->
+			{control contactForm}
 		</div>
 
 		<!-- FLICKR -->
@@ -67,7 +60,7 @@
 	<!-- COPYRIGHT -->
 	<div class="copyright clearfix">
 		<div class="pull-left">
-			<a class="copyright_logo" href="javascript:void(0);">Versatile</a> <span> &copy; Copyright 2020</span>
+			<a class="copyright_logo" href="javascript:void(0);">Versatile</a> <span> &copy; Copyright {date('Y')}</span>
 		</div>
 		<ul class="social pull-right">
 			<li class="icon1"><a href="javascript:void(0);" alt=""></a></li>

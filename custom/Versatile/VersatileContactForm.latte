@@ -1,7 +1,6 @@
-{ifset $parameters}
-	{dump $parameters->param}
-{/ifset}
-
-<div class="well">
-	{control form}
-</div>
+<form n:name="form" id="contact-form-false">
+	<input n:name="name" value="Name" onFocus="if (this.value == 'Name') this.value = '';" onBlur="if (this.value == '') this.value = 'Name';" />
+	<input n:name="email" value="Email" onFocus="if (this.value == 'Email') this.value = '';" onBlur="if (this.value == '') this.value = 'Email';" />
+	<textarea n:name="message" onFocus="if (this.value == 'Message') this.value = '';" onBlur="if (this.value == '') this.value = 'Message';">Message</textarea>
+	<input class="contact_btn" n:name="submit" value="send" />
+</form>
