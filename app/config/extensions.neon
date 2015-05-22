@@ -21,3 +21,4 @@ extensions:
     - App\Extensions\ImageExtension(%wwwDir%)
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
+    migrations: Migrations\DI\MigrationsExtension
