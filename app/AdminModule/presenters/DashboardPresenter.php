@@ -14,9 +14,9 @@ class DashboardPresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
-	public function startup()
+	public function checkRequirements($element)
 	{
-		parent::startup();
+		parent::checkRequirements($element);
 		if (!$this->user->isLoggedIn()) {
 			if ($this->user->logoutReason === Nette\Security\IUserStorage::INACTIVITY) {
 				$this->flashMessage('Byli jste odhlášeni z důvodu nečinnosti. Přihlaste se prosím znovu.', 'danger');
