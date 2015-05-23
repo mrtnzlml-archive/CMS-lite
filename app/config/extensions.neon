@@ -12,7 +12,7 @@ extensions:
 
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     console: Kdyby\Console\DI\ConsoleExtension
-    core: App\Extensions\CoreExtension
+    core: App\Extensions\CoreExtension(%debugMode%)
     doctrine: Kdyby\Doctrine\DI\OrmExtension
     events: Kdyby\Events\DI\EventsExtension
     translation: Kdyby\Translation\DI\TranslationExtension

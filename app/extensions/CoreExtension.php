@@ -14,7 +14,16 @@ class CoreExtension extends Nette\DI\CompilerExtension
 
 	private $defaultConfiguration = [
 		'https' => TRUE,
+//		'debugger' => TRUE,
 	];
+
+	/** @var bool */
+	private $debugMode;
+
+	public function __construct($debugMode = FALSE)
+	{
+		$this->debugMode = $debugMode;
+	}
 
 	public function beforeCompile()
 	{
@@ -49,12 +58,19 @@ class CoreExtension extends Nette\DI\CompilerExtension
 
 	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)
 	{
+		$cb = $this->getContainerBuilder();
+		$initialize = $generatedContainer->getMethod('initialize');
 		$config = $this->getConfig($this->defaultConfiguration);
+
 		if ($config['https']) {
-			$generatedContainer
-				->getMethod('initialize')
-				->addBody('Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;');
+			$initialize->addBody('Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;');
 		}
+
+//		if ($this->debugMode && $config['debugger']) {
+//			$initialize->addBody($cb->formatPhp('?;', [
+//				new Nette\DI\Statement('@Tracy\Bar::addPanel', [new Nette\DI\Statement('App\Extensions\AntPanel')])
+//			]));
+//		}
 	}
 
 }
