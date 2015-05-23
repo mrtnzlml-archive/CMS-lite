@@ -21,7 +21,7 @@ class ImageExtension extends Nette\DI\CompilerExtension
 	{
 		/** @var IImageProvider $extension */
 		foreach ($this->compiler->getExtensions(IImageProvider::class) as $extension) {
-			$this->purge($this->imagesCacheFolder);
+//			$this->purge($this->imagesCacheFolder);
 			$this->copy($extension->getImagesFolder(), $this->imagesCacheFolder);
 			file_put_contents($this->imagesCacheFolder . DIRECTORY_SEPARATOR . '.gitignore', "*\n!.gitignore");
 		}
@@ -59,9 +59,13 @@ class ImageExtension extends Nette\DI\CompilerExtension
 			), \RecursiveIteratorIterator::SELF_FIRST
 		) as $entry) {
 			if ($entry->isDir()) {
-				mkdir($to . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+				if (!is_dir($newDir = $to . DIRECTORY_SEPARATOR . $iterator->getSubPathName())) {
+					mkdir($newDir);
+				}
 			} else {
-				copy($entry, $to . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+				if (!file_exists($newFile = $to . DIRECTORY_SEPARATOR . $iterator->getSubPathName())) {
+					copy($entry, $newFile);
+				}
 			}
 		}
 	}

@@ -19,6 +19,7 @@ class Css extends Nette\Application\UI\Control
 	private $styles = [];
 	private $externalStyles = [];
 
+	/** @var string */
 	private $dir;
 
 	public function __construct($dir)
