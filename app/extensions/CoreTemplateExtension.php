@@ -2,8 +2,12 @@
 
 namespace App\Extensions;
 
+use App\Components\Breadcrumb\IBreadcrumbFactory;
+use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
 use App\Components\ContactForm\IContactFormFactory;
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
+use App\Components\Error404\IError404Factory;
+use App\Components\Error404\Providers\IError404TemplateProvider;
 use App\Components\Favicon\IFaviconFactory;
 use App\Components\Favicon\Providers\IFaviconTemplateProvider;
 use App\Components\Footer\IFooterFactory;
@@ -49,6 +53,18 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 		foreach ($this->compiler->getExtensions(IFaviconTemplateProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IFaviconFactory::class));
 			$definition->addSetup('changeTemplate', [$extension->getFaviconTemplate()]);
+		}
+
+		/** @var IError404TemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IError404TemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IError404Factory::class));
+			$definition->addSetup('changeTemplate', [$extension->getError404Template()]);
+		}
+
+		/** @var IBreadcrumbTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IBreadcrumbTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IBreadcrumbFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getBreadcrumbTemplate()]);
 		}
 	}
 

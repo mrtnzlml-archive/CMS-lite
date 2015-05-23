@@ -14,8 +14,9 @@
 	<div id="page">
 		<div class="container page_block">
 			<div class="wrapper">
-				{* TODO: control header, zanořené menu? *}
-				{control mainMenu}
+				<header>
+					{control mainMenu}
+				</header>
 				{* TODO: flash control *}
 				<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 				<div class="content">

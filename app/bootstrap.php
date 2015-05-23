@@ -15,6 +15,8 @@ $configurator->createRobotLoader()
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 $configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
+define('IE_ONLY', 'ie');
+
 $container = $configurator->createContainer();
 
 return $container;

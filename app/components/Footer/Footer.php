@@ -2,11 +2,11 @@
 
 namespace App\Components\Footer;
 
-use App\Components\ITemplateProvider;
+use App\Components\IComponentTemplateProvider;
 use App\Traits\PublicComponentsTrait;
 use Nette;
 
-class Footer extends Nette\Application\UI\Control implements ITemplateProvider
+class Footer extends Nette\Application\UI\Control implements IComponentTemplateProvider
 {
 
 	use PublicComponentsTrait; //FIXME: je toto dobrý nápad?

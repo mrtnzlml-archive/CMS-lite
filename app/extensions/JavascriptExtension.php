@@ -18,8 +18,10 @@ class JavascriptExtension extends Nette\DI\CompilerExtension
 			$definition = $cb->getDefinition($cb->getByType(IJsFactory::class));
 			$scripts = $extension->getJsScripts();
 			if ($scripts instanceof \Traversable || is_array($scripts)) {
-				foreach ($extension->getJsScripts() as $script) {
-					if (Nette\Utils\Validators::isUrl($script)) {
+				foreach ($extension->getJsScripts() as $key => $script) {
+					if ($key === IE_ONLY) {
+						$definition->addSetup('addIeOnlyScript', [$script]);
+					} elseif (Nette\Utils\Validators::isUrl($script)) {
 						$definition->addSetup('addExternalScript', [$script]);
 					} else {
 						$definition->addSetup('addScript', [$script]);

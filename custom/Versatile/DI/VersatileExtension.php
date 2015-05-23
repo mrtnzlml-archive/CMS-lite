@@ -2,19 +2,29 @@
 
 namespace Versatile\DI;
 
+use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
-use App\Components\Css\Providers\ICssProvider;
 use App\Components\Favicon\Providers\IFaviconProvider;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
-use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
-use App\Components\Meta\Providers\IMetasProvider;
 use App\Extensions\IImageProvider;
+use App\ITemplateProvider;
 use Nette;
 
-class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
-	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider, IMetasProvider
+class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplateProvider,
+	IMainMenuTemplateProvider, IContactFormTemplateProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider,
+	IBreadcrumbTemplateProvider
 {
+
+	public function getBreadcrumbTemplate()
+	{
+		return realpath(__DIR__ . '/../breadcrumb.latte');
+	}
+
+	public function getError404Template()
+	{
+		return realpath(__DIR__ . '/../404.latte');
+	}
 
 	public function getMetas()
 	{
@@ -30,12 +40,12 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 
 	public function getMainMenuTemplate()
 	{
-		return realpath(__DIR__ . '/../VersatileMainMenu.latte');
+		return realpath(__DIR__ . '/../mainMenu.latte');
 	}
 
 	public function getContactFormTemplate()
 	{
-		return realpath(__DIR__ . '/../VersatileContactForm.latte');
+		return realpath(__DIR__ . '/../contactForm.latte');
 	}
 
 	public function getCssStyles()
@@ -51,6 +61,7 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 	{
 		//Keep order!
 		$scripts = [
+			IE_ONLY => 'http://html5shiv.googlecode.com/svn/trunk/html5.js',
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 			__DIR__ . '/../js/bootstrap.min.js',
 			__DIR__ . '/../js/jquery.prettyPhoto.js',
@@ -61,8 +72,8 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 			__DIR__ . '/../js/animate.js',
 			__DIR__ . '/../js/myscript.js',
 		];
-		foreach ($scripts as $script) {
-			yield $script;
+		foreach ($scripts as $key => $script) {
+			yield $key => $script;
 		}
 	}
 
@@ -73,7 +84,7 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenu
 
 	public function getFooterTemplate()
 	{
-		return realpath(__DIR__ . '/../VersatileFooter.latte');
+		return realpath(__DIR__ . '/../footer.latte');
 	}
 
 }

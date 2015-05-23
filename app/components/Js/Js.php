@@ -9,12 +9,14 @@ use WebLoader;
 /**
  * @method addScript(string)
  * @method addExternalScript(string)
+ * @method addIeOnlyScript(string)
  */
 class Js extends Nette\Application\UI\Control
 {
 
 	private $scripts = [];
 	private $externalScripts = [];
+	private $ieOnlyScripts = []; //TODO
 
 	private $dir;
 

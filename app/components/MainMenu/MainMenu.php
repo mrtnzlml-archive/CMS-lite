@@ -2,10 +2,10 @@
 
 namespace App\Components\MainMenu;
 
-use App\Components\ITemplateProvider;
+use App\Components\IComponentTemplateProvider;
 use Nette;
 
-class MainMenu extends Nette\Application\UI\Control implements ITemplateProvider
+class MainMenu extends Nette\Application\UI\Control implements IComponentTemplateProvider
 {
 
 	private $items = [];

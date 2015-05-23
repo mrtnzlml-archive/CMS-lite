@@ -2,12 +2,12 @@
 
 namespace App\Components\SignInForm;
 
-use App\Components\ITemplateProvider;
+use App\Components\IComponentTemplateProvider;
 use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
-class SignInForm extends Nette\Application\UI\Control implements ITemplateProvider
+class SignInForm extends Nette\Application\UI\Control implements IComponentTemplateProvider
 {
 
 	/** @persistent */

@@ -3,10 +3,12 @@
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	- App\Components\Breadcrumb\IBreadcrumbFactory
 	- App\Components\ContactForm\IContactFormFactory
 	- implement: App\Components\Css\ICssFactory
 	  arguments: [%wwwDir%]
 	- App\Components\Doctype\IDoctypeFactory
+	- App\Components\Error404\IError404Factory
 	- App\Components\Favicon\IFaviconFactory
 	- App\Components\Footer\IFooterFactory
 	- implement: App\Components\Js\IJsFactory

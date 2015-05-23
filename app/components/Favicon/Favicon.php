@@ -2,10 +2,10 @@
 
 namespace App\Components\Favicon;
 
-use App\Components\ITemplateProvider;
+use App\Components\IComponentTemplateProvider;
 use Nette;
 
-class Favicon extends Nette\Application\UI\Control implements ITemplateProvider
+class Favicon extends Nette\Application\UI\Control implements IComponentTemplateProvider
 {
 
 	private $templatePath = NULL;

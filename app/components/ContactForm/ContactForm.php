@@ -2,12 +2,12 @@
 
 namespace App\Components\ContactForm;
 
-use App\Components\ITemplateProvider;
+use App\Components\IComponentTemplateProvider;
 use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
-class ContactForm extends Nette\Application\UI\Control implements ITemplateProvider
+class ContactForm extends Nette\Application\UI\Control implements IComponentTemplateProvider
 {
 
 	private $templatePath = NULL;
