@@ -2,8 +2,8 @@
 
 namespace Eshop\Presenters;
 
-use App\Components\MainMenu\IMainMenuFactory;
 use App\Presenters\BasePresenter;
+use App\Traits\PublicComponentsTrait;
 use Nette;
 
 class CategoryPresenter extends BasePresenter
@@ -11,7 +11,7 @@ class CategoryPresenter extends BasePresenter
 
 	//TODO: nějaký společný předek, který to vše pořeší
 
-	use \ComponentsTrait;
+	use PublicComponentsTrait;
 
 	public function formatLayoutTemplateFiles()
 	{

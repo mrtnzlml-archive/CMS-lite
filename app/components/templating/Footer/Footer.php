@@ -3,12 +3,13 @@
 namespace App\Components\Footer;
 
 use App\Components\ITemplateProvider;
+use App\Traits\PublicComponentsTrait;
 use Nette;
 
 class Footer extends Nette\Application\UI\Control implements ITemplateProvider
 {
 
-	use \ComponentsTrait; //FIXME: je toto dobrý nápad?
+	use PublicComponentsTrait; //FIXME: je toto dobrý nápad?
 
 	private $templatePath = NULL;
 

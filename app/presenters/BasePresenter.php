@@ -2,13 +2,14 @@
 
 namespace App\Presenters;
 
+use App\Traits\PublicComponentsTrait;
 use Nette;
 use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	use \ComponentsTrait;
+	use PublicComponentsTrait;
 
 	/** @persistent */
 	public $locale;

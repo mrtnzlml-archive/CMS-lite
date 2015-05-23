@@ -9,7 +9,7 @@ use Nette\Application\UI;
 class DashboardPresenter extends Nette\Application\UI\Presenter
 {
 
-	use \ComponentsTrait;
+	use App\Traits\PublicComponentsTrait;
 
 	/** @persistent */
 	public $locale;

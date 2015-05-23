@@ -1,9 +1,14 @@
 <?php
 
-use App\Components;
+namespace App\Traits;
 
-trait ComponentsTrait
+use App\Components;
+use Kdyby;
+
+trait PublicComponentsTrait
 {
+
+	//FIXME: bezpečnost? (public vs private + role a ?do= signály)
 
 	use Kdyby\Autowired\AutowireComponentFactories;
 

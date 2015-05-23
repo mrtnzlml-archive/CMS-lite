@@ -15,7 +15,7 @@ class SignPresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $backlink = '';
 
-	use \ComponentsTrait;
+	use App\Traits\PublicComponentsTrait;
 
 	/** @persistent */
 	public $locale;
