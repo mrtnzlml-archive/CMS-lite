@@ -47,4 +47,9 @@ trait ComponentsTrait
 		return $factory->create();
 	}
 
+	protected function createComponentMeta(Components\Meta\IMetaFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }

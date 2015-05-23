@@ -2,8 +2,7 @@
 	{control doctype}
 	<html lang="{$locale}">
 	<head>
-		<meta charset="utf-8">{* TODO: component:meta *}
-		<meta name="viewport" content="width=device-width">{* TODO: component:meta *}
+		{control meta}
 		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS</title>{* TODO: component:title *}
 		{block styles}{control css}{/block}
 		{control favicon}

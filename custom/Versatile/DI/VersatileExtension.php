@@ -8,12 +8,20 @@ use App\Components\Favicon\Providers\IFaviconProvider;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\Js\Providers\IJsProvider;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
+use App\Components\Meta\Providers\IMetasProvider;
 use App\Extensions\IImageProvider;
 use Nette;
 
 class VersatileExtension extends Nette\DI\CompilerExtension implements IMainMenuTemplateProvider, IContactFormTemplateProvider,
-	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider
+	ICssProvider, IJsProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider, IMetasProvider
 {
+
+	public function getMetas()
+	{
+		return [
+			'description' => '', //TODO
+		];
+	}
 
 	public function getFaviconPath()
 	{
