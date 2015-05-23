@@ -26,7 +26,7 @@ class RouterFactory
 			'presenter' => 'Dashboard',
 			'action' => 'default',
 		]);
-		$router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>[/<id>]', 'Homepage:default');
+		$router[] = new Route('[<locale=cs cs|en>/]<presenter>[/<action>[/<id>]]', 'Homepage:default');
 		return $router;
 	}
 

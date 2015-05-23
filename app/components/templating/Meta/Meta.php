@@ -11,15 +11,13 @@ class Meta extends Nette\Application\UI\Control
 		'viewport' => 'width=device-width, initial-scale=1.0',
 		'auhor' => 'vytvořili v www.antstudio.cz',
 		'robots' => 'all',
+//		'description' => '',
 	];
 
 	private $httpEquivs = [];
 
 	public function render()
 	{
-		if (!isset($this->metas['description'])) {
-			throw new Nette\UnexpectedValueException('You should set up description meta tag.');
-		}
 		$this->template->metas = $this->metas;
 		$this->template->httpEquivs = $this->httpEquivs;
 		$this->template->render(__DIR__ . '/templates/Meta.latte');
