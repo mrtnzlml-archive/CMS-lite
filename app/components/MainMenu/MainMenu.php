@@ -2,14 +2,13 @@
 
 namespace App\Components\MainMenu;
 
-use App\Components\IComponentTemplateProvider;
+use App\Components\AControl;
 use Nette;
 
-class MainMenu extends Nette\Application\UI\Control implements IComponentTemplateProvider
+class MainMenu extends AControl
 {
 
 	private $items = [];
-	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
 	{
@@ -23,11 +22,6 @@ class MainMenu extends Nette\Application\UI\Control implements IComponentTemplat
 	public function addMainMenuItem(MainMenuItem $item)
 	{
 		$this->items[] = $item;
-	}
-
-	public function changeTemplate($templatePath)
-	{
-		$this->templatePath = $templatePath;
 	}
 
 }

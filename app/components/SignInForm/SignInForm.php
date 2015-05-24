@@ -2,18 +2,16 @@
 
 namespace App\Components\SignInForm;
 
-use App\Components\IComponentTemplateProvider;
+use App\Components\AControl;
 use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
-class SignInForm extends Nette\Application\UI\Control implements IComponentTemplateProvider
+class SignInForm extends AControl
 {
 
 	/** @persistent */
 	public $backlink = '';
-
-	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
 	{
@@ -55,11 +53,6 @@ class SignInForm extends Nette\Application\UI\Control implements IComponentTempl
 
 		$this->presenter->restoreRequest($this->backlink);
 		$this->presenter->redirect(':Admin:Dashboard:');
-	}
-
-	public function changeTemplate($templatePath)
-	{
-		$this->templatePath = $templatePath;
 	}
 
 }

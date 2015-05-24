@@ -2,15 +2,13 @@
 
 namespace App\Components\ContactForm;
 
-use App\Components\IComponentTemplateProvider;
+use App\Components\AControl;
 use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
-class ContactForm extends Nette\Application\UI\Control implements IComponentTemplateProvider
+class ContactForm extends AControl
 {
-
-	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
 	{
@@ -37,11 +35,6 @@ class ContactForm extends Nette\Application\UI\Control implements IComponentTemp
 			$this->redirect('this');
 		};
 		return $form;
-	}
-
-	public function changeTemplate($templatePath)
-	{
-		$this->templatePath = $templatePath;
 	}
 
 }

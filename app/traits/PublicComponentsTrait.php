@@ -5,10 +5,15 @@ namespace App\Traits;
 use App\Components;
 use Kdyby;
 
+/**
+ * !!! POZOR !!!
+ *
+ * Tuto traitu je možné použivat jen pro komponenty, které jsou veřejně přístupné pro kohokoliv!
+ *
+ * !!! POZOR !!!
+ */
 trait PublicComponentsTrait
 {
-
-	//FIXME: bezpečnost? (public vs private + role a ?do= signály)
 
 	use Kdyby\Autowired\AutowireComponentFactories;
 

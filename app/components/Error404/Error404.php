@@ -2,13 +2,11 @@
 
 namespace App\Components\Error404;
 
-use App\Components\IComponentTemplateProvider;
+use App\Components\AControl;
 use Nette;
 
-class Error404 extends Nette\Application\UI\Control implements IComponentTemplateProvider
+class Error404 extends AControl
 {
-
-	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
 	{
@@ -16,11 +14,6 @@ class Error404 extends Nette\Application\UI\Control implements IComponentTemplat
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Error404.latte');
-	}
-
-	public function changeTemplate($templatePath)
-	{
-		$this->templatePath = $templatePath;
 	}
 
 }

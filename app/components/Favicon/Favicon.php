@@ -2,13 +2,11 @@
 
 namespace App\Components\Favicon;
 
-use App\Components\IComponentTemplateProvider;
+use App\Components\AControl;
 use Nette;
 
-class Favicon extends Nette\Application\UI\Control implements IComponentTemplateProvider
+class Favicon extends AControl
 {
-
-	private $templatePath = NULL;
 
 	public function render(array $parameters = NULL)
 	{
@@ -16,11 +14,6 @@ class Favicon extends Nette\Application\UI\Control implements IComponentTemplate
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Favicon.latte');
-	}
-
-	public function changeTemplate($templatePath)
-	{
-		$this->templatePath = $templatePath;
 	}
 
 }
