@@ -17,6 +17,11 @@ trait PublicComponentsTrait
 
 	use Kdyby\Autowired\AutowireComponentFactories;
 
+	protected function createComponentTitle(Components\Title\ITitleFactory $factory)
+	{
+		return $factory->create();
+	}
+
 	protected function createComponentWrapper(Components\MainMenu\IWrapperFactory $factory)
 	{
 		return $factory->create();
