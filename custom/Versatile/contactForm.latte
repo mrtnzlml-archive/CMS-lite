@@ -1,6 +1,6 @@
 <form n:name="form" id="contact-form-false">
-	<input n:name="name" value="Name" onFocus="if (this.value == 'Name') this.value = '';" onBlur="if (this.value == '') this.value = 'Name';" />
-	<input n:name="email" value="Email" onFocus="if (this.value == 'Email') this.value = '';" onBlur="if (this.value == '') this.value = 'Email';" />
-	<textarea n:name="message" onFocus="if (this.value == 'Message') this.value = '';" onBlur="if (this.value == '') this.value = 'Message';">Message</textarea>
-	<input class="contact_btn" n:name="submit" value="send" />
+	<input n:name="name" value="{_Jméno}" onFocus="if (this.value == {_Jméno}) this.value = '';" onBlur="if (this.value == '') this.value = {_Jméno};" />
+	<input n:name="email" value="{_Email}" onFocus="if (this.value == {_Email}) this.value = '';" onBlur="if (this.value == '') this.value = {_Email};" />
+	<textarea n:name="message" onFocus="if (this.value == '{_Zpráva}') this.value = '';" onBlur="if (this.value == '') this.value = {_Zpráva};">{_Zpráva}</textarea>
+	<input class="contact_btn" n:name="submit" value="{_Odeslat}" />
 </form>
