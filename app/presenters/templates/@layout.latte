@@ -10,20 +10,10 @@
 	<body>
 
 	<script> document.body.className += 'js' </script>
-	<img id="preloader" src="images/preloader.gif" alt=""/>
 
-	<div id="page">
-		<div class="container page_block">
-			<div class="wrapper">
-				{control header}
-				{control flashes}
-				<div class="content">
-					{include content}
-				</div>
-				{control footer}
-			</div>
-		</div>
-	</div>
+	{control wrapper:above}
+	{include content}
+	{control wrapper:below}
 
 	{block scripts}{control js}{/block}
 	</body>

@@ -18,3 +18,4 @@ services:
 	- App\Components\MainMenu\IMainMenuFactory
 	- App\Components\Meta\IMetaFactory
 	- App\Components\SignInForm\ISignInFormFactory
+	- App\Components\MainMenu\IWrapperFactory
