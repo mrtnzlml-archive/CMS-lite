@@ -22,6 +22,18 @@ class SignPresenter extends Tester\TestCase
 		$this->tester->testAction('in');
 	}
 
+	public function testRenderInLogged()
+	{
+		$this->tester->logIn();
+		$this->tester->testRedirect('in');
+	}
+
+	public function testLogOut()
+	{
+		$this->tester->logIn();
+		$this->tester->testRedirect('out');
+	}
+
 }
 
 (new SignPresenter($container))->run();

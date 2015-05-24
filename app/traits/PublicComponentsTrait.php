@@ -17,6 +17,11 @@ trait PublicComponentsTrait
 
 	use Kdyby\Autowired\AutowireComponentFactories;
 
+	protected function createComponentBreadcrumb(Components\Breadcrumb\IBreadcrumbFactory $factory)
+	{
+		return $factory->create();
+	}
+
 	protected function createComponentTitle(Components\Title\ITitleFactory $factory)
 	{
 		return $factory->create();

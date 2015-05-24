@@ -27,6 +27,12 @@ class DashboardPresenter extends Tester\TestCase
 		$this->tester->testAction('default');
 	}
 
+	public function testRenderDefaultLoggedOut()
+	{
+		$this->tester->logOut();
+		$this->tester->testRedirect('default');
+	}
+
 }
 
 (new DashboardPresenter($container))->run();
