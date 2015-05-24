@@ -12,6 +12,11 @@ trait PublicComponentsTrait
 
 	use Kdyby\Autowired\AutowireComponentFactories;
 
+	protected function createComponentHeader(Components\Header\IHeaderFactory $factory)
+	{
+		return $factory->create();
+	}
+
 	protected function createComponentError404(Components\Error404\IError404Factory $factory)
 	{
 		return $factory->create();

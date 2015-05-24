@@ -12,6 +12,8 @@ use App\Components\Favicon\IFaviconFactory;
 use App\Components\Favicon\Providers\IFaviconTemplateProvider;
 use App\Components\Footer\IFooterFactory;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
+use App\Components\Header\IHeaderFactory;
+use App\Components\Header\Providers\IHeaderTemplateProvider;
 use App\Components\MainMenu\IMainMenuFactory;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use App\Components\SignInForm\ISignInFormFactory;
@@ -24,6 +26,12 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
+
+		/** @var IHeaderTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IHeaderTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IHeaderFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getHeaderTemplate()]);
+		}
 
 		/** @var IMainMenuTemplateProvider $extension */
 		foreach ($this->compiler->getExtensions(IMainMenuTemplateProvider::class) as $extension) {
