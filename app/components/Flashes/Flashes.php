@@ -14,7 +14,7 @@ class Flashes extends AControl
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 
-		$flashes = $this->parent->template->flashes;
+		$flashes = $this->getPresenter()->getTemplate()->flashes;
 		$this->template->flashes = $flashes;
 
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Flashes.latte');
