@@ -9,14 +9,14 @@
 	</head>
 	<body>
 
+	<script> document.body.className += 'js' </script>
 	<img id="preloader" src="images/preloader.gif" alt=""/>
 
 	<div id="page">
 		<div class="container page_block">
 			<div class="wrapper">
 				{control header}
-				{* TODO: flash control *}
-				<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+				{control flashes}
 				<div class="content">
 					{include content}
 				</div>

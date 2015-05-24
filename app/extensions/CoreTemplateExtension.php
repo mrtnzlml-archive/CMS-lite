@@ -10,6 +10,8 @@ use App\Components\Error404\IError404Factory;
 use App\Components\Error404\Providers\IError404TemplateProvider;
 use App\Components\Favicon\IFaviconFactory;
 use App\Components\Favicon\Providers\IFaviconTemplateProvider;
+use App\Components\Flashes\IFlashesFactory;
+use App\Components\Flashes\Providers\IFlashesTemplateProvider;
 use App\Components\Footer\IFooterFactory;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\Header\IHeaderFactory;
@@ -26,6 +28,12 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
+
+		/** @var IFlashesTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IFlashesTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IFlashesFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getFlashesTemplate()]);
+		}
 
 		/** @var IHeaderTemplateProvider $extension */
 		foreach ($this->compiler->getExtensions(IHeaderTemplateProvider::class) as $extension) {

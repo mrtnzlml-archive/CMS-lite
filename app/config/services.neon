@@ -10,6 +10,7 @@ services:
 	- App\Components\Doctype\IDoctypeFactory
 	- App\Components\Error404\IError404Factory
 	- App\Components\Favicon\IFaviconFactory
+	- App\Components\Flashes\IFlashesFactory
 	- App\Components\Footer\IFooterFactory
 	- App\Components\Header\IHeaderFactory
 	- implement: App\Components\Js\IJsFactory

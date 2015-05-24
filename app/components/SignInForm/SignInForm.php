@@ -21,7 +21,7 @@ class SignInForm extends AControl
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/SignInForm.latte');
 	}
 
-	protected function createComponentSignInForm()
+	protected function createComponentForm()
 	{
 		$form = new UI\Form;
 		$form->addText('username', 'Uživatelské jméno:')
