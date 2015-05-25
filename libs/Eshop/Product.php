@@ -2,6 +2,7 @@
 
 namespace Eshop;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
@@ -11,8 +12,12 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @ORM\Table(name="products")
  *
  * @method setTitle(string)
+ * @method string getTitle()
  * @method setSlug(string)
  * @method setDescription(string)
+ * @method string getDescription()
+ * @method Delivery[] getDeliveries()
+ * @method ProductVariant[] getVariants()
  */
 class Product extends BaseEntity
 {
@@ -36,5 +41,25 @@ class Product extends BaseEntity
 	 * @var string
 	 */
 	protected $description;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Delivery", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="product_id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="delivery")}
+	 *    )
+	 * @var Delivery[]|ArrayCollection
+	 */
+	protected $deliveries;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="ProductVariant", mappedBy="product")
+	 */
+	protected $variants;
+
+	public function __construct()
+	{
+		$this->deliveries = new ArrayCollection();
+	}
 
 }

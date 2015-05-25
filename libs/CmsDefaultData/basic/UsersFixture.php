@@ -1,9 +1,10 @@
 <?php
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Nette\Security\Passwords;
 
-class UsersFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class UsersFixture extends \Doctrine\Common\DataFixtures\AbstractFixture implements DependentFixtureInterface
 {
 
 	public function load(ObjectManager $manager)
@@ -22,6 +23,13 @@ class UsersFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 
 		$this->addReference('admin-user', $admin);
 		$this->addReference('demo-user', $demo);
+	}
+
+	public function getDependencies()
+	{
+		return [
+			\RolesFixture::class,
+		];
 	}
 
 }

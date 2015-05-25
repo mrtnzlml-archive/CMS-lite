@@ -1,8 +1,9 @@
 <?php
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ArticlesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class ArticlesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture implements DependentFixtureInterface
 {
 
 	public function load(ObjectManager $manager)
@@ -20,6 +21,13 @@ BODY;
 		$manager->persist($article);
 
 		$manager->flush();
+	}
+
+	public function getDependencies()
+	{
+		return [
+			\UsersFixture::class,
+		];
 	}
 
 }
