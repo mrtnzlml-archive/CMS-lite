@@ -33,12 +33,33 @@ class Css extends Nette\Application\UI\Control
 		$this->template->render(__DIR__ . '/templates/Css.latte');
 	}
 
+	public function renderAdmin()
+	{
+		$this->template->render(__DIR__ . '/templates/CssAdmin.latte');
+	}
+
 	protected function createComponentCss()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/css');
 		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
+		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
+		$compiler->addFilter(function ($code) {
+			$minifier = new Minify\CSS;
+			$minifier->add($code);
+			return $minifier->minify();
+		});
+		$control = new WebLoader\Nette\CssLoader($compiler, 'temp');
+		$control->setMedia($this->media);
+		return $control;
+	}
+
+	protected function createComponentCssAdmin()
+	{
+		$files = new WebLoader\FileCollection($this->dir . '/css');
+		$files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css');
+		$files->addFile('admin.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;

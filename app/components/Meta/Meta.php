@@ -8,7 +8,6 @@ class Meta extends Nette\Application\UI\Control
 {
 
 	private $metas = [
-		'viewport' => 'width=device-width, initial-scale=1.0',
 		'auhor' => 'vytvořili v www.antstudio.cz',
 		'robots' => 'all',
 //		'description' => '',
@@ -25,6 +24,7 @@ class Meta extends Nette\Application\UI\Control
 
 	public function setMeta($name, $content)
 	{
+		//TODO: zakázat viewport? (pro bootstrap musí být některé jako první)
 		$this->metas[$name] = $content;
 	}
 
@@ -37,7 +37,7 @@ class Meta extends Nette\Application\UI\Control
 	public function setHttpEquiv($http_equiv, $content)
 	{
 		if (in_array(mb_strtolower($http_equiv), [
-			'content-type', 'content-language'
+			'content-type', 'content-language', 'x-ua-compatible',
 		])) {
 			throw new Nette\InvalidArgumentException(sprintf('You are not allowed to take care about %s meta tag. I\'ll do it for you.', $http_equiv));
 		}

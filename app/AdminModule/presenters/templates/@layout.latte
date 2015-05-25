@@ -6,14 +6,53 @@
 		<meta name="viewport" content="width=device-width">
 		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS Administrace</title>
 		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+		{control css:admin}
 	</head>
 	<body>
 
-	<a n:href=":Auth:Sign:out">Odhlásit?</a>
-	{* TODO: flash control *}
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-	<div class="content">
-		{include content}
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" n:href=":Admin:Dashboard:default">ANTstudio CMS</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a n:href=":Auth:Sign:out">Odhlásit {$user->identity->data['email']}</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<input type="text" class="form-control" placeholder="Search..." disabled>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li {ifCurrent :Admin:Dashboard:default}class="active"{/ifCurrent}>
+						<a n:href=":Admin:Dashboard:default">
+							Nástěnka
+							{ifCurrent :Admin:Dashboard:default}
+								<span class="sr-only"> (aktuální)</span>
+							{/ifCurrent}
+						</a>
+					</li>
+					<li><a>&hellip;</a></li>
+					<li><a>Nastavení</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+				{include content}
+			</div>
+		</div>
 	</div>
 
 	</body>
