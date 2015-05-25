@@ -39,5 +39,21 @@
   "require-dev": {
     "mrtnzlml/testbench": "~1.1",
     "nette/tester": "~1.4"
+  },
+  "scripts": {
+    "pre-install-cmd": [
+      "php -v",
+      "composer selfupdate"
+    ],
+    "pre-update-cmd": [
+      "php -v",
+      "composer selfupdate"
+    ],
+    "post-install-cmd": [
+      "php www/index.php migrations:status"
+    ],
+    "post-update-cmd": [
+      "php www/index.php migrations:status"
+    ]
   }
 }
