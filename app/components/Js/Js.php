@@ -44,7 +44,7 @@ class Js extends Nette\Application\UI\Control
 			$minifier->add($code);
 			return $minifier->minify();
 		});
-		$control = new WebLoader\Nette\JavaScriptLoader($compiler, 'temp');
+		$control = new WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/temp');
 		return $control;
 	}
 

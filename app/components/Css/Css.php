@@ -50,7 +50,7 @@ class Css extends Nette\Application\UI\Control
 			$minifier->add($code);
 			return $minifier->minify();
 		});
-		$control = new WebLoader\Nette\CssLoader($compiler, 'temp');
+		$control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/temp');
 		$control->setMedia($this->media);
 		return $control;
 	}
@@ -66,7 +66,7 @@ class Css extends Nette\Application\UI\Control
 			$minifier->add($code);
 			return $minifier->minify();
 		});
-		$control = new WebLoader\Nette\CssLoader($compiler, 'temp');
+		$control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/temp');
 		$control->setMedia($this->media);
 		return $control;
 	}
