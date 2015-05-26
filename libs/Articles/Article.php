@@ -12,8 +12,12 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @ORM\Table(name="articles")
  *
  * @method setTitle(string)
+ * @method string getTitle()
  * @method setSlug(string)
+ * @method string getSlug()
  * @method setBody(string)
+ * @method string getBody()
+ * @method boolean getDeleted()
  */
 class Article extends BaseEntity
 {
@@ -51,6 +55,12 @@ class Article extends BaseEntity
 	private $publishedAt;
 
 	/**
+	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})
+	 * @var boolean
+	 */
+	private $deleted = FALSE;
+
+	/**
 	 * @ORM\ManyToMany(targetEntity="Users\User", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="article_id")},
@@ -65,6 +75,11 @@ class Article extends BaseEntity
 		$this->createdAt = new \DateTime();
 		$this->publishedAt = new \DateTime();
 		$this->authors = new ArrayCollection();
+	}
+
+	public function setDeleted($deleted = TRUE)
+	{
+		$this->deleted = $deleted;
 	}
 
 }

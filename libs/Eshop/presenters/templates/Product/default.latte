@@ -1,0 +1,163 @@
+{block scripts}
+	{include parent}
+	<script>
+		$("#filter").hide();
+		$(".filter_btn, #filter li a").click(function() {
+			$("#filter").slideToggle("fast");
+		});
+	</script>
+{/block}
+
+{block content}
+	<!-- Shop -->
+	<section class="shop">
+		<div class="row">
+
+			<!-- Shop Products -->
+			<div class="col-lg-9 col-sm-9 padbot20">
+
+				<div class="sorting_options clearfix">
+					<a class="btn-compare" href="javascript:void(0);" alt="">Compare</a>
+					<!-- filter_block -->
+					<div id="options" class="product_sort">
+						<div class="filter_btn"><span class="sorting_options_text">Sort by</span><span class="pull-right glyphicon glyphicon-chevron-down"></span><div class="clear"></div></div>
+						<ul id="filter" class="option-set" data-option-key="filter">
+							<li><a class="selected" href="#filter" data-option-value="*">Default sorting</a></li>
+							<li><a class="" href="#filter" data-option-value=".category1">Popularity</a></li>
+							<li><a class="" href="#filter" data-option-value=".category2">Average Rating</a></li>
+							<li><a class="" href="#filter" data-option-value=".category3">Newness</a></li>
+							<li><a class="" href="#filter" data-option-value=".category4">Low to High</a></li>
+							<li><a class="" href="#filter" data-option-value=".category5">High to Low</a></li>
+						</ul>
+					</div>
+					<!-- //filter_block -->
+
+					<!-- Produc Size -->
+					<div id="toggle-sizes">
+						<a class="view_full" href="javascript:void(0);"><span class="glyphicon glyphicon-th-list"></span></a>
+						<a class="view_box" href="javascript:void(0);"><span class="glyphicon glyphicon-th-large"></span></a>
+					</div>
+					<!-- //Produc Size -->
+
+					<!-- Pagination -->
+					{*<ul class="pull-right pagination">*}
+						{*<li><a href="#">&laquo;</a></li>*}
+						{*<li class="active"><a href="#">1</a></li>*}
+						{*<li><a href="#">2</a></li>*}
+						{*<li><a href="#">3</a></li>*}
+						{*<li><a href="#">&raquo;</a></li>*}
+					{*</ul>*}
+					<!-- //Pagination -->
+
+				</div>
+
+				<div class="row shop_block">
+					<div class="element category1 col-lg-4 col-md-4 col-sm-6 col-xs-6 col-ss-12" n:foreach="$products as $product">
+						<div class="product_item center margbot30">
+							<div class="hover_img">
+								<img src="{$basePath}/images/products/{$iterator->counter}.jpg" alt="" />
+							</div>
+							<div class="item_btn_in center">
+								<a class="btn btn-white" href="javascript:void(0);" alt="">Add to Cart</a>
+								<a class="btn btn-white" href="#" alt="">Open</a>
+							</div>
+							<div class="project_descr">
+								<h4><a href="#">{$product->title}</a></h4>
+								<span class="price">$100</span>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi tecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit.</p>
+								<p>Aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Pagination -->
+				{*<ul class="pagination">*}
+					{*<li><a href="#">&laquo;</a></li>*}
+					{*<li class="active"><a href="#">1</a></li>*}
+					{*<li><a href="#">2</a></li>*}
+					{*<li><a href="#">3</a></li>*}
+					{*<li><a href="#">&raquo;</a></li>*}
+				{*</ul>*}
+				<!-- //Pagination -->
+
+			</div><!-- //Shop Products -->
+
+			<!-- Sidebar -->
+			<div id="sidebar" class="col-lg-3 col-sm-3">
+				<!-- Search -->
+				<div class="sidepanel widget_search">
+					<form class="search_form" action="#" method="" name="">
+						<input type="text" name="Search the site..." value="Search the site..." onFocus="if (this.value == 'Search the site...') this.value = '';" onBlur="if (this.value == '') this.value = 'Search the site...';" />
+					</form>
+				</div><!-- //Search -->
+
+				<!-- Shop Cart -->
+				<div class="sidepanel widget_shopcart">
+					<h4>Shopping Cart</h4>
+					<div id="cart">
+						<ul class="cart-items">
+							<li>
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<a href="#" class="cart-item-title">Nullam turpis quam</a>
+								<span class="cart-item-amount"><a class="item-remove" href=""></a> 2 x $100</span>
+							</li>
+							<li>
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<a href="#" class="cart-item-title">Nullam turpis quam</a>
+								<span class="cart-item-amount"><a class="item-remove" href=""></a> 1 x $100</span>
+							</li>
+						</ul>
+						<span class="cart-subtotal">Subtotal: <strong>$300</strong></span>
+						<div class="right">
+							<a class="btn btn-xs margbot5" href="javascript:void(0);">View Cart</a>
+							<a class="btn btn-xs margbot5" href="javascript:void(0);">Checkout</a>
+						</div>
+					</div>
+				</div><!-- //Shop Cart -->
+
+				<!-- Price Range -->
+				<div class="sidepanel widget_pricefilter">
+					<h4>Filter by Price</h4>
+					<div id="price-range">
+						<div class="padding-range"><div id="slider-range"></div></div>
+						<label for="amount">Price:</label>
+						<input type="text" id="amount"/>
+						<a class="pull-right btn btn-xs" href="javascript:void(0);">Filter</a>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+
+				<!-- Categories -->
+				<div class="sidepanel widget_categories">
+					<h4>Product Categories</h4>
+					<ul class="list4">
+						<li><b class="glyphicon glyphicon-ok"></b><a href="javascript:void(0);">Vestibulum molestie</a></li>
+						<li><b class="glyphicon glyphicon-ok"></b><a href="javascript:void(0);">Aenean nonummy</a></li>
+						<li><b class="glyphicon glyphicon-ok"></b><a href="javascript:void(0);">Hendrerit </a></li>
+						<li><b class="glyphicon glyphicon-ok"></b><a href="javascript:void(0);">Phasellus porta</a></li>
+					</ul>
+				</div>
+
+				<div class="sidepanel widget_products">
+					<h4>Popular Products</h4>
+					<ul class="popular_products">
+						<li n:foreach="$products as $product">
+							<div class="pull-left popular_product_img">
+								<img src="{$basePath}/images/products/{$iterator->counter}.jpg" width="70" height="70" alt="" />
+							</div>
+							<div class="popular_product_descr">
+								<a class="title" href="#">{$product->title}</a>
+								{$product->description|truncate:50|texy}
+								<span class="price color_text">$150</span>
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+				</div><!-- .sidepanel -->
+
+			</div><!-- //Sidebar -->
+		</div>
+	</section><!-- //Shop -->
+{/block}

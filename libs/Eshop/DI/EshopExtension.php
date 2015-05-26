@@ -71,7 +71,7 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 			//TODO: dynamic language routing
 			new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<presenter>[/<action>[/<id>]]]', [
 				'module' => 'Eshop',
-				'presenter' => 'Category',
+				'presenter' => 'Product',
 				'action' => 'default',
 			]),
 		];
@@ -91,17 +91,11 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 
 	public function getMenuItems()
 	{
-		//TODO: SplPriorityQueue
-		$menuItem1 = new MainMenuItem();
-		$menuItem1->setTitle('Eshop 1');
-		$menuItem1->setLink(':Homepage:default');
-
-		$menuItem2 = clone $menuItem1;
-		$menuItem2->setTitle('Eshop 2');
-		$menuItem2->setLink(':Eshop:Category:default');
+		$menuItem = new MainMenuItem();
+		$menuItem->setTitle('Eshop');
+		$menuItem->setLink(':Eshop:Product:default');
 		return [
-			$menuItem1,
-			$menuItem2,
+			$menuItem,
 		];
 	}
 

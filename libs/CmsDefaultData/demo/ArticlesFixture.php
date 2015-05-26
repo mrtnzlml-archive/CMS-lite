@@ -10,9 +10,21 @@ class ArticlesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impl
 	{
 		$title = 'Toto je první příspěvek';
 		$body = <<<BODY
-Můžete jej upravovat podle libosti.
+Můžete jej **upravovat** podle //libosti//...
 BODY;
 
+		$article = new \Articles\Article();
+		$article->setTitle($title);
+		$article->setSlug(\Nette\Utils\Strings::webalize($title));
+		$article->setBody($body);
+		$article->addAuthor($this->getReference('admin-user'));
+		$article->addAuthor($this->getReference('demo-user'));
+		$manager->persist($article);
+
+		$title = 'Toto je druhý příspěvek';
+		$body = <<<BODY
+Můžete jej **upravovat** podle //libosti//...
+BODY;
 		$article = new \Articles\Article();
 		$article->setTitle($title);
 		$article->setSlug(\Nette\Utils\Strings::webalize($title));

@@ -4,14 +4,27 @@ namespace Eshop\Presenters;
 
 use App\Presenters\BasePresenter;
 use App\Traits\PublicComponentsTrait;
+use Eshop\Product;
+use Eshop\Query\ProductQuery;
+use Kdyby\Doctrine\EntityManager;
 use Nette;
 
-class CategoryPresenter extends BasePresenter
+class ProductPresenter extends BasePresenter
 {
 
 	//TODO: nějaký společný předek, který to vše pořeší
 
 	use PublicComponentsTrait;
+
+	/** @var EntityManager @inject */
+	public $em;
+
+	public function renderDefault()
+	{
+		$query = new ProductQuery();
+		$products = $this->em->getRepository(Product::class)->fetch($query);
+		$this->template->products = $products;
+	}
 
 	public function formatLayoutTemplateFiles()
 	{
