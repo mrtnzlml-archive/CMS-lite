@@ -44,17 +44,27 @@
 							{/ifCurrent}
 						</a>
 					</li>
-					<li><a>&hellip;</a></li>
-					<li><a>Nastavení</a></li>
+					<li {ifCurrent :Admin:Page:default}class="active"{/ifCurrent}>
+						<a n:href=":Admin:Page:default">
+							Stránky
+							{ifCurrent :Admin:Page:default}
+								<span class="sr-only"> (aktuální)</span>
+							{/ifCurrent}
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+				{control flashes}
 				{include content}
 			</div>
 		</div>
 	</div>
 
+	{block scripts}
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="{$basePath}/js/main.js"></script>
+	{/block}
 	</body>
 	</html>
 {/block}

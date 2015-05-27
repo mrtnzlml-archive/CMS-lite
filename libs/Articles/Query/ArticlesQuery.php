@@ -71,6 +71,7 @@ class ArticlesQuery extends Kdyby\Doctrine\QueryObject
 	private function createBasicDql(Kdyby\Persistence\Queryable $repository)
 	{
 		$qb = $repository->createQueryBuilder('article', 'article.id');
+		$qb->andWhere('article.deleted = FALSE');
 		foreach ($this->filter as $modifier) {
 			$modifier($qb);
 		}

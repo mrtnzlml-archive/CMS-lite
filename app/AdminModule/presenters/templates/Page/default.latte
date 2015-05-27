@@ -1,0 +1,22 @@
+{block content}
+	<a class="btn btn-default" n:href="new">Nová stránka</a>
+	<hr>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>Titulek</th>
+			<th>Autoři</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr n:foreach="$articles as $article">
+			<td>{$article->title}</td>
+			<td>
+				{foreach $article->authors as $author}
+					{$author->email}{sep}, {/sep}
+				{/foreach}
+			</td>
+		</tr>
+		</tbody>
+	</table>
+{/block}

@@ -54,7 +54,7 @@ class HomepagePresenter extends BasePresenter
 		$newArticle->setBody('New **body**!');
 		$this->articleProcess->onPersist[] = function (ArticleProcess $process, Article $article) {
 			//this is just example, it's not necessary to use event (but it's prepared for listeners)
-			//$this->em->flush($article); //(nevoalt vždy, jen za posledním $em->persist)
+			//$this->em->flush($article); //(nevolat vždy, jen za posledním $em->persist)
 			//čas na flashmessage atd...
 		};
 		$this->articleProcess->publish($newArticle);
