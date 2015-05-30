@@ -1,0 +1,3 @@
+services:
+    - Pages\PageProcess
+    - Pages\Components\PageForm\IPageFormFactory

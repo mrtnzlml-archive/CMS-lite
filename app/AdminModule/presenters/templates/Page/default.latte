@@ -1,6 +1,7 @@
 {block content}
 	<a class="btn btn-default" n:href="new">Nová stránka</a>
 	<hr>
+	{* TODO: také jako komponentu *}
 	<table class="table table-striped">
 		<thead>
 		<tr>
@@ -9,10 +10,10 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr n:foreach="$articles as $article">
-			<td>{$article->title}</td>
+		<tr n:foreach="$pages as $page">
+			<td>{$page->title}</td>
 			<td>
-				{foreach $article->authors as $author}
+				{foreach $page->authors as $author}
 					{$author->email}{sep}, {/sep}
 				{/foreach}
 			</td>

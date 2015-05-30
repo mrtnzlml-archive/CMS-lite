@@ -8,6 +8,7 @@ extensions:
     - Articles\DI\ArticlesExtension
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
     - Eshop\DI\EshopExtension
+    - Pages\DI\PagesExtension
     - Users\DI\UsersExtension
 
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
