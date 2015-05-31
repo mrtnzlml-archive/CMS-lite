@@ -36,6 +36,15 @@ class PagesQuery extends Kdyby\Doctrine\QueryObject
 		return $this;
 	}
 
+	public function withAllCategories()
+	{
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
+			// leftJoin, because category is optional (innerJoin otherwise)
+			$qb->leftJoin('page.categories', 'categories')->addSelect('categories');
+		};
+		return $this;
+	}
+
 	/**
 	 * @param \Kdyby\Persistence\Queryable $repository
 	 *

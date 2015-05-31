@@ -10,6 +10,7 @@ use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 use Pages\Page;
+use Pages\PageCategory;
 use Pages\PageProcess;
 use Users\User;
 
@@ -59,6 +60,10 @@ class PageForm extends AControl
 			[0 => 'Bez autora'] +
 			$this->em->getRepository(User::class)->findPairs('email')
 		)->setDefaultValue($this->presenter->user->id);
+		$form->addMultiSelect('categories', 'Kategorie:',
+			[0 => 'Bez kategorie'] +
+			$this->em->getRepository(PageCategory::class)->findPairs('name')
+		);
 		$form->addSubmit('save', 'Uložit');
 		$form->onSuccess[] = $this->pageFormSucceeded;
 		return $form;
@@ -74,6 +79,12 @@ class PageForm extends AControl
 				/** @var User $author */
 				foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
 					$page->addAuthor($author);
+				}
+			}
+			if ($values->categories) {
+				/** @var PageCategory $author */
+				foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
+					$page->addCategory($category);
 				}
 			}
 			$this->pageProcess->onPersist[] = function (PageProcess $process, Page $page) {

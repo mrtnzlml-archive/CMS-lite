@@ -19,6 +19,8 @@ BODY;
 		$page->setBody($body);
 		$page->addAuthor($this->getReference('admin-user'));
 		$page->addAuthor($this->getReference('demo-user'));
+		$page->addCategory($this->getReference('page-category-1'));
+		$page->addCategory($this->getReference('page-category-3'));
 		$manager->persist($page);
 
 		$manager->flush();
@@ -28,6 +30,7 @@ BODY;
 	{
 		return [
 			\UsersFixture::class,
+			\PageCategoryFixture::class,
 		];
 	}
 

@@ -63,18 +63,29 @@ class Page extends BaseEntity
 	/**
 	 * @ORM\ManyToMany(targetEntity="Users\User", cascade={"persist"})
 	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="article_id")},
+	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
 	 *        inverseJoinColumns={@ORM\JoinColumn(name="role")}
 	 * )
 	 * @var \Users\User[]|ArrayCollection
 	 */
 	protected $authors;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="category")}
+	 * )
+	 * @var \Pages\PageCategory[]|ArrayCollection
+	 */
+	protected $categories;
+
 	public function __construct()
 	{
 		$this->createdAt = new \DateTime();
 		$this->publishedAt = new \DateTime();
 		$this->authors = new ArrayCollection();
+		$this->categories = new ArrayCollection();
 	}
 
 	public function setDeleted($deleted = TRUE)

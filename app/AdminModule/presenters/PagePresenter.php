@@ -10,7 +10,7 @@ use Pages\Components\PageForm\IPageFormFactory;
 use Pages\Page;
 use Pages\Query\PagesQuery;
 
-class PagePresenter extends App\Presenters\BasePresenter
+class PagePresenter extends BasePresenter
 {
 
 	/** @var EntityManager @inject */
@@ -21,7 +21,7 @@ class PagePresenter extends App\Presenters\BasePresenter
 
 	public function renderDefault()
 	{
-		$query = (new PagesQuery())->withAllAuthors();
+		$query = (new PagesQuery())->withAllAuthors()->withAllCategories();
 		$pages = $this->em->getRepository(Page::class)->fetch($query);
 		$pages->setFetchJoinCollection(FALSE);
 		$pages->applyPaging(0, 100);
