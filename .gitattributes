@@ -1,0 +1,2 @@
+/composer.lock -merge
+*.sh eol=lf
