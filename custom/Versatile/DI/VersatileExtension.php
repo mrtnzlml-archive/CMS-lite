@@ -3,6 +3,7 @@
 namespace Versatile\DI;
 
 use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
+use App\Components\ContactForm\IContactFormFactory;
 use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
 use App\Components\Favicon\Providers\IFaviconProvider;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
@@ -15,6 +16,17 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplate
 	IMainMenuTemplateProvider, IContactFormTemplateProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider,
 	IBreadcrumbTemplateProvider
 {
+
+	public function beforeCompile()
+	{
+		$cb = $this->getContainerBuilder();
+		$cb->getDefinition($cb->getByType(IContactFormFactory::class))
+			->addSetup(
+				'$service->onComponentCreation[] = function ($control, $form) {' . "\n" .
+				"\t" . '$form->addText(?, ?)->setType(?);' . "\n" .
+				'}', ['phone', 'Telefonní číslo', 'tel']
+			);
+	}
 
 	public function getBreadcrumbTemplate()
 	{

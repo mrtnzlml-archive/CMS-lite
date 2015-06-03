@@ -7,8 +7,13 @@ use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
+/**
+ * @method onComponentCreation(ContactForm $control, UI\Form $form)
+ */
 class ContactForm extends AControl
 {
+
+	public $onComponentCreation = [];
 
 	public function render(array $parameters = NULL)
 	{
@@ -35,6 +40,7 @@ class ContactForm extends AControl
 			$this->presenter->flashMessage(json_encode($values));
 			$this->redirect('this');
 		};
+		$this->onComponentCreation($this, $form);
 		return $form;
 	}
 
