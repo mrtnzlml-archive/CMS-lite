@@ -1,0 +1,8 @@
+{if $user->loggedIn}
+	<div class="admin-bar">
+		<a href="{plink :Auth:Sign:in}">Administrace</a>
+		<div class="pull-right">
+			<a href="{plink :Auth:Sign:out}">Odhlásit {$user->identity->data['email']}</a>
+		</div>
+	</div>
+{/if}

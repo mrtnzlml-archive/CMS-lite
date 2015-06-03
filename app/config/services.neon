@@ -3,6 +3,7 @@
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	- App\Components\AdminBar\IAdminBarFactory
 	- App\Components\Breadcrumb\IBreadcrumbFactory
 	- App\Components\ContactForm\IContactFormFactory
 	- implement: App\Components\Css\ICssFactory

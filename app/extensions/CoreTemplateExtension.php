@@ -2,6 +2,8 @@
 
 namespace App\Extensions;
 
+use App\Components\AdminBar\IAdminBarFactory;
+use App\Components\AdminBar\Providers\IAdminBarTemplateProvider;
 use App\Components\Breadcrumb\IBreadcrumbFactory;
 use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
 use App\Components\ContactForm\IContactFormFactory;
@@ -30,6 +32,12 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
+
+		/** @var IAdminBarTemplateProvider $extension */
+		foreach ($this->compiler->getExtensions(IAdminBarTemplateProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IAdminBarFactory::class));
+			$definition->addSetup('changeTemplate', [$extension->getAdminBarTemplate()]);
+		}
 
 		/** @var IWrapperTemplatesProvider $extension */
 		foreach ($this->compiler->getExtensions(IWrapperTemplatesProvider::class) as $extension) {
