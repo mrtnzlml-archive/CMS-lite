@@ -8,6 +8,7 @@
 			<th>Titulek</th>
 			<th>Autoři</th>
 			<th>Kategorie</th>
+			<th>&nbsp;</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -22,6 +23,10 @@
 				{foreach $page->categories as $category}
 					{$category->name}{sep}, {/sep}
 				{/foreach}
+			</td>
+			<td>
+				<a class="btn btn-xs btn-default" n:href="edit $page->id">{_Upravit}</a>
+				<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
 			</td>
 		</tr>
 		</tbody>

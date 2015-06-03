@@ -32,8 +32,12 @@ class PageForm extends AControl
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(ITranslator $translator = NULL, PageProcess $pageProcess, EntityManager $em)
+	/** @var Page */
+	private $editablePage;
+
+	public function __construct($editablePage, ITranslator $translator = NULL, PageProcess $pageProcess, EntityManager $em)
 	{
+		$this->editablePage = $editablePage;
 		$this->translator = $translator;
 		$this->pageProcess = $pageProcess;
 		$this->em = $em;
@@ -65,6 +69,16 @@ class PageForm extends AControl
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 		$form->addSubmit('save', 'Uložit');
+
+		if ($this->editablePage) {
+			$form->setDefaults([
+				'title' => $this->editablePage->title,
+				'slug' => $this->editablePage->slug,
+				'editor' => $this->editablePage->body,
+				//TODO: authors, categories
+			]);
+		}
+
 		$form->onSuccess[] = $this->pageFormSucceeded;
 		return $form;
 	}
@@ -72,26 +86,30 @@ class PageForm extends AControl
 	public function pageFormSucceeded(UI\Form $form, Nette\Utils\ArrayHash $values)
 	{
 		try {
-			$page = new Page();
-			$page->setTitle($values->title);
-			$page->setBody($values->editor);
+			if (!$this->editablePage) {
+				$this->editablePage = new Page;
+			}
+			$this->editablePage->setTitle($values->title);
+			$this->editablePage->setBody($values->editor);
 			if ($values->authors) {
 				/** @var User $author */
 				foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
-					$page->addAuthor($author);
+					//TODO: update autorů
+					$this->editablePage->addAuthor($author);
 				}
 			}
 			if ($values->categories) {
 				/** @var PageCategory $author */
 				foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
-					$page->addCategory($category);
+					//TODO: update kategorií
+					$this->editablePage->addCategory($category);
 				}
 			}
 			$this->pageProcess->onPersist[] = function (PageProcess $process, Page $page) {
 				$this->em->flush($page);
 				$this->onSave();
 			};
-			$this->pageProcess->publish($page);
+			$this->pageProcess->publish($this->editablePage);
 		} catch (\Exception $exc) {
 			$this->presenter->flashMessage($exc->getMessage(), 'danger');
 		}
@@ -102,6 +120,10 @@ class PageForm extends AControl
 
 interface IPageFormFactory
 {
-	/** @return PageForm */
-	public function create();
+	/**
+	 * @param NULL|Page $editablePage
+	 *
+	 * @return PageForm
+	 */
+	public function create($editablePage);
 }

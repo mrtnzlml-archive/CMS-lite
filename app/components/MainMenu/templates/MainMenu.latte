@@ -1,9 +1,14 @@
 <div class="main-menu">
+	<a href="{plink :Homepage:}" title="">Home</a>
 	{if $items}
 		{foreach $items as $item}
 			<a href="{plink $item->link}">{$item->title}</a>
-			{sep} | {/sep}
 		{/foreach}
 	{/if}
-	| <a href="{plink :Contact:}">{_'Kontakt'}</a>
+	{if $pages}
+		{foreach $pages as $page}
+			<a>{$page->title}</a>{* TODO *}
+		{/foreach}
+	{/if}
+	<a href="{plink :Contact:}">{_'Kontakt'}</a>
 </div>

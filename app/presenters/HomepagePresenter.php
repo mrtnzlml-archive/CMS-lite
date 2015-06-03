@@ -46,18 +46,6 @@ class HomepagePresenter extends BasePresenter
 		$articles->setFetchJoinCollection(FALSE);
 		$articles->applyPaging(0, 100);
 		$this->template->articles = $articles;
-
-
-		//ArticleProcess example:
-		$newArticle = new Article();
-		$newArticle->setTitle('New Title');
-		$newArticle->setBody('New **body**!');
-		$this->articleProcess->onPersist[] = function (ArticleProcess $process, Article $article) {
-			//this is just example, it's not necessary to use event (but it's prepared for listeners)
-			//$this->em->flush($article); //(nevolat vždy, jen za posledním $em->persist)
-			//čas na flashmessage atd...
-		};
-		$this->articleProcess->publish($newArticle);
 	}
 
 }

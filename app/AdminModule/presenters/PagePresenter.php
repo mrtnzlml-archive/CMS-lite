@@ -19,6 +19,20 @@ class PagePresenter extends BasePresenter
 	/** @var IPageFormFactory @inject */
 	public $pageFormFactory;
 
+	private $editablePage = NULL;
+
+	public function actionEdit($id = NULL)
+	{
+		if ($id === NULL) {
+			$this->redirect('new');
+		}
+		if ($editablePage = $this->em->getRepository(Page::class)->find($id)) {
+			$this->editablePage = $editablePage;
+		} else {
+			$this->redirect('new');
+		}
+	}
+
 	public function renderDefault()
 	{
 		$query = (new PagesQuery())->withAllAuthors()->withAllCategories();
@@ -30,7 +44,7 @@ class PagePresenter extends BasePresenter
 
 	protected function createComponentPageForm()
 	{
-		$control = $this->pageFormFactory->create();
+		$control = $this->pageFormFactory->create($this->editablePage);
 		$control->onSave[] = function () {
 			$this->flashMessage('Stránka byla úspěšně uložena.', 'success');
 		};
@@ -38,6 +52,16 @@ class PagePresenter extends BasePresenter
 			$this->redirect('default');
 		};
 		return $control;
+	}
+
+	public function handleDelete($id)
+	{
+		//TODO: is user allowed to delete this page? (same with edit)
+		if ($page = $this->em->getRepository(Page::class)->find($id)) {
+			$this->em->remove($page);
+			$this->em->flush($page);
+		}
+		$this->redirect('this');
 	}
 
 }

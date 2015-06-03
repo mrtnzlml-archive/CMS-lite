@@ -17,6 +17,10 @@
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
 			<li class="first"><a href="{plink :Homepage:}" title="">Home</a></li>
+			<li n:foreach="$pages as $page">
+				<a>{$page->title}</a>
+			</li>
+			{* TODO: odkaz na stránky a lepší zakomponování items *}
 			<li n:foreach="$items as $item">
 				<a href="{plink $item->link}">{$item->title}</a>
 			</li>
