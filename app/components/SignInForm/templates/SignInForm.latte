@@ -1,10 +1,12 @@
+{translator component.signInForm /}
+
 {form form, class => form-signin}
 	<ul class="error" n:if="$form->errors">
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
 	<h3 class="form-signin-heading" n:block=title>Přihlašte se prosím</h3>
-	{input username, class => form-control, placeholder => "Uživatelské jméno"}
-	{input password, class => form-control, placeholder => "Heslo"}
+	{input username, class => form-control}
+	{input password, class => form-control}
 	<label class="checkbox">
 		{input remember}
 	</label>

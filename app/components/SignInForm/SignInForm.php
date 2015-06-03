@@ -24,13 +24,16 @@ class SignInForm extends AControl
 	protected function createComponentForm()
 	{
 		$form = new UI\Form;
-		$form->addText('username', 'Uživatelské jméno:')
-			->setRequired('Vyplňte prosím uživatelské jméno.');
-		$form->addPassword('password', 'Heslo:')
+		$form->setTranslator($this->getTranslator()->domain('component.signInForm'));
+		$form->addText('username', 'username.label')
+			->setAttribute('placeholder', 'username.label')
+			->setRequired('username.required');
+		$form->addPassword('password', 'password.label')
+			->setAttribute('placeholder', 'password.label')
 			->setAttribute('autocomplete', 'off')
-			->setRequired('Vyplňte prosím heslo.');
-		$form->addCheckbox('remember', 'Zůstat přihlášen');
-		$form->addSubmit('send', 'Přihlásit');
+			->setRequired('password.required');
+		$form->addCheckbox('remember', 'remember.caption');
+		$form->addSubmit('send', 'send.caption');
 
 		$form->onSuccess[] = $this->signInFormSucceeded;
 		return $form;

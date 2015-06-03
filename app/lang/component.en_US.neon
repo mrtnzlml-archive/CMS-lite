@@ -1,0 +1,23 @@
+contactForm:
+	name:
+		label: Name
+	email:
+		label: Email
+		invalid: Please enter your email address in the correct format.
+	message:
+		label: Message
+		required: Please fill out a masseage area.
+	submit:
+		caption: Send
+
+signInForm:
+	username:
+		label: Username
+		required: Please fill out username.
+	password:
+		label: Password
+		required: Please fill out password.
+	remember:
+		caption: Remember password
+	send:
+		caption: Log in

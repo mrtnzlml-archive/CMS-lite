@@ -3,23 +3,12 @@
 namespace App\Components\ContactForm;
 
 use App\Components\AControl;
-use Kdyby\Translation\ITranslator;
-use Kdyby\Translation\Phrase;
-use Kdyby\Translation\Translator;
 use Nette;
 use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 
 class ContactForm extends AControl
 {
-
-	/** @var Translator */
-	private $translator;
-
-	public function __construct(ITranslator $translator = NULL)
-	{
-		$this->translator = $translator;
-	}
 
 	public function render(array $parameters = NULL)
 	{
@@ -32,16 +21,16 @@ class ContactForm extends AControl
 	public function createComponentForm()
 	{
 		$form = new UI\Form;
-		$form->setTranslator($this->translator->domain('contactForm'));
-		$form->addText('name');
+		$form->setTranslator($this->getTranslator()->domain('component.contactForm'));
+		$form->addText('name', 'name.label');
 		$form
-			->addText('email')
+			->addText('email', 'email.label')
 			->setType('email')
-			->addRule(UI\Form::EMAIL, new Phrase('useValidEmail'));
+			->addRule(UI\Form::EMAIL, 'email.invalid');
 		$form
-			->addTextArea('message')
-			->setRequired();
-		$form->addSubmit('submit');
+			->addTextArea('message', 'message.label')
+			->setRequired('message.required');
+		$form->addSubmit('submit', 'submit.caption');
 		$form->onSuccess[] = function (UI\Form $form, ArrayHash $values) {
 			$this->presenter->flashMessage(json_encode($values));
 			$this->redirect('this');

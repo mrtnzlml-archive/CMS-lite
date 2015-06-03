@@ -1,0 +1,23 @@
+contactForm:
+	name:
+		label: Jméno
+	email:
+		label: Email
+		invalid: Zadejte prosím email ve správném formátu.
+	message:
+		label: Zpráva
+		required: Vyplňte prosím nějakou zprávu.
+	submit:
+		caption: Odeslat
+
+signInForm:
+	username:
+		label: Uživatelské jméno
+		required: Vyplňte prosím uživatelské jméno.
+	password:
+		label: Heslo
+		required: Vyplňte prosím heslo.
+	remember:
+		caption: Zůstat přihlášen
+	send:
+		caption: Přihlásit
