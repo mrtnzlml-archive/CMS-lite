@@ -1,2 +1,3 @@
 services:
-    - Users\Manager
+	- Users\Authorizator
+	- Users\Manager

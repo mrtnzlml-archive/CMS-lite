@@ -2,7 +2,6 @@
 
 namespace Users;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
@@ -13,10 +12,14 @@ use Nette\Security\IRole;
  * @ORM\Table(name="roles")
  *
  * @method setName(string)
+ * @method string getName()
+ * @method setParent(Role $parent)
+ * @method Role getParent
  */
 class Role extends BaseEntity implements IRole
 {
 
+	const GUEST = 'guest';
 	const USER = 'user';
 	const ADMIN = 'admin';
 	const SUPERADMIN = 'superadmin';
@@ -30,19 +33,11 @@ class Role extends BaseEntity implements IRole
 	protected $name;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="role")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="inherit")}
-	 * )
-	 * @var Role[]|\Doctrine\Common\Collections\ArrayCollection
+	 * @ORM\OneToOne(targetEntity="Role", cascade={"persist"}, orphanRemoval=FALSE)
+	 * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+	 * @var Role
 	 */
-	protected $inherits;
-
-	public function __construct()
-	{
-		$this->inherits = new ArrayCollection();
-	}
+	protected $parent;
 
 	/**
 	 * Returns a string identifier of the Role.

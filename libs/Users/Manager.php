@@ -43,7 +43,12 @@ class Manager extends Nette\Object implements Nette\Security\IAuthenticator
 			$this->em->persist($user);
 			$this->em->flush($user);
 		}
-		return new Nette\Security\Identity($user->getId(), $user->roles, Nette\Utils\ArrayHash::from([
+
+		$roles = [];
+		foreach ($user->roles as $role) {
+			$roles[] = $role->getName();
+		}
+		return new Nette\Security\Identity($user->getId(), $roles, Nette\Utils\ArrayHash::from([
 			'email' => $user->getEmail()
 		]));
 	}

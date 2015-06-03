@@ -4,6 +4,7 @@ namespace App\AdminModule\Presenters;
 
 use App;
 use Nette;
+use Users;
 use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
@@ -24,10 +25,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 				$this->flashMessage('Pro vstup do této sekce se musíte přihlásit.', 'danger');
 			}
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
-		} /*elseif (!$this->user->isAllowed($this->name, 'TODO')) { //TODO
+		} elseif (!$this->user->isAllowed($this->name, Users\Authorizator::READ)) {
 			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', 'danger');
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
-		}*/
+		}
 	}
 
 	public function beforeRender()
