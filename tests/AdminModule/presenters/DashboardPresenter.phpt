@@ -19,7 +19,7 @@ class DashboardPresenter extends Tester\TestCase
 
 	public function setUp()
 	{
-		$this->tester->logIn();
+		$this->tester->logIn(1, 'superadmin');
 	}
 
 	public function testRenderDefault()
