@@ -2,7 +2,7 @@
 
 <form n:name="form" id="contact-form-false">
 	<input n:name="name" value="{_name.label}" onFocus="if (this.value == {_name.label}) this.value = '';" onBlur="if (this.value == '') this.value = {_name.label};"/>
-	<input n:name="phone" value="{_Telefon}" onFocus="if (this.value == {_Telefon}) this.value = '';" onBlur="if (this.value == '') this.value = {_Telefon};"/>
+	<input n:name="phone" value="{_phone.label}" onFocus="if (this.value == {_phone.label}) this.value = '';" onBlur="if (this.value == '') this.value = {_phone.label};"/>
 	<input n:name="email" value="{_email.label}" onFocus="if (this.value == {_email.label}) this.value = '';" onBlur="if (this.value == '') this.value = {_email.label};"/>
 	<textarea n:name="message" onFocus="if (this.value == '{_message.label}') this.value = '';" onBlur="if (this.value == '') this.value = {_message.label};">{_message.label}</textarea>
 	<input class="contact_btn" n:name="submit" value="{_submit.caption}"/>
