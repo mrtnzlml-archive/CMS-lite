@@ -1,6 +1,8 @@
 contactForm:
 	name:
 		label: Name
+	phone:
+		label: Telefon
 	email:
 		label: Email
 		invalid: Please enter your email address in the correct format.
