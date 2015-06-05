@@ -21,7 +21,8 @@ class ImageExtension extends Nette\DI\CompilerExtension
 	{
 		/** @var IImageProvider $extension */
 		foreach ($this->compiler->getExtensions(IImageProvider::class) as $extension) {
-//			$this->purge($this->imagesCacheFolder);
+			//TODO: nemazat pokud to není potřeba (resp. nepřepisovat stejným)
+			$this->purge($this->imagesCacheFolder);
 			$this->copy($extension->getImagesFolder(), $this->imagesCacheFolder);
 			file_put_contents($this->imagesCacheFolder . DIRECTORY_SEPARATOR . '.gitignore', "*\n!.gitignore");
 		}

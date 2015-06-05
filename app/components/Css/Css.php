@@ -45,6 +45,7 @@ class Css extends Nette\Application\UI\Control
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
+		$compiler->addFileFilter(new WebLoader\Filter\LessFilter());
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;
 			$minifier->add($code);

@@ -62,7 +62,7 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplate
 
 	public function getCssStyles()
 	{
-		foreach (Nette\Utils\Finder::findFiles('*.css')->from(__DIR__ . '/../css') as $key => $file) {
+		foreach (Nette\Utils\Finder::findFiles('*.css', '*.less')->from(__DIR__ . '/../css') as $key => $file) {
 			yield $key;
 		}
 		yield 'https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic';
