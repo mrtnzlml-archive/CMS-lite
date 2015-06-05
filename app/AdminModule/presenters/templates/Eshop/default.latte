@@ -1,0 +1,20 @@
+{block content}
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>Titulek</th>
+			<th>Doprava</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr n:foreach="$products as $product">
+			<td>{$product->title}</td>
+			<td>
+				{foreach $product->deliveries as $delivery}
+					{$delivery->name}{sep}, {/sep}
+				{/foreach}
+			</td>
+		</tr>
+		</tbody>
+	</table>
+{/block}

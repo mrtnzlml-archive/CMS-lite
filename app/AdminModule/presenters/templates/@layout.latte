@@ -55,6 +55,14 @@
 							{/ifCurrent}
 						</a>
 					</li>
+					<li {ifCurrent :Admin:Eshop:default}class="active"{/ifCurrent}>
+						<a n:href=":Admin:Eshop:default">
+							Eshop
+							{ifCurrent :Admin:Eshop:default}
+								<span class="sr-only"> (aktuální)</span>
+							{/ifCurrent}
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
