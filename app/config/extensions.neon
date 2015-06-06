@@ -8,6 +8,8 @@ extensions:
     - Articles\DI\ArticlesExtension
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
     - Eshop\DI\EshopExtension
+    - Migrations\DI\MigrationsExtension
+    - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
     - Users\DI\UsersExtension
 
@@ -22,4 +24,3 @@ extensions:
     - App\Extensions\ImageExtension(%wwwDir%)
     - App\Extensions\JavascriptExtension
     - App\Extensions\StylesheetExtension
-    migrations: Migrations\DI\MigrationsExtension
