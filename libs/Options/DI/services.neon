@@ -1,0 +1,2 @@
+services:
+    - Options\Components\OptionsForm\IOptionsFormFactory

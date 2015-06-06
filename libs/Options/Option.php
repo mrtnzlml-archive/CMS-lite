@@ -9,6 +9,10 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="options")
+ *
+ * @method setFullName(string)
+ * @method string getFullName()
+ * @method setCategory(OptionCategory $category)
  */
 class Option extends BaseEntity
 {
@@ -26,6 +30,19 @@ class Option extends BaseEntity
 	 * @var string
 	 */
 	protected $value;
+
+	/**
+	 * @ORM\Column(type="string", options={"comment":"Nice name of the option (form label)"})
+	 * @var string
+	 */
+	protected $fullName;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="OptionCategory", cascade={"persist"})
+	 * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+	 * @var OptionCategory
+	 */
+	protected $category;
 
 	public function __construct($key, $value)
 	{

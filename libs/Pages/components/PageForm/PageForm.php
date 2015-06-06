@@ -60,10 +60,13 @@ class PageForm extends AControl
 		$form->addTextArea('editor', 'Obsah stránky:')
 			->setHtmlId('editor')
 			->setRequired('Je zapotřebí napsat nějaký text.');
+
+		$authors = $this->em->getRepository(User::class)->findPairs('email');
+		$user_id = $this->presenter->user->id;
 		$form->addMultiSelect('authors', 'Autor:',
-			[0 => 'Bez autora'] +
-			$this->em->getRepository(User::class)->findPairs('email')
-		)->setDefaultValue($this->presenter->user->id);
+			[0 => 'Bez autora'] + $authors
+		)->setDefaultValue(array_key_exists($user_id, $authors) ? $user_id : 0);
+
 		$form->addMultiSelect('categories', 'Kategorie:',
 			[0 => 'Bez kategorie'] +
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
