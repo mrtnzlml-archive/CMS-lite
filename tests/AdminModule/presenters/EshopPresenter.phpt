@@ -7,14 +7,14 @@ $container = require __DIR__ . '/../../bootstrap.php';
 /**
  * @testCase
  */
-class DashboardPresenter extends Tester\TestCase
+class EshopPresenter extends Tester\TestCase
 {
 
 	private $tester;
 
 	public function __construct(Nette\DI\Container $container)
 	{
-		$this->tester = new PresenterTester($container, 'Admin:Dashboard');
+		$this->tester = new PresenterTester($container, 'Admin:Eshop');
 	}
 
 	public function setUp()
@@ -35,4 +35,4 @@ class DashboardPresenter extends Tester\TestCase
 
 }
 
-(new DashboardPresenter($container))->run();
+(new EshopPresenter($container))->run();
