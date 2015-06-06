@@ -1,0 +1,20 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+
+				{foreach $categories as $category}
+					<li {ifCurrent :Admin:Options:$category->name}class="active"{/ifCurrent}>
+						<a href="{plink :Admin:Options:$category->name}">
+							{_$category->fullName}
+							{ifCurrent :Admin:Options:$category->name}
+								<span class="sr-only"> ({_aktuální})</span>
+							{/ifCurrent}
+						</a>
+					</li>
+				{/foreach}
+
+			</ul>
+		</div>
+	</div>
+</nav>

@@ -39,28 +39,36 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li {ifCurrent :Admin:Dashboard:default}class="active"{/ifCurrent}>
+					<li {if $presenter->name === 'Admin:Dashboard'}class="active"{/if}>
 						<a n:href=":Admin:Dashboard:default">
-							Nástěnka
-							{ifCurrent :Admin:Dashboard:default}
-								<span class="sr-only"> (aktuální)</span>
-							{/ifCurrent}
+							{_Nástěnka}
+							{if $presenter->name === 'Admin:Dashboard'}
+								<span class="sr-only"> ({_aktuální})</span>
+							{/if}
 						</a>
 					</li>
-					<li {ifCurrent :Admin:Page:default}class="active"{/ifCurrent}>
+					<li {if $presenter->name === 'Admin:Page'}class="active"{/if}>
 						<a n:href=":Admin:Page:default">
-							Stránky
-							{ifCurrent :Admin:Page:default}
-								<span class="sr-only"> (aktuální)</span>
-							{/ifCurrent}
+							{_Stránky}
+							{if $presenter->name === 'Admin:Page'}
+								<span class="sr-only"> ({_aktuální})</span>
+							{/if}
 						</a>
 					</li>
-					<li {ifCurrent :Admin:Eshop:default}class="active"{/ifCurrent}>
+					<li {if $presenter->name === 'Admin:Eshop'}class="active"{/if}>
 						<a n:href=":Admin:Eshop:default">
-							Eshop
-							{ifCurrent :Admin:Eshop:default}
-								<span class="sr-only"> (aktuální)</span>
-							{/ifCurrent}
+							{_Eshop}
+							{if $presenter->name === 'Admin:Eshop'}
+								<span class="sr-only"> ({_aktuální})</span>
+							{/if}
+						</a>
+					</li>
+					<li {if $presenter->name === 'Admin:Options'}class="active"{/if}>
+						<a n:href=":Admin:Options:general">
+							{_Nastavení}
+							{if $presenter->name === 'Admin:Options'}
+								<span class="sr-only"> ({_aktuální})</span>
+							{/if}
 						</a>
 					</li>
 				</ul>

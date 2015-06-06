@@ -16,9 +16,6 @@ class PagePresenter extends BasePresenter
 	/** @var EntityManager @inject */
 	public $em;
 
-	/** @var IPageFormFactory @inject */
-	public $pageFormFactory;
-
 	private $editablePage = NULL;
 
 	public function actionEdit($id = NULL)
@@ -42,9 +39,9 @@ class PagePresenter extends BasePresenter
 		$this->template->pages = $pages;
 	}
 
-	protected function createComponentPageForm()
+	protected function createComponentPageForm(IPageFormFactory $factory)
 	{
-		$control = $this->pageFormFactory->create($this->editablePage);
+		$control = $factory->create($this->editablePage);
 		$control->onSave[] = function () {
 			$this->flashMessage('Stránka byla úspěšně uložena.', 'success');
 		};
