@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bec0a0fec917bb3c91debaedb63196aa",
+    "hash": "c624eca038f0e07333543d654aca69d7",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -592,12 +592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "abb87d84ed21fd30c27bd3b52252a495a36d32fb"
+                "reference": "67f02686c6c779ae50489728b91026bc8199720c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/abb87d84ed21fd30c27bd3b52252a495a36d32fb",
-                "reference": "abb87d84ed21fd30c27bd3b52252a495a36d32fb",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/67f02686c6c779ae50489728b91026bc8199720c",
+                "reference": "67f02686c6c779ae50489728b91026bc8199720c",
                 "shasum": ""
             },
             "require": {
@@ -649,7 +649,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2015-05-26 15:30:26"
+            "time": "2015-06-01 21:18:20"
         },
         {
             "name": "doctrine/orm",
@@ -1567,16 +1567,16 @@
         },
         {
             "name": "matthiasmullie/path-converter",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/path-converter.git",
-                "reference": "fcda5cc99c45c2e08d7f2ff59b4dd503c729275d"
+                "reference": "b1e31c51e8c207ad6114f5b4ac4e652bc936c380"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/fcda5cc99c45c2e08d7f2ff59b4dd503c729275d",
-                "reference": "fcda5cc99c45c2e08d7f2ff59b4dd503c729275d",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/b1e31c51e8c207ad6114f5b4ac4e652bc936c380",
+                "reference": "b1e31c51e8c207ad6114f5b4ac4e652bc936c380",
                 "shasum": ""
             },
             "require": {
@@ -1613,7 +1613,7 @@
                 "paths",
                 "relative"
             ],
-            "time": "2015-05-13 15:40:03"
+            "time": "2015-06-01 15:20:30"
         },
         {
             "name": "nette/application",
@@ -2921,16 +2921,16 @@
     "packages-dev": [
         {
             "name": "mrtnzlml/testbench",
-            "version": "1.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mrtnzlml/testbench.git",
-                "reference": "cdff01c2ee32edd0104821cb9a96c34bd7778e50"
+                "reference": "f09ffb2ef2c226d13267ff8840cc14cf07d43519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrtnzlml/testbench/zipball/cdff01c2ee32edd0104821cb9a96c34bd7778e50",
-                "reference": "cdff01c2ee32edd0104821cb9a96c34bd7778e50",
+                "url": "https://api.github.com/repos/mrtnzlml/testbench/zipball/f09ffb2ef2c226d13267ff8840cc14cf07d43519",
+                "reference": "f09ffb2ef2c226d13267ff8840cc14cf07d43519",
                 "shasum": ""
             },
             "require": {
@@ -2964,7 +2964,7 @@
                     "homepage": "http://www.zeminem.cz/"
                 }
             ],
-            "time": "2015-05-07 15:53:10"
+            "time": "2015-06-07 09:14:46"
         },
         {
             "name": "nette/tester",
@@ -3026,7 +3026,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "doctrine/migrations": 20
+        "doctrine/migrations": 20,
+        "mrtnzlml/testbench": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

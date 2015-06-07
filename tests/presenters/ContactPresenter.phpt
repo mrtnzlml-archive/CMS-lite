@@ -1,8 +1,6 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 /**
  * @testCase
@@ -10,18 +8,18 @@ $container = require __DIR__ . '/../bootstrap.php';
 class ContactPresenter extends Tester\TestCase
 {
 
-	private $tester;
+	use Test\PresenterTester;
 
-	public function __construct(Nette\DI\Container $container)
+	public function setUp()
 	{
-		$this->tester = new PresenterTester($container, 'Contact');
+		$this->openPresenter('Contact:');
 	}
 
 	public function testRenderDefault()
 	{
-		$this->tester->testAction('default');
+		$this->checkAction('default');
 	}
 
 }
 
-(new ContactPresenter($container))->run();
+(new ContactPresenter())->run();

@@ -1,8 +1,6 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
@@ -10,29 +8,25 @@ $container = require __DIR__ . '/../../bootstrap.php';
 class EshopPresenter extends Tester\TestCase
 {
 
-	private $tester;
-
-	public function __construct(Nette\DI\Container $container)
-	{
-		$this->tester = new PresenterTester($container, 'Admin:Eshop');
-	}
+	use Test\PresenterTester;
 
 	public function setUp()
 	{
-		$this->tester->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$this->openPresenter('Auth:Eshop:');
+		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
 	public function testRenderDefault()
 	{
-		$this->tester->testAction('default');
+		$this->checkAction('default');
 	}
 
 	public function testRenderDefaultLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('default');
+		$this->logOut();
+		$this->checkRedirect('default');
 	}
 
 }
 
-(new EshopPresenter($container))->run();
+(new EshopPresenter())->run();

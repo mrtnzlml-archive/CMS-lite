@@ -1,8 +1,6 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
@@ -10,29 +8,30 @@ $container = require __DIR__ . '/../../bootstrap.php';
 class DashboardPresenter extends Tester\TestCase
 {
 
-	private $tester;
-
-	public function __construct(Nette\DI\Container $container)
-	{
-		$this->tester = new PresenterTester($container, 'Admin:Dashboard');
-	}
+	use Test\PresenterTester;
 
 	public function setUp()
 	{
-		$this->tester->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$router = $this->getContainer([
+			__DIR__ . '/../../../app/config/config.neon',
+			__DIR__ . '/../../../app/config/config.local.neon',
+		])->getService('router');
+		$router[] = new Nette\Application\Routers\Route('<presenter>/<action>[/<id>]', 'Auth:Sign:in');
+		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$this->openPresenter('Admin:Dashboard:');
 	}
 
 	public function testRenderDefault()
 	{
-		$this->tester->testAction('default');
+		$this->checkAction('default');
 	}
 
 	public function testRenderDefaultLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('default');
+		$this->logOut();
+		$this->checkRedirect('default');
 	}
 
 }
 
-(new DashboardPresenter($container))->run();
+(new DashboardPresenter())->run();

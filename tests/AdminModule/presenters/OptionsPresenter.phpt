@@ -1,8 +1,6 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
@@ -10,40 +8,36 @@ $container = require __DIR__ . '/../../bootstrap.php';
 class OptionsPresenter extends Tester\TestCase
 {
 
-	private $tester;
-
-	public function __construct(Nette\DI\Container $container)
-	{
-		$this->tester = new PresenterTester($container, 'Admin:Options');
-	}
+	use Test\PresenterTester;
 
 	public function setUp()
 	{
-		$this->tester->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$this->openPresenter('Auth:Options:');
+		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
 	public function testRenderGeneral()
 	{
-		$this->tester->testAction('general');
+		$this->checkAction('general');
 	}
 
 	public function testRenderGeneralLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('general');
+		$this->logOut();
+		$this->checkRedirect('general');
 	}
 
 	public function testRenderSeo()
 	{
-		$this->tester->testAction('seo');
+		$this->checkAction('seo');
 	}
 
 	public function testRenderSeoLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('seo');
+		$this->logOut();
+		$this->checkRedirect('seo');
 	}
 
 }
 
-(new OptionsPresenter($container))->run();
+(new OptionsPresenter())->run();

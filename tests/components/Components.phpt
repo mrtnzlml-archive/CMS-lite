@@ -8,6 +8,7 @@ require __DIR__ . '/../helpers/FakePresenter.php';
 
 /**
  * @testCase
+ * @skip TODO
  */
 class Components extends Tester\TestCase
 {
