@@ -5,12 +5,10 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class ContactPresenter extends Tester\TestCase
+class ContactPresenter extends \PresenterTestCase
 {
 
-	use Test\PresenterTester;
-
-	public function setUp()
+	public function __construct()
 	{
 		$this->openPresenter('Contact:');
 	}

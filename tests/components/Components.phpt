@@ -1,26 +1,21 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../bootstrap.php';
-
+require __DIR__ . '/../bootstrap.php';
 require __DIR__ . '/../helpers/FakePresenter.php';
 
 /**
  * @testCase
- * @skip TODO
  */
-class Components extends Tester\TestCase
+class Components extends \PresenterTestCase
 {
 
-	private $tester;
 	/** @var \App\Components\Css\ICssFactory */
 	private $cssFactory;
 
-	public function __construct(Nette\DI\Container $container)
+	public function __construct()
 	{
-		$this->tester = new PresenterTester($container, 'Fake');
-		$this->cssFactory = $container->getByType(App\Components\Css\ICssFactory::class);
+		$this->openPresenter('Fake:');
+		$this->cssFactory = $this->getContainer()->getByType(App\Components\Css\ICssFactory::class);
 	}
 
 	public function testCss()
@@ -29,7 +24,7 @@ class Components extends Tester\TestCase
 		$control->setMedia([
 			'screen', 'projection', 'tv'
 		]);
-		$this->tester->getPresenter()['css'] = $control;
+		$this->getPresenter()['css'] = $control;
 		$this->checkReponse();
 	}
 
@@ -37,7 +32,7 @@ class Components extends Tester\TestCase
 	{
 		$control = new \App\Components\Doctype\Doctype;
 		$control->setDoctype(\App\Components\Doctype\Doctype::HTML4_STRICT);
-		$this->tester->getPresenter()['doctype'] = $control;
+		$this->getPresenter()['doctype'] = $control;
 		$this->checkReponse();
 		Tester\Assert::exception(function () use ($control) {
 			$control->setDoctype('unknown');
@@ -50,7 +45,7 @@ class Components extends Tester\TestCase
 		$control->setMeta('xxx', 'yyy');
 		$control->setMetas(['aaa' => 'bbb']);
 		$control->setHttpEquiv('equiv', 'content');
-		$this->tester->getPresenter()['meta'] = $control;
+		$this->getPresenter()['meta'] = $control;
 		Tester\Assert::exception(function () use ($control) {
 			$control->setHttpEquiv('Content-Type', 'type');
 		}, Nette\InvalidArgumentException::class);
@@ -68,8 +63,8 @@ class Components extends Tester\TestCase
 
 	private function checkReponse()
 	{
-		$response = $this->tester->test('all');
-		Tester\Assert::same(200, $this->tester->getReturnCode());
+		$response = $this->check('all');
+		Tester\Assert::same(200, $this->getReturnCode());
 		Tester\Assert::type('Nette\Application\Responses\TextResponse', $response);
 		Tester\Assert::type('Nette\Application\UI\ITemplate', $response->getSource());
 		Tester\Assert::type('Tester\DomQuery', @Tester\DomQuery::fromHtml($response->getSource()));
@@ -77,4 +72,4 @@ class Components extends Tester\TestCase
 
 }
 
-(new Components($container))->run();
+(new Components())->run();

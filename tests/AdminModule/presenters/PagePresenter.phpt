@@ -5,23 +5,21 @@ require __DIR__ . '/../../bootstrap.php';
 /**
  * @testCase
  */
-class PagePresenter extends Tester\TestCase
+class PagePresenter extends \PresenterTestCase
 {
-
-	use Test\PresenterTester;
 
 	/** @var Kdyby\Doctrine\EntityManager */
 	private $em;
 
 	public function __construct()
 	{
-		$container = $this->createContainer();
-		$this->em = $container->getByType('Kdyby\Doctrine\EntityManager');
+		$this->openPresenter('Admin:Page:');
+		$container = $this->getContainer();
+		$this->em = $container->getByType(Kdyby\Doctrine\EntityManager::class);
 	}
 
 	public function setUp()
 	{
-		$this->openPresenter('Auth:Page:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 

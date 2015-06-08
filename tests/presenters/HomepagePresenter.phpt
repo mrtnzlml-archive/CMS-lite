@@ -5,10 +5,8 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class HomepagePresenter extends Tester\TestCase
+class HomepagePresenter extends \PresenterTestCase
 {
-
-	use Test\PresenterTester;
 
 	public function __construct()
 	{

@@ -5,14 +5,16 @@ require __DIR__ . '/../../bootstrap.php';
 /**
  * @testCase
  */
-class EshopPresenter extends Tester\TestCase
+class EshopPresenter extends \PresenterTestCase
 {
 
-	use Test\PresenterTester;
+	public function __construct()
+	{
+		$this->openPresenter('Admin:Eshop:');
+	}
 
 	public function setUp()
 	{
-		$this->openPresenter('Auth:Eshop:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 

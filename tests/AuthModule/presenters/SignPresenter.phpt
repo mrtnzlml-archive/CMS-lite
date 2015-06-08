@@ -5,12 +5,10 @@ require __DIR__ . '/../../bootstrap.php';
 /**
  * @testCase
  */
-class SignPresenter extends Tester\TestCase
+class SignPresenter extends \PresenterTestCase
 {
 
-	use Test\PresenterTester;
-
-	public function setUp()
+	public function __construct()
 	{
 		$this->openPresenter('Auth:Sign:');
 	}

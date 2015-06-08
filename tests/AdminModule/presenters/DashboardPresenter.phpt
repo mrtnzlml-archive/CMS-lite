@@ -5,20 +5,17 @@ require __DIR__ . '/../../bootstrap.php';
 /**
  * @testCase
  */
-class DashboardPresenter extends Tester\TestCase
+class DashboardPresenter extends \PresenterTestCase
 {
 
-	use Test\PresenterTester;
+	public function __construct()
+	{
+		$this->openPresenter('Admin:Dashboard:');
+	}
 
 	public function setUp()
 	{
-		$router = $this->getContainer([
-			__DIR__ . '/../../../app/config/config.neon',
-			__DIR__ . '/../../../app/config/config.local.neon',
-		])->getService('router');
-		$router[] = new Nette\Application\Routers\Route('<presenter>/<action>[/<id>]', 'Auth:Sign:in');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
-		$this->openPresenter('Admin:Dashboard:');
 	}
 
 	public function testRenderDefault()
