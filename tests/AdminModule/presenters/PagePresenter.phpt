@@ -1,68 +1,65 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class PagePresenter extends Tester\TestCase
+class PagePresenter extends \PresenterTestCase
 {
-
-	private $tester;
 
 	/** @var Kdyby\Doctrine\EntityManager */
 	private $em;
 
-	public function __construct(Nette\DI\Container $container)
+	public function __construct()
 	{
-		$this->tester = new PresenterTester($container, 'Admin:Page');
-		$this->em = $container->getByType('Kdyby\Doctrine\EntityManager');
+		$this->openPresenter('Admin:Page:');
+		$container = $this->getContainer();
+		$this->em = $container->getByType(Kdyby\Doctrine\EntityManager::class);
 	}
 
 	public function setUp()
 	{
-		$this->tester->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
 	public function testRenderDefault()
 	{
-		$this->tester->testAction('default');
+		$this->checkAction('default');
 	}
 
 	public function testRenderDefaultLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('default');
+		$this->logOut();
+		$this->checkRedirect('default');
 	}
 
 	public function testRenderNew()
 	{
-		$this->tester->testAction('new');
+		$this->checkAction('new');
 	}
 
 	public function testRenderNewLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('new');
+		$this->logOut();
+		$this->checkRedirect('new');
 	}
 
 	public function testRenderEmptyEditRedirect()
 	{
 		//TODO: u redirectů testovat kam přesměrovávají
-		$this->tester->testRedirect('edit');
+		$this->checkRedirect('edit');
 	}
 
 	public function testRenderEdit()
 	{
 		/** @var \Pages\Page $page */
 		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
-		$this->tester->testAction('edit', \Test\PresenterTester::GET, [
+		$this->checkAction('edit', 'GET', [
 			'id' => $page->getId()
 		]);
 	}
 
 }
 
-(new PagePresenter($container))->run();
+(new PagePresenter())->run();

@@ -1,38 +1,34 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class EshopPresenter extends Tester\TestCase
+class EshopPresenter extends \PresenterTestCase
 {
 
-	private $tester;
-
-	public function __construct(Nette\DI\Container $container)
+	public function __construct()
 	{
-		$this->tester = new PresenterTester($container, 'Admin:Eshop');
+		$this->openPresenter('Admin:Eshop:');
 	}
 
 	public function setUp()
 	{
-		$this->tester->logIn(1, 'superadmin'); //TODO: lépe (?)
+		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
 	public function testRenderDefault()
 	{
-		$this->tester->testAction('default');
+		$this->checkAction('default');
 	}
 
 	public function testRenderDefaultLoggedOut()
 	{
-		$this->tester->logOut();
-		$this->tester->testRedirect('default');
+		$this->logOut();
+		$this->checkRedirect('default');
 	}
 
 }
 
-(new EshopPresenter($container))->run();
+(new EshopPresenter())->run();

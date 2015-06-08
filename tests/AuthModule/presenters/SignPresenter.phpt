@@ -1,39 +1,35 @@
 <?php
 
-use Test\PresenterTester;
-
-$container = require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class SignPresenter extends Tester\TestCase
+class SignPresenter extends \PresenterTestCase
 {
 
-	private $tester;
-
-	public function __construct(Nette\DI\Container $container)
+	public function __construct()
 	{
-		$this->tester = new PresenterTester($container, 'Auth:Sign');
+		$this->openPresenter('Auth:Sign:');
 	}
 
 	public function testRenderIn()
 	{
-		$this->tester->testAction('in');
+		$this->checkAction('in');
 	}
 
 	public function testRenderInLogged()
 	{
-		$this->tester->logIn();
-		$this->tester->testRedirect('in');
+		$this->logIn();
+		$this->checkRedirect('in');
 	}
 
 	public function testLogOut()
 	{
-		$this->tester->logIn();
-		$this->tester->testRedirect('out');
+		$this->logIn();
+		$this->checkRedirect('out');
 	}
 
 }
 
-(new SignPresenter($container))->run();
+(new SignPresenter())->run();

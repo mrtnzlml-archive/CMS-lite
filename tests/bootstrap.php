@@ -1,26 +1,15 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
-
-$configurator = Test\Bootstrap::setup(__DIR__);
-
-$configurator->createRobotLoader()
-	->addDirectory(__DIR__ . '/../app')
-	->addDirectory(__DIR__ . '/../custom')
-	->addDirectory(__DIR__ . '/../libs')
-	->register();
-
-$configurator->addConfig(__DIR__ . '/../app/config/config.neon');
-$configurator->addConfig(__DIR__ . '/../app/config/config.local.neon');
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/PresenterTestCase.php';
 
 define('IE_ONLY', 'ie');
 
-$configurator->addParameters([
-	'appDir' => __DIR__ . '/../app',
-	'wwwDir' => __DIR__ . '/../www',
-])->addServices([
-	//In tests (CLI), there is nothing like HTTP request, so we need to fake it...
-	'http.request' => new Nette\Http\Request(new Nette\Http\UrlScript('https://fake.url/')),
-]);
+$loader = new \Nette\Loaders\RobotLoader();
+$loader->setCacheStorage(new \Nette\Caching\Storages\MemoryStorage());
+$loader->addDirectory(__DIR__ . '/../app');
+$loader->addDirectory(__DIR__ . '/../custom');
+$loader->addDirectory(__DIR__ . '/../libs');
+$loader->register();
 
-return $configurator->createContainer();
+Test\Bootstrap::setup(__DIR__);

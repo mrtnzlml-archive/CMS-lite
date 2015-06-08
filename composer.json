@@ -38,7 +38,7 @@
     "leafo/lessphp": "^0.5.0"
   },
   "require-dev": {
-    "mrtnzlml/testbench": "~1.1",
+    "mrtnzlml/testbench": "dev-master",
     "nette/tester": "~1.4"
   }
 }
