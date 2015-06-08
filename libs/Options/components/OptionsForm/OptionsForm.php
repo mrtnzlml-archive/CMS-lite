@@ -43,9 +43,9 @@ class OptionsForm extends AControl
 		/** @var Option $option */
 		foreach ($options as $option) {
 			if ($this->checkBool($option->value)) {
-				$control = $form->addCheckbox($option->key, $option->fullName);
+				$control = $form->addCheckbox($option->key, $option->description);
 			} else {
-				$control = $form->addText($option->key, $option->fullName);
+				$control = $form->addText($option->key, $option->description);
 			}
 			$control->setDefaultValue($option->value);
 		}

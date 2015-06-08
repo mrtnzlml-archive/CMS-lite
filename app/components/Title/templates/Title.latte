@@ -1,1 +1,4 @@
-<title>{ifset title}{include title|striptags} {$separator} {/ifset}ANTstudio CMS</title>
+<title>
+	{ifset title}{include title|striptags} {isset($options->site_title_separator) ? $options->site_title_separator->value : '|'} {/ifset}
+	{ifset $options->site_title}{$options->site_title->value}{/ifset}
+</title>

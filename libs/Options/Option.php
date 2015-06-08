@@ -10,8 +10,8 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @ORM\Entity
  * @ORM\Table(name="options")
  *
- * @method setFullName(string)
- * @method string getFullName()
+ * @method setDescription(string)
+ * @method string getDescription()
  * @method setCategory(OptionCategory $category)
  */
 class Option extends BaseEntity
@@ -32,13 +32,13 @@ class Option extends BaseEntity
 	protected $value;
 
 	/**
-	 * @ORM\Column(type="string", options={"comment":"Nice name of the option (form label)"})
+	 * @ORM\Column(type="string", options={"comment":"Description of the option (form label)"})
 	 * @var string
 	 */
-	protected $fullName;
+	protected $description;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="OptionCategory", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="OptionCategory", cascade={"persist"})
 	 * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
 	 * @var OptionCategory
 	 */

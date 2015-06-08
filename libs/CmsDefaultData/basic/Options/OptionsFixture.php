@@ -8,7 +8,8 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 
 	private $demoOptions = [
 		//[category, title, value]
-		'site_title' => ['general', 'Název webu', 'Site Title'],
+		'site_title' => ['general', 'Název webu', 'ANTstudio CMS'],
+		'site_title_separator' => ['general', 'Oddělovač titulku', '|'],
 		'index' => ['seo', 'Indexovat web', TRUE],
 	];
 
@@ -16,7 +17,7 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 	{
 		foreach ($this->demoOptions as $key => $value) {
 			$entity = new \Options\Option($key, $value[2]);
-			$entity->setFullName($value[1]);
+			$entity->setDescription($value[1]);
 			$entity->setCategory($this->getReference('option-' . $value[0]));
 			$manager->persist($entity);
 		}
@@ -35,6 +36,5 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 			OptionCategoriesFixture::class,
 		];
 	}
-
 
 }
