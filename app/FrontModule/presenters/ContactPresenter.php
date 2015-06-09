@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presenters;
+namespace App\FrontModule\Presenters;
 
 class ContactPresenter extends BasePresenter
 {

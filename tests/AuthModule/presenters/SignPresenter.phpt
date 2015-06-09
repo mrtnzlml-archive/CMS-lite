@@ -18,6 +18,14 @@ class SignPresenter extends \PresenterTestCase
 		$this->checkAction('in');
 	}
 
+//	public function testSignInForm()
+//	{
+//		$this->checkForm('in', 'signInForm-form', [
+//			'username' => 'Username',
+//			'password' => 'Password',
+//		]);
+//	}
+
 	public function testRenderInLogged()
 	{
 		$this->logIn();

@@ -2,7 +2,7 @@
 
 namespace Eshop\Presenters;
 
-use App\Presenters\BasePresenter;
+use App\FrontModule\Presenters\BasePresenter;
 use App\Traits\PublicComponentsTrait;
 use Eshop\Product;
 use Eshop\Query\ProductQuery;

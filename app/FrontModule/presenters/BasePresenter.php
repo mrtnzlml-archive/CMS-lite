@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presenters;
+namespace App\FrontModule\Presenters;
 
 use App\Traits\PublicComponentsTrait;
 use Nette;

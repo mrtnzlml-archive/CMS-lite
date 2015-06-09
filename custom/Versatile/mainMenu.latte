@@ -2,7 +2,7 @@
 
 	{* LOGO *}
 	<div class="logo">
-		<a href="{plink :Homepage:}">Versatile</a>
+		<a href="{plink :Front:Homepage:}">Versatile</a>
 	</div>
 	{* LOGO *}
 
@@ -16,7 +16,7 @@
 
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li class="first"><a href="{plink :Homepage:}" title="">Home</a></li>
+			<li class="first"><a href="{plink :Front:Homepage:}" title="">Home</a></li>
 			<li n:foreach="$pages as $page">
 				<a>{$page->title}</a>
 			</li>
@@ -24,7 +24,7 @@
 			<li n:foreach="$items as $item">
 				<a href="{plink $item->link}">{$item->title}</a>
 			</li>
-			<li class="last"><a href="{plink :Contact:}" title="">Contacts</a></li>
+			<li class="last"><a href="{plink :Front:Contact:}" title="">Contacts</a></li>
 		</ul>
 	</div>
 </div>
