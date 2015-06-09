@@ -16,17 +16,16 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('[<locale=cs cs|en>/]auth[/<presenter>[/<action>[/<id>]]]', [
-			'module' => 'Auth',
-			'presenter' => 'Sign',
-			'action' => 'in',
-		]);
-		$router[] = new Route('[<locale=cs cs|en>/]administrace[/<presenter>[/<action>[/<id>]]]', [
-			'module' => 'Admin',
-			'presenter' => 'Dashboard',
-			'action' => 'default',
-		]);
-		$router[] = new Route('[<locale=cs cs|en>/]<presenter>[/<action>[/<id>]]', 'Homepage:default');
+
+		$router[] = $auth = new RouteList('Auth');
+		$auth[] = new Route('[<locale=cs cs|en>/]auth[/<presenter>[/<action>[/<id>]]]', 'Sign:in');
+
+		$router[] = $admin = new RouteList('Admin');
+		$admin[] = new Route('[<locale=cs cs|en>/]administrace[/<presenter>[/<action>[/<id>]]]', 'Dashboard:default');
+
+		$router[] = $front = new RouteList('Front');
+		$front[] = new Route('[<locale=cs cs|en>/]<presenter>[/<action>[/<id>]]', 'Homepage:default');
+
 		return $router;
 	}
 

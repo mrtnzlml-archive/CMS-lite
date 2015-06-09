@@ -9,6 +9,7 @@ use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 use Nette\Application\IPresenterFactory;
+use Nette\Application\Routers\RouteList;
 
 class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IMainMenuProvider, IRouterProvider
 {
@@ -67,14 +68,11 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 
 	public function getRouter()
 	{
-		return [
-			//TODO: dynamic language routing
-			new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<presenter>[/<action>[/<id>]]]', [
-				'module' => 'Eshop',
-				'presenter' => 'Product',
-				'action' => 'default',
-			]),
-		];
+		//TODO: dynamic language routing
+		$router = new RouteList();
+		$router[] = $eshop = new RouteList('Eshop');
+		$eshop[] = new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<presenter>[/<action>[/<id>]]]', 'Product:default');
+		return $router;
 	}
 
 	/**
