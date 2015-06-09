@@ -49,8 +49,8 @@ class SignInForm extends AControl
 
 		try {
 			$this->presenter->getUser()->login($values->username, $values->password);
-		} catch (Nette\Security\AuthenticationException $e) {
-			$form->addError($e->getMessage());
+		} catch (Nette\Security\AuthenticationException $exc) {
+			$form->addError($exc->getMessage());
 			return;
 		}
 

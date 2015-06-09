@@ -1,7 +1,7 @@
 {translator component.signInForm /}
 
 {form form, class => form-signin}
-	<ul class="error" n:if="$form->errors">
+	<ul class="alert alert-danger" n:if="$form->errors">
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
 	<h3 class="form-signin-heading" n:block=title>Přihlašte se prosím</h3>
