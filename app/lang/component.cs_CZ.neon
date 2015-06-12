@@ -1,8 +1,6 @@
 contactForm:
 	name:
 		label: Jméno
-	phone:
-		label: Telefon
 	email:
 		label: Email
 		invalid: Zadejte prosím email ve správném formátu.
