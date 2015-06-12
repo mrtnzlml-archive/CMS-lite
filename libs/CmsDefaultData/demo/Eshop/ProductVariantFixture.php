@@ -9,7 +9,7 @@ class ProductVariantFixture extends \Doctrine\Common\DataFixtures\AbstractFixtur
 	public function load(ObjectManager $manager)
 	{
 		$prodVar = new \Eshop\ProductVariant();
-		$prodVar->setProduct($this->getReference('book-product'));
+		$prodVar->setProduct($this->getReference('book-product-1'));
 		$prodVar->setVariantName('modrá-M');
 		$prodVar->setSku('blue1');
 		$prodVar->addVariantValue($this->getReference('modra-varval'));
@@ -17,7 +17,7 @@ class ProductVariantFixture extends \Doctrine\Common\DataFixtures\AbstractFixtur
 		$manager->persist($prodVar);
 
 		$prodVar = new \Eshop\ProductVariant();
-		$prodVar->setProduct($this->getReference('book-product'));
+		$prodVar->setProduct($this->getReference('book-product-2'));
 		$prodVar->setVariantName('červená-S');
 		$prodVar->setSku('red1');
 		$prodVar->addVariantValue($this->getReference('cervena-varval'));

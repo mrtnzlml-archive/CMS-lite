@@ -7,21 +7,13 @@ class PageCategoryFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 
 	public function load(ObjectManager $manager)
 	{
-		$category = new \Pages\PageCategory();
-		$category->setName('Kategorie 1');
-		$manager->persist($category);
-		$this->addReference('page-category-1', $category);
-
-		$category = clone $category;
-		$category->setName('Kategorie 2');
-		$manager->persist($category);
-		$this->addReference('page-category-2', $category);
-
-		$category = clone $category;
-		$category->setName('Kategorie 3');
-		$manager->persist($category);
-		$this->addReference('page-category-3', $category);
-
+		$faker = Faker\Factory::create('cs_CZ');
+		for ($iterator = 0; $iterator < 5; $iterator++) {
+			$category = new \Pages\PageCategory();
+			$category->setName(\Nette\Utils\Strings::firstUpper($faker->word));
+			$manager->persist($category);
+			$this->addReference('page-category-' . $iterator, $category);
+		}
 		$manager->flush();
 	}
 

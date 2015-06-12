@@ -8,21 +8,31 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 
 	public function load(ObjectManager $manager)
 	{
-		$title = 'Toto je první stránka';
-		$body = <<<BODY
-Můžete ji **upravovat** dle //libosti//...
-BODY;
-
-		$page = new \Pages\Page();
-		$page->setTitle($title);
-		$page->setSlug(\Nette\Utils\Strings::webalize($title));
-		$page->setBody($body);
-		$page->addAuthor($this->getReference('admin-user'));
-		$page->addAuthor($this->getReference('demo-user'));
-		$page->addCategory($this->getReference('page-category-1'));
-		$page->addCategory($this->getReference('page-category-3'));
-		$manager->persist($page);
-
+		$faker = Faker\Factory::create('cs_CZ');
+		for ($iterator = 0; $iterator < 3; $iterator++) {
+			$title = \Nette\Utils\Strings::firstUpper($faker->word);
+			$body = $faker->realText(500);
+			$page = new \Pages\Page();
+			$page->setTitle($title);
+			$page->setSlug(\Nette\Utils\Strings::webalize($title));
+			$page->setBody($body);
+			if (rand(0, 1)) {
+				$page->addAuthor($this->getReference('admin-user'));
+			}
+			if (rand(0, 1)) {
+				$page->addAuthor($this->getReference('demo-user'));
+			}
+			if (rand(0, 1)) {
+				$page->addCategory($this->getReference('page-category-1'));
+			}
+			if (rand(0, 1)) {
+				$page->addCategory($this->getReference('page-category-2'));
+			}
+			if (rand(0, 1)) {
+				$page->addCategory($this->getReference('page-category-3'));
+			}
+			$manager->persist($page);
+		}
 		$manager->flush();
 	}
 

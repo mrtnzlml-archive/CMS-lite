@@ -8,30 +8,20 @@ class ArticlesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impl
 
 	public function load(ObjectManager $manager)
 	{
-		$title = 'Toto je první příspěvek';
-		$body = <<<BODY
-Můžete jej **upravovat** podle //libosti//...
-BODY;
-
-		$article = new \Articles\Article();
-		$article->setTitle($title);
-		$article->setSlug(\Nette\Utils\Strings::webalize($title));
-		$article->setBody($body);
-		$article->addAuthor($this->getReference('admin-user'));
-		$article->addAuthor($this->getReference('demo-user'));
-		$manager->persist($article);
-
-		$title = 'Toto je druhý příspěvek';
-		$body = <<<BODY
-Můžete jej **upravovat** podle //libosti//...
-BODY;
-		$article = new \Articles\Article();
-		$article->setTitle($title);
-		$article->setSlug(\Nette\Utils\Strings::webalize($title));
-		$article->setBody($body);
-		$article->addAuthor($this->getReference('admin-user'));
-		$manager->persist($article);
-
+		$faker = Faker\Factory::create('cs_CZ');
+		for ($iterator = 0; $iterator < 5; $iterator++) {
+			$title = $faker->catchPhrase;
+			$body = $faker->realText(500);
+			$article = new \Articles\Article();
+			$article->setTitle($title);
+			$article->setSlug(\Nette\Utils\Strings::webalize($title));
+			$article->setBody($body);
+			$article->addAuthor($this->getReference('admin-user'));
+			if (rand(0, 1)) {
+				$article->addAuthor($this->getReference('demo-user'));
+			}
+			$manager->persist($article);
+		}
 		$manager->flush();
 	}
 
