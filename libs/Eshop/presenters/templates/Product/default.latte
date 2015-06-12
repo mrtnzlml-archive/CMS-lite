@@ -55,7 +55,7 @@
 					<div class="element category1 col-lg-4 col-md-4 col-sm-6 col-xs-6 col-ss-12" n:foreach="$products as $product">
 						<div class="product_item center margbot30">
 							<div class="hover_img">
-								<img src="{$basePath}/images/products/{$iterator->counter}.jpg" alt="" />
+								<img src="{$basePath}/images/products/{$iterator->counter % 9 + 1}.jpg" alt="" />
 							</div>
 							<div class="item_btn_in center">
 								<a class="btn btn-white" href="javascript:void(0);" alt="">Add to Cart</a>
@@ -145,7 +145,7 @@
 					<ul class="popular_products">
 						<li n:foreach="$products as $product">
 							<div class="pull-left popular_product_img">
-								<img src="{$basePath}/images/products/{$iterator->counter}.jpg" width="70" height="70" alt="" />
+								<img src="{$basePath}/images/products/{$iterator->counter % 9 + 1}.jpg" width="70" height="70" alt="" />
 							</div>
 							<div class="popular_product_descr">
 								<a class="title" href="#">{$product->title}</a>

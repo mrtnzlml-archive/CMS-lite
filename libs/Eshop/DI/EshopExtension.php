@@ -33,37 +33,10 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 	public function beforeCompile()
 	{
 		$container = $this->getContainerBuilder();
-
 		// presenter mapping configuration
 		$container
 			->getDefinition($container->getByType(IPresenterFactory::class) ?: 'nette.presenterFactory')
 			->addSetup('setMapping', [['Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter']]);
-
-		// presenter registration
-		$robotLoader = new Nette\Loaders\RobotLoader();
-		$robotLoader->addDirectory(__DIR__ . '/..');
-		$robotLoader->setCacheStorage(new Nette\Caching\Storages\MemoryStorage());
-		$robotLoader->rebuild();
-		$counter = 0;
-		foreach ($robotLoader->getIndexedClasses() as $class => $file) {
-			try {
-				$reflection = Nette\Reflection\ClassType::from($class);
-				if (!$reflection->implementsInterface(Nette\Application\IPresenter::class)) {
-					continue;
-				}
-				if (!$reflection->isInstantiable()) {
-					continue;
-				}
-				$container->addDefinition($this->prefix(++$counter))
-					->setClass($class)
-					->setInject(TRUE)
-					->setAutowired(FALSE)
-					->addTag('nette.presenter', $class);
-				//FIXME: invalidLinkMode
-			} catch (\ReflectionException $e) {
-				continue;
-			}
-		}
 	}
 
 	public function getRouter()

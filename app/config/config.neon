@@ -2,6 +2,8 @@
 # http://nette.org/security-warning
 
 parameters:
+	adminLayout: '%appDir%/AdminModule/presenters/templates/@layout.latte'
+	frontLayout: '%appDir%/FrontModule/presenters/templates/@layout.latte'
 
 
 php:
@@ -20,10 +22,6 @@ di:
 
 session:
 	expiration: 14 days
-
-
-constants:
-    APP_DIR: %appDir%
 
 
 core:
