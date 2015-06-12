@@ -20,12 +20,12 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplate
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
-		$cb->getDefinition($cb->getByType(IContactFormFactory::class))
-			->addSetup(
-				'$service->onComponentCreation[] = function ($control, $form) {' . "\n" .
-				"\t" . '$form->addText(?, ?)->setType(?);' . "\n" .
-				'}', ['phone', 'Telefonní číslo', 'tel']
-			);
+//		$cb->getDefinition($cb->getByType(IContactFormFactory::class))
+//			->addSetup(
+//				'$service->onComponentCreation[] = function ($control, $form) {' . "\n" .
+//				"\t" . '$form->addText(?, ?)->setType(?);' . "\n" .
+//				'}', ['phone', 'Telefonní číslo', 'tel']
+//			);
 	}
 
 	public function getBreadcrumbTemplate()
