@@ -1,3 +1,4 @@
 services:
     - Pages\PageProcess
     - Pages\Components\PageForm\IPageFormFactory
+    - Pages\Components\PagesGrid\IPagesGridFactory

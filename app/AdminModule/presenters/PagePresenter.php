@@ -7,17 +7,22 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 use Pages\Components\PageForm\IPageFormFactory;
+use Pages\Components\PagesGrid\IPagesGridFactory;
 use Pages\Page;
-use Pages\Query\PagesQuery;
-use Pages\Query\PagesQueryAdmin;
 
 class PagePresenter extends BasePresenter
 {
 
-	/** @var EntityManager @inject */
-	public $em;
+	/** @var EntityManager */
+	private $em;
 
+	/** @var Page|NULL */
 	private $editablePage = NULL;
+
+	public function __construct(EntityManager $em)
+	{
+		$this->em = $em;
+	}
 
 	public function actionEdit($id = NULL)
 	{
@@ -31,13 +36,9 @@ class PagePresenter extends BasePresenter
 		}
 	}
 
-	public function renderDefault()
+	protected function createComponentPagesGrid(IPagesGridFactory $gridFactory)
 	{
-		$query = (new PagesQueryAdmin())->withAllAuthors()->withAllCategories();
-		$pages = $this->em->getRepository(Page::class)->fetch($query);
-		$pages->setFetchJoinCollection(FALSE);
-		$pages->applyPaging(0, 100);
-		$this->template->pages = $pages;
+		return $gridFactory->create();
 	}
 
 	protected function createComponentPageForm(IPageFormFactory $factory)
@@ -50,16 +51,6 @@ class PagePresenter extends BasePresenter
 			$this->redirect('default');
 		};
 		return $control;
-	}
-
-	public function handleDelete($id)
-	{
-		//TODO: is user allowed to delete this page? (same with edit)
-		if ($page = $this->em->getRepository(Page::class)->find($id)) {
-			$this->em->remove($page);
-			$this->em->flush($page);
-		}
-		$this->redirect('this');
 	}
 
 }

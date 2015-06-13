@@ -1,0 +1,37 @@
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<th>Titulek</th>
+		<th>Autoři</th>
+		<th>Kategorie</th>
+		<th>Publikována</th>
+		<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr n:foreach="$pages as $page">
+		<td>{$page->title}</td>
+		<td>
+			{foreach $page->authors as $author}
+				{$author->email}{sep}, {/sep}
+			{/foreach}
+		</td>
+		<td>
+			{foreach $page->categories as $category}
+				{$category->name}{sep}, {/sep}
+			{/foreach}
+		</td>
+		<td>
+			{if $page->publishedAt}
+				<span class="label label-success">ANO</span>
+			{else}
+				<span class="label label-danger">NE - uložena</span>
+			{/if}
+		</td>
+		<td>
+			<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
+			<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
+		</td>
+	</tr>
+	</tbody>
+</table>
