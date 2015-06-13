@@ -20,6 +20,17 @@ class PagesGrid extends AControl
 		$this->em = $em;
 	}
 
+	/** @param $presenter UI\Presenter */
+	public function attached($presenter)
+	{
+		parent::attached($presenter);
+		/** @var \App\Components\Css\Css $component */
+		foreach ($presenter->getComponents(FALSE, \App\Components\Js\Js::class) as $component) {
+			//dump($component);
+			//TODO: nějakou vlastní komponentu, která umožní podobně přidávat custom styly (ale ne do webloaderu)
+		}
+	}
+
 	public function render(array $parameters = NULL)
 	{
 		if ($parameters) {

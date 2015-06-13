@@ -31,6 +31,10 @@ class Js extends Nette\Application\UI\Control
 		$this->template->render(__DIR__ . '/templates/Js.latte');
 	}
 
+	public function renderCustom() {
+		//TODO: nějakou vlastní komponentu, která umožní podobně přidávat custom styly (ale ne do webloaderu)
+	}
+
 	protected function createComponentJs()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/js');

@@ -1,6 +1,23 @@
+<script>
+	window.onload = function () {
+		$('#selectAll').change(function () {
+			//TODO: closest form, not table
+			var checkboxes = $(this).closest('table').find(':checkbox');
+			if ($(this).is(':checked')) {
+				checkboxes.prop('checked', true);
+			} else {
+				checkboxes.prop('checked', false);
+			}
+		});
+	};
+</script>
+
 <table class="table table-striped">
 	<thead>
 	<tr>
+		<th>
+			<input type="checkbox" id="selectAll">
+		</th>
 		<th>Titulek</th>
 		<th>Autoři</th>
 		<th>Kategorie</th>
@@ -10,6 +27,9 @@
 	</thead>
 	<tbody>
 	<tr n:foreach="$pages as $page">
+		<td>
+			<input type="checkbox" name="pages[]">
+		</td>
 		<td>{$page->title}</td>
 		<td>
 			{foreach $page->authors as $author}
