@@ -49,10 +49,10 @@ class Page extends BaseEntity
 	private $createdAt;
 
 	/**
-	 * @ORM\Column(type="datetime", options={"comment":"Date of the article publication"})
+	 * @ORM\Column(type="datetime", nullable=TRUE, options={"comment":"Date of the article publication"})
 	 * @var \DateTime
 	 */
-	private $publishedAt;
+	protected $publishedAt;
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})
@@ -83,7 +83,6 @@ class Page extends BaseEntity
 	public function __construct()
 	{
 		$this->createdAt = new \DateTime();
-		$this->publishedAt = new \DateTime();
 		$this->authors = new ArrayCollection();
 		$this->categories = new ArrayCollection();
 	}

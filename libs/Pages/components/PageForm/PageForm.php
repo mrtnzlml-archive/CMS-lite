@@ -37,6 +37,9 @@ class PageForm extends AControl
 
 	public function __construct($editablePage, ITranslator $translator = NULL, PageProcess $pageProcess, EntityManager $em)
 	{
+		if (!$editablePage) { //NEW
+			$editablePage = new Page;
+		}
 		$this->editablePage = $editablePage;
 		$this->translator = $translator;
 		$this->pageProcess = $pageProcess;
@@ -48,6 +51,7 @@ class PageForm extends AControl
 		if ($parameters) {
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
+		$this->template->showPublish = isset($this->editablePage) && $this->editablePage->publishedAt ? FALSE : TRUE;
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PageForm.latte');
 	}
 
@@ -72,8 +76,11 @@ class PageForm extends AControl
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 		$form->addSubmit('save', 'Uložit');
+		$form->addSubmit('publish', 'Publikovat')->onClick[] = function () {
+			$this->editablePage->publishedAt = new \DateTime();
+		};
 
-		if ($this->editablePage) {
+		if ($this->editablePage) { //EDIT
 			$form->setDefaults([
 				'title' => $this->editablePage->title,
 				'slug' => $this->editablePage->slug,
@@ -89,9 +96,6 @@ class PageForm extends AControl
 	public function pageFormSucceeded(UI\Form $form, Nette\Utils\ArrayHash $values)
 	{
 		try {
-			if (!$this->editablePage) {
-				$this->editablePage = new Page;
-			}
 			$this->editablePage->setTitle($values->title);
 			$this->editablePage->setBody($values->editor);
 			if ($values->authors) {

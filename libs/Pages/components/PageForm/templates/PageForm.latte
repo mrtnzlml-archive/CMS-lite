@@ -34,7 +34,25 @@
 			</div>
 		</div>
 	</div>
-	{input save, class => "btn btn-primary form-control"}
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="form-group">
+				{input save, class => "btn btn-primary form-control"}
+			</div>
+		</div>
+		<div class="col-lg-4" n:if="$showPublish">
+			<div class="form-group">
+				{input publish, class => "btn btn-primary form-control"}
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="form-group">
+				<a class="btn btn-default form-control">
+					<del>Zobrazit stránku</del>
+				</a>
+			</div>
+		</div>
+	</div>
 {/form}
 
 {*{block scripts}*}
