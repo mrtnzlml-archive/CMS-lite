@@ -65,12 +65,6 @@ class CoreExtension extends Nette\DI\CompilerExtension
 		if ($config['https']) {
 			$initialize->addBody('Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;');
 		}
-
-//		if ($this->debugMode && $config['debugger']) {
-//			$initialize->addBody($cb->formatPhp('?;', [
-//				new Nette\DI\Statement('@Tracy\Bar::addPanel', [new Nette\DI\Statement('App\Extensions\AntPanel')])
-//			]));
-//		}
 	}
 
 }
