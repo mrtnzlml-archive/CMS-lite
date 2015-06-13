@@ -1,2 +1,3 @@
 services:
     - Options\Components\OptionsForm\IOptionsFormFactory
+    - Options\Components\OptionsMenu\IOptionsMenuFactory

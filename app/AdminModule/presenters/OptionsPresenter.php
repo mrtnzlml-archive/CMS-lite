@@ -2,10 +2,8 @@
 
 namespace App\AdminModule\Presenters;
 
-use App\AdminModule\Components\OptionsMenu\IOptionsMenuFactory;
-use Kdyby\Doctrine\EntityManager;
 use Options\Components\OptionsForm\IOptionsFormFactory;
-use Options\OptionCategory;
+use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
 class OptionsPresenter extends BasePresenter
 {

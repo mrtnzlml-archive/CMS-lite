@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AdminModule\Components\OptionsMenu;
+namespace Options\Components\OptionsMenu;
 
 use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
