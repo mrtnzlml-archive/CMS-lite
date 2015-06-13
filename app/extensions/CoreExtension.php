@@ -58,10 +58,8 @@ class CoreExtension extends Nette\DI\CompilerExtension
 
 	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)
 	{
-		$cb = $this->getContainerBuilder();
 		$initialize = $generatedContainer->getMethod('initialize');
 		$config = $this->getConfig($this->defaultConfiguration);
-
 		if ($config['https']) {
 			$initialize->addBody('Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;');
 		}
