@@ -20,6 +20,13 @@ class SignPresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
+	private $layout;
+
+	public function __construct($layout)
+	{
+		$this->layout = $layout;
+	}
+
 	public function startup()
 	{
 		parent::startup();
@@ -35,8 +42,7 @@ class SignPresenter extends Nette\Application\UI\Presenter
 
 	public function findLayoutTemplateFile()
 	{
-		parent::findLayoutTemplateFile();
-		return __DIR__ . '/../../presenters/templates/@layout.latte';
+		return $this->layout;
 	}
 
 	public function actionOut()

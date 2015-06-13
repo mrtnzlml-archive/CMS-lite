@@ -29,9 +29,9 @@ class ProductPresenter extends BasePresenter
 		$this->template->products = $products;
 	}
 
-	public function formatLayoutTemplateFiles()
+	public function findLayoutTemplateFile()
 	{
-		yield $this->layout;
+		return $this->layout;
 	}
 
 }

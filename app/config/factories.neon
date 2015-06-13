@@ -1,0 +1,19 @@
+services:
+	- App\Components\AdminBar\IAdminBarFactory
+	- App\Components\Breadcrumb\IBreadcrumbFactory
+	- App\Components\ContactForm\IContactFormFactory
+	- implement: App\Components\Css\ICssFactory
+	  arguments: [%wwwDir%]
+	- App\Components\Doctype\IDoctypeFactory
+	- App\Components\Error404\IError404Factory
+	- App\Components\Favicon\IFaviconFactory
+	- App\Components\Flashes\IFlashesFactory
+	- App\Components\Footer\IFooterFactory
+	- App\Components\Header\IHeaderFactory
+	- implement: App\Components\Js\IJsFactory
+	  arguments: [%wwwDir%]
+	- App\Components\MainMenu\IMainMenuFactory
+	- App\Components\Meta\IMetaFactory
+	- App\Components\SignInForm\ISignInFormFactory
+	- App\Components\Title\ITitleFactory
+	- App\Components\MainMenu\IWrapperFactory

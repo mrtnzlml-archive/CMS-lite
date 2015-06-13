@@ -35,4 +35,5 @@ translation:
 
 includes:
     - extensions.neon
+    - factories.neon
     - services.neon
