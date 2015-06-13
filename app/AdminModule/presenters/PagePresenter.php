@@ -9,6 +9,7 @@ use Nette\Application\UI;
 use Pages\Components\PageForm\IPageFormFactory;
 use Pages\Page;
 use Pages\Query\PagesQuery;
+use Pages\Query\PagesQueryAdmin;
 
 class PagePresenter extends BasePresenter
 {
@@ -32,7 +33,7 @@ class PagePresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$query = (new PagesQuery())->withAllAuthors()->withAllCategories();
+		$query = (new PagesQueryAdmin())->withAllAuthors()->withAllCategories();
 		$pages = $this->em->getRepository(Page::class)->fetch($query);
 		$pages->setFetchJoinCollection(FALSE);
 		$pages->applyPaging(0, 100);
