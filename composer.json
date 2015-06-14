@@ -36,7 +36,8 @@
     "doctrine/data-fixtures": "~1.1",
     "doctrine/migrations": "@dev",
     "leafo/lessphp": "^0.5.0",
-    "fzaninotto/faker": "^1.5"
+    "fzaninotto/faker": "^1.5",
+    "kdyby/monolog": "^1.1"
   },
   "require-dev": {
     "mrtnzlml/testbench": "dev-master",

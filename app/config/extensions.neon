@@ -19,6 +19,7 @@ extensions:
     doctrine: Kdyby\Doctrine\DI\OrmExtension
     events: Kdyby\Events\DI\EventsExtension
     translation: Kdyby\Translation\DI\TranslationExtension
+    monolog: Kdyby\Monolog\DI\MonologExtension
     - Nette\DI\Extensions\InjectExtension
     - App\Extensions\CoreTemplateExtension
     - App\Extensions\ImageExtension(%wwwDir%)

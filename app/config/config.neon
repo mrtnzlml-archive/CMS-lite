@@ -1,6 +1,12 @@
 # WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
 # http://nette.org/security-warning
 
+includes:
+    - extensions.neon
+    - factories.neon
+    - services.neon
+
+
 parameters:
 	adminLayout: '%appDir%/AdminModule/presenters/templates/@layout.latte'
 	frontLayout: '%appDir%/FrontModule/presenters/templates/@layout.latte'
@@ -11,7 +17,7 @@ php:
 
 
 application:
-	errorPresenter: Error
+	errorPresenter: Front:Error
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 
@@ -33,7 +39,12 @@ translation:
     fallback: [cs_CZ, cs]
 
 
-includes:
-    - extensions.neon
-    - factories.neon
-    - services.neon
+monolog:
+    name: CMS # Syslog only
+    handlers:
+    	- Monolog\Handler\RotatingFileHandler(%appDir%/../log/syslog.log, 30)
+    	- Monolog\Handler\SlackHandler('xoxp-4887199231-4887199235-6370206292-b83657', '#testing', 'Monolog', TRUE, 'shit', 500, TRUE, FALSE, TRUE)
+    processors:
+    	- Monolog\Processor\IntrospectionProcessor
+    	- Monolog\Processor\WebProcessor
+    	- Monolog\Processor\GitProcessor

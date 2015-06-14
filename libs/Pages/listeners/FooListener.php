@@ -7,6 +7,15 @@ use Nette;
 
 class FooListener extends Nette\Object implements Kdyby\Events\Subscriber
 {
+
+	/** @var Kdyby\Monolog\Logger */
+	private $logger;
+
+	public function __construct(Kdyby\Monolog\Logger $logger)
+	{
+		$this->logger = $logger->channel('foo');
+	}
+
 	public function getSubscribedEvents()
 	{
 		return [
@@ -18,7 +27,7 @@ class FooListener extends Nette\Object implements Kdyby\Events\Subscriber
 
 	public function appStartup(Nette\Application\Application $app)
 	{
-		// todo
+//		$this->logger->addCritical(sprintf(__METHOD__ . ' %s', rand()));
 	}
 
 }
