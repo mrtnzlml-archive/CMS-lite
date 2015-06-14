@@ -1,4 +1,6 @@
 services:
-    - Pages\PageProcess
-    - Pages\Components\PageForm\IPageFormFactory
-    - Pages\Components\PagesGrid\IPagesGridFactory
+	- Pages\PageProcess
+	- Pages\Components\PageForm\IPageFormFactory
+	- Pages\Components\PagesGrid\IPagesGridFactory
+	- class: Pages\Listeners\FooListener
+	  tags: [kdyby.subscriber]

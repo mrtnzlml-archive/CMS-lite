@@ -2,11 +2,12 @@
 
 namespace Pages\DI;
 
+use App\Components\Js\Providers\IJsProvider;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class PagesExtension extends Nette\DI\CompilerExtension implements IEntityProvider
+class PagesExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IJsProvider
 {
 
 	public function loadConfiguration()
@@ -26,6 +27,12 @@ class PagesExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 		return [
 			'Pages' => __DIR__ . '/..',
 		];
+	}
+
+	public function getJsScripts()
+	{
+		//TODO: bude potřeba celé toto přidávání vyřešit lépe (záleží na pořadí)
+		yield __DIR__ . '/../assets/grid.js';
 	}
 
 }
