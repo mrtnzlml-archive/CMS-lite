@@ -43,14 +43,10 @@ class PageForm extends AControl
 	/** @var Page */
 	private $editablePage;
 
-	private $editing = FALSE;
-
 	public function __construct($editablePage, PageProcess $pageProcess, EntityManager $em)
 	{
 		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
-		} else {
-			$this->editing = TRUE;
 		}
 		$this->editablePage = $editablePage;
 		$this->pageProcess = $pageProcess;
@@ -87,7 +83,7 @@ class PageForm extends AControl
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 
-		if ($this->editing) {
+		if ($this->editablePage !== NULL) { //EDITING
 			$form->setDefaults([
 				'title' => $this->editablePage->title,
 				'slug' => $this->editablePage->slug,
