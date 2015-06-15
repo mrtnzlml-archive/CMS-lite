@@ -1,5 +1,5 @@
 {form pageForm, onsubmit => 'cleanPageLocationStorage()'}
-	<ul class="error" n:if="$form->errors">
+	<ul class="alert alert-danger" n:if="$form->errors">
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
 	<div class="row">

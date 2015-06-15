@@ -2,5 +2,5 @@ services:
 	- Pages\PageProcess
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
-	- class: Pages\Listeners\FooListener
+	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]

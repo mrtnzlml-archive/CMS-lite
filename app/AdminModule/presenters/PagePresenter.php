@@ -47,6 +47,12 @@ class PagePresenter extends BasePresenter
 		$control->onSave[] = function () {
 			$this->flashMessage('Stránka byla úspěšně uložena.', 'success');
 		};
+		$control->onPublish[] = function () {
+			$this->flashMessage('Stránka byla úspěšně uložena a publikována.', 'success');
+		};
+		$control->onException[] = function () {
+			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.', 'danger');
+		};
 		$control->onComplete[] = function () {
 			$this->redirect('default');
 		};

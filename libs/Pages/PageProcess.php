@@ -5,11 +5,18 @@ namespace Pages;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 
+/**
+ * @method onSave(PageProcess $control, Page $entity)
+ * @method onPublish(PageProcess $control, Page $entity)
+ */
 class PageProcess extends Nette\Object
 {
 
 	/** @var \Closure[] */
-	public $onPersist = [];
+	public $onPublish = [];
+
+	/** @var \Closure[] */
+	public $onSave = [];
 
 	/** @var EntityManager */
 	private $em;
@@ -24,19 +31,32 @@ class PageProcess extends Nette\Object
 
 	public function publish(Page $page)
 	{
+		$page->publishedAt = new \DateTime();
+		$this->completePageEntity($page);
+		$this->em->persist($page);
+		$this->onPublish($this, $page);
+		// don't forget to call $em->flush() in your control
+	}
+
+	public function save(Page $page)
+	{
+		$this->completePageEntity($page);
+		$this->em->persist($page);
+		$this->onSave($this, $page);
+		// don't forget to call $em->flush() in your control
+	}
+
+	private function completePageEntity(Page $page)
+	{
 		if ($page->getTitle() === NULL) {
-			throw new Nette\InvalidArgumentException;
+			throw new Nette\InvalidArgumentException('You must set title of the page.');
 		}
 		if ($page->getBody() === NULL) {
-			throw new Nette\InvalidArgumentException;
+			throw new Nette\InvalidArgumentException('You must set body of the page.');
 		}
 		if ($page->getSlug() === NULL) {
 			$page->setSlug(Nette\Utils\Strings::webalize($page->getTitle()));
 		}
-		// $page->published = TRUE;
-		$this->em->persist($page);
-		$this->onPersist($this, $page);
-		// don't forget to call $em->flush() in your presenter
 	}
 
 }

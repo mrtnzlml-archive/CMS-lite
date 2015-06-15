@@ -92,4 +92,12 @@ class Page extends BaseEntity
 		$this->deleted = $deleted;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isPublished()
+	{
+		return $this->publishedAt ? TRUE : FALSE;
+	}
+
 }

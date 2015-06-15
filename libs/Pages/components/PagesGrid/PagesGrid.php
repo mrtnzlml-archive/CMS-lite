@@ -47,6 +47,7 @@ class PagesGrid extends AControl
 	public function handleDelete($id)
 	{
 		//TODO: is user allowed to delete this page? (same with edit)
+		//TODO: should set delete flag instead of actually deleting (?)
 		if ($page = $this->em->getRepository(Page::class)->find($id)) {
 			$this->em->remove($page);
 			$this->em->flush($page);

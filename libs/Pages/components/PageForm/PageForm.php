@@ -4,16 +4,21 @@ namespace Pages\Components\PageForm;
 
 use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
-use Kdyby\Translation\ITranslator;
-use Kdyby\Translation\Translator;
 use Nette;
 use Nette\Application\UI;
+use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 use Pages\Page;
 use Pages\PageCategory;
 use Pages\PageProcess;
 use Users\User;
 
+/**
+ * @method onSave(PageForm $control, Page $entity)
+ * @method onPublish(PageForm $control, Page $entity)
+ * @method onComplete(PageForm $control)
+ * @method onException(PageForm $control, \Exception $exc)
+ */
 class PageForm extends AControl
 {
 
@@ -21,10 +26,13 @@ class PageForm extends AControl
 	public $onSave = [];
 
 	/** @var \Closure[] */
+	public $onPublish = [];
+
+	/** @var \Closure[] */
 	public $onComplete = [];
 
-	/** @var Translator */
-	private $translator;
+	/** @var \Closure[] */
+	public $onException = [];
 
 	/** @var PageProcess */
 	private $pageProcess;
@@ -35,13 +43,16 @@ class PageForm extends AControl
 	/** @var Page */
 	private $editablePage;
 
-	public function __construct($editablePage, ITranslator $translator = NULL, PageProcess $pageProcess, EntityManager $em)
+	private $editing = FALSE;
+
+	public function __construct($editablePage, PageProcess $pageProcess, EntityManager $em)
 	{
-		if (!$editablePage) { //NEW
+		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
+		} else {
+			$this->editing = TRUE;
 		}
 		$this->editablePage = $editablePage;
-		$this->translator = $translator;
 		$this->pageProcess = $pageProcess;
 		$this->em = $em;
 	}
@@ -51,11 +62,11 @@ class PageForm extends AControl
 		if ($parameters) {
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
-		$this->template->showPublish = isset($this->editablePage) && $this->editablePage->publishedAt ? FALSE : TRUE;
+		$this->template->showPublish = $this->editablePage->isPublished() ? FALSE : TRUE;
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PageForm.latte');
 	}
 
-	public function createComponentPageForm()
+	protected function createComponentPageForm()
 	{
 		$form = new UI\Form;
 		$form->addProtection();
@@ -75,12 +86,8 @@ class PageForm extends AControl
 			[0 => 'Bez kategorie'] +
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
-		$form->addSubmit('save', 'Uložit');
-		$form->addSubmit('publish', 'Publikovat')->onClick[] = function () {
-			$this->editablePage->publishedAt = new \DateTime();
-		};
 
-		if ($this->editablePage) { //EDIT
+		if ($this->editing) {
 			$form->setDefaults([
 				'title' => $this->editablePage->title,
 				'slug' => $this->editablePage->slug,
@@ -89,38 +96,61 @@ class PageForm extends AControl
 			]);
 		}
 
-		$form->onSuccess[] = $this->pageFormSucceeded;
+		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
+		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
 		return $form;
 	}
 
-	public function pageFormSucceeded(UI\Form $form, Nette\Utils\ArrayHash $values)
+	public function savePage(SubmitButton $sender)
 	{
 		try {
-			$this->editablePage->setTitle($values->title);
-			$this->editablePage->setBody($values->editor);
-			if ($values->authors) {
-				/** @var User $author */
-				foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
-					//TODO: update autorů
-					$this->editablePage->addAuthor($author);
-				}
-			}
-			if ($values->categories) {
-				/** @var PageCategory $author */
-				foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
-					//TODO: update kategorií
-					$this->editablePage->addCategory($category);
-				}
-			}
-			$this->pageProcess->onPersist[] = function (PageProcess $process, Page $page) {
+			$entity = $this->editablePage;
+			$this->fillEntityWithValues($entity, $sender->getForm()->getValues());
+			$this->pageProcess->onSave[] = function (PageProcess $process, Page $page) use ($entity) {
 				$this->em->flush($page);
-				$this->onSave();
+				$this->onSave($this, $entity);
 			};
-			$this->pageProcess->publish($this->editablePage);
+			$this->pageProcess->save($entity);
 		} catch (\Exception $exc) {
-			$this->presenter->flashMessage($exc->getMessage(), 'danger');
+			$this->onException($this, $exc);
 		}
-		$this->onComplete();
+		$this->onComplete($this);
+	}
+
+	public function publishPage(SubmitButton $sender)
+	{
+		try {
+			$entity = $this->editablePage;
+			$this->fillEntityWithValues($entity, $sender->getForm()->getValues());
+			$this->pageProcess->onPublish[] = function (PageProcess $process, Page $page) use ($entity) {
+				$this->em->flush($page);
+				$this->onPublish($this, $entity);
+			};
+			$this->pageProcess->publish($entity);
+		} catch (\Exception $exc) {
+			$this->onException($this, $exc);
+		}
+		$this->onComplete($this);
+	}
+
+	private function fillEntityWithValues(Page $entity, ArrayHash $values)
+	{
+		$entity->setTitle($values->title);
+		$entity->setBody($values->editor);
+		if ($values->authors) {
+			/** @var User $author */
+			foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
+				//TODO: update autorů
+				$entity->addAuthor($author);
+			}
+		}
+		if ($values->categories) {
+			/** @var PageCategory $author */
+			foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
+				//TODO: update kategorií
+				$entity->addCategory($category);
+			}
+		}
 	}
 
 }
