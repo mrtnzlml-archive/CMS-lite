@@ -2,5 +2,6 @@
 # http://nette.org/security-warning
 
 services:
-	router: App\Router\RouterFactory::createRouter
+	- App\Router\RouterFactory
+	router: @App\Router\RouterFactory::createRouter
 	- App\AuthModule\Presenters\SignPresenter(%frontLayout%)
