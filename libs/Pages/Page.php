@@ -10,6 +10,12 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 /**
  * @ORM\Entity
  * @ORM\Table(name="pages")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=10)
+ * @ORM\DiscriminatorMap({
+ *      "page" = "Page",
+ *      "news" = "News"
+ * })
  *
  * @method setTitle(string)
  * @method string getTitle()
