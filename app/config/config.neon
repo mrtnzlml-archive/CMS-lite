@@ -43,7 +43,6 @@ monolog:
     name: CMS # Syslog only
     handlers:
     	- Monolog\Handler\RotatingFileHandler(%appDir%/../log/syslog.log, 30)
-    	- Monolog\Handler\SlackHandler('xoxp-4887199231-4887199235-6370206292-b83657', '#testing', 'Monolog', TRUE, 'shit', 500, TRUE, FALSE, TRUE)
     processors:
     	- Monolog\Processor\IntrospectionProcessor
     	- Monolog\Processor\WebProcessor
