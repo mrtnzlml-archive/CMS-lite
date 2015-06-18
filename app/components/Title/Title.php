@@ -9,14 +9,13 @@ use Nette\Application\UI;
 use Options\Option;
 use Pages\Query\OptionsQuery;
 
-/**
- * FIXME: nelze ovlivňovat bloky šablon z jiných komponent, nebo nadřazených šablon => nepoužitelné... :-(
- */
 class Title extends Components\AControl
 {
 
 	/** @var EntityManager */
 	private $em;
+
+	private $title = NULL;
 
 	public function __construct(EntityManager $em)
 	{
@@ -28,15 +27,29 @@ class Title extends Components\AControl
 		if ($parameters) {
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
+		$this->template->title = $this->getTitle();
+		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Title.latte');
+	}
 
+	public function setTitle($title)
+	{
+		if ($this->title !== NULL) {
+			throw new Nette\InvalidStateException(sprintf('You are trying to override current title (%s).', $this->getTitle()));
+		}
+		$this->title = $title;
+	}
+
+	private function getTitle()
+	{
 		$query = (new OptionsQuery)->withOptions([
 			'site_title',
 			'site_title_separator',
 		]);
-		$options = $this->em->getRepository(Option::class)->fetch($query);
-		$this->template->options = Nette\Utils\ArrayHash::from($options);
-
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Title.latte');
+		$options = Nette\Utils\ArrayHash::from($this->em->getRepository(Option::class)->fetch($query));
+		$separator = isset($options->site_title_separator)
+			? ($this->title ? $options->site_title_separator->value : NULL)
+			: ($this->title ? '|' : NULL);
+		return "$this->title $separator {$options->site_title->value}";
 	}
 
 }

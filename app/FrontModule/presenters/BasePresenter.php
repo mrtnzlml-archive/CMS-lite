@@ -14,7 +14,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
-	public function beforeRender()
+	protected function beforeRender()
 	{
 		$this->template->locale = $this->locale;
 	}
@@ -29,6 +29,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		});
 
 		return $template;
+	}
+
+	protected function setTitle($title)
+	{
+		$this['title']->setTitle($title);
 	}
 
 }

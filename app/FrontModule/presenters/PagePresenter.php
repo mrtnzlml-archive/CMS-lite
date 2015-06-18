@@ -16,6 +16,7 @@ class PagePresenter extends BasePresenter
 	public function actionDefault($slug)
 	{
 		$page = $this->em->getRepository(Page::class)->findOneBy(['slug' => $slug]);
+		$this->setTitle($page->title);
 		$this->template->page = $page;
 	}
 
