@@ -7,7 +7,7 @@
 	{/if}
 	{if $pages}
 		{foreach $pages as $page}
-			<a>{$page->title}</a>{* TODO *}
+			<a href="{plink :Front:Page: $page->slug}">{$page->title}</a>
 		{/foreach}
 	{/if}
 	<a href="{plink :Contact:}">{_'Kontakt'}</a>
