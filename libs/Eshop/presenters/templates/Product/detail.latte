@@ -1,0 +1,201 @@
+{block content}
+	<!-- Product Details -->
+	<section class="product_details type2">
+		<div class="row">
+			<div class="col-lg-5 col-sm-5 padbot40">
+				<div class="product_item_details">
+					<div id="slider2" class="flexslider">
+						<ul class="slides">
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/1.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/2.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/3.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/4.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/5.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/6.jpg" alt="" /></a></li>
+						</ul>
+					</div>
+					<div id="carousel2" class="flexslider">
+						<ul class="slides">
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/1.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/2.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/3.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/4.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/5.jpg" alt="" /></a></li>
+							<li><a href="javascript:void(0);"><img src="{$basePath}/images/products/6.jpg" alt="" /></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="col-lg-7 col-sm-7 padbot0">
+				<h2>{$product->title}</h2>
+				<span class="rating">
+					<input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1" />
+					<label for="rating-input-1-5" class="rating-star glyphicon glyphicon-star"></label>
+					<input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1" />
+					<label for="rating-input-1-4" class="rating-star glyphicon glyphicon-star"></label>
+					<input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1" />
+					<label for="rating-input-1-3" class="rating-star glyphicon glyphicon-star"></label>
+					<input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1" />
+					<label for="rating-input-1-2" class="rating-star glyphicon glyphicon-star"></label>
+					<input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1" />
+					<label for="rating-input-1-1" class="rating-star glyphicon glyphicon-star"></label>
+				</span>
+				<span class="review_block">
+					<a href="javascript:void(0);">5 review</a> | <a href="javascript:void(0);">Add Your Reviews</a>
+				</span>
+				<div class="price_block clearfix">
+					<div class="old_price">$970.00</div>
+					<div class="product_price">$758.00</div>
+				</div>
+				<hr>
+				<ul class="product_info margbot20">
+					<li><span>Brand :</span> HTC</li>
+					<li><span>Product code :</span> Product 17</li>
+					<li><span>Availability :</span> In Stock</li>
+				</ul>
+				<ul class="color_choice margbot20">
+					<li class="color1"><a href="javascript:void(0);"></a></li>
+					<li class="color2"><a href="javascript:void(0);"></a></li>
+					<li class="color3"><a href="javascript:void(0);"></a></li>
+				</ul>
+				<ul class="quantity_block clearfix">
+					<li class="quantity">quantity:</li>
+					<li class="product-amount">
+						<form method="post" action="">
+							<input type="text" name="french-hens" value="0">
+							<a class="plus button" href="javascript:void(0);">+</a>
+							<a class="minus button" href="javascript:void(0);">-</a>
+						</form>
+						<script>
+							$(".button").on("click", function() {
+								var $button = $(this);
+								var oldValue = $button.parent().find("input").val();
+
+								if ($button.text() == "+") {
+									var newVal = parseFloat(oldValue) + 1;
+								} else {
+									// Don't allow decrementing below zero
+									if (oldValue > 0) {
+										var newVal = parseFloat(oldValue) - 1;
+									} else {
+										newVal = 0;
+									}
+								}
+								$button.parent().find("input").val(newVal);
+							});
+						</script>
+					</li>
+					<li class="product_inf">
+						<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+						<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+						<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+					</li>
+				</ul>
+				<hr>
+				{$product->description|texy}
+				<hr>
+				<!-- Product Socials -->
+				<ul class="product_social">
+					<li><a class="soc1" href="javascript:void(0);" alt=""></a></li>
+					<li><a class="soc2" href="javascript:void(0);" alt=""></a></li>
+					<li><a class="soc3" href="javascript:void(0);" alt=""></a></li>
+				</ul><!-- //Product Socials -->
+			</div>
+		</div>
+	</section><!-- //Product Details -->
+
+	<!-- Related Production -->
+	<section class="product_page">
+		<h2>Related Production</h2>
+
+		<!-- JCAROUSEL -->
+		<div class="jCarousel_pagination right">
+			<a href="#" class="jcarousel-control-prev"></a>
+			<a href="#" class="jcarousel-control-next"></a>
+		</div>
+
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<li>
+						<div class="product_item2">
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/5.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>Vestibulum imperdiet</h4>
+								<div class="price color_text">$366.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="product_item2">
+							<div class="sale">Sale</div>
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/6.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>Tempus libero</h4>
+								<div class="old_price">$735.00</div>
+								<div class="price color_text">$567.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="product_item2">
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/7.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>Integer consectetur</h4>
+								<div class="price color_text">$788.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="product_item2">
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/8.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>In tempor risus</h4>
+								<div class="price color_text">$687.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="product_item2">
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/9.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>Sed venenatis</h4>
+								<div class="price color_text">$366.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="product_item2">
+							<div class="sale">Sale</div>
+							<a class="product_foto" href="product-page.html" alt=""><img src="{$basePath}/images/products/1.jpg" alt="" /></a>
+							<div class="product_inf">
+								<h4>Integer consectetur</h4>
+								<div class="old_price">$735.00</div>
+								<div class="price color_text">$567.00</div>
+								<a class="add_cart" href="javascript:void(0);" alt="">Add to cart</a>
+								<a class="btn_like2 glyphicon glyphicon-heart" href="javascript:void(0);"></a>
+								<a class="btn_com glyphicon glyphicon-signal" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div><!-- //JCAROUSEL -->
+	</section><!-- //RELATED PRODUCTION -->
+{/block}

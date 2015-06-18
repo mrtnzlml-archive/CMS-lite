@@ -22,12 +22,24 @@ class ProductPresenter extends BasePresenter
 		$this->em = $em;
 	}
 
-	public function renderDefault()
+	public function renderDefault($slug = NULL)
 	{
+		if ($slug !== NULL) {
+			$this->forward(':Eshop:Product:detail', $slug);
+		}
 		$this->setTitle('Eshop');
 		$query = new ProductQuery();
 		$products = $this->em->getRepository(Product::class)->fetch($query);
 		$this->template->products = $products;
+	}
+
+	public function renderDetail($slug)
+	{
+		$product = $this->em->getRepository(Product::class)->findOneBy(['slug' => $slug]);
+		if (!$product) {
+			$this->error('Product not found.');
+		}
+		$this->template->product = $product;
 	}
 
 	public function findLayoutTemplateFile()

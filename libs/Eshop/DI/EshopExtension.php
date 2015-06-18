@@ -44,6 +44,7 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 		//TODO: dynamic language routing
 		$router = new RouteList();
 		$router[] = $eshop = new RouteList('Eshop');
+		$eshop[] = new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<slug>]', 'Product:default');
 		$eshop[] = new Nette\Application\Routers\Route('[<locale=cs cs|en>/]eshop[/<presenter>[/<action>[/<id>]]]', 'Product:default');
 		return $router;
 	}
