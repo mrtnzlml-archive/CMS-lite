@@ -14,7 +14,8 @@ class EshopPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$products = $this->em->getRepository(Product::class)->fetch(new ProductQuery);
+		$query = (new ProductQuery)->withAllDeliveries();
+		$products = $this->em->getRepository(Product::class)->fetch($query);
 		$this->template->products = $products;
 	}
 

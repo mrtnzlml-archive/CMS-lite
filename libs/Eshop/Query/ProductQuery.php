@@ -18,6 +18,14 @@ class ProductQuery extends Kdyby\Doctrine\QueryObject
 	 */
 	private $select = [];
 
+	public function withAllDeliveries()
+	{
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
+			$qb->leftJoin('product.deliveries', 'delivery')->addSelect('delivery');
+		};
+		return $this;
+	}
+
 	/**
 	 * @param \Kdyby\Persistence\Queryable $repository
 	 *
