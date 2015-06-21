@@ -19,6 +19,14 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 	 */
 	private $select = [];
 
+	public function onlyMenuItems()
+	{
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
+			$qb->select('partial page.{id, title, slug}');
+		};
+		return $this;
+	}
+
 	public function byAuthor(User $user)
 	{
 		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($user) {

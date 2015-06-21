@@ -49,7 +49,7 @@ class MainMenu extends AControl
 		$contact->setTitle('Kontakt')->setLink(':Front:Contact:');
 		$this->addMainMenuItem($contact);
 
-		$pages = $this->em->getRepository(Page::class)->fetch((new PagesQuery));
+		$pages = $this->em->getRepository(Page::class)->fetch((new PagesQuery)->onlyMenuItems());
 		//TODO: priority of page menu items
 		/** @var Page $page */
 		foreach ($pages as $page) {
