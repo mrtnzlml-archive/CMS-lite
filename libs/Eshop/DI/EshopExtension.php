@@ -14,6 +14,8 @@ use Nette\Application\Routers\RouteList;
 class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IMainMenuProvider, IRouterProvider
 {
 
+	const ESHOP_MENU_PRIORITY = 1000;
+
 	public function loadConfiguration()
 	{
 		$config = $this->loadFromFile(__DIR__ . '/config.neon');
@@ -63,7 +65,7 @@ class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 
 	public function getMenuItems()
 	{
-		$menuItem = new MainMenuItem();
+		$menuItem = new MainMenuItem(self::ESHOP_MENU_PRIORITY);
 		$menuItem->setTitle('Eshop');
 		$menuItem->setLink(':Eshop:Product:default');
 		return [

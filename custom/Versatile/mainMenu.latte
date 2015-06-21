@@ -16,14 +16,9 @@
 
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li class="first"><a href="{plink :Front:Homepage:}" title="">Home</a></li>
-			<li n:foreach="$pages as $page">
-				<a href="{plink :Front:Page: $page->slug}">{$page->title}</a>
+			<li n:foreach="$items as $item" n:class="$iterator->first ? first, $iterator->last ? last">
+				<a href="{$item->link}">{$item->title}</a>
 			</li>
-			<li n:foreach="$items as $item">
-				<a href="{plink $item->link}">{$item->title}</a>
-			</li>
-			<li class="last"><a href="{plink :Front:Contact:}" title="">Contacts</a></li>
 		</ul>
 	</div>
 </div>

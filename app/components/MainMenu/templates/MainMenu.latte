@@ -1,14 +1,7 @@
 <div class="main-menu">
-	<a href="{plink :Homepage:}" title="">Home</a>
 	{if $items}
 		{foreach $items as $item}
-			<a href="{plink $item->link}">{$item->title}</a>
+			<a href="{$item->link}">{$item->title}</a>
 		{/foreach}
 	{/if}
-	{if $pages}
-		{foreach $pages as $page}
-			<a href="{plink :Front:Page: $page->slug}">{$page->title}</a>
-		{/foreach}
-	{/if}
-	<a href="{plink :Contact:}">{_'Kontakt'}</a>
 </div>
