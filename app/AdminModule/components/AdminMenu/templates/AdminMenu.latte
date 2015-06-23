@@ -1,0 +1,44 @@
+<div class="col-sm-3 col-md-2 sidebar">
+	<ul class="nav nav-sidebar">
+		<li {if $presenter->name === 'Admin:Dashboard'}class="active"{/if}>
+			<a href="{plink :Admin:Dashboard:}">
+				{_Nástěnka}
+				{if $presenter->name === 'Admin:Dashboard'}
+					<span class="sr-only"> ({_aktuální})</span>
+				{/if}
+			</a>
+		</li>
+		<li {if $presenter->name === 'Admin:Page'}class="active"{/if}>
+			<a href="{plink :Admin:Page:}">
+				{_Stránky}
+				{if $presenter->name === 'Admin:Page'}
+					<span class="sr-only"> ({_aktuální})</span>
+				{/if}
+			</a>
+		</li>
+
+		<li {if $presenter->name === 'Admin:Eshop'}class="active"{/if}>
+			{* FIXME: should be part of Eshop ext *}
+			<a href="{plink :Admin:Eshop:}">
+				{_Eshop}
+				{if $presenter->name === 'Admin:Eshop'}
+					<span class="sr-only"> ({_aktuální})</span>
+				{/if}
+			</a>
+		</li>
+
+		<li>
+			<a>
+				<del>{_Uživatelé}</del>
+			</a>
+		</li>
+		<li {if $presenter->name === 'Admin:Options'}class="active"{/if}>
+			<a href="{plink :Admin:Options:general}">
+				{_Nastavení}
+				{if $presenter->name === 'Admin:Options'}
+					<span class="sr-only"> ({_aktuální})</span>
+				{/if}
+			</a>
+		</li>
+	</ul>
+</div>

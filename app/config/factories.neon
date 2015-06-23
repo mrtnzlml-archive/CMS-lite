@@ -17,3 +17,5 @@ services:
 	- App\Components\SignInForm\ISignInFormFactory
 	- App\Components\Title\ITitleFactory
 	- App\Components\MainMenu\IWrapperFactory
+
+	- App\AdminModule\Components\IAdminMenuFactory

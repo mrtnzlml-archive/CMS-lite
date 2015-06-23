@@ -36,4 +36,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->template->locale = $this->locale;
 	}
 
+	protected function createComponentAdminMenu(App\AdminModule\Components\IAdminMenuFactory $factory)
+	{
+		return $factory->create();
+	}
+
 }
