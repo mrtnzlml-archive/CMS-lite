@@ -48,7 +48,8 @@ class PagesGrid extends AControl
 	{
 		//TODO: is user allowed to delete this page? (same with edit)
 		//TODO: should set delete flag instead of actually deleting (?)
-		if ($page = $this->em->getRepository(Page::class)->find($id)) {
+		//TODO: log
+		if ($page = $this->em->getPartialReference(Page::class, $id)) {
 			$this->em->remove($page);
 			$this->em->flush($page);
 		}
