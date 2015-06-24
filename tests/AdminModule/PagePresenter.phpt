@@ -31,10 +31,7 @@ class PagePresenter extends \PresenterTestCase
 	public function testRenderDefaultLoggedOut()
 	{
 		$this->logOut();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('default');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('default', '/auth');
 	}
 
 	public function testRenderNew()
@@ -45,18 +42,12 @@ class PagePresenter extends \PresenterTestCase
 	public function testRenderNewLoggedOut()
 	{
 		$this->logOut();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('new');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('new', '/auth');
 	}
 
 	public function testRenderEmptyEditRedirect()
 	{
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('edit');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::same('https://fake.url/administrace/page/new', $response->getUrl());
+		$this->checkRedirect('edit', '/administrace/page/new');
 	}
 
 	public function testRenderEdit()
@@ -70,12 +61,9 @@ class PagePresenter extends \PresenterTestCase
 
 	public function testRenderEditMissingId()
 	{
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('edit', 'GET', [
+		$this->checkRedirect('edit', '/administrace/page/new', 'GET', [
 			'id' => 'missing'
 		]);
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::same('https://fake.url/administrace/page/new', $response->getUrl());
 	}
 
 }

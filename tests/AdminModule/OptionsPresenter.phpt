@@ -26,10 +26,7 @@ class OptionsPresenter extends \PresenterTestCase
 	public function testRenderGeneralLoggedOut()
 	{
 		$this->logOut();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('general');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('general', '/auth');
 	}
 
 	public function testRenderSeo()
@@ -40,10 +37,7 @@ class OptionsPresenter extends \PresenterTestCase
 	public function testRenderSeoLoggedOut()
 	{
 		$this->logOut();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('seo');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('seo', '/auth');
 	}
 
 }

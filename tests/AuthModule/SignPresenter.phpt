@@ -31,19 +31,13 @@ class SignPresenter extends \PresenterTestCase
 	public function testRenderInLogged()
 	{
 		$this->logIn();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('in');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::same('https://fake.url/administrace', $response->getUrl());
+		$this->checkRedirect('in', '/administrace');
 	}
 
 	public function testLogOut()
 	{
 		$this->logIn();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('out');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('out', '/auth');
 	}
 
 }

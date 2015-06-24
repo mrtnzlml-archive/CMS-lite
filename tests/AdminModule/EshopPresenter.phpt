@@ -26,10 +26,7 @@ class EshopPresenter extends \PresenterTestCase
 	public function testRenderDefaultLoggedOut()
 	{
 		$this->logOut();
-		/** @var \Nette\Application\Responses\RedirectResponse $response */
-		$response = $this->checkRedirect('default');
-		Tester\Assert::same(302, $response->getCode());
-		Tester\Assert::match('~https://fake.url/auth\?backlink=[a-z0-9]{5}&_fid=[a-z0-9]{4}~', $response->getUrl());
+		$this->checkRedirect('default', '/auth');
 	}
 
 }
