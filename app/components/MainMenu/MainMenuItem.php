@@ -8,15 +8,17 @@ use Nette;
  * @method string getTitle()
  * @method setTitle(string)
  * @method string getLink()
- * @method setLink()
  * @method integer getPriority()
  * @method setPriority(integer)
+ * @method array getLinkParameters()
  */
 class MainMenuItem extends Nette\Object
 {
 
 	private $title;
+
 	private $link;
+	private $linkParameters = [];
 
 	private $priority;
 
@@ -30,6 +32,13 @@ class MainMenuItem extends Nette\Object
 			throw new Nette\InvalidArgumentException(sprintf('Priority should be numeric, %s given.', gettype($priority)));
 		}
 		$this->priority = $priority;
+	}
+
+	public function setLink($link, array $parameters = [])
+	{
+		$this->link = $link;
+		$this->linkParameters = $parameters;
+		return $this;
 	}
 
 }

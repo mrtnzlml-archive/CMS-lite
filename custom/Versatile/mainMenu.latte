@@ -17,7 +17,9 @@
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
 			<li n:foreach="$items as $item" n:class="$iterator->first ? first, $iterator->last ? last">
-				<a href="{$item->link}">{$item->title}</a>
+				<a href="{plink $item->link (expand) $item->linkParameters}">
+					{$item->title}
+				</a>
 			</li>
 		</ul>
 	</div>

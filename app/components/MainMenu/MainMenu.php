@@ -53,16 +53,10 @@ class MainMenu extends AControl
 		//TODO: priority of page menu items
 		/** @var Page $page */
 		foreach ($pages as $page) {
-			$item = (new MainMenuItem)->setTitle($page->title)->setLink($this->presenter->lazyLink(':Front:Page:', $page->slug));
+			$item = (new MainMenuItem)->setTitle($page->title)->setLink(':Front:Page:', [
+				'slug' => $page->getSlug(),
+			]);
 			$this->addMainMenuItem($item);
-		}
-
-		//Extensions cannot create links properly during compile time, co we have to fix it...
-		foreach (clone $this->itemsQueue as $item) {
-			$link = $item->getLink();
-			if (!$link instanceof Nette\Application\UI\Link) {
-				$item->setLink($this->getPresenter()->lazyLink($link));
-			}
 		}
 	}
 
