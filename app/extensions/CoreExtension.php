@@ -14,7 +14,6 @@ class CoreExtension extends Nette\DI\CompilerExtension
 
 	private $defaultConfiguration = [
 		'https' => TRUE,
-//		'debugger' => TRUE,
 	];
 
 	/** @var bool */
