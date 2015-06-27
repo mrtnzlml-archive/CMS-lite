@@ -41,6 +41,7 @@ class Css extends Nette\Application\UI\Control
 	protected function createComponentCss()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/css');
+		$files->addFile('bootstrap.min.css');
 		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
@@ -59,7 +60,7 @@ class Css extends Nette\Application\UI\Control
 	protected function createComponentCssAdmin()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/css');
-		$files->addRemoteFile('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css');
+		$files->addFile('bootstrap.min.css');
 		$files->addFile('admin.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
