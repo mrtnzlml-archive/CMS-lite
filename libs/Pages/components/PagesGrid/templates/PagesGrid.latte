@@ -1,43 +1,53 @@
-<table class="table table-striped">
-	<thead>
-	<tr>
-		<th>
-			<input type="checkbox" id="selectAll">
-		</th>
-		<th>Titulek</th>
-		<th>Autoři</th>
-		<th>Kategorie</th>
-		<th>Publikována</th>
-		<th>&nbsp;</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr n:foreach="$pages as $page">
-		<td>
-			<input type="checkbox" name="pages[]">
-		</td>
-		<td>{$page->title}</td>
-		<td>
-			{foreach $page->authors as $author}
-				{$author->email}{sep}, {/sep}
-			{/foreach}
-		</td>
-		<td>
-			{foreach $page->categories as $category}
-				{$category->name}{sep}, {/sep}
-			{/foreach}
-		</td>
-		<td>
-			{if $page->publishedAt}
-				<span class="label label-success">ANO</span>
-			{else}
-				<span class="label label-danger">NE - uložena</span>
-			{/if}
-		</td>
-		<td>
-			<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
-			<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
-		</td>
-	</tr>
-	</tbody>
-</table>
+<form n:name="gridForm">
+	{dump $multiEdit}
+	{if $multiEdit}
+		<h4>Hromadná editace</h4>
+		{control multiEdit}
+	{/if}
+
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>
+				<input type="checkbox" id="selectAll">
+			</th>
+			<th>Titulek</th>
+			<th>Autoři</th>
+			<th>Kategorie</th>
+			<th>Publikována</th>
+			<th>&nbsp;</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr n:foreach="$pages as $page">
+			<td>
+				{input page-$page->id}
+			</td>
+			<td>{$page->title}</td>
+			<td>
+				{foreach $page->authors as $author}
+					{$author->email}{sep}, {/sep}
+				{/foreach}
+			</td>
+			<td>
+				{foreach $page->categories as $category}
+					{$category->name}{sep}, {/sep}
+				{/foreach}
+			</td>
+			<td>
+				{if $page->publishedAt}
+					<span class="label label-success">ANO</span>
+				{else}
+					<span class="label label-danger">NE - uložena</span>
+				{/if}
+			</td>
+			<td>
+				<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
+				<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	{input action}
+	{input submit}
+</form>

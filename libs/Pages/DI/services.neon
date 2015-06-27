@@ -1,5 +1,6 @@
 services:
 	- Pages\PageProcess
+	- Pages\Components\MultiEdit\IMultiEditFactory
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
 	- class: Pages\Listeners\PageLoggerListener

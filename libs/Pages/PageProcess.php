@@ -46,6 +46,8 @@ class PageProcess extends Nette\Object
 		// don't forget to call $em->flush() in your control
 	}
 
+	//TODO: delete (přijímá i pole a iteruje jej)
+
 	private function completePageEntity(Page $page)
 	{
 		if ($page->getTitle() === NULL) {
