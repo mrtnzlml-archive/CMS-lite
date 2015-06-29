@@ -6,11 +6,13 @@ use App\Traits\PublicComponentsTrait;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
+use Nextras;
 
 abstract class AControl extends Control implements IComponentTemplateProvider
 {
 
 	use PublicComponentsTrait;
+	use Nextras\Application\UI\SecuredLinksControlTrait;
 
 	/** @var Translator|ITranslator */
 	private $translator;

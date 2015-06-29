@@ -47,6 +47,7 @@ class SignPresenter extends Nette\Application\UI\Presenter
 
 	public function actionOut()
 	{
+		//TODO: CSRF protection?
 		$this->getUser()->logout();
 		$this->flashMessage('Odhlášení bylo úspěšné.', 'info');
 		$this->restoreRequest($this->backlink);

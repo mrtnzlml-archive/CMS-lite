@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "14b0297dd65f220e9cd25ac11757da62",
+    "hash": "e8802c7b0564e760e4946973da658b00",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2724,6 +2724,63 @@
             "time": "2015-06-17 17:12:44"
         },
         {
+            "name": "nextras/secured-links",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/secured-links.git",
+                "reference": "244b85fb33fa8e582e3144a592a1a8adf8884aa0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/secured-links/zipball/244b85fb33fa8e582e3144a592a1a8adf8884aa0",
+                "reference": "244b85fb33fa8e582e3144a592a1a8adf8884aa0",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.2",
+                "nette/utils": "~2.2",
+                "php": ">=5.4"
+            },
+            "replace": {
+                "nextras/application": "self.version"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "nette/tester": "~1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\Application\\UI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Skrasek",
+                    "email": "hrach.cz@gmail.com",
+                    "homepage": "http://jan.skrasek.com"
+                }
+            ],
+            "description": "Package secures Nette Framework signals against CSRF attack.",
+            "keywords": [
+                "application",
+                "nette",
+                "nextras",
+                "secured signals"
+            ],
+            "time": "2015-06-21 16:18:06"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -3155,7 +3212,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrtnzlml/testbench/zipball/4d00153dfd9c5a4bcc79bb0be1b2cd4013889030",
+                "url": "https://api.github.com/repos/mrtnzlml/testbench/zipball/df5b65c494538958d73e07f9a5ee44f2d590a607",
                 "reference": "4d00153dfd9c5a4bcc79bb0be1b2cd4013889030",
                 "shasum": ""
             },

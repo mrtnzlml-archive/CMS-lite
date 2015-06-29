@@ -4,6 +4,7 @@ namespace App\AdminModule\Presenters;
 
 use App;
 use Nette;
+use Nextras;
 use Users;
 use WebLoader;
 
@@ -11,6 +12,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
 	use App\Traits\PublicComponentsTrait;
+	use Nextras\Application\UI\SecuredLinksPresenterTrait;
 
 	/** @persistent */
 	public $locale;

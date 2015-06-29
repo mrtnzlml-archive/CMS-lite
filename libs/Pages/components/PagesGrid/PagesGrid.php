@@ -88,6 +88,9 @@ class PagesGrid extends AControl
 		return $this->multiEditFactory->create($this->multiEdit);
 	}
 
+	/**
+	 * @secured
+	 */
 	public function handleDelete($id)
 	{
 		//TODO: is user allowed to delete this page? (same with edit)
