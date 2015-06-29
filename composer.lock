@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e8802c7b0564e760e4946973da658b00",
+    "hash": "c19eace7a5fab79e0baf2eb6beecd794",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3208,12 +3208,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mrtnzlml/testbench.git",
-                "reference": "4d00153dfd9c5a4bcc79bb0be1b2cd4013889030"
+                "reference": "df5b65c494538958d73e07f9a5ee44f2d590a607"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/mrtnzlml/testbench/zipball/df5b65c494538958d73e07f9a5ee44f2d590a607",
-                "reference": "4d00153dfd9c5a4bcc79bb0be1b2cd4013889030",
+                "reference": "df5b65c494538958d73e07f9a5ee44f2d590a607",
                 "shasum": ""
             },
             "require": {
@@ -3247,7 +3247,7 @@
                     "homepage": "http://www.zeminem.cz/"
                 }
             ],
-            "time": "2015-06-24 09:05:46"
+            "time": "2015-06-27 15:15:31"
         },
         {
             "name": "nette/tester",
