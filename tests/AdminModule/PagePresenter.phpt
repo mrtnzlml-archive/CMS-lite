@@ -54,14 +54,14 @@ class PagePresenter extends \PresenterTestCase
 	{
 		/** @var \Pages\Page $page */
 		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
-		$this->checkAction('edit', 'GET', [
+		$this->checkAction('edit', [
 			'id' => $page->getId(),
 		]);
 	}
 
 	public function testRenderEditMissingId()
 	{
-		$this->checkRedirect('edit', '/administrace/page/new', 'GET', [
+		$this->checkRedirect('edit', '/administrace/page/new', [
 			'id' => 'missing'
 		]);
 	}

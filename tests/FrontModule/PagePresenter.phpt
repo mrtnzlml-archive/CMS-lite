@@ -21,7 +21,7 @@ class PagePresenter extends \PresenterTestCase
 	{
 		/** @var \Pages\Page $page */
 		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
-		$this->checkAction('default', 'GET', [
+		$this->checkAction('default', [
 			'slug' => $page->getSlug(),
 		]);
 	}
@@ -36,7 +36,7 @@ class PagePresenter extends \PresenterTestCase
 	public function testRenderDefaultNonExist()
 	{
 		Tester\Assert::exception(function () {
-			$this->checkAction('default', 'GET', [
+			$this->checkAction('default', [
 				'slug' => md5('this-slug-probably-does-not-exist'),
 			]);
 		}, Nette\Application\BadRequestException::class, 'Page not found.');
