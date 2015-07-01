@@ -82,16 +82,10 @@ class PageForm extends AControl
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 
-		if ($this->editablePage !== NULL) { //EDITING
-			$form->setDefaults([
-				'title' => $this->editablePage->title,
-				'slug' => $this->editablePage->slug,
-				'editor' => $this->editablePage->body,
-				'authors' => $this->editablePage->getAuthorsIds(),
-				'categories' => $this->editablePage->getCategoriesIds(),
-			]);
-		}
+		// OPTIMIZATION:
+		$form->addText('individualTitle', 'Individuální titulek');
 
+		$this->setDefaults($form);
 		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
 		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
 		$form->addSubmit('preview', 'Zobrazit stránku')->onClick[] = function (SubmitButton $sender) {
@@ -139,6 +133,7 @@ class PageForm extends AControl
 	{
 		$entity->setTitle($values->title);
 		$entity->setBody($values->editor);
+		$entity->setIndividualTitle($values->individualTitle);
 
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
@@ -154,6 +149,20 @@ class PageForm extends AControl
 				$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
 				$entity->addCategory($categoryRef);
 			}
+		}
+	}
+
+	private function setDefaults(UI\Form $form)
+	{
+		if ($this->editablePage !== NULL) { //EDITING
+			$form->setDefaults([
+				'title' => $this->editablePage->title,
+				'slug' => $this->editablePage->slug,
+				'editor' => $this->editablePage->body,
+				'authors' => $this->editablePage->getAuthorsIds(),
+				'categories' => $this->editablePage->getCategoriesIds(),
+				'individualTitle' => $this->editablePage->getIndividualTitle(),
+			]);
 		}
 	}
 

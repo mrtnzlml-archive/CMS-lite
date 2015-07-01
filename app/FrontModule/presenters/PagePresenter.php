@@ -22,7 +22,7 @@ class PagePresenter extends BasePresenter
 		if ($page === NULL) {
 			$this->error('Page not found.');
 		}
-		$this->setTitle($page->title);
+		$this->setTitle($page->individualTitle ?: $page->title);
 		$this->template->page = $page;
 	}
 

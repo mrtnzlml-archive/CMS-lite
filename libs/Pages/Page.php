@@ -25,6 +25,8 @@ use Users\User;
  * @method setBody(string)
  * @method string getBody()
  * @method boolean getDeleted()
+ * @method setIndividualTitle(string)
+ * @method string getIndividualTitle()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -48,6 +50,12 @@ class Page extends BaseEntity
 	 * @var string
 	 */
 	protected $title;
+
+	/**
+	 * @ORM\Column(type="text", nullable=TRUE, options={"comment":"Meta title of the article"})
+	 * @var string
+	 */
+	protected $individualTitle = NULL;
 
 	/**
 	 * @ORM\Column(type="text", options={"comment":"Webalized title (slug) of the article"})
