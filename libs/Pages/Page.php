@@ -29,6 +29,10 @@ use Users\User;
  * @method string getIndividualTitle()
  * @method setDescription(string)
  * @method string getDescription()
+ * @method setIndex(string)
+ * @method string getIndex()
+ * @method setFollow(string)
+ * @method string getFollow()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -76,6 +80,18 @@ class Page extends BaseEntity
 	 * @var string
 	 */
 	protected $body;
+
+	/**
+	 * @ORM\Column(type="string", name="`index`", nullable=TRUE, options={"comment":"Meta robots - index value"})
+	 * @var string
+	 */
+	protected $index = NULL;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Meta robots - follow value"})
+	 * @var string
+	 */
+	protected $follow = NULL;
 
 	/**
 	 * @ORM\Column(type="datetime", options={"comment":"Date of the article creation"})

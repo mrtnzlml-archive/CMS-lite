@@ -22,6 +22,9 @@ class PagePresenter extends BasePresenter
 		if ($page === NULL) {
 			$this->error('Page not found.');
 		}
+		$this['meta']->setRobots([
+			$page->index, $page->follow,
+		]);
 		$this->setTitle($page->individualTitle ?: $page->title);
 		$this->setMeta('description', $page->description);
 		$this->template->page = $page;

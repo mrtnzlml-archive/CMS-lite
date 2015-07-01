@@ -85,6 +85,16 @@ class PageForm extends AControl
 		// OPTIMIZATION:
 		$form->addText('individualTitle', 'Individuální titulek:');
 		$form->addTextArea('description', 'Popis stránky (Description):');
+		$form->addSelect('index', 'Indexace stránky:', [
+			NULL => 'Výchozí',
+			'index' => 'Indexovat (index)',
+			'noindex' => 'Neindexovat (noindex)',
+		]);
+		$form->addSelect('follow', 'Sledování odkazů', [
+			NULL => 'Výchozí',
+			'follow' => 'Sledovat (follow)',
+			'nofollow' => 'Nesledovat (nofollow)',
+		]);
 
 		$this->setDefaults($form);
 		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
@@ -136,6 +146,8 @@ class PageForm extends AControl
 		$entity->setBody($values->editor);
 		$entity->setIndividualTitle($values->individualTitle);
 		$entity->setDescription($values->description);
+		$entity->setIndex($values->index);
+		$entity->setFollow($values->follow);
 
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
@@ -165,6 +177,8 @@ class PageForm extends AControl
 				'categories' => $this->editablePage->getCategoriesIds(),
 				'individualTitle' => $this->editablePage->getIndividualTitle(),
 				'description' => $this->editablePage->getDescription(),
+				'index' => $this->editablePage->getIndex(),
+				'follow' => $this->editablePage->getFollow(),
 			]);
 		}
 	}
