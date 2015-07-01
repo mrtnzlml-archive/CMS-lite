@@ -74,7 +74,7 @@ class Page extends BaseEntity
 	 * @ORM\ManyToMany(targetEntity="Users\User", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="role")}
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="author")}
 	 * )
 	 * @var \Users\User[]|ArrayCollection
 	 */
