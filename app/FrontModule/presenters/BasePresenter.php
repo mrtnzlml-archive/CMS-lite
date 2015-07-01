@@ -36,4 +36,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this['title']->setTitle($title);
 	}
 
+	protected function setMeta($name, $content)
+	{
+		$this['meta']->setMeta($name, $content);
+	}
+
 }

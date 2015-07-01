@@ -3,18 +3,13 @@
 namespace Versatile\DI;
 
 use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
-use App\Components\ContactForm\IContactFormFactory;
-use App\Components\ContactForm\Providers\IContactFormTemplateProvider;
 use App\Components\Favicon\Providers\IFaviconProvider;
-use App\Components\Footer\Providers\IFooterTemplateProvider;
-use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use App\Extensions\IImageProvider;
 use App\ITemplateProvider;
 use Nette;
 
 class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplateProvider,
-	IMainMenuTemplateProvider, IContactFormTemplateProvider, IImageProvider, IFooterTemplateProvider, IFaviconProvider,
-	IBreadcrumbTemplateProvider
+	IImageProvider, IFaviconProvider, IBreadcrumbTemplateProvider
 {
 
 	public function beforeCompile()
@@ -36,13 +31,6 @@ class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplate
 	public function getError404Template()
 	{
 		return realpath(__DIR__ . '/../404.latte');
-	}
-
-	public function getMetas()
-	{
-		return [
-			'description' => '', //TODO
-		];
 	}
 
 	public function getFaviconPath()

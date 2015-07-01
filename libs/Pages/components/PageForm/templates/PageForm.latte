@@ -1,4 +1,5 @@
 {form pageForm, onsubmit => 'cleanPageLocationStorage()'}
+	<h3>Základní obsah</h3>
 	<ul class="alert alert-danger" n:if="$form->errors">
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
@@ -17,8 +18,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		{label editor /}
-		{input editor, class => "form-control"}
+		{input editor}
 	</div>
 	<div class="row">
 		<div class="col-lg-6">
@@ -34,6 +34,33 @@
 			</div>
 		</div>
 	</div>
+	{******************* OPTIMIZATION *******************}
+	<h3>Optimalizace</h3>
+	<div class="form-group">
+		{label individualTitle /}
+		<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown-title"></span></span>
+		{input individualTitle, class => "form-control", data-countdown-to => "countdown-title", data-countdown-max => 55}
+	</div>
+	<div class="form-group">
+		{label description /}
+		<span>Popis je ve vyhledávání nejčastěji omezen na 156 znaků, zbývá: <span id="countdown-desc"></span></span>
+		{input description, class => "form-control", data-countdown-to => "countdown-desc", data-countdown-max => 156}
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label index /}
+				{input index, class => "form-control"}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label follow /}
+				{input follow, class => "form-control"}
+			</div>
+		</div>
+	</div>
+	{******************* /OPTIMIZATION *******************}
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="form-group">
@@ -47,24 +74,22 @@
 		</div>
 		<div class="col-lg-4">
 			<div class="form-group">
-				<a class="btn btn-default form-control">
-					<del>Zobrazit stránku</del>
-				</a>
+				{input preview, class => "btn btn-default form-control"}
 			</div>
 		</div>
 	</div>
 {/form}
 
 {*{block scripts}*}
-	{*{include parent}*}
-	{* TODO *}
-	{*<script>*}
-		{*function cleanPageLocationStorage() {*}
-			{*if (window.localStorage) {*}
-				{*localStorage.removeItem('content:' + location.pathname);*}
-				{*localStorage.removeItem('title:' + location.pathname);*}
-				{*localStorage.removeItem('slug:' + location.pathname);*}
-			{*}*}
-		{*}*}
-	{*</script>*}
+{*{include parent}*}
+{* TODO *}
+{*<script>*}
+{*function cleanPageLocationStorage() {*}
+{*if (window.localStorage) {*}
+{*localStorage.removeItem('content:' + location.pathname);*}
+{*localStorage.removeItem('title:' + location.pathname);*}
+{*localStorage.removeItem('slug:' + location.pathname);*}
+{*}*}
+{*}*}
+{*</script>*}
 {*{/block}*}

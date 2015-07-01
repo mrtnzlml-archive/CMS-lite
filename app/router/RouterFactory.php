@@ -8,6 +8,7 @@ use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Pages\Page;
+use Pages\Query\PagesQuery;
 
 class RouterFactory
 {
@@ -37,13 +38,15 @@ class RouterFactory
 
 		//FrontModule
 		$router[] = $front = new RouteList('Front');
+		$front[] = new Route('[<locale=cs cs|en>/]preview/<id>', 'Front:Page:preview');
 		$front[] = new Route('[<locale=cs cs|en>/]<slug>', [
 			'presenter' => 'Page',
 			'action' => 'default',
 			NULL => [
 				Route::FILTER_IN => function ($params) {
 					//FIXME: cache maybe?
-					$page = $this->em->getRepository(Page::class)->findOneBy(['slug' => $params['slug']]);
+					$pageQuery = (new PagesQuery)->bySlug($params['slug']);
+					$page = $this->em->getRepository(Page::class)->fetchOne($pageQuery);
 					if ($page === NULL) {
 						return NULL;
 					} else {

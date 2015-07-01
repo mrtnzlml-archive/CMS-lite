@@ -16,6 +16,15 @@ $(function () {
 		}
 	});
 
+	// zbývající počet znaků
+	$('[data-countdown-to]').keyup(function () {
+		var countdownId = $(this).data('countdown-to');
+		var countdownMax = $(this).data('countdown-max');
+		var val = $(this).val().length;
+		var remaining = countdownMax - val > 0 ? countdownMax - val : 0;
+		$('#' + countdownId).html(remaining);
+	});
+
 });
 
 var nodiac = { 'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o', 'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z' };
