@@ -1,8 +1,33 @@
 {block content}
-	
+<div id="image-uploader">
+      <script type="text/template" id="qq-template">
+          {include 'qq-template.latte'}
+      </script>
+</div>
+{/block}
+
+{block css}
+<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
 {/block}
 
 {block scripts}
-    {include parent}
-    <script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
+{include parent}
+<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
+<script>
+    $(function () {
+        $('#image-uploader').fineUploader({
+            debug: true, 
+            
+            request: {
+                endpoint: 'files?do=upload'
+            }
+            ,
+            retry: {
+                enableAuto: false
+            }
+        });
+    });
+</script>
 {/block}

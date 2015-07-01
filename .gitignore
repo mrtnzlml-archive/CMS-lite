@@ -2,6 +2,7 @@
 /vendor
 /www/favicon.ico
 /www/sitemap.xml
+/www/upload/
 /nbproject/
 /log/
 /temp/
