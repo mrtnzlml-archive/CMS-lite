@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
+use Users\User;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,9 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setBody(string)
  * @method string getBody()
  * @method boolean getDeleted()
+ *
+ * @method addAuthor(User $author)
+ * @method addCategory(PageCategory $category)
  */
 class Page extends BaseEntity
 {
@@ -104,6 +108,34 @@ class Page extends BaseEntity
 	public function isPublished()
 	{
 		return $this->publishedAt ? TRUE : FALSE;
+	}
+
+	public function getAuthorsIds()
+	{
+		$authorIds = [];
+		foreach ($this->authors as $author) {
+			$authorIds[] = $author->id;
+		}
+		return $authorIds;
+	}
+
+	public function getCategoriesIds()
+	{
+		$categoriesIds = [];
+		foreach ($this->categories as $category) {
+			$categoriesIds[] = $category->id;
+		}
+		return $categoriesIds;
+	}
+
+	public function clearAuthors()
+	{
+		$this->authors->clear();
+	}
+
+	public function clearCategories()
+	{
+		$this->categories->clear();
 	}
 
 }

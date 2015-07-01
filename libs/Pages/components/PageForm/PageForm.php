@@ -75,11 +75,11 @@ class PageForm extends AControl
 		$authors = $this->em->getRepository(User::class)->findPairs('email');
 		$user_id = $this->presenter->user->id;
 		$form->addMultiSelect('authors', 'Autor:',
-			[0 => 'Bez autora'] + $authors
+			[NULL => 'Bez autora'] + $authors
 		)->setDefaultValue(array_key_exists($user_id, $authors) ? $user_id : 0);
 
 		$form->addMultiSelect('categories', 'Kategorie:',
-			[0 => 'Bez kategorie'] +
+			[NULL => 'Bez kategorie'] +
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 
@@ -88,7 +88,8 @@ class PageForm extends AControl
 				'title' => $this->editablePage->title,
 				'slug' => $this->editablePage->slug,
 				'editor' => $this->editablePage->body,
-				//TODO: authors, categories
+				'authors' => $this->editablePage->getAuthorsIds(),
+				'categories' => $this->editablePage->getCategoriesIds(),
 			]);
 		}
 
@@ -133,18 +134,20 @@ class PageForm extends AControl
 	{
 		$entity->setTitle($values->title);
 		$entity->setBody($values->editor);
-		if ($values->authors) {
-			/** @var User $author */
-			foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
-				//TODO: update autorů
-				$entity->addAuthor($author);
+
+		$entity->clearAuthors();
+		if (!in_array(NULL, $values->authors)) {
+			foreach ($values->authors as $authorId) {
+				$authorRef = $this->em->getPartialReference(User::class, $authorId);
+				$entity->addAuthor($authorRef);
 			}
 		}
-		if ($values->categories) {
-			/** @var PageCategory $author */
-			foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
-				//TODO: update kategorií
-				$entity->addCategory($category);
+
+		$entity->clearCategories();
+		if (!in_array(NULL, $values->categories)) {
+			foreach ($values->categories as $categoryId) {
+				$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
+				$entity->addCategory($categoryRef);
 			}
 		}
 	}
