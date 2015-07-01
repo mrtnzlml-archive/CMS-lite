@@ -83,7 +83,8 @@ class PageForm extends AControl
 		);
 
 		// OPTIMIZATION:
-		$form->addText('individualTitle', 'Individuální titulek');
+		$form->addText('individualTitle', 'Individuální titulek:');
+		$form->addTextArea('description', 'Popis stránky (Description):');
 
 		$this->setDefaults($form);
 		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
@@ -134,6 +135,7 @@ class PageForm extends AControl
 		$entity->setTitle($values->title);
 		$entity->setBody($values->editor);
 		$entity->setIndividualTitle($values->individualTitle);
+		$entity->setDescription($values->description);
 
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
@@ -162,6 +164,7 @@ class PageForm extends AControl
 				'authors' => $this->editablePage->getAuthorsIds(),
 				'categories' => $this->editablePage->getCategoriesIds(),
 				'individualTitle' => $this->editablePage->getIndividualTitle(),
+				'description' => $this->editablePage->getDescription(),
 			]);
 		}
 	}

@@ -25,7 +25,9 @@ class Meta extends Nette\Application\UI\Control
 	public function setMeta($name, $content)
 	{
 		//TODO: zakázat viewport? (pro bootstrap musí být některé jako první)
-		$this->metas[$name] = $content;
+		if (!empty($content)) {
+			$this->metas[$name] = $content;
+		}
 	}
 
 	public function setMetas(array $metas)

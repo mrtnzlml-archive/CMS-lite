@@ -37,8 +37,13 @@
 	<h2>Optimalizace</h2>
 	<div class="form-group">
 		{label individualTitle /}
-		<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown"></span></span>
-		{input individualTitle, class => "form-control", data-countdown-to => "countdown", data-countdown-max => 55}
+		<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown-title"></span></span>
+		{input individualTitle, class => "form-control", data-countdown-to => "countdown-title", data-countdown-max => 55}
+	</div>
+	<div class="form-group">
+		{label description /}
+		<span>Popis je ve vyhledávání nejčastěji omezen na 156 znaků, zbývá: <span id="countdown-desc"></span></span>
+		{input description, class => "form-control", data-countdown-to => "countdown-desc", data-countdown-max => 156}
 	</div>
 	{*******************}
 	<div class="row">

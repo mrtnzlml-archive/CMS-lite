@@ -23,6 +23,7 @@ class PagePresenter extends BasePresenter
 			$this->error('Page not found.');
 		}
 		$this->setTitle($page->individualTitle ?: $page->title);
+		$this->setMeta('description', $page->description);
 		$this->template->page = $page;
 	}
 
@@ -37,7 +38,7 @@ class PagePresenter extends BasePresenter
 			$this->error('Page not found.');
 		}
 		$this->setTitle($page->title);
-		$this['meta']->setMeta('robots', 'noindex');
+		$this->setMeta('robots', 'noindex');
 		$this->template->page = $page;
 		$this->setView('default');
 	}

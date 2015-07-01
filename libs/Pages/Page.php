@@ -27,6 +27,8 @@ use Users\User;
  * @method boolean getDeleted()
  * @method setIndividualTitle(string)
  * @method string getIndividualTitle()
+ * @method setDescription(string)
+ * @method string getDescription()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -64,6 +66,12 @@ class Page extends BaseEntity
 	protected $slug;
 
 	/**
+	 * @ORM\Column(type="text", nullable=TRUE, options={"comment":"Meta description of the article"})
+	 * @var string
+	 */
+	protected $description = NULL;
+
+	/**
 	 * @ORM\Column(type="text", options={"comment":"Body of the article"})
 	 * @var string
 	 */
@@ -79,7 +87,7 @@ class Page extends BaseEntity
 	 * @ORM\Column(type="datetime", nullable=TRUE, options={"comment":"Date of the article publication"})
 	 * @var \DateTime
 	 */
-	protected $publishedAt;
+	protected $publishedAt = NULL;
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})

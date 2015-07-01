@@ -17,7 +17,7 @@ $(function () {
 	});
 
 	// zbývající počet znaků
-	$('input[data-countdown-to]').keyup(function () {
+	$('[data-countdown-to]').keyup(function () {
 		var countdownId = $(this).data('countdown-to');
 		var countdownMax = $(this).data('countdown-max');
 		var val = $(this).val().length;
