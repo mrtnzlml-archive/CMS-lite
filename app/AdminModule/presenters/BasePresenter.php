@@ -32,13 +32,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		parent::checkRequirements($element);
 		if (!$this->user->isLoggedIn()) {
 			if ($this->user->logoutReason === Nette\Security\IUserStorage::INACTIVITY) {
-				$this->flashMessage('Byli jste odhlášeni z důvodu nečinnosti. Přihlaste se prosím znovu.', 'danger');
+				$this->flashMessage('Byli jste odhlášeni z důvodu nečinnosti. Přihlaste se prosím znovu.', self::FLASH_DANGER);
 			} else {
-				$this->flashMessage('Pro vstup do této sekce se musíte přihlásit.', 'danger');
+				$this->flashMessage('Pro vstup do této sekce se musíte přihlásit.', self::FLASH_DANGER);
 			}
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		} elseif (!$this->user->isAllowed($this->name, Users\Authorizator::READ)) {
-			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', 'danger');
+			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', self::FLASH_DANGER);
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}
 	}

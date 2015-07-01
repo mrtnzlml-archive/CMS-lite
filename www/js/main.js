@@ -1,5 +1,7 @@
 $(function () {
-
+    
+        $.nette.init();
+    
 	// generuje URL na zaklade zadavaneho titulku
 	$('input[data-slug-to]').keyup(function () {
 		var slugId = $(this).data('slug-to');
