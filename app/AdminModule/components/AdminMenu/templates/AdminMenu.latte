@@ -17,21 +17,21 @@
 			</a>
 		</li>
 
-		<li {ifCurrent ':Admin:Eshop:*'}class="active"{/ifCurrent}>
+		{*<li {ifCurrent ':Admin:Eshop:*'}class="active"{/ifCurrent}>*}
 			{* FIXME: should be part of Eshop ext *}
-			<a href="{plink :Admin:Eshop:}">
-				{_Eshop}
-				{ifCurrent ':Admin:Eshop:*'}
-					<span class="sr-only"> ({_aktuální})</span>
-				{/ifCurrent}
-			</a>
-		</li>
+			{*<a href="{plink :Admin:Eshop:}">*}
+				{*{_Eshop}*}
+				{*{ifCurrent ':Admin:Eshop:*'}*}
+					{*<span class="sr-only"> ({_aktuální})</span>*}
+				{*{/ifCurrent}*}
+			{*</a>*}
+		{*</li>*}
 
-		<li>
-			<a>
-				<del>{_Uživatelé}</del>
-			</a>
-		</li>
+		{*<li>*}
+			{*<a>*}
+				{*{_Uživatelé}*}
+			{*</a>*}
+		{*</li>*}
 		<li {ifCurrent ':Admin:Options:*'}class="active"{/ifCurrent}>
 			<a href="{plink :Admin:Options:general}">
 				{_Nastavení}
