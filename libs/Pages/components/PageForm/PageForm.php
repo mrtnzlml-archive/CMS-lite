@@ -68,36 +68,44 @@ class PageForm extends AControl
 		$form->addProtection();
 		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
 		$form->addText('slug', 'URL slug:');
-		$form->addTextArea('editor', 'Obsah stránky:')
-			->setHtmlId('editor')
+		$form->addTinyMCE('editor', NULL)
 			->setRequired('Je zapotřebí napsat nějaký text.');
 
 		$authors = $this->em->getRepository(User::class)->findPairs('email');
 		$user_id = $this->presenter->user->id;
 		$form->addMultiSelect('authors', 'Autor:',
-			[0 => 'Bez autora'] + $authors
+			[NULL => 'Bez autora'] + $authors
 		)->setDefaultValue(array_key_exists($user_id, $authors) ? $user_id : 0);
 
 		$form->addMultiSelect('categories', 'Kategorie:',
-			[0 => 'Bez kategorie'] +
+			[NULL => 'Bez kategorie'] +
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
 
-		if ($this->editablePage !== NULL) { //EDITING
-			$form->setDefaults([
-				'title' => $this->editablePage->title,
-				'slug' => $this->editablePage->slug,
-				'editor' => $this->editablePage->body,
-				//TODO: authors, categories
-			]);
-		}
+		// OPTIMIZATION:
+		$form->addText('individualTitle', 'Individuální titulek:');
+		$form->addTextArea('description', 'Popis stránky (Description):');
+		$form->addSelect('index', 'Indexace stránky:', [
+			NULL => 'Výchozí',
+			'index' => 'Indexovat (index)',
+			'noindex' => 'Neindexovat (noindex)',
+		]);
+		$form->addSelect('follow', 'Sledování odkazů', [
+			NULL => 'Výchozí',
+			'follow' => 'Sledovat (follow)',
+			'nofollow' => 'Nesledovat (nofollow)',
+		]);
 
+		$this->setDefaults($form);
 		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
 		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
+		$form->addSubmit('preview', 'Zobrazit stránku')->onClick[] = function (SubmitButton $sender) {
+			$this->savePage($sender, TRUE);
+		};
 		return $form;
 	}
 
-	public function savePage(SubmitButton $sender)
+	public function savePage(SubmitButton $sender, $preview = FALSE)
 	{
 		try {
 			$entity = $this->editablePage;
@@ -109,6 +117,9 @@ class PageForm extends AControl
 			$this->pageProcess->save($entity);
 		} catch (\Exception $exc) {
 			$this->onException($this, $exc);
+		}
+		if ($preview) {
+			$this->presenter->redirect(':Front:Page:preview', $entity->id);
 		}
 		$this->onComplete($this);
 	}
@@ -133,19 +144,42 @@ class PageForm extends AControl
 	{
 		$entity->setTitle($values->title);
 		$entity->setBody($values->editor);
-		if ($values->authors) {
-			/** @var User $author */
-			foreach ($this->em->getRepository(User::class)->findBy(['id' => $values->authors]) as $author) {
-				//TODO: update autorů
-				$entity->addAuthor($author);
+		$entity->setIndividualTitle($values->individualTitle);
+		$entity->setDescription($values->description);
+		$entity->setIndex($values->index);
+		$entity->setFollow($values->follow);
+
+		$entity->clearAuthors();
+		if (!in_array(NULL, $values->authors)) {
+			foreach ($values->authors as $authorId) {
+				$authorRef = $this->em->getPartialReference(User::class, $authorId);
+				$entity->addAuthor($authorRef);
 			}
 		}
-		if ($values->categories) {
-			/** @var PageCategory $author */
-			foreach ($this->em->getRepository(PageCategory::class)->findBy(['id' => $values->categories]) as $category) {
-				//TODO: update kategorií
-				$entity->addCategory($category);
+
+		$entity->clearCategories();
+		if (!in_array(NULL, $values->categories)) {
+			foreach ($values->categories as $categoryId) {
+				$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
+				$entity->addCategory($categoryRef);
 			}
+		}
+	}
+
+	private function setDefaults(UI\Form $form)
+	{
+		if ($this->editablePage !== NULL) { //EDITING
+			$form->setDefaults([
+				'title' => $this->editablePage->title,
+				'slug' => $this->editablePage->slug,
+				'editor' => $this->editablePage->body,
+				'authors' => $this->editablePage->getAuthorsIds(),
+				'categories' => $this->editablePage->getCategoriesIds(),
+				'individualTitle' => $this->editablePage->getIndividualTitle(),
+				'description' => $this->editablePage->getDescription(),
+				'index' => $this->editablePage->getIndex(),
+				'follow' => $this->editablePage->getFollow(),
+			]);
 		}
 	}
 

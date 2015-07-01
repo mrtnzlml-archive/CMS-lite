@@ -4,6 +4,7 @@ namespace Pages;
 
 use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Users\User;
 
 /**
  * @method onSave(PageProcess $control, Page $entity)
@@ -22,11 +23,14 @@ class PageProcess extends Nette\Object
 	private $em;
 	/** @var \Kdyby\Doctrine\EntityRepository */
 	private $articles;
+	/** @var Nette\Security\IUserStorage */
+	private $user;
 
-	public function __construct(EntityManager $em)
+	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user)
 	{
 		$this->em = $em;
 		$this->articles = $em->getRepository(Page::class);
+		$this->user = $user;
 	}
 
 	public function publish(Page $page)
@@ -59,6 +63,8 @@ class PageProcess extends Nette\Object
 		if ($page->getSlug() === NULL) {
 			$page->setSlug(Nette\Utils\Strings::webalize($page->getTitle()));
 		}
+		$realAuthorReference = $this->em->getPartialReference(User::class, $this->user->getIdentity()->getId());
+		$page->setRealAuthor($realAuthorReference);
 	}
 
 }

@@ -7,6 +7,8 @@ use Nette;
 class Meta extends Nette\Application\UI\Control
 {
 
+	private $robots = [];
+
 	private $metas = [
 		'auhor' => 'vytvořili v www.antstudio.cz',
 		'robots' => 'all',
@@ -17,15 +19,31 @@ class Meta extends Nette\Application\UI\Control
 
 	public function render()
 	{
+		if (!empty(array_filter($this->robots))) {
+			$this->metas['robots'] = implode(', ', array_filter($this->robots));
+		}
 		$this->template->metas = $this->metas;
 		$this->template->httpEquivs = $this->httpEquivs;
 		$this->template->render(__DIR__ . '/templates/Meta.latte');
 	}
 
+	public function setRobots($value)
+	{
+		if (is_array($value)) {
+			foreach ($value as $v) {
+				$this->robots[$v] = $v;
+			}
+		} else {
+			$this->robots[$value] = $value;
+		}
+	}
+
 	public function setMeta($name, $content)
 	{
 		//TODO: zakázat viewport? (pro bootstrap musí být některé jako první)
-		$this->metas[$name] = $content;
+		if (!empty($content)) {
+			$this->metas[$name] = $content;
+		}
 	}
 
 	public function setMetas(array $metas)

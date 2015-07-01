@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
+use Users\User;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,26 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setBody(string)
  * @method string getBody()
  * @method boolean getDeleted()
+ * @method setIndividualTitle(string)
+ * @method string getIndividualTitle()
+ * @method setDescription(string)
+ * @method string getDescription()
+ * @method setIndex(string)
+ * @method string getIndex()
+ * @method setFollow(string)
+ * @method string getFollow()
+ *
+ * @method addAuthor(User $author)
+ * @method addCategory(PageCategory $category)
+ *
+ * //remove<name>($entity)
+ * //has<name>($entity)
+ *
+ * //get<name>($entity)
+ *
+ * @method setRealAuthor(User $realAuthor)
+ *
+ *
  */
 class Page extends BaseEntity
 {
@@ -37,16 +58,40 @@ class Page extends BaseEntity
 	protected $title;
 
 	/**
+	 * @ORM\Column(type="text", nullable=TRUE, options={"comment":"Meta title of the article"})
+	 * @var string
+	 */
+	protected $individualTitle = NULL;
+
+	/**
 	 * @ORM\Column(type="text", options={"comment":"Webalized title (slug) of the article"})
 	 * @var string
 	 */
 	protected $slug;
 
 	/**
+	 * @ORM\Column(type="text", nullable=TRUE, options={"comment":"Meta description of the article"})
+	 * @var string
+	 */
+	protected $description = NULL;
+
+	/**
 	 * @ORM\Column(type="text", options={"comment":"Body of the article"})
 	 * @var string
 	 */
 	protected $body;
+
+	/**
+	 * @ORM\Column(type="string", name="`index`", nullable=TRUE, options={"comment":"Meta robots - index value"})
+	 * @var string
+	 */
+	protected $index = NULL;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Meta robots - follow value"})
+	 * @var string
+	 */
+	protected $follow = NULL;
 
 	/**
 	 * @ORM\Column(type="datetime", options={"comment":"Date of the article creation"})
@@ -58,7 +103,7 @@ class Page extends BaseEntity
 	 * @ORM\Column(type="datetime", nullable=TRUE, options={"comment":"Date of the article publication"})
 	 * @var \DateTime
 	 */
-	protected $publishedAt;
+	protected $publishedAt = NULL;
 
 	/**
 	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})
@@ -70,11 +115,18 @@ class Page extends BaseEntity
 	 * @ORM\ManyToMany(targetEntity="Users\User", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="role")}
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="author")}
 	 * )
 	 * @var \Users\User[]|ArrayCollection
 	 */
 	protected $authors;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Users\User", cascade={"persist"})
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @var \Users\User
+	 */
+	protected $realAuthor;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", cascade={"persist"})
@@ -104,6 +156,34 @@ class Page extends BaseEntity
 	public function isPublished()
 	{
 		return $this->publishedAt ? TRUE : FALSE;
+	}
+
+	public function getAuthorsIds()
+	{
+		$authorIds = [];
+		foreach ($this->authors as $author) {
+			$authorIds[] = $author->id;
+		}
+		return $authorIds;
+	}
+
+	public function getCategoriesIds()
+	{
+		$categoriesIds = [];
+		foreach ($this->categories as $category) {
+			$categoriesIds[] = $category->id;
+		}
+		return $categoriesIds;
+	}
+
+	public function clearAuthors()
+	{
+		$this->authors->clear();
+	}
+
+	public function clearCategories()
+	{
+		$this->categories->clear();
 	}
 
 }
