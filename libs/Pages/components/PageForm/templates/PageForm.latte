@@ -35,16 +35,10 @@
 	</div>
 	{*******************}
 	<h2>Optimalizace</h2>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label individualTitle /}
-				{input individualTitle, class => "form-control"}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			&nbsp;
-		</div>
+	<div class="form-group">
+		{label individualTitle /}
+		<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown"></span></span>
+		{input individualTitle, class => "form-control", data-countdown-to => "countdown", data-countdown-max => 55}
 	</div>
 	{*******************}
 	<div class="row">
