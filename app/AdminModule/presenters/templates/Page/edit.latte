@@ -1,3 +1,8 @@
 {block content}
 	{control pageForm}
 {/block}
+
+{block scripts}
+	{include parent}
+	<script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+{/block}
