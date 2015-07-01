@@ -68,8 +68,7 @@ class PageForm extends AControl
 		$form->addProtection();
 		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
 		$form->addText('slug', 'URL slug:');
-		$form->addTextArea('editor', NULL)
-			->setHtmlId('tinymceTextarea')
+		$form->addTinyMCE('editor', NULL)
 			->setRequired('Je zapotřebí napsat nějaký text.');
 
 		$authors = $this->em->getRepository(User::class)->findPairs('email');

@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		{input editor, class => "form-control"}
+		{input editor}
 	</div>
 	<div class="row">
 		<div class="col-lg-6">
@@ -55,15 +55,15 @@
 {/form}
 
 {*{block scripts}*}
-	{*{include parent}*}
-	{* TODO *}
-	{*<script>*}
-		{*function cleanPageLocationStorage() {*}
-			{*if (window.localStorage) {*}
-				{*localStorage.removeItem('content:' + location.pathname);*}
-				{*localStorage.removeItem('title:' + location.pathname);*}
-				{*localStorage.removeItem('slug:' + location.pathname);*}
-			{*}*}
-		{*}*}
-	{*</script>*}
+{*{include parent}*}
+{* TODO *}
+{*<script>*}
+{*function cleanPageLocationStorage() {*}
+{*if (window.localStorage) {*}
+{*localStorage.removeItem('content:' + location.pathname);*}
+{*localStorage.removeItem('title:' + location.pathname);*}
+{*localStorage.removeItem('slug:' + location.pathname);*}
+{*}*}
+{*}*}
+{*</script>*}
 {*{/block}*}
