@@ -17,7 +17,8 @@ $(function () {
 	});
 
 	tinymce.init({
-		selector: "#tinymceTextarea"
+		selector: '#tinymceTextarea',
+		language : 'cs'
 	});
 
 });
