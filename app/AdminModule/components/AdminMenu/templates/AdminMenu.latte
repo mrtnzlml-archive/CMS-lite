@@ -16,6 +16,14 @@
 				{/ifCurrent}
 			</a>
 		</li>
+                <li {ifCurrent ':Admin:Files:*'}class="active"{/ifCurrent}>
+			<a href="{plink :Admin:Files:}">
+				{_Přílohy / soubory}
+				{ifCurrent ':Admin:Files:*'}
+					<span class="sr-only"> ({_aktuální})</span>
+				{/ifCurrent}
+			</a>
+		</li>
 
 		{*<li {ifCurrent ':Admin:Eshop:*'}class="active"{/ifCurrent}>*}
 			{* FIXME: should be part of Eshop ext *}

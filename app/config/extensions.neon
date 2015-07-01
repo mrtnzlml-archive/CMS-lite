@@ -11,6 +11,7 @@ extensions:
     - Migrations\DI\MigrationsExtension
     - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
+    - Files\DI\FilesExtension	
     - TinyMCE\TinyExtension
     - Users\DI\UsersExtension
 
