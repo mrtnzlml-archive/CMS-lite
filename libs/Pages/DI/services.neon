@@ -3,5 +3,6 @@ services:
 	- Pages\Components\MultiEdit\IMultiEditFactory
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
+	- Pages\Query\PagesQuery
 	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]

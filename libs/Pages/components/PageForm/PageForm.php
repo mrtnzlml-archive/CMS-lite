@@ -94,10 +94,13 @@ class PageForm extends AControl
 
 		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
 		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
+		$form->addSubmit('preview', 'Zobrazit stránku')->onClick[] = function (SubmitButton $sender) {
+			$this->savePage($sender, TRUE);
+		};
 		return $form;
 	}
 
-	public function savePage(SubmitButton $sender)
+	public function savePage(SubmitButton $sender, $preview = FALSE)
 	{
 		try {
 			$entity = $this->editablePage;
@@ -109,6 +112,9 @@ class PageForm extends AControl
 			$this->pageProcess->save($entity);
 		} catch (\Exception $exc) {
 			$this->onException($this, $exc);
+		}
+		if ($preview) {
+			$this->presenter->redirect(':Front:Page:preview', $entity->id);
 		}
 		$this->onComplete($this);
 	}

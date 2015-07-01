@@ -35,6 +35,23 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 		return $this;
 	}
 
+	public function bySlug($slug)
+	{
+		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($slug) {
+			$qb->andWhere('page.slug = :slug')->setParameter('slug', $slug);
+		};
+		return $this;
+	}
+
+	public function preview($pageId, $userId)
+	{
+		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($pageId, $userId) {
+			$qb->andWhere('page.id = :pageId')->setParameter('pageId', $pageId);
+			$qb->andWhere('page.realAuthor = :userId')->setParameter('userId', $userId);
+		};
+		return $this;
+	}
+
 	public function withAllAuthors()
 	{
 		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {

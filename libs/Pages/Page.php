@@ -28,6 +28,15 @@ use Users\User;
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
+ *
+ * //remove<name>($entity)
+ * //has<name>($entity)
+ *
+ * //get<name>($entity)
+ *
+ * @method setRealAuthor(User $realAuthor)
+ *
+ *
  */
 class Page extends BaseEntity
 {
@@ -79,6 +88,13 @@ class Page extends BaseEntity
 	 * @var \Users\User[]|ArrayCollection
 	 */
 	protected $authors;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Users\User", cascade={"persist"})
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @var \Users\User
+	 */
+	protected $realAuthor;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", cascade={"persist"})
