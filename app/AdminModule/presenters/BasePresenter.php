@@ -10,7 +10,17 @@ use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-
+        /* #@+
+         * Flash message types
+         * 
+         * @var string
+         */
+        const FLASH_SUCCESS = 'success';
+        const FLASH_WARNING = 'warning';
+        const FLASH_DANGER  = 'danger';
+        const FLASH_ERROR   = 'error';
+        const FLASH_INFO    = 'information';
+        
 	use App\Traits\PublicComponentsTrait;
 	use Nextras\Application\UI\SecuredLinksPresenterTrait;
 
