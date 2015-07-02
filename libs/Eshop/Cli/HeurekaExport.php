@@ -21,7 +21,7 @@ class HeurekaExport extends Command
 
 	protected function configure()
 	{
-		$this->setName('eshop:heureka:export');
+		$this->setName('cms:eshop:heureka:export');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
