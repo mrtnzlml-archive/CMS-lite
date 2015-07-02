@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Kdyby\Doctrine\EntityManager;
+use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,6 +19,9 @@ class DefaultData extends Command
 
 	/** @var EntityManager @inject */
 	public $em;
+
+	/** @var Logger @inject */
+	public $monolog;
 
 	protected function configure()
 	{
@@ -70,11 +74,13 @@ EOT
 			$executor = new ORMExecutor($this->em, $purger);
 			$executor->setLogger(function ($message) use ($output) {
 				$output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
+				$this->monolog->addDebug(sprintf('Fixture: %s', $message));
 			});
 			$executor->execute($fixtures, $input->getOption('append'));
 			return 0; // zero return code means everything is ok
 		} catch (\Exception $exc) {
 			$output->writeLn("<error>{$exc->getMessage()}</error>");
+			$this->monolog->addError($exc->getMessage());
 			return 1; // non-zero return code means error
 		}
 	}
