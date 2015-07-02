@@ -22,25 +22,25 @@ class DefaultData extends Command
 	protected function configure()
 	{
 		$this
-			->setName('cms:demo-data:load')
+			->setName('cms:fixtures:load')
 			->setDescription('Load data fixtures to your database.')
 			->addOption('append', NULL, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
 			->addOption('demo', NULL, InputOption::VALUE_NONE, 'Include also demo data.')
 			->addOption('purge-with-truncate', NULL, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
 			->setHelp(<<<EOT
-The <info>cms:demo-data:load</info> command loads data fixtures from your bundles:
+The <info>cms:fixtures:load</info> command loads data fixtures from your bundles:
 
-  <info>php index.php cms:demo-data:load</info> (everything you need without demo data)
-  <info>php index.php cms:demo-data:load --demo</info> (everything including demo data)
+  <info>php index.php cms:fixtures:load</info> (everything you need without demo data)
+  <info>php index.php cms:fixtures:load --demo</info> (everything including demo data)
 
 If you want to append the fixtures instead of flushing the database first you can use the <info>--append</info> option:
 
-  <info>php index.php cms:demo-data:load --append</info>
+  <info>php index.php cms:fixtures:load --append</info>
 
 By default Doctrine Data Fixtures uses DELETE statements to drop the existing rows from
 the database. If you want to use a TRUNCATE statement instead you can use the <info>--purge-with-truncate</info> flag:
 
-  <info>php index.php cms:demo-data:load --purge-with-truncate</info>
+  <info>php index.php cms:fixtures:load --purge-with-truncate</info>
 EOT
 			);
 	}
