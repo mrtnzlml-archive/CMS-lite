@@ -1,9 +1,9 @@
 <?php
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProductVariantFixture extends \Doctrine\Common\DataFixtures\AbstractFixture implements DependentFixtureInterface
+class ProductVariantFixture //extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
 {
 
 	public function load(ObjectManager $manager)

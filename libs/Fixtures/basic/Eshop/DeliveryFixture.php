@@ -2,7 +2,7 @@
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-class DeliveryFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class DeliveryFixture //extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
 	private $deliveries = [
