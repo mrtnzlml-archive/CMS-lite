@@ -18,7 +18,7 @@ class CmsDefaultDataExtension extends Nette\DI\CompilerExtension
 
 		foreach ($this->commands as $i => $command) {
 			$containerBuilder->addDefinition($this->prefix('cli.' . $i))
-				->addTag(Kdyby\Console\DI\ConsoleExtension::COMMAND_TAG)
+				->addTag(Kdyby\Console\DI\ConsoleExtension::TAG_COMMAND)
 				->setInject(FALSE)// lazy injects
 				->setClass($command);
 		}

@@ -16,9 +16,13 @@ class RouterFactory
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(EntityManager $em)
+	/** @var AntRoute */
+	private $antRoute;
+
+	public function __construct(EntityManager $em, AntRoute $antRoute)
 	{
 		$this->em = $em;
+		$this->antRoute = $antRoute;
 	}
 
 	/**
@@ -26,25 +30,16 @@ class RouterFactory
 	 */
 	public function createRouter()
 	{
-		$router = new RouteList();
-
-		//AuthModule
-		$router[] = $auth = new RouteList('Auth');
-		$auth[] = new Route('[<locale=cs cs|en>/]auth[/<presenter>[/<action>[/<id>]]]', 'Sign:in');
-
-		//AdminModule
-		$router[] = $admin = new RouteList('Admin');
-		$admin[] = new Route('[<locale=cs cs|en>/]administrace[/<presenter>[/<action>[/<id>]]]', 'Dashboard:default');
+		$router = new RouteList;
+		$router[] = $this->antRoute;
 
 		//FrontModule
 		$router[] = $front = new RouteList('Front');
-		$front[] = new Route('[<locale=cs cs|en>/]preview/<id>', 'Front:Page:preview');
-		$front[] = new Route('[<locale=cs cs|en>/]<slug>', [
+		$front[] = new Route('[<locale=cs cs|en>/]<slug>', [ //TODO: nechat na AntRoute, stránky si ale musí vygenerovat URL
 			'presenter' => 'Page',
 			'action' => 'default',
 			NULL => [
 				Route::FILTER_IN => function ($params) {
-					//FIXME: cache maybe?
 					$pageQuery = (new PagesQuery)->bySlug($params['slug']);
 					$page = $this->em->getRepository(Page::class)->fetchOne($pageQuery);
 					if ($page === NULL) {
@@ -55,24 +50,12 @@ class RouterFactory
 				}
 			]
 		]);
-		$front[] = new Route('[<locale=cs cs|en>/]<presenter>[/<action>[/<id>]]', [
-			'presenter' => [
-				Route::VALUE => 'Homepage',
-				Route::FILTER_TABLE => [
-					'kontakt' => 'Contact',
-				],
-			],
-			'action' => 'default',
-		]);
 
 		return $router;
 	}
 
 	/**
-	 * @param IRouter $router
-	 * @param IRouter $newRouter
-	 *
-	 * @throws Nette\Utils\AssertionException
+	 * @deprecated Nahrazeno AntRoute, tato metoda bude úplně odstraněna
 	 */
 	public static function prependTo(IRouter &$router, IRouter $newRouter)
 	{

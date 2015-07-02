@@ -1,0 +1,12 @@
+,Front:Homepage:default
+kontakt,Front:Contact:default
+auth,Auth:Sign:in
+administrace,Admin:Dashboard:default
+odhlasit,Auth:Sign:out
+administrace/stranky,Admin:Page:default
+administrace/soubory,Admin:Files:default
+administrace/nastaveni,Admin:Options:general
+administrace/nova-stranka,Admin:Page:new
+administrace/editovat-stranku,Admin:Page:edit
+administrace/nastaveni/seo,Admin:Options:seo
+nahled-stranky,Front:Page:preview
