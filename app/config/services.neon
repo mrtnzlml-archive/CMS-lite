@@ -2,6 +2,10 @@
 # http://nette.org/security-warning
 
 services:
-	- App\Router\RouterFactory
+	- App\Router\RouterFactory(..., @antRoute)
+	antRoute:
+		class: App\Router\AntRoute
+		autowired: no
+		inject: yes
 	router: @App\Router\RouterFactory::createRouter
 	- App\AuthModule\Presenters\SignPresenter(%frontLayout%)
