@@ -4,3 +4,5 @@
 doctrine:
 	user: REPLACE
 	dbname: REPLACE
+	metadata:
+		App\Router: %appDir%/router
