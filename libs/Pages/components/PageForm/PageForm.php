@@ -75,7 +75,7 @@ class PageForm extends AControl
 		$user_id = $this->presenter->user->id;
 		$form->addMultiSelect('authors', 'Autor:',
 			[NULL => 'Bez autora'] + $authors
-		)->setDefaultValue(array_key_exists($user_id, $authors) ? $user_id : 0);
+		)->setDefaultValue(array_key_exists($user_id, $authors) ? $user_id : NULL);
 
 		$form->addMultiSelect('categories', 'Kategorie:',
 			[NULL => 'Bez kategorie'] +
