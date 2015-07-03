@@ -64,6 +64,7 @@ class Page extends BaseEntity
 	protected $individualTitle = NULL;
 
 	/**
+	 * @deprecated
 	 * @ORM\Column(type="text", options={"comment":"Webalized title (slug) of the article"})
 	 * @var string
 	 */

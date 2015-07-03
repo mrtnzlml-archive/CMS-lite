@@ -4,6 +4,7 @@ namespace Pages;
 
 use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Url\RouteGenerator;
 use Users\User;
 
 /**
@@ -25,12 +26,15 @@ class PageProcess extends Nette\Object
 	private $articles;
 	/** @var Nette\Security\IUserStorage */
 	private $user;
+	/** @var RouteGenerator */
+	private $routeGenerator;
 
-	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user)
+	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user, RouteGenerator $routeGenerator)
 	{
 		$this->em = $em;
 		$this->articles = $em->getRepository(Page::class);
 		$this->user = $user;
+		$this->routeGenerator = $routeGenerator;
 	}
 
 	public function publish(Page $page)
@@ -38,6 +42,9 @@ class PageProcess extends Nette\Object
 		$page->publishedAt = new \DateTime();
 		$this->completePageEntity($page);
 		$this->em->persist($page);
+		$this->routeGenerator->add($page->slug, 'Front:Page:default', [
+			'slug' => $page->slug,
+		]);
 		$this->onPublish($this, $page);
 		// don't forget to call $em->flush() in your control
 	}
@@ -46,6 +53,9 @@ class PageProcess extends Nette\Object
 	{
 		$this->completePageEntity($page);
 		$this->em->persist($page);
+		$this->routeGenerator->add($page->slug, 'Front:Page:default', [
+			'slug' => $page->slug,
+		]);
 		$this->onSave($this, $page);
 		// don't forget to call $em->flush() in your control
 	}
