@@ -2,6 +2,7 @@
 
 namespace Options;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
@@ -26,16 +27,21 @@ class Option extends BaseEntity
 	protected $key;
 
 	/**
-	 * @ORM\Column(type="text", name="`value`", options={"comment":"Value of the option"})
-	 * @var string
-	 */
-	protected $value;
-
-	/**
 	 * @ORM\Column(type="string", options={"comment":"Description of the option (form label)"})
 	 * @var string
 	 */
 	protected $description;
+
+	/**
+	 * //FIXME: klasiku MTM?
+	 * @ORM\ManyToMany(targetEntity="OptionValue", cascade={"persist"})
+	 * @ORM\JoinTable(name="options_optionvalues",
+	 *      joinColumns={@ORM\JoinColumn(name="option_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="optionvalue_id", referencedColumnName="id", unique=TRUE)}
+	 * )
+	 * @var OptionValue[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $values;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="OptionCategory", cascade={"persist"})
@@ -47,7 +53,22 @@ class Option extends BaseEntity
 	public function __construct($key, $value)
 	{
 		$this->key = $key;
-		$this->value = $value;
+		$this->values = new ArrayCollection;
+		if (is_array($value)) {
+			foreach ($value as $v) {
+				$this->addValue(new OptionValue($v));
+			}
+		} else {
+			$this->addValue(new OptionValue($value));
+		}
+	}
+
+	public function getValue()
+	{
+		if (count($this->values) === 1) {
+			return $this->values[0]->value;
+		}
+		return $this->values;
 	}
 
 }

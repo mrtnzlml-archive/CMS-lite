@@ -1,1 +1,12 @@
-{control generalSettings}
+{form generalSettings}
+	<ul class=error n:if="$form->ownErrors">
+		<li n:foreach="$form->ownErrors as $error">{$error}</li>
+	</ul>
+	{foreach $form->controls as $input}
+		<div class="form-group">
+			{label $input/}
+			{input $input, class => 'form-control'}
+			<span class=error n:ifcontent>{$input->error}</span>
+		</div>
+	{/foreach}
+{/form}

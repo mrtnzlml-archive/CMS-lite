@@ -2,6 +2,7 @@
 
 namespace Options\Components\OptionsForm;
 
+use App\AdminModule\Presenters\BasePresenter;
 use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
@@ -42,21 +43,37 @@ class OptionsForm extends AControl
 
 		/** @var Option $option */
 		foreach ($options as $option) {
-			if ($this->checkBool($option->value)) {
-				$control = $form->addCheckbox($option->key, $option->description);
+			if (count($option->values) === 1) {
+				$value = $option->values[0]->value;
+				if ($this->checkBool($value)) {
+					$control = $form->addCheckbox($option->key, $option->description);
+				} else {
+					$control = $form->addText($option->key, $option->description);
+				}
+				$control->setDefaultValue($value);
 			} else {
-				$control = $form->addText($option->key, $option->description);
+				$select = [];
+				foreach ($option->values as $value) {
+					$select[$value->id] = $value->value;
+				}
+				$form->addSelect($option->key, $option->description, $select);
+				//TODO: default values
 			}
-			$control->setDefaultValue($option->value);
 		}
 
+		$form->addSubmit('save', 'Uložit změny');
 		$form->onSuccess[] = $this->generalSettingsSucceeded;
 		return $form;
 	}
 
-	public function generalSettingsSucceeded(UI\Form $form, Nette\Utils\ArrayHash $values)
+	public function generalSettingsSucceeded(UI\Form $_, Nette\Utils\ArrayHash $values)
 	{
-		$this->presenter->flashMessage('TODO', 'danger');
+		foreach ($values as $key => $value) {
+			//...
+		}
+		$this->em->flush();
+//		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', BasePresenter::FLASH_SUCCESS); //FIXME: :-( BasePresenter
+		$this->presenter->flashMessage('TODO', BasePresenter::FLASH_DANGER);
 		$this->redirect('this');
 	}
 

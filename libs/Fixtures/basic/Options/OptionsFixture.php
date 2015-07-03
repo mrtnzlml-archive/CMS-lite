@@ -10,7 +10,14 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 		//[category, title, value]
 		'site_title' => ['general', 'Název webu', 'ANTstudio CMS'],
 		'site_title_separator' => ['general', 'Oddělovač titulku', '|'],
+
 		'index' => ['seo', 'Indexovat web', TRUE],
+		'page_url_end' => ['seo', 'Koncovka URL stránek', [ //TODO
+			'žádná', '/', '.htm', '.html',
+		]],
+		'category_url_end' => ['seo', 'Koncovka URL kategorií', [ //TODO
+			'žádná', '/', '.htm', '.html',
+		]],
 	];
 
 	public function load(ObjectManager $manager)

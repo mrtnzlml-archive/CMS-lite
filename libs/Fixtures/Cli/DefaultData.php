@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Tracy\Debugger;
 
 class DefaultData extends Command
 {
@@ -31,6 +32,7 @@ class DefaultData extends Command
 			->addOption('append', NULL, InputOption::VALUE_NONE, 'Append the data fixtures instead of deleting all data from the database first.')
 			->addOption('demo', NULL, InputOption::VALUE_NONE, 'Include also demo data.')
 			->addOption('purge-with-truncate', NULL, InputOption::VALUE_NONE, 'Purge data by using a database-level TRUNCATE statement')
+			->addOption('debug-mode', NULL, InputOption::VALUE_OPTIONAL, 'Force Tracy debug mode', TRUE)
 			->setHelp(<<<EOT
 The <info>cms:fixtures:load</info> command loads data fixtures from your bundles:
 
@@ -47,6 +49,12 @@ the database. If you want to use a TRUNCATE statement instead you can use the <i
   <info>php index.php cms:fixtures:load --purge-with-truncate</info>
 EOT
 			);
+	}
+
+	protected function initialize(InputInterface $input, OutputInterface $output)
+	{
+		parent::initialize($input, $output);
+		Debugger::$productionMode = !$input->getOption('debug-mode');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
