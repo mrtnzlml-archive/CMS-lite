@@ -3,6 +3,7 @@
 require __DIR__ . '/../bootstrap.php';
 
 /**
+ * @skip Eshop isn't ready yet...
  * @testCase
  */
 class EshopPresenter extends \PresenterTestCase

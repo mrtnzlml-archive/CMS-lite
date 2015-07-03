@@ -47,7 +47,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function testRenderEmptyEditRedirect()
 	{
-		$this->checkRedirect('edit', '/administrace/page/new');
+		$this->checkRedirect('edit', '/administrace/nova-stranka');
 	}
 
 	public function testRenderEdit()
@@ -61,7 +61,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function testRenderEditMissingId()
 	{
-		$this->checkRedirect('edit', '/administrace/page/new', [
+		$this->checkRedirect('edit', '/administrace/nova-stranka', [
 			'id' => 'missing'
 		]);
 	}
