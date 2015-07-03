@@ -1,6 +1,6 @@
 <?php
 
-namespace TinyMCE;
+namespace TinyMCE\DI;
 
 class TinyExtension extends \Nette\DI\CompilerExtension
 {
