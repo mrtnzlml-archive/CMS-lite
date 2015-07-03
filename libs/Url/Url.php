@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Router;
+namespace Url;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby;
 
@@ -32,5 +33,16 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	 * @var string
 	 */
 	protected $destination;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="UrlParameter", mappedBy="url", cascade={"persist"})
+	 * @var UrlParameter[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $parameters;
+
+	public function __construct()
+	{
+		$this->parameters = new ArrayCollection;
+	}
 
 }

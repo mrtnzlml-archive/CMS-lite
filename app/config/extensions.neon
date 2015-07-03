@@ -12,7 +12,8 @@ extensions:
     - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
     - Files\DI\FilesExtension	
-    - TinyMCE\TinyExtension
+    - TinyMCE\DI\TinyExtension
+    - Url\DI\UrlExtension
     - Users\DI\UsersExtension
 
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
