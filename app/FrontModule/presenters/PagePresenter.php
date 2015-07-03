@@ -15,9 +15,9 @@ class PagePresenter extends BasePresenter
 	/** @var EntityManager @inject */
 	public $em;
 
-	public function actionDefault($slug)
+	public function actionDefault($id)
 	{
-		$pageQuery = (new PagesQuery)->bySlug($slug);
+		$pageQuery = (new PagesQuery)->byId($id);
 		$page = $this->em->getRepository(Page::class)->fetchOne($pageQuery);
 		if ($page === NULL) {
 			$this->error('Page not found.');

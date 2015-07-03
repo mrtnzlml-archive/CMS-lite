@@ -14,7 +14,6 @@ class NewsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture implemen
 			$body = $faker->realText(500);
 			$page = new \Pages\News();
 			$page->setTitle($title);
-			$page->setSlug(\Nette\Utils\Strings::webalize($title));
 			$page->setBody($body);
 			if (rand(0, 1)) {
 				$page->addAuthor($this->getReference('admin-user'));

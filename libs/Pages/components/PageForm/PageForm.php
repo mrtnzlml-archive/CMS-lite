@@ -67,7 +67,6 @@ class PageForm extends AControl
 		$form = new UI\Form;
 		$form->addProtection();
 		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
-		$form->addText('slug', 'URL slug:');
 		$form->addTinyMCE('editor', NULL)
 			->setRequired('Je zapotřebí napsat nějaký text.');
 
@@ -171,7 +170,6 @@ class PageForm extends AControl
 		if ($this->editablePage !== NULL) { //EDITING
 			$form->setDefaults([
 				'title' => $this->editablePage->title,
-				'slug' => $this->editablePage->slug,
 				'editor' => $this->editablePage->body,
 				'authors' => $this->editablePage->getAuthorsIds(),
 				'categories' => $this->editablePage->getCategoriesIds(),

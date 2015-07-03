@@ -22,7 +22,7 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 	public function onlyMenuItems()
 	{
 		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
-			$qb->select('partial page.{id, title, slug}');
+			$qb->select('partial page.{id, title}');
 		};
 		return $this;
 	}
@@ -35,10 +35,10 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 		return $this;
 	}
 
-	public function bySlug($slug)
+	public function byId($id)
 	{
-		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($slug) {
-			$qb->andWhere('page.slug = :slug')->setParameter('slug', $slug);
+		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($id) {
+			$qb->andWhere('page.id = :id')->setParameter('id', $id);
 		};
 		return $this;
 	}

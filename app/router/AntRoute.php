@@ -127,6 +127,7 @@ class AntRoute extends Nette\Object implements Application\IRouter
 //				}
 			}
 
+			//FIXME: toto fakt bude muset hledat nejen podle destination, ale i podle parametrů
 			$path = $this->em->getRepository(Url::class)->findOneBy(['destination' => $destination]);
 			return $path;
 		});
@@ -144,8 +145,9 @@ class AntRoute extends Nette\Object implements Application\IRouter
 
 		// 3) Add parameters to the URL
 		$params = $applicationRequest->getParameters();
+		unset($params['action']);
+
 //		unset($params['locale']); //FIXME
-//		unset($params['action']); //FIXME
 //		unset($params['slug']); //FIXME
 //		unset($params['test']); //FIXME
 		$sep = ini_get('arg_separator.input');

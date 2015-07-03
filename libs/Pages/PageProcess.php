@@ -42,8 +42,8 @@ class PageProcess extends Nette\Object
 		$page->publishedAt = new \DateTime();
 		$this->completePageEntity($page);
 		$this->em->persist($page);
-		$this->routeGenerator->add($page->slug, 'Front:Page:default', [
-			'slug' => $page->slug,
+		$this->routeGenerator->add(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', [
+			'id' => $page->getId(),
 		]);
 		$this->onPublish($this, $page);
 		// don't forget to call $em->flush() in your control
@@ -53,8 +53,8 @@ class PageProcess extends Nette\Object
 	{
 		$this->completePageEntity($page);
 		$this->em->persist($page);
-		$this->routeGenerator->add($page->slug, 'Front:Page:default', [
-			'slug' => $page->slug,
+		$this->routeGenerator->add(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', [
+			'id' => $page->getId(),
 		]);
 		$this->onSave($this, $page);
 		// don't forget to call $em->flush() in your control
@@ -69,9 +69,6 @@ class PageProcess extends Nette\Object
 		}
 		if ($page->getBody() === NULL) {
 			throw new Nette\InvalidArgumentException('You must set body of the page.');
-		}
-		if ($page->getSlug() === NULL) {
-			$page->setSlug(Nette\Utils\Strings::webalize($page->getTitle()));
 		}
 		$realAuthorReference = $this->em->getPartialReference(User::class, $this->user->getIdentity()->getId());
 		$page->setRealAuthor($realAuthorReference);

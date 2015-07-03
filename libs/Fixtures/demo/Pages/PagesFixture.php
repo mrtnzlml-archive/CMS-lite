@@ -14,7 +14,6 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			$body = $faker->realText(500);
 			$page = new \Pages\Page();
 			$page->setTitle($title);
-			$page->setSlug(\Nette\Utils\Strings::webalize($title));
 			$page->setBody($body);
 			if (rand(0, 1)) {
 				$page->addAuthor($this->getReference('admin-user'));

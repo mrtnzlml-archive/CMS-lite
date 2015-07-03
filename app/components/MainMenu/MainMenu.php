@@ -54,7 +54,7 @@ class MainMenu extends AControl
 		/** @var Page $page */
 		foreach ($pages as $page) {
 			$item = (new MainMenuItem)->setTitle($page->title)->setLink(':Front:Page:', [
-				'slug' => $page->getSlug(),
+				'id' => $page->getId(),
 			]);
 			$this->addMainMenuItem($item);
 		}

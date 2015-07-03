@@ -20,8 +20,6 @@ use Users\User;
  *
  * @method setTitle(string)
  * @method string getTitle()
- * @method setSlug(string)
- * @method string getSlug()
  * @method setBody(string)
  * @method string getBody()
  * @method boolean getDeleted()
@@ -62,13 +60,6 @@ class Page extends BaseEntity
 	 * @var string
 	 */
 	protected $individualTitle = NULL;
-
-	/**
-	 * @deprecated
-	 * @ORM\Column(type="text", options={"comment":"Webalized title (slug) of the article"})
-	 * @var string
-	 */
-	protected $slug;
 
 	/**
 	 * @ORM\Column(type="text", nullable=TRUE, options={"comment":"Meta description of the article"})
