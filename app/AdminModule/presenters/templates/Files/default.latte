@@ -1,33 +1,47 @@
 {block content}
-<div id="image-uploader">
-      <script type="text/template" id="qq-template">
-          {include 'qq-template.latte'}
-      </script>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">{_'Přílohy'}</a></li>
+            <li role="presentation"><a n:href="upload">{_'Nahrát přílohy'}</a></li>
+            <li role="presentation"><a href="#">{_'Nastavení'}</a></li>
+        </ul>
+    </div>
 </div>
-{/block}
 
-{block css}
-<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
-{/block}
+<div class="row mt20">
+    <div class="col-md-12">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>{_'SOUBOR'}</th>
+                    <th>{_'VELIKOST'}</th>
+                    <th></th>
 
-{block scripts}
-{include parent}
-<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
-<script>
-    $(function () {
-        $('#image-uploader').fineUploader({
-            debug: true, 
-            
-            request: {
-                endpoint: 'files?do=upload'
-            }
-            ,
-            retry: {
-                enableAuto: false
-            }
-        });
-    });
-</script>
+                </tr>
+            </thead>
+            {snippet files}
+            {if !empty($files)}
+                <tbody>
+                    <tr n:foreach="$files as $file">
+                        <td>{$file->getName()}</td>
+                        <td>{$file->getSize()|bytes}</td>
+                        <td>
+                            <a n:href="edit id => $file->getId()" class="btn btn-xs btn-default">upravit</a>
+                            <a n:href="delete! id => $file->getId()" class="btn btn-xs btn-default">smazat</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            {/if}
+            {/snippet}
+        </table>
+
+
+        <div class="clearfix"></div>
+        {control fineUploader}
+    </div>
+</div>
+
 {/block}

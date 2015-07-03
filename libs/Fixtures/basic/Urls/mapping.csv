@@ -10,3 +10,5 @@ administrace/nova-stranka,Admin:Page:new
 administrace/editovat-stranku,Admin:Page:edit
 administrace/nastaveni/seo,Admin:Options:seo
 nahled-stranky,Front:Page:preview
+administrace/nahrat-soubory,Admin:Files:upload
+administrace/editovat-soubor,Admin:Files:edit

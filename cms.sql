@@ -355,7 +355,9 @@ INSERT INTO `urls` (`id`, `fake_path`, `destination`) VALUES
 (99,	'sint',	'Front:Page:default'),
 (100,	'eveniet',	'Front:Page:default'),
 (102,	'molestias',	'Front:Page:default'),
-(104,	'dolorem',	'Front:Page:default');
+(104,	'dolorem',	'Front:Page:default'),
+(105, 'administrace/nahrat-soubory', 'Admin:Files:upload'),
+(106, 'administrace/editovat-soubor', 'Admin:Files:edit');
 
 DROP TABLE IF EXISTS `url_parameter`;
 CREATE TABLE `url_parameter` (
@@ -435,5 +437,18 @@ INSERT INTO `variant_values` (`id`, `variant_id`, `value`) VALUES
 (385,	129,	'bavlna'),
 (386,	129,	'dřevo'),
 (387,	129,	'polyester');
+
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE `files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sanitized_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8_unicode_ci,
+  `uuid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `size` int(11) NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 2015-07-03 10:47:14
