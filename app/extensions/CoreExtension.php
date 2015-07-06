@@ -37,17 +37,6 @@ class CoreExtension extends Nette\DI\CompilerExtension
 			}
 		}
 
-		/** @var IRouterProvider $extension */
-		foreach ($this->compiler->getExtensions(IRouterProvider::class) as $extension) {
-			if ($config['https']) {
-				Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;
-			}
-			$router = $cb->getDefinition($cb->getByType(Nette\Application\IRouter::class) ?: 'router');
-			foreach ($extension->getRouter() as $routerDefinition) {
-				$router->addSetup('App\Router\RouterFactory::prependTo($service, ?)', [$routerDefinition]);
-			}
-		}
-
 		/** @var IMetasProvider $extension */
 		foreach ($this->compiler->getExtensions(IMetasProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IMetaFactory::class));

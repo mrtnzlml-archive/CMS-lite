@@ -5,10 +5,4 @@ services:
 	antFileStorage:
 		class: Caching\AntFileStorage(%tempDir%/cache)
 		autowired: no
-	- App\Router\RouterFactory(..., @antRoute)
-	antRoute:
-		class: App\Router\AntRoute(..., @antFileStorage)
-		autowired: no
-		inject: yes
-	router: @App\Router\RouterFactory::createRouter
 	- App\AuthModule\Presenters\SignPresenter(%frontLayout%)

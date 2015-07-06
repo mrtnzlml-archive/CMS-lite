@@ -26,6 +26,10 @@ di:
     debugger: yes
 
 
+routing:
+	debugger: no
+
+
 session:
 	expiration: 14 days
 

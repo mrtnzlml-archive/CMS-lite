@@ -13,6 +13,8 @@ class UrlExtension extends Nette\DI\CompilerExtension implements IEntityProvider
 		$builder = $this->getContainerBuilder();
 		$config = $this->loadFromFile(__DIR__ . '/services.neon');
 		$this->compiler->parseServices($builder, $config);
+
+		$builder->removeDefinition('routing.router'); //remove default Nette Router
 	}
 
 	/**
