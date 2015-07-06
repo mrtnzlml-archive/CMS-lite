@@ -31,6 +31,7 @@ use Users\User;
  * @method string getIndex()
  * @method setFollow(string)
  * @method string getFollow()
+ * @method setUrl(\Url\Url $url)
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -129,6 +130,13 @@ class Page extends BaseEntity
 	 * @var \Pages\PageCategory[]|ArrayCollection
 	 */
 	protected $categories;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
+	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
+	 * @var \Url\Url
+	 */
+	protected $url;
 
 	public function __construct()
 	{

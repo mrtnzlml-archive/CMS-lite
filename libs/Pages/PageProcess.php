@@ -4,7 +4,7 @@ namespace Pages;
 
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use Url\RouteGenerator;
+use Url\RouteGenerator as Url;
 use Users\User;
 
 /**
@@ -26,25 +26,25 @@ class PageProcess extends Nette\Object
 	private $articles;
 	/** @var Nette\Security\IUserStorage */
 	private $user;
-	/** @var RouteGenerator */
-	private $routeGenerator;
 
-	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user, RouteGenerator $routeGenerator)
+	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user)
 	{
 		$this->em = $em;
 		$this->articles = $em->getRepository(Page::class);
 		$this->user = $user;
-		$this->routeGenerator = $routeGenerator;
 	}
 
 	public function publish(Page $page)
 	{
 		$page->publishedAt = new \DateTime();
 		$this->completePageEntity($page);
+
+		if (!$page->url) {
+			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', $page->getId());
+			$page->setUrl($url); //UniqueConstraintViolationException
+		}
+
 		$this->em->persist($page);
-		$this->routeGenerator->add(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', [
-			'id' => $page->getId(),
-		]);
 		$this->onPublish($this, $page);
 		// don't forget to call $em->flush() in your control
 	}
@@ -52,10 +52,14 @@ class PageProcess extends Nette\Object
 	public function save(Page $page)
 	{
 		$this->completePageEntity($page);
+
+		//FIXME: pokud by bylo potřeba vytvořit novou URL adresu, musí se stará přesměrovávat na tuto novou...
+		if (!$page->url) {
+			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', $page->getId());
+			$page->setUrl($url); //UniqueConstraintViolationException
+		}
+
 		$this->em->persist($page);
-		$this->routeGenerator->add(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', [
-			'id' => $page->getId(),
-		]);
 		$this->onSave($this, $page);
 		// don't forget to call $em->flush() in your control
 	}
