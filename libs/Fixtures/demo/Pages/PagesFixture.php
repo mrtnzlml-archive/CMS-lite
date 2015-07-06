@@ -9,10 +9,14 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 	public function load(ObjectManager $manager)
 	{
 		$faker = Faker\Factory::create('cs_CZ');
-		for ($iterator = 0; $iterator < 3; $iterator++) {
+		for ($iterator = 0; $iterator < 6; $iterator++) {
 			$title = \Nette\Utils\Strings::firstUpper($faker->word);
 			$body = $faker->realText(500);
-			$page = new \Pages\Page();
+			if (rand(0, 1)) {
+				$page = new \Pages\Page();
+			} else {
+				$page = new \Pages\News();
+			}
 			$page->setTitle($title);
 			$page->setBody($body);
 			if (rand(0, 1)) {
@@ -30,6 +34,8 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			if (rand(0, 1)) {
 				$page->addCategory($this->getReference('page-category-3'));
 			}
+			//TODO: takto nejde ID stránky samozřejmě předat
+			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Front:Page:default', $page->getId()));
 			$manager->persist($page);
 		}
 		$manager->flush();
