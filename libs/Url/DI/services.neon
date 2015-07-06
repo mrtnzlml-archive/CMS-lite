@@ -1,2 +1,3 @@
 services:
+	- Url\AntRoute(..., @antFileStorage)
 	- Url\RouteGenerator

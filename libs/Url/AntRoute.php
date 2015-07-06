@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Router;
+namespace Url;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
 use Nette;
 use Nette\Application;
-use Url\Url;
-use Url\UrlParameter;
 
-//TODO: Automatická koncová lomítka a redirect 301?
-class AntRoute extends Nette\Object implements Application\IRouter
+class AntRoute extends Application\Routers\RouteList
 {
 
 	/** @var EntityManager */
@@ -47,12 +44,25 @@ class AntRoute extends Nette\Object implements Application\IRouter
 	 */
 	public function match(Nette\Http\IRequest $httpRequest)
 	{
+		/** @var Application\IRouter $route */
+		foreach ($this as $route) { //because of \Kdyby\Console\CliRouter::prependTo
+			/** @var Application\Request $applicationRequest */
+			$applicationRequest = $route->match($httpRequest);
+			if ($applicationRequest !== NULL) {
+				return $applicationRequest;
+			}
+		}
+
 		$url = $httpRequest->getUrl();
+		$host = $url->getHost(); //TODO: jazykové mutace na základě domény + na stejné doméně!
 		$basePath = $url->getBasePath();
 		if (strncmp($url->getPath(), $basePath, strlen($basePath)) !== 0) {
 			return NULL;
 		}
 		$path = (string)substr($url->getPath(), strlen($basePath));
+		if ($path !== '') {
+			$path = rtrim(rawurldecode($path), '/'); //TODO: další koncovky podle nastavení
+		}
 
 		// 1) Load route definition (internal destination) from cache
 		$destination = $this->cache->load($path, function (& $dependencies) use ($path) {
@@ -61,12 +71,7 @@ class AntRoute extends Nette\Object implements Application\IRouter
 				$this->monolog->addError(sprintf('Cannot find route for path %s', $path));
 				return NULL;
 			}
-
-			$params = [];
-			foreach ($destination->parameters as $parameter) {
-				$params[$parameter->name] = $parameter->value;
-			}
-			return [$destination->destination => $params];
+			return [$destination->destination => $destination->internalId];
 		});
 		if ($destination === NULL) {
 			return NULL;
@@ -79,10 +84,15 @@ class AntRoute extends Nette\Object implements Application\IRouter
 		$action = substr($internalDestination, $pos + 1);
 
 		// 3) Create Application Request
+		$params = $httpRequest->getQuery();
+		$params['action'] = $action;
+		if ($destination[$internalDestination]) {
+			$params['id'] = $destination[$internalDestination];
+		}
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),
-			$httpRequest->getQuery() + ['action' => $action] + $destination[$internalDestination], //params
+			$params,
 			$httpRequest->getPost(),
 			$httpRequest->getFiles(),
 			[Application\Request::SECURED => $httpRequest->isSecured()]
@@ -90,7 +100,7 @@ class AntRoute extends Nette\Object implements Application\IRouter
 	}
 
 	/**
-	 * Constructs absolute URL from Request object.
+	 * Constructs absolute URL from Application Request object.
 	 *
 	 * @param Application\Request $applicationRequest
 	 * @param Nette\Http\Url $refUrl
@@ -105,35 +115,44 @@ class AntRoute extends Nette\Object implements Application\IRouter
 
 		// 1) Load path (public) from cache
 		$path = $this->cache->load($applicationRequest, function (& $dependencies) use ($applicationRequest) {
+			$fallback = FALSE;
 			$params = $applicationRequest->getParameters();
 			$destination = $applicationRequest->getPresenterName() . ':' . $params['action'];
-//			unset($params['locale']); //FIXME
-//			unset($params['action']); //FIXME
-//			unset($params['backlink']); //FIXME
+			$internalId = isset($params['id']) ? $params['id'] : NULL;
 
-			if ($params) {
-				$qb = $this->em->getRepository(UrlParameter::class)->createQueryBuilder('up');
-				$qb->select('COUNT(up.id) AS total_count');
-				$iterator = 0;
-				foreach ($params as $key => $value) {
-					$qb->orWhere("up.name = :name$iterator AND up.value = :value$iterator");
-					$qb->setParameter("name$iterator", $key);
-					$qb->setParameter("value$iterator", $value);
-					$iterator++;
+			// 1) pokud není předáno ID, pokusit se najít pouze path na základě destination (ID je volitelné)
+			// 2) pokud je předáno i ID, tak najít path na základe destination i internalId
+			// 3) může se stát, že je předáno ID (bod 2), ale nebylo nic nalezeno, pak předat destination, jak by ID nebylo předáno a pověsit parametry za otazník
+			if (!isset($params['id'])) {
+				$path = $this->em->getRepository(Url::class)->findOneBy([
+					'destination' => $destination,
+				]);
+			} else {
+				$path = $this->em->getRepository(Url::class)->findOneBy([
+					'destination' => $destination,
+					'internalId' => $internalId,
+				]);
+				if ($path === NULL) {
+					//FIXME: v tomto případě by se to nemělo ukládat do cache
+					$this->monolog->addWarning(sprintf('Cannot find cool route for destination %s. Fallback will be used.', $destination), [
+						'internalId' => $internalId,
+					]); //FIXME: logovat / nelogovat?
+					$fallback = TRUE;
+					$path = $this->em->getRepository(Url::class)->findOneBy([
+						'destination' => $destination,
+					]);
 				}
-//				if (count($params) !== (int)$qb->getQuery()->getSingleScalarResult()) {
-//					$this->monolog->addError(sprintf('Cannot find route for destination %s', $destination));
-//					return NULL;
-//				}
 			}
 
-			//FIXME: toto fakt bude muset hledat nejen podle destination, ale i podle parametrů
-			$path = $this->em->getRepository(Url::class)->findOneBy(['destination' => $destination]);
-			return $path;
+			if ($path === NULL) {
+				$this->monolog->addError(sprintf('Cannot find route for destination %s', $destination), [
+					'internalId' => $internalId,
+				]);
+				return NULL;
+			}
+			return [$path->getFakePath() => $fallback];
 		});
-		if ($path === NULL) {
-			return NULL;
-		}
+		//if $path === NULL return?
 
 		// 2) Construct URL
 		if ($this->lastRefUrl !== $refUrl) {
@@ -141,22 +160,21 @@ class AntRoute extends Nette\Object implements Application\IRouter
 			$this->lastBaseUrl = $scheme . $refUrl->getAuthority() . $refUrl->getBasePath();
 			$this->lastRefUrl = $refUrl;
 		}
-		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize($path->fakePath, '/');
+		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize(key($path), '/');
 
 		// 3) Add parameters to the URL
 		$params = $applicationRequest->getParameters();
-		unset($params['action']);
-
-//		unset($params['locale']); //FIXME
-//		unset($params['slug']); //FIXME
-//		unset($params['test']); //FIXME
+		if (!$path[key($path)]) { //fallback in case it's not possible to find any route
+			unset($params['action']);
+			unset($params['id']);
+		}
 		$sep = ini_get('arg_separator.input');
 		$query = http_build_query($params, '', $sep ? $sep[0] : '&');
 		if ($query != '') { // intentionally ==
 			$url .= '?' . $query;
 		}
 
-		return $url;
+		return $url; //TODO: další koncovky podle nastavení
 	}
 
 }
