@@ -17,6 +17,7 @@ use Kdyby;
  * @method string getDestination()
  * @method setInternalId(integer)
  * @method integer getInternalId()
+ * @method setRedirectTo(Url $url)
  */
 class Url extends Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -42,15 +43,10 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	protected $internalId = NULL;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="Url", cascade={"persist"}, orphanRemoval=FALSE)
-	 * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+	 * @ORM\ManyToOne(targetEntity="Url", cascade={"persist"})
+	 * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
 	 * @var Url
 	 */
-	protected $parent;
-
-	public function __construct()
-	{
-		$this->parent = $this->getId();
-	}
+	protected $redirectTo = NULL;
 
 }

@@ -64,21 +64,30 @@ class AntRoute extends Application\Routers\RouteList
 			$path = rtrim(rawurldecode($path), '/'); //TODO: další koncovky podle nastavení
 		}
 
-		// 1) Load route definition (internal destination) from cache
+		/**
+		 * 1) Load route definition (internal destination) from cache
+		 * @var Url $destination
+		 */
 		$destination = $this->cache->load($path, function (& $dependencies) use ($path) {
+			/** @var Url $destination */
 			$destination = $this->em->getRepository(Url::class)->findOneBy(['fakePath' => $path]);
 			if ($destination === NULL) {
 				$this->monolog->addError(sprintf('Cannot find route for path %s', $path));
 				return NULL;
 			}
-			return [$destination->destination => $destination->internalId];
+			$dependencies = [Nette\Caching\Cache::TAGS => ['route/' . $destination->getId()]];
+			return $destination;
 		});
 		if ($destination === NULL) {
 			return NULL;
 		}
 
 		// 2) Extract parts of the destination
-		$internalDestination = key($destination);
+		if ($destination->redirectTo === NULL) {
+			$internalDestination = $destination->destination;
+		} else {
+			$internalDestination = $destination->redirectTo->destination;
+		}
 		$pos = strrpos($internalDestination, ':');
 		$presenter = substr($internalDestination, 0, $pos);
 		$action = substr($internalDestination, $pos + 1);
@@ -86,7 +95,7 @@ class AntRoute extends Application\Routers\RouteList
 		// 3) Create Application Request
 		$params = $httpRequest->getQuery();
 		$params['action'] = $action;
-		if ($destination[$internalDestination]) {
+		if ($destination->internalId) {
 			$params['id'] = $destination[$internalDestination];
 		}
 		return new Application\Request(
@@ -113,8 +122,11 @@ class AntRoute extends Application\Routers\RouteList
 			return NULL;
 		}
 
-		// 1) Load path (public) from cache
-		$path = $this->cache->load($applicationRequest, function (& $dependencies) use ($applicationRequest) {
+		/**
+		 * 1) Load path (public) from cache
+		 * @var array [Url $path, (bool)fallback]
+		 */
+		$cacheResult = $this->cache->load($applicationRequest, function (& $dependencies) use ($applicationRequest) {
 			$fallback = FALSE;
 			$params = $applicationRequest->getParameters();
 			$destination = $applicationRequest->getPresenterName() . ':' . $params['action'];
@@ -150,9 +162,14 @@ class AntRoute extends Application\Routers\RouteList
 				]);
 				return NULL;
 			}
-			return [$path->getFakePath() => $fallback];
+			$dependencies = [Nette\Caching\Cache::TAGS => ['route/' . $path->getId()]];
+			return [$path, $fallback];
 		});
-		//if $path === NULL return?
+		/** @var Url $path */
+		$path = $cacheResult[0];
+		if ($path === NULL) {
+			return NULL;
+		}
 
 		// 2) Construct URL
 		if ($this->lastRefUrl !== $refUrl) {
@@ -160,11 +177,16 @@ class AntRoute extends Application\Routers\RouteList
 			$this->lastBaseUrl = $scheme . $refUrl->getAuthority() . $refUrl->getBasePath();
 			$this->lastRefUrl = $refUrl;
 		}
-		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize(key($path), '/');
+		if ($path->redirectTo === NULL) {
+			$fakePath = $path->getFakePath();
+		} else {
+			$fakePath = $path->redirectTo->getFakePath();
+		}
+		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize($fakePath, '/');
 
 		// 3) Add parameters to the URL
 		$params = $applicationRequest->getParameters();
-		if (!$path[key($path)]) { //fallback in case it's not possible to find any route
+		if (!$cacheResult[1]) { //fallback in case it's not possible to find any route
 			unset($params['action']);
 			unset($params['id']);
 		}

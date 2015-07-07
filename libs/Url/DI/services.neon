@@ -1,3 +1,4 @@
 services:
 	- Url\AntRoute(..., @antFileStorage)
+	- Url\RedirectFacade
 	- Url\RouteGenerator
