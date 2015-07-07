@@ -62,6 +62,7 @@ class OptionsForm extends AControl
 				}
 				$form->addSelect($option->key, $option->description, $select)
 					->setDefaultValue(isset($selectedId) ? $selectedId : NULL);
+				unset($selectedId);
 			}
 		}
 

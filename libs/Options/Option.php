@@ -33,11 +33,7 @@ class Option extends BaseEntity
 	protected $description;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="OptionValue", cascade={"persist"}, orphanRemoval=TRUE)
-	 * @ORM\JoinTable(name="options_optionvalues",
-	 *      joinColumns={@ORM\JoinColumn(name="option_id", referencedColumnName="id")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="optionvalue_id", referencedColumnName="id", unique=TRUE)}
-	 * )
+	 * @ORM\OneToMany(targetEntity="OptionValue", mappedBy="option", cascade={"persist"})
 	 * @var OptionValue[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $values;
@@ -53,6 +49,7 @@ class Option extends BaseEntity
 	{
 		$this->key = $key;
 		$this->values = new ArrayCollection;
+
 		if (is_array($value)) {
 			foreach ($value as $v) {
 				$this->addValue(new OptionValue($v));
@@ -62,16 +59,24 @@ class Option extends BaseEntity
 		}
 	}
 
+	public function addValue(OptionValue $value)
+	{
+		$value->option = $this;
+		$this->values->add($value);
+	}
+
 	/**
-	 * FIXME: Toto je fak ošklivé (ale funkční)...
+	 * FIXME: Toto je fakt ošklivé (ale funkční)...
 	 *
 	 * @param $value
 	 */
 	public function setDefaultValue($value)
 	{
 		if (is_bool($value)) { //checkbox
-			$this->values->clear();
-			$this->values->add(new OptionValue($value ? 1 : 0));
+			foreach ($this->values as $val) {
+				$val->value = $value ? 1 : 0;
+				$val->selected = 1;
+			}
 		} elseif (is_int($value)) { //select
 			foreach ($this->values as $val) {
 				if ($val->getId() === $value) {
@@ -81,15 +86,17 @@ class Option extends BaseEntity
 				}
 			}
 		} else { //input
-			$this->values->clear();
-			$this->values->add(new OptionValue($value));
+			foreach ($this->values as $val) {
+				$val->value = $value;
+				$val->selected = 1;
+			}
 		}
 	}
 
 	public function getValue()
 	{
 		if (count($this->values) === 1) {
-			return $this->values[0]->value;
+			return $this->values[0];
 		}
 		return $this->values;
 	}

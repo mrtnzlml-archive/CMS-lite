@@ -12,11 +12,11 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 		'site_title_separator' => ['general', 'Oddělovač titulku', '|'],
 
 		'index' => ['seo', 'Indexovat web', TRUE],
-		'page_url_end' => ['seo', 'Koncovka URL stránek', [ //TODO
-			'žádná', '/', '.htm', '.html',
+		'page_url_end' => ['seo', 'Koncovka URL stránek', [
+			NULL, '/', '.htm', '.html',
 		]],
-		'category_url_end' => ['seo', 'Koncovka URL kategorií', [ //TODO
-			'žádná', '/', '.htm', '.html',
+		'category_url_end' => ['seo', 'Koncovka URL kategorií', [
+			NULL, '/', '.htm', '.html',
 		]],
 	];
 

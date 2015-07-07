@@ -6,6 +6,8 @@ use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
 use Nette;
 use Nette\Application;
+use Options\Option;
+use Pages\Query\OptionsQuery;
 
 class AntRoute extends Application\Routers\RouteList
 {
@@ -27,12 +29,23 @@ class AntRoute extends Application\Routers\RouteList
 	/** @var string */
 	private $lastBaseUrl;
 
+	private $extension;
+
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
 		$this->em = $em;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, 'ANT.Router');
 		$this->monolog = $monolog;
 		$this->flags = Nette\Application\Routers\Route::$defaultFlags;
+
+		$query = (new OptionsQuery())->withOptions('page_url_end');
+		$values = $this->em->getRepository(Option::class)->fetchOne($query)->values;
+		foreach ($values as $value) {
+			if ($value->selected) {
+				$this->extension = $value->value;
+			}
+		}
+//		$this->extension = '.přípona';
 	}
 
 	/**
@@ -61,8 +74,9 @@ class AntRoute extends Application\Routers\RouteList
 		}
 		$path = (string)substr($url->getPath(), strlen($basePath));
 		if ($path !== '') {
-			$path = rtrim(rawurldecode($path), '/'); //TODO: další koncovky podle nastavení
+			$path = rtrim(rawurldecode($path), '/');
 		}
+		$path = preg_replace('~' . preg_quote($this->extension, '~') . '$~', '', $path);
 
 		/**
 		 * 1) Load route definition (internal destination) from cache
@@ -183,6 +197,9 @@ class AntRoute extends Application\Routers\RouteList
 			$fakePath = $path->redirectTo->getFakePath();
 		}
 		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize($fakePath, '/');
+		if (substr($url, -1) !== '/') {
+			$url .= $this->extension;
+		}
 
 		// 3) Add parameters to the URL
 		$params = $applicationRequest->getParameters();
@@ -196,7 +213,7 @@ class AntRoute extends Application\Routers\RouteList
 			$url .= '?' . $query;
 		}
 
-		return $url; //TODO: další koncovky podle nastavení
+		return $url;
 	}
 
 }

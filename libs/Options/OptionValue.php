@@ -18,7 +18,14 @@ class OptionValue extends BaseEntity
 	use Identifier;
 
 	/**
-	 * @ORM\Column(type="string", name="`value`", options={"comment":"Value of the option"})
+	 * @ORM\ManyToOne(targetEntity="Option", inversedBy="values", cascade={"persist"})
+	 * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
+	 * @var Option
+	 */
+	protected $option;
+
+	/**
+	 * @ORM\Column(type="string", name="`value`", nullable=TRUE, options={"comment":"Value of the option"})
 	 * @var string
 	 */
 	protected $value;
