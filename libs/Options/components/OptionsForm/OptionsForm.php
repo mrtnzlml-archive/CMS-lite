@@ -10,6 +10,7 @@ use Nette\Application\UI;
 use Nette\Utils\ArrayHash;
 use Options\Option;
 use Options\OptionCategory;
+use Pages\Query\OptionsQuery;
 
 class OptionsForm extends AControl
 {
@@ -54,10 +55,13 @@ class OptionsForm extends AControl
 			} else {
 				$select = [];
 				foreach ($option->values as $value) {
-					$select[$value->id] = $value->value;
+					$select[$value->getId()] = $value->value;
+					if ($value->selected) {
+						$selectedId = $value->getId();
+					}
 				}
-				$form->addSelect($option->key, $option->description, $select);
-				//TODO: default values
+				$form->addSelect($option->key, $option->description, $select)
+					->setDefaultValue(isset($selectedId) ? $selectedId : NULL);
 			}
 		}
 
@@ -66,14 +70,20 @@ class OptionsForm extends AControl
 		return $form;
 	}
 
+	/**
+	 * @param UI\Form $_
+	 * @param ArrayHash $values
+	 */
 	public function generalSettingsSucceeded(UI\Form $_, Nette\Utils\ArrayHash $values)
 	{
 		foreach ($values as $key => $value) {
-			//...
+			$query = (new OptionsQuery)->withOptions($key);
+			/** @var Option $option */
+			$option = $this->em->getRepository(Option::class)->fetchOne($query);
+			$option->setDefaultValue($value);
 		}
 		$this->em->flush();
-//		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', BasePresenter::FLASH_SUCCESS); //FIXME: :-( BasePresenter
-		$this->presenter->flashMessage('TODO', BasePresenter::FLASH_DANGER);
+		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', BasePresenter::FLASH_SUCCESS); //FIXME: :-( BasePresenter
 		$this->redirect('this');
 	}
 

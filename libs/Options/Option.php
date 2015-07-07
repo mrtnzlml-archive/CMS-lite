@@ -33,8 +33,7 @@ class Option extends BaseEntity
 	protected $description;
 
 	/**
-	 * //FIXME: klasiku MTM?
-	 * @ORM\ManyToMany(targetEntity="OptionValue", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="OptionValue", cascade={"persist"}, orphanRemoval=TRUE)
 	 * @ORM\JoinTable(name="options_optionvalues",
 	 *      joinColumns={@ORM\JoinColumn(name="option_id", referencedColumnName="id")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="optionvalue_id", referencedColumnName="id", unique=TRUE)}
@@ -60,6 +59,30 @@ class Option extends BaseEntity
 			}
 		} else {
 			$this->addValue(new OptionValue($value));
+		}
+	}
+
+	/**
+	 * FIXME: Toto je fak ošklivé (ale funkční)...
+	 *
+	 * @param $value
+	 */
+	public function setDefaultValue($value)
+	{
+		if (is_bool($value)) { //checkbox
+			$this->values->clear();
+			$this->values->add(new OptionValue($value ? 1 : 0));
+		} elseif (is_int($value)) { //select
+			foreach ($this->values as $val) {
+				if ($val->getId() === $value) {
+					$val->selected = TRUE;
+				} else {
+					$val->selected = FALSE;
+				}
+			}
+		} else { //input
+			$this->values->clear();
+			$this->values->add(new OptionValue($value));
 		}
 	}
 

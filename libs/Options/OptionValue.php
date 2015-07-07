@@ -23,6 +23,12 @@ class OptionValue extends BaseEntity
 	 */
 	protected $value;
 
+	/**
+	 * @ORM\Column(type="boolean", options={"comment":"Should be this value used as selected?"})
+	 * @var boolean
+	 */
+	protected $selected = FALSE;
+
 	public function __construct($optionValue)
 	{
 		$this->value = $optionValue;
