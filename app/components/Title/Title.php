@@ -47,7 +47,7 @@ class Title extends Components\AControl
 		]);
 		$options = Nette\Utils\ArrayHash::from($this->em->getRepository(Option::class)->fetch($query));
 		$separator = isset($options->site_title_separator)
-			? ($this->title ? $options->site_title_separator->value : NULL)
+			? ($this->title ? $options->site_title_separator->getValue()->value : NULL)
 			: ($this->title ? '|' : NULL);
 		return "$this->title $separator {$options->site_title->getValue()->value}"; //FIXME: to je ale pěkná hovadina
 	}
