@@ -12,11 +12,7 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 		for ($iterator = 0; $iterator < 6; $iterator++) {
 			$title = \Nette\Utils\Strings::firstUpper($faker->word);
 			$body = $faker->realText(500);
-			if (rand(0, 1)) {
-				$page = new \Pages\Page();
-			} else {
-				$page = new \Pages\News();
-			}
+			$page = rand(0, 1) ? new \Pages\Page() : new \Pages\News();
 			$page->setTitle($title);
 			$page->setBody($body);
 			if (rand(0, 1)) {
