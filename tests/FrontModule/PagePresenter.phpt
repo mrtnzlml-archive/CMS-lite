@@ -17,14 +17,18 @@ class PagePresenter extends \PresenterTestCase
 		$this->em = $this->getContainer()->getByType(Kdyby\Doctrine\EntityManager::class);
 	}
 
-//	public function testRenderDefault()
-//	{ //TODO: Nefunguje, protože se používá nový styp routování. Nutno opravit.
-//		/** @var \Pages\Page $page */
-//		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
-//		$this->checkAction('default', [
-//			'id' => $page->getId(),
-//		]);
-//	}
+	public function testRenderDefault()
+	{
+		/** @var \Pages\Page $page */
+		$pageQuery = (new \Pages\Query\PagesQuery());
+		$page = $this->em->getRepository(\Pages\Page::class)->fetchOne($pageQuery);
+		if ($page === NULL) {
+			Tester\Environment::skip('You don\'t have any public page.');
+		}
+		$this->checkAction('default', [
+			'id' => $page->getId(),
+		]);
+	}
 
 	public function testRenderDefaultEmpty()
 	{
