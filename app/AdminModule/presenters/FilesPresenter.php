@@ -45,6 +45,9 @@ class FilesPresenter extends BasePresenter
         }
     }
 
+	/**
+	 * @secured
+	 */
     public function handleDelete($id)
     {
         $file = $this->em->getRepository(File::class)->find((int) $id);
