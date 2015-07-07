@@ -49,7 +49,7 @@ class Title extends Components\AControl
 		$separator = isset($options->site_title_separator)
 			? ($this->title ? $options->site_title_separator->value : NULL)
 			: ($this->title ? '|' : NULL);
-		return "$this->title $separator {$options->site_title->value}";
+		return "$this->title $separator {$options->site_title->getValue()->value}"; //FIXME: to je ale pěkná hovadina
 	}
 
 }
