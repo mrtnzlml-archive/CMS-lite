@@ -13,7 +13,7 @@ use Nette\Application\UI;
 use Files\FineUploader;
 use Nette\Application\Responses\JsonResponse;
 
-final class FilesPresenter extends BasePresenter
+class FilesPresenter extends BasePresenter
 {
     /** @var EntityManager */
     private $em;
