@@ -26,6 +26,10 @@ di:
     debugger: yes
 
 
+doctrine:
+	defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
+
+
 routing:
 	debugger: no
 
