@@ -31,7 +31,7 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	protected $fakePath;
 
 	/**
-	 * @ORM\Column(type="string", options={"comment":"Internal link destination (Module:Presenter:action)"})
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Internal link destination (Module:Presenter:action)"})
 	 * @var string
 	 */
 	protected $destination;
