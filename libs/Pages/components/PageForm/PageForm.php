@@ -3,14 +3,19 @@
 namespace Pages\Components\PageForm;
 
 use App\Components\AControl;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Strings;
 use Pages\Page;
 use Pages\PageCategory;
 use Pages\PageProcess;
+use Url\Components\RedirectForm\IRedirectFormFactory;
+use Url\DuplicateRouteException;
+use Url\RouteGenerator;
 use Users\User;
 
 /**
@@ -62,11 +67,17 @@ class PageForm extends AControl
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PageForm.latte');
 	}
 
+	protected function createComponentRedirectForm(IRedirectFormFactory $factory)
+	{
+		return $factory->create($this->editablePage->getId());
+	}
+
 	protected function createComponentPageForm()
 	{
 		$form = new UI\Form;
 		$form->addProtection();
 		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
+		$form->addText('slug', 'URL stránky:');
 		$form->addTinyMCE('editor', NULL)
 			->setRequired('Je zapotřebí napsat nějaký text.');
 
@@ -108,14 +119,20 @@ class PageForm extends AControl
 	{
 		try {
 			$entity = $this->editablePage;
-			$this->fillEntityWithValues($entity, $sender->getForm()->getValues());
-			$this->pageProcess->onSave[] = function (PageProcess $process, Page $page) use ($entity) {
+			$values = $sender->getForm()->getValues();
+			$this->fillEntityWithValues($entity, $values);
+			$this->pageProcess->onSave[] = function (PageProcess $process, Page $page) use ($entity, $values) {
 				$this->em->flush($page);
+				$this->setUrl($page, $values);
 				$this->onSave($this, $entity);
 			};
 			$this->pageProcess->save($entity);
+		} catch (DuplicateRouteException $exc) {
+			$this->presenter->flashMessage($exc->getMessage());
+			return;
 		} catch (\Exception $exc) {
 			$this->onException($this, $exc);
+			return;
 		}
 		if ($preview) {
 			$this->presenter->redirect(':Front:Page:preview', $entity->id);
@@ -127,16 +144,43 @@ class PageForm extends AControl
 	{
 		try {
 			$entity = $this->editablePage;
-			$this->fillEntityWithValues($entity, $sender->getForm()->getValues());
-			$this->pageProcess->onPublish[] = function (PageProcess $process, Page $page) use ($entity) {
+			$values = $sender->getForm()->getValues();
+			$this->fillEntityWithValues($entity, $values);
+			$this->pageProcess->onPublish[] = function (PageProcess $process, Page $page) use ($entity, $values) {
 				$this->em->flush($page);
+				$this->setUrl($page, $values);
 				$this->onPublish($this, $entity);
 			};
 			$this->pageProcess->publish($entity);
+		} catch (DuplicateRouteException $exc) {
+			$this->presenter->flashMessage($exc->getMessage());
+			return;
 		} catch (\Exception $exc) {
 			$this->onException($this, $exc);
+			return;
 		}
 		$this->onComplete($this);
+	}
+
+	/**
+	 * TODO: měnit jen někdy a když už, tak použít ještě \Url\RedirectFacade::createRedirect
+	 *
+	 * @param Page $page
+	 * @param ArrayHash $values
+	 *
+	 * @throws DuplicateRouteException
+	 */
+	private function setUrl(Page $page, ArrayHash $values)
+	{
+		$page->setUrl(RouteGenerator::generate(
+			empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
+			'Front:Page:default', $page->getId()
+		));
+		try {
+			$this->em->flush($page);
+		} catch (UniqueConstraintViolationException $exc) {
+			throw new DuplicateRouteException;
+		}
 	}
 
 	private function fillEntityWithValues(Page $entity, ArrayHash $values)

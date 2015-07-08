@@ -39,9 +39,11 @@ class RedirectForm extends UI\Control
 		$this->redirectFacade = $redirectFacade;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, Url\AntRoute::CACHE_NAMESPACE);
 
-		/** @var Page $page */
-		$page = $this->em->find(Page::class, $this->pageId);
-		$this->currentUrl = $page->getUrl();
+		if ($this->pageId !== NULL) {
+			/** @var Page $page */
+			$page = $this->em->find(Page::class, $this->pageId);
+			$this->currentUrl = $page->getUrl();
+		}
 	}
 
 	public function render()
@@ -70,6 +72,7 @@ class RedirectForm extends UI\Control
 			$url = (new Url\Url)->setFakePath($values->url);
 			$this->em->persist($url);
 			$this->em->flush($url);
+			//FIXME: nebude fungovat při nové stránce
 			$this->redirectFacade->createRedirect($url->getId(), $this->currentUrl->getId());
 			$this->getPresenter()->flashMessage('Přesměrování bylo úspěšně vytvořeno.', Flashes::FLASH_SUCCESS);
 		};

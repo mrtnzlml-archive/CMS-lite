@@ -4,10 +4,19 @@
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-6">
 			<div class="form-group">
 				{label title /}
-				{input title, class => "form-control"}
+				{input title, class => "form-control", data-slug-to => "slug"}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label slug /}
+				<div class="input-group">
+					<div class="input-group-addon">http://www...cz/</div>
+					<input id="slug" n:name="slug" class="form-control">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -40,6 +49,7 @@
 		<span>Popis je ve vyhledávání nejčastěji omezen na 156 znaků, zbývá: <span id="countdown-desc"></span></span>
 		{input description, class => "form-control", data-countdown-to => "countdown-desc", data-countdown-max => 156}
 	</div>
+	{*{control redirectForm}*}
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">

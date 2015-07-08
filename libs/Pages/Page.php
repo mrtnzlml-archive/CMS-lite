@@ -32,6 +32,7 @@ use Users\User;
  * @method setFollow(string)
  * @method string getFollow()
  * @method setUrl(\Url\Url $url)
+ * @method \Url\Url getUrl()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -132,6 +133,7 @@ class Page extends BaseEntity
 	protected $categories;
 
 	/**
+	 * FIXME: cascade remove
 	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
 	 * @var \Url\Url
