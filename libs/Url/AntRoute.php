@@ -110,7 +110,7 @@ class AntRoute extends Application\Routers\RouteList
 		$params = $httpRequest->getQuery();
 		$params['action'] = $action;
 		if ($destination->internalId) {
-			$params['id'] = $destination[$internalDestination];
+			$params['id'] = $destination->getInternalId();
 		}
 		return new Application\Request(
 			$presenter,
