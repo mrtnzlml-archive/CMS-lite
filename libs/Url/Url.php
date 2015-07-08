@@ -34,7 +34,7 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Internal link destination (Module:Presenter:action)"})
 	 * @var string
 	 */
-	protected $destination;
+	protected $destination = NULL;
 
 	/**
 	 * @ORM\Column(type="integer", nullable=TRUE, options={"comment":"Internal ID passed to the action (optional)"})
