@@ -85,6 +85,7 @@ EOT
 				$this->monolog->addDebug(sprintf('Fixture: %s', $message));
 			});
 			$executor->execute($fixtures, $input->getOption('append'));
+			$output->write('<fg=black;bg=yellow>You should logout from application. Internal IDs changed...</>');
 			return 0; // zero return code means everything is ok
 		} catch (\Exception $exc) {
 			$output->writeLn("<error>{$exc->getMessage()}</error>");
