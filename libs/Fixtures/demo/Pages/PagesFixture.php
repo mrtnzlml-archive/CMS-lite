@@ -30,11 +30,11 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			if (rand(0, 1)) {
 				$page->addCategory($this->getReference('page-category-3'));
 			}
-			//TODO: takto nejde ID stránky samozřejmě předat
-			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Front:Page:default', $page->getId()));
 			$manager->persist($page);
+			$manager->flush($page);
+			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Front:Page:default', $page->getId()));
+			$manager->flush($page);
 		}
-		$manager->flush();
 	}
 
 	public function getDependencies()
