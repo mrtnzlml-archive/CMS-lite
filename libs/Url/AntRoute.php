@@ -99,8 +99,10 @@ class AntRoute extends Application\Routers\RouteList
 		// 2) Extract parts of the destination
 		if ($destination->redirectTo === NULL) {
 			$internalDestination = $destination->destination;
+			$internalId = $destination->getInternalId();
 		} else {
 			$internalDestination = $destination->redirectTo->destination;
+			$internalId = $destination->redirectTo->getInternalId();
 		}
 		$pos = strrpos($internalDestination, ':');
 		$presenter = substr($internalDestination, 0, $pos);
@@ -109,8 +111,8 @@ class AntRoute extends Application\Routers\RouteList
 		// 3) Create Application Request
 		$params = $httpRequest->getQuery();
 		$params['action'] = $action;
-		if ($destination->internalId) {
-			$params['id'] = $destination->getInternalId();
+		if ($internalId) {
+			$params['id'] = $internalId;
 		}
 		return new Application\Request(
 			$presenter,
