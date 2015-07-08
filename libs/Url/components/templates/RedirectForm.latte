@@ -1,0 +1,32 @@
+<table class="table table-bordered">
+	<tr>
+		<th>Adresa stránky</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	{foreach $redirects as $redirect}
+		<tr>
+			<td><code>{$redirect->fakePath}</code></td>
+			<td>301 Moved Permanently (<code>{$redirect->redirectTo->fakePath}</code>)</td>
+			<td>
+				<a n:href="deleteRedirect! $redirect->id">Zrušit přesměrování, na 404</a>
+			</td>
+		</tr>
+	{/foreach}
+</table>
+
+{form redirectForm}
+	<div class="row">
+		<div style="padding-left:15px">
+			{label url /}
+		</div>
+		<div class="col-lg-11">
+			<div class="form-group">
+				{input url, class => "form-control"}
+			</div>
+		</div>
+		<div class="col-lg-1">
+			{input add, class => 'btn btn-primary'}
+		</div>
+	</div>
+{/form}

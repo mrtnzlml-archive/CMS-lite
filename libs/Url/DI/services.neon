@@ -2,3 +2,4 @@ services:
 	- Url\AntRoute(..., @antFileStorage)
 	- Url\RedirectFacade
 	- Url\RouteGenerator
+	- Url\Components\RedirectForm\IRedirectFormFactory
