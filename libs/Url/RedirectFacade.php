@@ -17,7 +17,7 @@ class RedirectFacade extends Nette\Object
 	public function __construct(EntityManager $entityManager, Nette\Caching\IStorage $cacheStorage)
 	{
 		$this->em = $entityManager;
-		$this->cache = new Nette\Caching\Cache($cacheStorage, 'ANT.Router');
+		$this->cache = new Nette\Caching\Cache($cacheStorage, AntRoute::CACHE_NAMESPACE);
 	}
 
 	/**

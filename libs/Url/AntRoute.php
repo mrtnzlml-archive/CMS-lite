@@ -31,10 +31,12 @@ class AntRoute extends Application\Routers\RouteList
 
 	private $extension;
 
+	const CACHE_NAMESPACE = 'ANT.Router';
+
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
 		$this->em = $em;
-		$this->cache = new Nette\Caching\Cache($cacheStorage, 'ANT.Router');
+		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 		$this->monolog = $monolog;
 		$this->flags = Nette\Application\Routers\Route::$defaultFlags;
 
