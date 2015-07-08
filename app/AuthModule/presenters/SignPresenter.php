@@ -3,6 +3,7 @@
 namespace App\AuthModule\Presenters;
 
 use App;
+use App\Components\Flashes\Flashes;
 use Nette;
 use Nette\Application\UI;
 
@@ -49,7 +50,7 @@ class SignPresenter extends Nette\Application\UI\Presenter
 	{
 		//TODO: CSRF protection?
 		$this->getUser()->logout();
-		$this->flashMessage('Odhlášení bylo úspěšné.', 'info');
+		$this->flashMessage('Odhlášení bylo úspěšné.', Flashes::FLASH_INFO);
 		$this->restoreRequest($this->backlink);
 		$this->redirect('in');
 	}

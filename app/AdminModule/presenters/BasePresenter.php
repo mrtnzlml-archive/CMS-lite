@@ -3,6 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use App;
+use App\Components\Flashes\Flashes;
 use Nette;
 use Nextras;
 use Users;
@@ -10,17 +11,7 @@ use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-        /* #@+
-         * Flash message types
-         * 
-         * @var string
-         */
-        const FLASH_SUCCESS = 'success';
-        const FLASH_WARNING = 'warning';
-        const FLASH_DANGER  = 'danger';
-        const FLASH_ERROR   = 'error';
-        const FLASH_INFO    = 'information';
-        
+
 	use App\Traits\PublicComponentsTrait;
 	use Nextras\Application\UI\SecuredLinksPresenterTrait;
 
@@ -32,13 +23,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		parent::checkRequirements($element);
 		if (!$this->user->isLoggedIn()) {
 			if ($this->user->logoutReason === Nette\Security\IUserStorage::INACTIVITY) {
-				$this->flashMessage('Byli jste odhlášeni z důvodu nečinnosti. Přihlaste se prosím znovu.', self::FLASH_DANGER);
+				$this->flashMessage('Byli jste odhlášeni z důvodu nečinnosti. Přihlaste se prosím znovu.', Flashes::FLASH_DANGER);
 			} else {
-				$this->flashMessage('Pro vstup do této sekce se musíte přihlásit.', self::FLASH_DANGER);
+				$this->flashMessage('Pro vstup do této sekce se musíte přihlásit.', Flashes::FLASH_DANGER);
 			}
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		} elseif (!$this->user->isAllowed($this->name, Users\Authorizator::READ)) {
-			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', self::FLASH_DANGER);
+			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', Flashes::FLASH_DANGER);
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}
 	}

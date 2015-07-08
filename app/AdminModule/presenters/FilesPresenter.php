@@ -3,6 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use App;
+use App\Components\Flashes\Flashes;
 use Files\Components\IFileFormFactory;
 use Files\Components\IFineUploaderFactory;
 use Files\File;
@@ -56,8 +57,8 @@ class FilesPresenter extends BasePresenter
         }
 
         $deleted = $this->fileProcess->delete($file);
-        ($deleted !== false) ? $this->flashMessage(_('Soubor byl smazán'), self::FLASH_SUCCESS)
-                             : $this->flashMessage(_('Soubor nebyl smazán'), self::FLASH_ERROR);
+        ($deleted !== false) ? $this->flashMessage(_('Soubor byl smazán'), Flashes::FLASH_SUCCESS)
+                             : $this->flashMessage(_('Soubor nebyl smazán'), Flashes::FLASH_DANGER);
 
         $this->redirect('this');
     }
@@ -82,7 +83,7 @@ class FilesPresenter extends BasePresenter
         $control = $factory->create($this->file, $this->fileProcess);
 
         $control->onUpdate[] = function () {
-            $this->flashMessage('Změny byly uloženy.', self::FLASH_SUCCESS);
+            $this->flashMessage('Změny byly uloženy.', Flashes::FLASH_SUCCESS);
         };
 
         $control->onComplete[] = function () {

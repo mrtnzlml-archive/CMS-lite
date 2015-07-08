@@ -2,8 +2,8 @@
 
 namespace Options\Components\OptionsForm;
 
-use App\AdminModule\Presenters\BasePresenter;
 use App\Components\AControl;
+use App\Components\Flashes\Flashes;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
@@ -84,7 +84,7 @@ class OptionsForm extends AControl
 			$option->setDefaultValue($value);
 		}
 		$this->em->flush();
-		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', BasePresenter::FLASH_SUCCESS); //FIXME: :-( BasePresenter
+		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
 	}
 

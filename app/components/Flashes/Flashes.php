@@ -8,6 +8,12 @@ use Nette;
 class Flashes extends AControl
 {
 
+	//http://getbootstrap.com/components/#alerts
+	const FLASH_SUCCESS = 'success';
+	const FLASH_INFO = 'info';
+	const FLASH_WARNING = 'warning';
+	const FLASH_DANGER = 'danger';
+
 	public function render(array $parameters = NULL)
 	{
 		if ($parameters) {

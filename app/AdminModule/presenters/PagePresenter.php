@@ -3,6 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use App;
+use App\Components\Flashes\Flashes;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
@@ -45,13 +46,13 @@ class PagePresenter extends BasePresenter
 	{
 		$control = $factory->create($this->editablePage);
 		$control->onSave[] = function () {
-			$this->flashMessage('Stránka byla úspěšně uložena.', self::FLASH_SUCCESS);
+			$this->flashMessage('Stránka byla úspěšně uložena.', Flashes::FLASH_SUCCESS);
 		};
 		$control->onPublish[] = function () {
-			$this->flashMessage('Stránka byla úspěšně uložena a publikována.', self::FLASH_SUCCESS);
+			$this->flashMessage('Stránka byla úspěšně uložena a publikována.', Flashes::FLASH_SUCCESS);
 		};
 		$control->onException[] = function () {
-			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.', self::FLASH_DANGER);
+			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.', Flashes::FLASH_DANGER);
 		};
 		$control->onComplete[] = function () {
 			$this->redirect('default');
