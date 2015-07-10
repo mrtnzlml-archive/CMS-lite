@@ -3,71 +3,71 @@
 namespace Files\Components;
 
 use App\Components\AControl;
+use Files\File;
+use Files\FineUploader as Uploader;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
-use Files\FineUploader as Uploader;
-use Files\File;
 
 class FineUploader extends AControl
 {
-    /** @var EntityManager */
-    private $em;
-    /** @var Uploader */
-    private $uploader;
-    /** @var string */
-    private $dir;
 
-    public $onSuccess = array();
-    public $onFailed = array();
+	/** @var EntityManager */
+	private $em;
+	/** @var Uploader */
+	private $uploader;
+	/** @var string */
+	private $dir;
 
-    public function __construct($dir, EntityManager $em, Uploader $uploader)
-    {
-        $this->dir = $dir;
-        $this->em = $em;
-        $this->uploader = $uploader;
-    }
+	public $onSuccess = [];
+	public $onFailed = [];
 
-    public function handleUpload()
-    {
-        $result = $this->uploader->handleUpload($this->dir);
-        $this->uploadProcess($result);
-    }
+	public function __construct($dir, EntityManager $em, Uploader $uploader)
+	{
+		$this->dir = $dir;
+		$this->em = $em;
+		$this->uploader = $uploader;
+	}
 
-    private function uploadProcess($result)
-    {
-        if (!isset($result['success']) || $result['success'] !== true) {
-            $this->onFailed($this, $result);
-        }
+	public function handleUpload()
+	{
+		$result = $this->uploader->handleUpload($this->dir);
+		$this->uploadProcess($result);
+	}
 
-        $file = new File();
-        $file->setName($this->uploader->getName(false));
-        $file->setSanitizedName($this->uploader->getName());
-        $file->setUuid($result['uuid']);
-        $file->setSize($result['size']);
+	private function uploadProcess($result)
+	{
+		if (!isset($result['success']) || $result['success'] !== TRUE) {
+			$this->onFailed($this, $result);
+		}
 
-        $this->em->persist($file);
-        $this->em->flush($file);
+		$file = new File();
+		$file->setName($this->uploader->getName(FALSE));
+		$file->setSanitizedName($this->uploader->getName());
+		$file->setUuid($result['uuid']);
+		$file->setSize($result['size']);
 
-        $this->onSuccess($this, $file, $result);
-    }
+		$this->em->persist($file);
+		$this->em->flush($file);
 
-    public function render(array $parameters = null)
-    {
-        if ($parameters) {
-            $this->template->parameteres = Nette\Utils\ArrayHash::from($parameters);
-        }
+		$this->onSuccess($this, $file, $result);
+	}
 
-        $this->template->setFile(dirname(__FILE__) . '/templates/uploader.latte');
-        $this->template->render();
-    }
+	public function render(array $parameters = NULL)
+	{
+		if ($parameters) {
+			$this->template->parameteres = Nette\Utils\ArrayHash::from($parameters);
+		}
+
+		$this->template->setFile(dirname(__FILE__) . '/templates/uploader.latte');
+		$this->template->render();
+	}
 }
 
 interface IFineUploaderFactory
 {
-    /**
-     * @param Uploader $uploader
-     * @return FineUploader
-     */
-    public function create(Uploader $uploader);
+	/**
+	 * @return FineUploader
+	 */
+	public function create(Uploader $uploader);
 }
