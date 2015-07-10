@@ -6,42 +6,91 @@
 		<meta name="viewport" content="width=device-width">
 		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS Administrace</title>
 		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-                {control css:admin}
-                {block css}{/block}
+		<link href='http://fonts.googleapis.com/css?family=Roboto:900,300,700,400&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
+		{control css:admin}
+		{block css}{/block}
 	</head>
-	<body>
+	<body class="home eshop_in no_prave_menu pjt responsive">
 
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<div class="navbar-brand">
-					<a n:href=":Admin:Dashboard:default">ANTstudio CMS</a> |
-					<a href="{plink :Front:Homepage:}">www</a>
-				</div>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a n:href=":Auth:Sign:out">Odhlásit {$user->identity->data['email']}</a></li>
-				</ul>
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search..." disabled>
-				</form>
+	<header>
+		<div class="fl webInfo">
+			<a class="open-nav ai-th"></a>
+			<p class="dib">
+				Přejít na web<br/>
+				<a href="{plink :Front:Homepage:}" class="ultra fs16">www.delsi-domenanawebu.cz</a>
+			</p>
+			<span id="tipsNums" class="num num-big valignT ml15">01</span>
+
+			<div id="tipsContent">
+				<p class="mb15">
+					Na veřejnou část webu se vždy vrátíte  pomocí odkazu v hlavičce administrace. Většinu
+					úprav můžete provést z veřejné části webu.
+				</p>
+				<p>
+					<a class="ico flaticon-light102 btnBorder" href="">
+						<span class="num">24</span>Chci další TIP</a><a class="posA ml10 mt15 seda exitTips" href="#">
+						UKONČIT
+					</a>
+				</p>
 			</div>
 		</div>
-	</nav>
 
-	<div class="container-fluid">
-		<div class="row">
-			{control adminMenu}
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				{control flashes}
-				{include content}
+		<div class="userInfo fr">
+			<span class="badge-def mr10">VV</span>
+			<span class="name">Václav Vomáčka <span class="ico flaticon-next21"></span></span>
+
+			<div class="cont">
+				<ul>
+					<li><a n:href=":Auth:Sign:out">Odhlásit</a></li>
+					<li><a href="">Nastavení uživatele</a></li>
+					<li><a href="">Přepnout uživatele</a></li>
+					<li><a href="">Nový uživatel</a></li>
+				</ul>
+				<p class="ml20 mb0">CMS 12.345.0</p>
+			</div>
+		</div>
+
+		<div class="langSet">
+			<select name="aa" class="" id="aa">
+				<option value="">CZ</option>
+				<option value="">EN</option>
+			</select>
+		</div>
+
+		<div class="searchWrap fr mr25">
+			<form class="navbar-form" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Hledej v administraci" name="srch-term" id="srch-term">
+
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</header>
+
+	<div id="wrapper">
+		{control adminMenu}
+		{control flashes}
+		<div id="content" class="grey-bg">
+			<div class="row dashboard-header pageTitle">
+				<span class="title fl">Nástěnka</span>
+
+				<div class="fr" data-toggle="tooltip" data-placement="left" title="Nastavení">
+					<em class="ico flaticon-gear39"></em> <em class="ico flaticon-next21 arrowDown"></em>
+				</div>
+			</div>
+			{include content}
+			<footer class="navbar-default noPrint row padding15 ">
+				Systém vyvíjí <img class="logoAnt" src="media/images/logo_ant.png" alt="Logo ANT studio"/>
+				Verze: 13.02.05
+			</footer>
+
+			<div class="helpBtns">
+				<a href=""><span class="ico flaticon-faq8 "></span><span class="text">Zobrazit NÁPOVÉDU</span></a>
+				<a href=""><span class="ico flaticon-information51 dib rotate180"></span><span class="text">Nahlásit PROBLÉM</span></a>
 			</div>
 		</div>
 	</div>

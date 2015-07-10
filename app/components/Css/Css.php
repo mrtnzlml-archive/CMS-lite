@@ -60,9 +60,12 @@ class Css extends Nette\Application\UI\Control
 	protected function createComponentCssAdmin()
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/css');
-		$files->addFile('bootstrap.min.css');
-		$files->addFile('admin.css');
+//		$files->addFile('bootstrap.min.css');
+//		$files->addFile('admin/default.less');
+//		$files->addFile('admin/modules.less');
+//		$files->addFile('admin/theme.less');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
+		$compiler->addFileFilter(new WebLoader\Filter\LessFilter());
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;
 			$minifier->add($code);
