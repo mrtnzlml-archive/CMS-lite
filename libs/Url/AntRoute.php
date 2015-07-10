@@ -35,6 +35,11 @@ class AntRoute extends Application\Routers\RouteList
 
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
+		if (PHP_SAPI === 'cli') {
+			// It's blocking Kdyby\Console...
+			return;
+		}
+
 		$this->em = $em;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 		$this->monolog = $monolog;
