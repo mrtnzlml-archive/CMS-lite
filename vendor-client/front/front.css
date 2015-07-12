@@ -1,0 +1,3 @@
+.admin-bar { z-index: 999; background: #085aa3; color: #fff; padding: 5px 10px; }
+.admin-bar a { color: #fff; }
+.admin-bar a:hover { text-decoration: underline; }

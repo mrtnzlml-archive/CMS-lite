@@ -5,12 +5,12 @@ module.exports = (grunt) ->
       admin:
         files:
           'temp/grunt/admin.css': [
-            'vendor-client/custom/admin/style.less'
+            'vendor-client/admin/style.less'
           ]
       front:
         files:
           'temp/grunt/front.css': [# FIXME: jak na soubory nových rozšíření?
-            'vendor-client/bootstrap/less/bootstrap.less'
+            'vendor/bootstrap/less/bootstrap.less'
           ]
 
     cssmin:
@@ -20,27 +20,27 @@ module.exports = (grunt) ->
         files:
           'www/css/admin.min.css': [
             'temp/grunt/admin.css'
-            'vendor-client/custom/admin/aicons/styles.css'
-            'vendor-client/custom/admin/aicons/flaticon.css'
+            'vendor-client/admin/aicons/styles.css'
+            'vendor-client/admin/aicons/flaticon.css'
           ]
       front:
         files:
           'www/css/front.min.css': [
             'temp/grunt/front.css'
-            'vendor-client/custom/front/front.css'
+            'vendor-client/front/front.css'
           ]
 
     uglify:
       admin:
         files:
           'www/js/admin.min.js': [
-            'vendor-client/bootstrap/js/bootstrap.js'
-            'vendor-client/bootstrap/js/tooltip.js'
-            'vendor-client/custom/modules/flexslider/2_2/js/jquery.flexslider-min.js'
-            'vendor-client/custom/modules/pretty_photo/js/jquery.prettyPhoto.js'
-            'vendor-client/custom/js/html5shiv.min.js'
-            'vendor-client/custom/js/respond.min.js'
-            'vendor-client/custom/js/main.js'
+            'vendor/bootstrap/js/bootstrap.js'
+            'vendor/bootstrap/js/tooltip.js'
+            'vendor-client/modules/flexslider/2_2/js/jquery.flexslider-min.js'
+            'vendor-client/modules/pretty_photo/js/jquery.prettyPhoto.js'
+            'vendor-client/js/html5shiv.min.js'
+            'vendor-client/js/respond.min.js'
+            'vendor-client/js/main.js'
           ]
 
     copy:
@@ -48,12 +48,12 @@ module.exports = (grunt) ->
         files: [
           expand: true
           flatten: true
-          src: 'vendor-client/custom/admin/aicons/fonts/*'
+          src: 'vendor-client/admin/aicons/fonts/*'
           dest: 'www/css/fonts/'
         ,
           expand: true
           flatten: true
-          src: 'vendor-client/bootstrap/fonts/*'
+          src: 'vendor/bootstrap/fonts/*'
           dest: 'www/fonts/'
         ]
 

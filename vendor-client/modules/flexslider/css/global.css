@@ -1,0 +1,4 @@
+#adminmenu li.menu-icon-slide .wp-menu-image img { display: none; opacity: 0; }
+#wpwrap li.menu-icon-slide div.wp-menu-image  { background: url(../images/icon_slide_16.png) no-repeat left top; width: 20px; height: 16px; margin-left: 9px; margin-right:7px;margin-top: 7px; }
+#wpwrap li.menu-icon-slide.current div.wp-menu-image, #wpwrap li.menu-icon-slide:hover div.wp-menu-image, #wpwrap li.menu-icon-slide.wp-has-current-submenu div.wp-menu-image  { background-position: left -16px; }
+#icon-wooslider, #icon-post.icon32-posts-slide, #icon-edit.icon32-posts-slide { background: transparent url(../images/icon_slide_32.png) no-repeat left top; }
