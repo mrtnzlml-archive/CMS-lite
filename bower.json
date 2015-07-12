@@ -1,0 +1,16 @@
+{
+  "name": "antstudiocz/CMS",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "nette.ajax.js": "~2.0.0",
+    "nette-forms": "~2.2.0",
+    "jquery": "~2.1.4"
+  }
+}

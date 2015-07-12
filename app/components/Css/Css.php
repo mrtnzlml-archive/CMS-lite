@@ -20,12 +20,15 @@ class Css extends Nette\Application\UI\Control
 	private $externalStyles = [];
 
 	/** @var string */
-	private $dir;
+	private $vendor;
+	/** @var string */
+	private $public;
 
-	public function __construct($dir)
+	public function __construct($vendor, $public)
 	{
 		parent::__construct();
-		$this->dir = $dir;
+		$this->vendor = $vendor;
+		$this->public = $public;
 	}
 
 	public function render()
@@ -40,29 +43,13 @@ class Css extends Nette\Application\UI\Control
 
 	protected function createComponentCss()
 	{
-		$files = new WebLoader\FileCollection($this->dir . '/css');
+		$files = new WebLoader\FileCollection($this->vendor . '/css');
 		$files->addFile('bootstrap.min.css');
 		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
 		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFileFilter(new WebLoader\Filter\LessFilter());
-		$compiler->addFilter(function ($code) {
-			$minifier = new Minify\CSS;
-			$minifier->add($code);
-			return $minifier->minify();
-		});
-		$control = new WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/temp');
-		$control->setMedia($this->media);
-		return $control;
-	}
-
-	protected function createComponentCssAdmin()
-	{
-		$files = new WebLoader\FileCollection($this->dir . '/css');
-		$files->addFile('bootstrap.min.css');
-		$files->addFile('admin.css');
-		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;
 			$minifier->add($code);
