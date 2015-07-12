@@ -3,7 +3,7 @@
 use Doctrine\Common\DataFixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProductsFixture //extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
+class ProductsFixture extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
 {
 
 	public function load(ObjectManager $manager)

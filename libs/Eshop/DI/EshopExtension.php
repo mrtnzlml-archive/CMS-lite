@@ -4,12 +4,12 @@ namespace Eshop\DI;
 
 use App\Components\MainMenu\MainMenuItem;
 use App\Components\MainMenu\Providers\IMainMenuProvider;
-use App\Router\IRouterProvider;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 use Nette\Application\IPresenterFactory;
 use Nette\Application\Routers\RouteList;
+use Url\IRouterProvider;
 
 class EshopExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IMainMenuProvider, IRouterProvider
 {

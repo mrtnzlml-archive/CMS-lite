@@ -34,9 +34,12 @@
 					{*<li><a href="">Katalog</a></li>*}
 				{*</ul>*}
 			{*</li>*}
-			{*<li class="">*}
-				{*<a href="" class=""><span class="icon flaticon-luggage36"></span> Zboží eshop</a>*}
-			{*</li>*}
+			<li {ifCurrent ':Admin:Eshop:*'}class="active"{/ifCurrent}>
+				<a href="{plink :Admin:Eshop:default}" {ifCurrent ':Admin:Eshop:*'}class="active"{/ifCurrent}>
+					<span class="icon flaticon-luggage36"></span>
+					Zboží eshop
+				</a>
+			</li>
 			{*<li class="">*}
 				{*<a href="" class=""><span class="icon flaticon-lightbulbs6"></span> Marketing</a>*}
 			{*</li>*}

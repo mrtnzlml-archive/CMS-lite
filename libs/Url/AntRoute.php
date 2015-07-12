@@ -225,4 +225,23 @@ class AntRoute extends Application\Routers\RouteList
 		return $url;
 	}
 
+	public static function prependTo(Application\IRouter &$router, Application\IRouter $newRouter)
+	{
+		if (!$router instanceof Application\Routers\RouteList) {
+			throw new Nette\Utils\AssertionException(
+				'If you want to prepend route then your main router ' .
+				'must be an instance of Nette\Application\Routers\RouteList'
+			);
+		}
+		$router[] = $newRouter; // need to increase the array size
+		$lastKey = count($router) - 1;
+		foreach ($router as $i => $route) {
+			if ($i === $lastKey) {
+				break;
+			}
+			$router[$i + 1] = $route;
+		}
+		$router[0] = $newRouter;
+	}
+
 }
