@@ -66,4 +66,9 @@ class User extends BaseEntity
 		return $this->email;
 	}
 
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
 }

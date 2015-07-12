@@ -13,3 +13,6 @@ nahled-stranky,Front:Page:preview
 administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit
 administrace/eshop/zbozi,Admin:Eshop:default
+administrace/uzivatele,Admin:Users:default
+eshop,Eshop:Product:default
+produkt,Eshop:Product:detail

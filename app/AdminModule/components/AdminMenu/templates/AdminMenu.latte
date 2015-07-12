@@ -43,9 +43,12 @@
 			{*<li class="">*}
 				{*<a href="" class=""><span class="icon flaticon-lightbulbs6"></span> Marketing</a>*}
 			{*</li>*}
-			{*<li class="">*}
-				{*<a href="" class=""><span class="icon flaticon-user8"></span> Uživatelé</a>*}
-			{*</li>*}
+			<li {ifCurrent ':Admin:Users:*'}class="active"{/ifCurrent}>
+				<a href="{plink :Admin:Users:default}" {ifCurrent ':Admin:Users:*'}class="active"{/ifCurrent}>
+					<span class="icon flaticon-user8"></span>
+					Uživatelé
+				</a>
+			</li>
 			<li {ifCurrent ':Admin:Options:*'}class="active"{/ifCurrent}>
 				<a href="{plink :Admin:Options:general}" {ifCurrent ':Admin:Options:*'}class="active"{/ifCurrent}>
 					<span class="icon flaticon-gear39"></span>

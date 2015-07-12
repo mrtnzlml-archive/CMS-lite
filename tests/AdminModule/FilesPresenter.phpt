@@ -31,7 +31,7 @@ class FilesPresenter extends \PresenterTestCase
 
 	public function testRenderEditEmpty()
 	{
-		$this->checkRedirect('edit', '/administrace/files');
+		$this->checkRedirect('edit', '/administrace/soubory');
 	}
 
 }
