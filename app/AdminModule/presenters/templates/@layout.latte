@@ -6,9 +6,10 @@
 		<meta name="viewport" content="width=device-width">
 		<title>{ifset title}{include title|striptags} | {/ifset}ANTstudio CMS Administrace</title>
 		<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-		<link href='http://fonts.googleapis.com/css?family=Roboto:900,300,700,400&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
-		{control css:admin}
-		{block css}{/block}
+		{block styles}
+			<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/css/admin.min.css">
+		{/block}
+		<link href='https://fonts.googleapis.com/css?family=Roboto:900,300,700,400&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
 	</head>
 	<body class="home eshop_in no_prave_menu pjt responsive">
 
@@ -46,7 +47,6 @@
 					<li><a href="">Přepnout uživatele</a></li>
 					<li><a href="">Nový uživatel</a></li>
 				</ul>
-				<p class="ml20 mb0">CMS 12.345.0</p>
 			</div>
 		</div>
 
@@ -84,8 +84,7 @@
 			</div>
 			{include content}
 			<footer class="navbar-default noPrint row padding15 ">
-				Systém vyvíjí <img class="logoAnt" src="media/images/logo_ant.png" alt="Logo ANT studio"/>
-				Verze: 13.02.05
+				Systém vyvíjí <img class="logoAnt" src="{$basePath}/images/logo_ant.png" alt="Logo ANT studio"/>
 			</footer>
 
 			<div class="helpBtns">
@@ -96,8 +95,10 @@
 	</div>
 
 	{block scripts}
-		{control js:admin}
-		{*{control js:custom}*}
+		<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="//nette.github.io/resources/js/netteForms.min.js"></script>
+		{* FIXME ^^ *}
+		<script type="text/javascript" src="{$basePath}/js/admin.min.js"></script>
 	{/block}
 	</body>
 	</html>
