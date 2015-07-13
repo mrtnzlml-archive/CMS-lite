@@ -1,12 +1,13 @@
 <?php
 
-namespace App\AdminModule\Presenters;
+namespace Eshop\Presenters;
 
+use App\AdminModule\Presenters\BasePresenter;
 use Eshop\Product;
 use Eshop\Query\ProductQuery;
 use Kdyby\Doctrine\EntityManager;
 
-class EshopPresenter extends BasePresenter
+class AdminProductPresenter extends BasePresenter
 {
 
 	/** @var EntityManager @inject */
