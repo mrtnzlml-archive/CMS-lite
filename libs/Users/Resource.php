@@ -10,7 +10,7 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @ORM\Entity
  * @ORM\Table(name="resources")
  *
- * @method setName(string)
+ * @method setName(string $name)
  * @method string getName()
  */
 class Resource extends BaseEntity

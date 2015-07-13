@@ -12,6 +12,11 @@ parameters:
 	frontLayout: '%appDir%/FrontModule/presenters/templates/@layout.latte'
 
 
+latte:
+	macros:
+		- App\Macros\BootstrapMacros
+
+
 php:
 	date.timezone: Europe/Prague
 

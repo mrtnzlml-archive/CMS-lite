@@ -46,25 +46,8 @@ class Js extends Nette\Application\UI\Control
 		$files = new WebLoader\FileCollection($this->dir . '/js');
 		$files->addRemoteFiles($this->externalScripts);
 		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js'); //FIXME (z vendoru)
-                $files->addFiles($this->scripts);
+		$files->addFiles($this->scripts);
 		$files->addFile('main.js');
-                $compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
-		$compiler->addFilter(function ($code) {
-			$minifier = new Minify\JS;
-			$minifier->add($code);
-			return $minifier->minify();
-		});
-		$control = new WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/temp');
-		return $control;
-	}
-
-	protected function createComponentJsAdmin()
-	{
-		$files = new WebLoader\FileCollection($this->dir . '/js');
-		$files->addRemoteFile('//code.jquery.com/jquery-2.1.4.min.js'); //FIXME
-		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js'); //FIXME
-		$files->addFile('nette.ajax.js');
-                $files->addFile('main.js');
 		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\JS;

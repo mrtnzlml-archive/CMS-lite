@@ -2,7 +2,7 @@
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-class VariantFixture //extends \Doctrine\Common\DataFixtures\AbstractFixture
+class VariantFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
 	public function load(ObjectManager $manager)

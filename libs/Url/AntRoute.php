@@ -35,6 +35,11 @@ class AntRoute extends Application\Routers\RouteList
 
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
+		if (PHP_SAPI === 'cli') {
+			// It's blocking Kdyby\Console...
+			return;
+		}
+
 		$this->em = $em;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 		$this->monolog = $monolog;
@@ -218,6 +223,25 @@ class AntRoute extends Application\Routers\RouteList
 		}
 
 		return $url;
+	}
+
+	public static function prependTo(Application\IRouter &$router, Application\IRouter $newRouter)
+	{
+		if (!$router instanceof Application\Routers\RouteList) {
+			throw new Nette\Utils\AssertionException(
+				'If you want to prepend route then your main router ' .
+				'must be an instance of Nette\Application\Routers\RouteList'
+			);
+		}
+		$router[] = $newRouter; // need to increase the array size
+		$lastKey = count($router) - 1;
+		foreach ($router as $i => $route) {
+			if ($i === $lastKey) {
+				break;
+			}
+			$router[$i + 1] = $route;
+		}
+		$router[0] = $newRouter;
 	}
 
 }

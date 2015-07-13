@@ -2,77 +2,76 @@
 
 namespace Files;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
-use Users\User;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="files")
  *
- * @method setName(string)
+ * @method setName(string $name)
  * @method string getName()
- * @method setSanitizedName(string)
+ * @method setSanitizedName(string $sanitizedName)
  * @method string getSanitizedName()
- * @method setTitle(string)
+ * @method setTitle(string $title)
  * @method string getTitle()
  * @method setDescription(string)
  * @method string getDescription()
- * @method setUuid(string)
+ * @method setUuid(string $uuid)
  * @method string getUuid()
- * @method setSize(int)
+ * @method setSize(int $size)
  * @method int getSize()
- * @method setType(string)
+ * @method setType(string $type)
  * @method string getType()
  */
 class File extends BaseEntity
 {
-    use Identifier;
 
-    const TYPE_ATTACHMENT = 'ATTACHMENT';
+	use Identifier;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $name;
+	const TYPE_ATTACHMENT = 'ATTACHMENT';
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $sanitizedName;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $name;
 
-    /**
-     * @ORM\Column(type="string", nullable=TRUE)
-     * @var string
-     */
-    protected $title;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $sanitizedName;
 
-    /**
-     * @ORM\Column(type="text", nullable=TRUE)
-     * @var string
-     */
-    protected $description;
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
+	 */
+	protected $title;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $uuid;
+	/**
+	 * @ORM\Column(type="text", nullable=TRUE)
+	 * @var string
+	 */
+	protected $description;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @var string
-     */
-    protected $size;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $uuid;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $type = self::TYPE_ATTACHMENT;
+	/**
+	 * @ORM\Column(type="integer")
+	 * @var string
+	 */
+	protected $size;
+
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $type = self::TYPE_ATTACHMENT;
 
 }

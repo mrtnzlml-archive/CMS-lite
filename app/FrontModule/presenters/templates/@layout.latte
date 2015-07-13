@@ -4,7 +4,9 @@
 	<head>
 		{control meta}
 		{control title}
-		{block styles}{control css}{/block}
+		{block styles}
+			<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/css/front.min.css">
+		{/block}
 		{control favicon}
 	</head>
 	<body>
