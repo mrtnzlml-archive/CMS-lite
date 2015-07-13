@@ -5,10 +5,11 @@ administrace,Admin:Dashboard:default
 odhlasit,Auth:Sign:out
 administrace/stranky,Admin:Page:default
 administrace/soubory,Admin:Files:default
-administrace/nastaveni,Admin:Options:general
+administrace/nastaveni/general,Admin:Options:general
 administrace/nova-stranka,Admin:Page:new
 administrace/editovat-stranku,Admin:Page:edit
 administrace/nastaveni/seo,Admin:Options:seo
+administrace/nastaveni,Admin:Options:default
 nahled-stranky,Front:Page:preview
 administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit

@@ -6,10 +6,10 @@ use Nette;
 
 /**
  * @method string getTitle()
- * @method setTitle(string)
+ * @method setTitle(string $title)
  * @method string getLink()
  * @method integer getPriority()
- * @method setPriority(integer)
+ * @method setPriority(integer $priority)
  * @method array getLinkParameters()
  */
 class MainMenuItem extends Nette\Object

@@ -3,6 +3,7 @@
 use Doctrine\Common\DataFixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
+//TODO: registrovat některé cesty z vlastních rozšíření
 class UrlsFixture extends DataFixtures\AbstractFixture implements DataFixtures\OrderedFixtureInterface
 {
 

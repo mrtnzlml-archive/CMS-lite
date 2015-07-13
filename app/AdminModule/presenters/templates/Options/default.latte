@@ -1,0 +1,23 @@
+{block content}
+	{control optionsMenu}
+
+	{if $known}
+		<h3>Nainstalovaná rozšíření:</h3>
+		{foreach $known as $ext}
+			{$ext->name}
+			-
+			<a>Přeinstalovat</a>
+			|
+			<a n:href="uninstallExtension! $ext->id">Odinstalovat</a>
+		{/foreach}
+	{/if}
+
+	{if $unknown}
+		<h3>Nenainstalovaná rozšíření:</h3>
+		{foreach $unknown as $md5 => $uext}
+			{$uext}
+			-
+			<a n:href="installExtension! $md5">Nainstalovat</a>
+		{/foreach}
+	{/if}
+{/block}

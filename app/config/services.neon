@@ -6,3 +6,4 @@ services:
 		class: Caching\AntFileStorage(%tempDir%/cache)
 		autowired: no
 	- App\AuthModule\Presenters\SignPresenter(%frontLayout%)
+	- App\Extensions\Registrar

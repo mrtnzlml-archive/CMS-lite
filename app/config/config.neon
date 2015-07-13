@@ -33,6 +33,8 @@ di:
 
 doctrine:
 	defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
+	metadata:
+		App\Extensions: %appDir%/extensions
 
 
 routing:
