@@ -6,8 +6,6 @@
 		{foreach $known as $ext}
 			{$ext->name}
 			-
-			<a>Přeinstalovat</a>
-			|
 			<a n:href="uninstallExtension! $ext->id">Odinstalovat</a>
 		{/foreach}
 	{/if}
