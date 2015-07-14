@@ -7,6 +7,7 @@ use Kdyby\Monolog\Logger;
 use Nette;
 use Url\AntRoute;
 use Url\Url;
+use Users\Resource;
 
 class Install extends Nette\Object
 {
@@ -37,15 +38,21 @@ class Install extends Nette\Object
 	{
 		$this->logger->addInfo('Calling method ' . __METHOD__);
 		$this->em->transactional(function () {
-			// 1) Add URLs
+			// 1) Add URLs and delete cache
 			foreach ($this->urls as $path => $destination) {
-				$url = new \Url\Url;
+				$url = new Url;
 				$url->setFakePath($path);
 				$url->setDestination($destination);
 				$this->em->persist($url);
-				$this->em->flush($url);
 				$this->cache->clean([Nette\Caching\Cache::TAGS => ['route/' . $url->getId()]]);
 			}
+
+			// 2) Add resources and delete cache
+			//FIXME:
+			$this->em->persist((new Resource())->setName('Eshop:AdminProduct'));
+			$this->cache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+
+			$this->em->flush();
 		});
 	}
 
@@ -53,12 +60,18 @@ class Install extends Nette\Object
 	{
 		$this->logger->addInfo('Calling method ' . __METHOD__);
 		$this->em->transactional(function () {
-			// 1) Remove URLs
+			// 1) Remove URLs and delete cache
 			foreach ($this->urls as $path => $_) {
 				$url = $this->em->getRepository(Url::class)->findOneBy(['fakePath' => $path]);
 				$this->em->remove($url);
 				$this->cache->clean([Nette\Caching\Cache::TAGS => ['route/' . $url->getId()]]);
 			}
+
+			// 2) Remove resources and delete cache
+			$resource = $this->em->getRepository(Resource::class)->findOneBy(['name' => 'Eshop:AdminProduct']);
+			$this->em->remove($resource);
+			$this->cache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+
 			$this->em->flush();
 		});
 	}

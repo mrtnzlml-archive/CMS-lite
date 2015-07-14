@@ -10,7 +10,6 @@ use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
 /**
- * TODO: oprávnění k přidaným stránkám (ACL)
  * TODO: schéma databáze při instalaci
  * TODO: default data
  * TODO: nainstalovat viditelné věci jako jsou položky menu atd...

@@ -20,6 +20,8 @@ class Authorizator implements Nette\Security\IAuthorizator
 	/** @var Permission */
 	private $acl;
 
+	const CACHE_NAMESPACE = 'ANT.Users';
+
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage)
 	{
 		if (PHP_SAPI === 'cli') {
@@ -28,11 +30,11 @@ class Authorizator implements Nette\Security\IAuthorizator
 		}
 
 		$this->em = $em;
-		$this->cache = new Nette\Caching\Cache($cacheStorage, 'ANT.' . __NAMESPACE__);
+		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 		$acl = new Permission;
 
-		//FIXME: invalidovat při uložení v administraci
 		$roles = $this->cache->load('roles', function (& $dependencies) {
+			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/roles']];
 			return $this->em->getRepository(Role::class)->findAll();
 		});
 		/** @var Role $role */
@@ -41,6 +43,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 		}
 
 		$resources = $this->cache->load('resources', function (& $dependencies) {
+			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/resources']];
 			return $this->em->getRepository(Resource::class)->findAll();
 		});
 		/** @var Resource $resource */
