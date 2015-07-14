@@ -10,7 +10,7 @@ use Nette\Application\UI;
 /**
  * Sign in/out presenter.
  */
-class SignPresenter extends Nette\Application\UI\Presenter
+class SignPresenter extends App\FrontModule\Presenters\BasePresenter
 {
 
 	/** @persistent */
@@ -20,13 +20,6 @@ class SignPresenter extends Nette\Application\UI\Presenter
 
 	/** @persistent */
 	public $locale;
-
-	private $layout;
-
-	public function __construct($layout)
-	{
-		$this->layout = $layout;
-	}
 
 	public function startup()
 	{
@@ -39,11 +32,6 @@ class SignPresenter extends Nette\Application\UI\Presenter
 	public function beforeRender()
 	{
 		$this->template->locale = $this->locale;
-	}
-
-	public function findLayoutTemplateFile()
-	{
-		return $this->layout;
 	}
 
 	public function actionOut()

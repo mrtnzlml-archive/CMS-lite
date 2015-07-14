@@ -7,3 +7,7 @@ services:
 	- Pages\Query\PagesQuery
 	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]
+
+	# Presenters in DIC
+	- Pages\Presenters\AdminPagePresenter
+	- Pages\Presenters\PagePresenter

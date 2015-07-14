@@ -32,7 +32,7 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			}
 			$manager->persist($page);
 			$manager->flush($page);
-			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Front:Page:default', $page->getId()));
+			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Pages:Page:default', $page->getId()));
 			$manager->flush($page);
 		}
 	}

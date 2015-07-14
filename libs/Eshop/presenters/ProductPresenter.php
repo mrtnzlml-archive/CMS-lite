@@ -11,14 +11,11 @@ use Nette;
 class ProductPresenter extends BasePresenter
 {
 
-	private $layout;
-
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct($layout, EntityManager $em)
+	public function __construct(EntityManager $em)
 	{
-		$this->layout = $layout;
 		$this->em = $em;
 	}
 
@@ -40,11 +37,6 @@ class ProductPresenter extends BasePresenter
 			$this->error('Product not found.');
 		}
 		$this->template->product = $product;
-	}
-
-	public function findLayoutTemplateFile()
-	{
-		return $this->layout;
 	}
 
 }

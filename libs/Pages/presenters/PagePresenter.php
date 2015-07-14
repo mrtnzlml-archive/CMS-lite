@@ -1,7 +1,8 @@
 <?php
 
-namespace App\FrontModule\Presenters;
+namespace Pages\Presenters;
 
+use App\FrontModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Latte;
 use Nette;
@@ -12,8 +13,13 @@ use Pages\Query\PagesQueryAdmin;
 class PagePresenter extends BasePresenter
 {
 
-	/** @var EntityManager @inject */
-	public $em;
+	/** @var EntityManager */
+	private $em;
+
+	public function __construct(EntityManager $em)
+	{
+		$this->em = $em;
+	}
 
 	public function actionDefault($id)
 	{

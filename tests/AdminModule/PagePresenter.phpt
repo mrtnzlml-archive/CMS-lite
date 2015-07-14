@@ -13,7 +13,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Admin:Page:');
+		$this->openPresenter('Pages:AdminPage:');
 		$container = $this->getContainer();
 		$this->em = $container->getByType(Kdyby\Doctrine\EntityManager::class);
 	}

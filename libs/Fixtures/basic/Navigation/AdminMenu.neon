@@ -9,7 +9,7 @@
 	subitems:
 		- name: Stránky
 		  path: administrace/stranky
-		  destination: Admin:Page:default
+		  destination: Pages:AdminPage:default
 
 - name: Uživatelé
   icon: 'icon flaticon-user8'

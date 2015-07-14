@@ -53,7 +53,7 @@ class MainMenu extends AControl
 		//TODO: priority of page menu items
 		/** @var Page $page */
 		foreach ($pages as $page) {
-			$item = (new MainMenuItem)->setTitle($page->title)->setLink(':Front:Page:', [
+			$item = (new MainMenuItem)->setTitle($page->title)->setLink(':Pages:Page:', [
 				'id' => $page->getId(),
 			]);
 			$this->addMainMenuItem($item);

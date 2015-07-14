@@ -5,4 +5,4 @@ commands:
 services:
 	- Eshop\DI\Install
 	- Eshop\Presenters\AdminProductPresenter
-	- Eshop\Presenters\ProductPresenter(%frontLayout%, ...)
+	- Eshop\Presenters\ProductPresenter

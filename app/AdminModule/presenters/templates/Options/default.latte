@@ -7,6 +7,7 @@
 			{$ext->name}
 			-
 			<a n:href="uninstallExtension! $ext->id">Odinstalovat</a>
+			{sep}<br>{/sep}
 		{/foreach}
 	{/if}
 
@@ -16,6 +17,7 @@
 			{$uext}
 			-
 			<a n:href="installExtension! $md5">Nainstalovat</a>
+			{sep}<br>{/sep}
 		{/foreach}
 	{/if}
 {/block}

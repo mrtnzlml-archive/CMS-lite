@@ -44,4 +44,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $factory->create();
 	}
 
+	public function findLayoutTemplateFile()
+	{
+		if ($this->layout === FALSE) {
+			return;
+		}
+		return __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '@layout.latte';
+	}
+
 }

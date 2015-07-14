@@ -135,7 +135,7 @@ class PageForm extends AControl
 			return;
 		}
 		if ($preview) {
-			$this->presenter->redirect(':Front:Page:preview', $entity->id);
+			$this->presenter->redirect(':Pages:Page:preview', $entity->id);
 		}
 		$this->onComplete($this);
 	}
@@ -174,7 +174,7 @@ class PageForm extends AControl
 	{
 		$page->setUrl(RouteGenerator::generate(
 			empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
-			'Front:Page:default', $page->getId()
+			'Pages:Page:default', $page->getId()
 		));
 		try {
 			$this->em->flush($page);

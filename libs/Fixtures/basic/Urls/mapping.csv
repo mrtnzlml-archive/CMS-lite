@@ -4,9 +4,9 @@ auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
 administrace/soubory,Admin:Files:default
 administrace/nastaveni/general,Admin:Options:general
-administrace/nova-stranka,Admin:Page:new
-administrace/editovat-stranku,Admin:Page:edit
+administrace/nova-stranka,Pages:AdminPage:new
+administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/nastaveni/seo,Admin:Options:seo
-nahled-stranky,Front:Page:preview
+nahled-stranky,Pages:Page:preview
 administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit

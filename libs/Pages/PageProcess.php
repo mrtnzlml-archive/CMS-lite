@@ -40,7 +40,7 @@ class PageProcess extends Nette\Object
 		$this->completePageEntity($page);
 
 		if (!$page->url) {
-			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', $page->getId());
+			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Pages:Page:default', $page->getId());
 			$page->setUrl($url); //UniqueConstraintViolationException
 		}
 
@@ -55,7 +55,7 @@ class PageProcess extends Nette\Object
 
 		//FIXME: pokud by bylo potřeba vytvořit novou URL adresu, musí se stará přesměrovávat na tuto novou...
 		if (!$page->url) {
-			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Front:Page:default', $page->getId());
+			$url = Url::generate(Nette\Utils\Strings::webalize($page->title), 'Pages:Page:default', $page->getId());
 			$page->setUrl($url); //UniqueConstraintViolationException
 		}
 

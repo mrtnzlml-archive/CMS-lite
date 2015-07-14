@@ -3,18 +3,25 @@
 namespace Pages\DI;
 
 use App\Components\Js\Providers\IJsProvider;
+use App\Extensions\CompilerExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class PagesExtension extends Nette\DI\CompilerExtension implements IEntityProvider, IJsProvider
+class PagesExtension extends CompilerExtension implements IEntityProvider, IJsProvider
 {
 
 	public function loadConfiguration()
 	{
 		$builder = $this->getContainerBuilder();
-		$config = $this->loadFromFile(__DIR__ . '/services.neon');
-		$this->compiler->parseServices($builder, $config);
+		$this->parseConfig($builder, __DIR__ . '/services.neon');
+	}
+
+	public function beforeCompile()
+	{
+		$builder = $this->getContainerBuilder();
+		$this->registerExtension($builder, self::class);
+		$this->setPresenterMapping($builder, ['Pages' => 'Pages\\*Module\\Presenters\\*Presenter']);
 	}
 
 	/**

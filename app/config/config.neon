@@ -7,11 +7,6 @@ includes:
     - services.neon
 
 
-parameters:
-	adminLayout: '%appDir%/AdminModule/presenters/templates/@layout.latte'
-	frontLayout: '%appDir%/FrontModule/presenters/templates/@layout.latte'
-
-
 latte:
 	macros:
 		- App\Macros\BootstrapMacros
