@@ -1,8 +1,8 @@
-console:
-	commands:
-		- Eshop\Cli\HeurekaExport
+commands:
+	- Eshop\Cli\HeurekaExport
 
 
 services:
+	- Eshop\DI\Install
 	- Eshop\Presenters\AdminProductPresenter
 	- Eshop\Presenters\ProductPresenter(%frontLayout%, ...)

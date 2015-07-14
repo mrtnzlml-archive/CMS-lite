@@ -7,8 +7,8 @@ use Nette;
 
 /**
  * @method onExtensionRegistration(Registrar $registrar)
- * @method onInstall(EntityManager $em)
- * @method onUninstall(EntityManager $em)
+ * @method onInstall()
+ * @method onUninstall()
  */
 class Registrar extends Nette\Object
 {

@@ -22,10 +22,10 @@ class ProductPresenter extends BasePresenter
 		$this->em = $em;
 	}
 
-	public function renderDefault($slug = NULL)
+	public function renderDefault($id = NULL)
 	{
-		if ($slug !== NULL) {
-			$this->forward(':Eshop:Product:detail', $slug);
+		if ($id !== NULL) {
+			$this->forward(':Eshop:Product:detail', $id);
 		}
 		$this->setTitle('Eshop');
 		$query = new ProductQuery();
@@ -33,9 +33,9 @@ class ProductPresenter extends BasePresenter
 		$this->template->products = $products;
 	}
 
-	public function renderDetail($slug)
+	public function renderDetail($id)
 	{
-		$product = $this->em->getRepository(Product::class)->findOneBy(['slug' => $slug]);
+		$product = $this->em->find(Product::class, $id);
 		if (!$product) {
 			$this->error('Product not found.');
 		}

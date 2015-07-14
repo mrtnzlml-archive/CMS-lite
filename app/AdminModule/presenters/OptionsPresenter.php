@@ -57,7 +57,7 @@ class OptionsPresenter extends BasePresenter
 		$this->em->persist($extension);
 		$this->em->flush($extension);
 
-		$this->registrar->onInstall($this->em);
+		$this->registrar->onInstall();
 
 		$this->flashMessage('Rozšíření bylo úspěšně nainstalováno.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
@@ -72,7 +72,7 @@ class OptionsPresenter extends BasePresenter
 		$this->em->remove($extension);
 		$this->em->flush($extension);
 
-		$this->registrar->onUninstall($this->em);
+		$this->registrar->onUninstall();
 
 		$this->flashMessage('Rozšíření bylo úspěšně odinstalováno.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');

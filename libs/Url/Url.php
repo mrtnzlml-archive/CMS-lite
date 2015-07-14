@@ -11,11 +11,11 @@ use Kdyby;
  *      @ORM\Index(columns={"fake_path"})
  * })
  *
- * @method setFakePath(string)
+ * @method setFakePath(string $path)
  * @method string getFakePath()
- * @method setDestination(string)
+ * @method setDestination(string $destination)
  * @method string getDestination()
- * @method setInternalId(integer)
+ * @method setInternalId(integer $internalId)
  * @method integer getInternalId()
  * @method setRedirectTo(Url $url)
  */
