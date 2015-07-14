@@ -7,7 +7,7 @@ extensions:
     ##### core extensions #####
     - Articles\DI\ArticlesExtension
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
-#    - Eshop\DI\EshopExtension
+    - Eshop\DI\EshopExtension
     - Migrations\DI\MigrationsExtension
     - Migrations\DI\NavigationExtension
     - Options\DI\OptionsExtension
