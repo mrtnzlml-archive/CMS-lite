@@ -6,6 +6,8 @@ use App\Components\Flashes\Flashes;
 use App\Extensions\Extension;
 use App\Extensions\Registrar;
 use Kdyby\Doctrine\EntityManager;
+use Navigation\NavigationFacade;
+use Navigation\NavigationItem;
 use Options\Components\OptionsForm\IOptionsFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
@@ -18,16 +20,26 @@ class OptionsPresenter extends BasePresenter
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(Registrar $registrar, EntityManager $em)
+	/** @var NavigationFacade */
+	private $navigationFacade;
+
+	public function __construct(Registrar $registrar, EntityManager $em, NavigationFacade $navigationFacade)
 	{
 		$this->registrar = $registrar;
 		$this->em = $em;
+		$this->navigationFacade = $navigationFacade;
 	}
 
 	public function renderDefault()
 	{
 		$this->template->known = $this->registrar->getKnownExtensions();
 		$this->template->unknown = $this->registrar->getUnknownExtensions();
+	}
+
+	public function renderNavigation()
+	{
+		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
+		$this->template->adminMenu = $this->navigationFacade->getItemTreeBelow($adminRoot->getId());
 	}
 
 	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)

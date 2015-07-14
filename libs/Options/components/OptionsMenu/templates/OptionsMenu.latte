@@ -9,6 +9,12 @@
 					</a>
 				</li>
 
+				<li {ifCurrent :Admin:Options:navigation}class="active"{/ifCurrent}>
+					<a href="{plink :Admin:Options:navigation}">
+						Navigace
+					</a>
+				</li>
+
 				{foreach $categories as $category}
 					<li {ifCurrent :Admin:Options:$category->name}class="active"{/ifCurrent}>
 						<a href="{plink :Admin:Options:$category->name}">
