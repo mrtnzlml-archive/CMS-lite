@@ -3,6 +3,7 @@
 require __DIR__ . '/../bootstrap.php';
 
 /**
+ * TODO: každá komponenta by si měla nést testy sama
  * @testCase
  */
 class PagePresenter extends \PresenterTestCase
@@ -13,7 +14,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Front:Page:');
+		$this->openPresenter('Pages:Page:');
 		$this->em = $this->getContainer()->getByType(Kdyby\Doctrine\EntityManager::class);
 	}
 
