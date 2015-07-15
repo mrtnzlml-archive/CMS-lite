@@ -1,7 +1,8 @@
 <?php
 
-namespace App\AdminModule\Presenters;
+namespace Options\Presenters;
 
+use App\AdminModule\Presenters\BasePresenter;
 use App\Components\Flashes\Flashes;
 use App\Extensions\Extension;
 use App\Extensions\Registrar;

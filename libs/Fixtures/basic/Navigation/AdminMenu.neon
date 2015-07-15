@@ -19,4 +19,4 @@
 - name: Nastavení
   icon: 'icon flaticon-gear39'
   path: administrace/nastaveni
-  destination: Admin:Options:default
+  destination: Options:Options:default

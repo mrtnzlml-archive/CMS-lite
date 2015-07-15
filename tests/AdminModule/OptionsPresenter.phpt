@@ -10,7 +10,7 @@ class OptionsPresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Admin:Options:');
+		$this->openPresenter('Options:Options:');
 	}
 
 	public function setUp()

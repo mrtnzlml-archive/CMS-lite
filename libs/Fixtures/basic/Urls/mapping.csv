@@ -3,11 +3,11 @@ kontakt,Front:Contact:default
 auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
 administrace/soubory,Admin:Files:default
-administrace/nastaveni/general,Admin:Options:general
+administrace/nastaveni/general,Options:Options:general
 administrace/nova-stranka,Pages:AdminPage:new
 administrace/editovat-stranku,Pages:AdminPage:edit
-administrace/nastaveni/seo,Admin:Options:seo
-administrace/nastaveni/navigace,Admin:Options:navigation
+administrace/nastaveni/seo,Options:Options:seo
+administrace/nastaveni/navigace,Options:Options:navigation
 nahled-stranky,Pages:Page:preview
 administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit
