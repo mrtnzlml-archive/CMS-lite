@@ -5,7 +5,7 @@
 			{define submenu}
 				<ul class="dropdown-menu subMenu" role="menu">
 					<li n:foreach="$menuItems as $menuItem">
-						<a href="{plink ":".$menuItem->url->destination}">{$menuItem->name}</a>
+						<a {if $menuItem->url}href="{plink ":".$menuItem->url->destination}"{/if}>{$menuItem->name}</a>
 					</li>
 				</ul>
 			{/define}

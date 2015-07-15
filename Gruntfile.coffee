@@ -6,6 +6,7 @@ module.exports = (grunt) ->
         files:
           'temp/grunt/admin.css': [
             'vendor-client/admin/style.less'
+            'vendor-client/admin/nestable.css'
           ]
       front:
         files:
@@ -36,11 +37,14 @@ module.exports = (grunt) ->
           'www/js/admin.min.js': [
             'vendor/bootstrap/js/bootstrap.js'
             'vendor/bootstrap/js/tooltip.js'
+            'vendor/nette.ajax.js/nette.ajax.js'
+            'vendor/nette/forms/src/assets/netteForms.js'
             'vendor-client/modules/flexslider/2_2/js/jquery.flexslider-min.js'
             'vendor-client/modules/pretty_photo/js/jquery.prettyPhoto.js'
-            'vendor-client/js/html5shiv.min.js'
-            'vendor-client/js/respond.min.js'
-            'vendor-client/js/main.js'
+            'vendor-client/html5shiv.min.js'
+            'vendor-client/respond.min.js'
+            'vendor-client/jquery.nestable.js'
+            'vendor-client/main.js'
           ]
 
     copy:

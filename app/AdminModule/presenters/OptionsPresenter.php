@@ -8,6 +8,7 @@ use App\Extensions\Registrar;
 use Kdyby\Doctrine\EntityManager;
 use Navigation\NavigationFacade;
 use Navigation\NavigationItem;
+use Navigation\Nestable;
 use Options\Components\OptionsForm\IOptionsFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
@@ -88,6 +89,22 @@ class OptionsPresenter extends BasePresenter
 
 		$this->flashMessage('Rozšíření bylo úspěšně odinstalováno.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
+	}
+
+	/**
+	 * FIXME: @secured
+	 */
+	public function handleUpdateNavigation($json)
+	{
+		if (!$this->isAjax()) {
+			$this->redirect('this');
+		}
+
+		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
+		$this->navigationFacade->recalculatePathsForNode($adminRoot->getId(), Nestable::resolveJson($json));
+		\Tracy\Debugger::log($json);
+
+		$this->redrawControl('adminMenu');
 	}
 
 }

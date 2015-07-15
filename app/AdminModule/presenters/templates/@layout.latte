@@ -72,7 +72,9 @@
 	</header>
 
 	<div id="wrapper">
-		{control adminMenu}
+		{snippet adminMenu}
+			{control adminMenu}
+		{/snippet}
 		<div id="content" class="grey-bg">
 			<div class="row dashboard-header pageTitle">
 				<span class="title fl">Nástěnka</span>
@@ -98,7 +100,6 @@
 
 	{block scripts}
 		<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
-		<script type="text/javascript" src="//nette.github.io/resources/js/netteForms.min.js"></script>
 		{* FIXME ^^ *}
 		<script type="text/javascript" src="{$basePath}/js/admin.min.js"></script>
 	{/block}

@@ -1,7 +1,22 @@
 $(function () {
-    
-        $.nette.init();
-    
+	"use strict";
+
+	$.nette.init();
+
+	$('.dd').nestable({
+		maxDepth: 3
+	}).on('change', function (event) {
+		var list = event.length ? event : $(event.target);
+		var output = list.data('output');
+		$.nette.ajax({
+			url: list.data('ajax-handle'),
+			type: 'post',
+			data: {
+				json: JSON.stringify(list.nestable('serialize'))
+			}
+		});
+	});
+
 	// generuje URL na zaklade zadavaneho titulku
 	$('input[data-slug-to]').keyup(function () {
 		var slugId = $(this).data('slug-to');
@@ -27,7 +42,35 @@ $(function () {
 		$('#' + countdownId).html(remaining);
 	});
 
+	$(initialize);
+	$(document).bind('ajaxSuccess', initialize);
 });
+
+function initialize() {
+
+	$('[data-toggle="tooltip"]').tooltip({
+		'delay': {show: 700, hide: 100}
+	});
+
+	$("#tipsNums").click(function () {
+		$("#tipsContent").fadeToggle(500, function () {
+		});
+	});
+
+	$(".exitTips").click(function (event) {
+		event.preventDefault();
+		$("#tipsContent").hide();
+	});
+
+	$('.dropdown-toggle').click(function () {
+		$(this).next('.dropdown-menu').slideToggle(500);
+	});
+
+	$('.open-nav').click(function () {
+		$('#content').toggleClass('closeMenu');
+	});
+
+}
 
 var nodiac = { 'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o', 'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z' };
 /** Vytvoření přátelského URL

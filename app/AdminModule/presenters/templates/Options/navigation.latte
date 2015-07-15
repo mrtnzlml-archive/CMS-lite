@@ -1,4 +1,41 @@
 {block content}
-	{dump $adminMenu}
-	&hellip;
+	{control optionsMenu}
+	<del>
+		<a>Vytvořit nové menu</a>
+		<select>
+			<option>Hlavní menu</option>
+		</select>
+		<a>Smazat menu</a>
+	</del>
+	<div class="dd" data-ajax-handle="{link updateNavigation!}">
+
+		{define submenu}
+			<ol class="dd-list">
+				{foreach $menuItems as $menuItem}
+					<li class="dd-item" data-id="{$menuItem->id}">
+						<div class="dd-handle">{$menuItem->name}</div>
+						{ifset $menuItem->descendants}
+							{include this, menuItems => $menuItem->descendants}
+						{/ifset}
+					</li>
+				{/foreach}
+			</ol>
+		{/define}
+
+		<ol class="dd-list">
+			{foreach $adminMenu as $menuItem}
+				{?$entity = $menuItem->entity}
+				<li class="dd-item" data-id="{$entity->id}">
+					<div class="dd-handle">
+						{$entity->name}
+						<span>(interní odkaz)</span>
+					</div>
+					{ifset $menuItem->descendants}
+						{include submenu, menuItems => $menuItem->descendants}
+					{/ifset}
+				</li>
+			{/foreach}
+		</ol>
+
+	</div>
 {/block}

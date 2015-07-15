@@ -5,6 +5,9 @@ namespace Navigation;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 
+/**
+ * @see http://blog.voracek.net/databaze/closure-table-stromy-v-mysql-trochu-jinak/
+ */
 class NavigationFacade extends Nette\Object
 {
 
@@ -38,6 +41,7 @@ class NavigationFacade extends Nette\Object
 		foreach ($menuItems as $menuItem) {
 			$nodes[$menuItem[2]]['entity'] = $menuItem[0];
 		}
+		//TODO: další úrovně zanoření
 		foreach ($menuItems as $menuItem) {
 			if (array_key_exists($menuItem[1], $nodes)) {
 				$nodes[$menuItem[1]]['descendants'][$menuItem[2]] = $menuItem[0];
@@ -73,19 +77,48 @@ class NavigationFacade extends Nette\Object
 			}
 
 			// 3) generate graph
-			$table = $this->em->getClassMetadata(NavigationTreePath::class)->getTableName();
-			$connection = $this->em->getConnection();
-			$stmt = $connection->prepare("
-					INSERT INTO $table (ancestor_id, descendant_id, depth)
-						SELECT ancestor_id, :descSelect, depth+1 FROM $table
-							WHERE descendant_id = :desc;
-				");
-			$stmt->bindValue('descSelect', $item->getId(), \Doctrine\DBAL\Types\Type::INTEGER);
-			$stmt->bindValue('desc', $parent_id);
-			$stmt->execute();
+			$this->createPath($parent_id, $item->getId());
 
 			return $item;
 		});
+	}
+
+	public function recalculatePathsForNode($nodeId, $nodeIds)
+	{
+		//DELETE t1 FROM navigation_tree_path t1 JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = 50 AND t1.depth > 0);
+		$connection = $this->em->getConnection();
+		$stmt = $connection->prepare("
+			DELETE t1 FROM navigation_tree_path t1
+			JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = :ancestor AND t1.depth > 0);
+		");
+		$stmt->bindValue('ancestor', $nodeId, \Doctrine\DBAL\Types\Type::INTEGER);
+		$stmt->execute();
+		$this->calculatePaths($nodeId, $nodeIds);
+	}
+
+	private function calculatePaths($root, array $nodeIds)
+	{
+		foreach ($nodeIds as $key => $id) {
+			if (!is_array($id)) {
+				$this->createPath($root, $id);
+			} else {
+				$this->createPath($root, $key);
+				$this->calculatePaths($key, $id);
+			}
+		}
+	}
+
+	private function createPath($parent_id, $item_id)
+	{
+		$connection = $this->em->getConnection();
+		$stmt = $connection->prepare('
+			INSERT INTO navigation_tree_path (ancestor_id, descendant_id, depth)
+			SELECT ancestor_id, :descSelect, depth+1 FROM navigation_tree_path
+			WHERE descendant_id = :desc;
+		');
+		$stmt->bindValue('descSelect', $item_id, \Doctrine\DBAL\Types\Type::INTEGER);
+		$stmt->bindValue('desc', $parent_id);
+		$stmt->execute();
 	}
 
 }
