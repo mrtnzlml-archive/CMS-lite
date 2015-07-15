@@ -12,12 +12,12 @@ function initialize() {
 	}).on('change', function (event) {
 		var list = event.length ? event : $(event.target);
 		var output = list.data('output');
+		var data = {};
+		data[list.data('control-prefix') + '-json'] = JSON.stringify(list.nestable('serialize'));
 		$.nette.ajax({
 			url: list.data('ajax-handle'),
 			type: 'post',
-			data: {
-				json: JSON.stringify(list.nestable('serialize'))
-			}
+			data: data
 		});
 	});
 

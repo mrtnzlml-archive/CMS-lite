@@ -6,9 +6,7 @@ use App\Components\Flashes\Flashes;
 use App\Extensions\Extension;
 use App\Extensions\Registrar;
 use Kdyby\Doctrine\EntityManager;
-use Navigation\NavigationFacade;
-use Navigation\NavigationItem;
-use Navigation\Nestable;
+use Navigation\IMenuEditorFactory;
 use Options\Components\OptionsForm\IOptionsFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
@@ -21,14 +19,10 @@ class OptionsPresenter extends BasePresenter
 	/** @var EntityManager */
 	private $em;
 
-	/** @var NavigationFacade */
-	private $navigationFacade;
-
-	public function __construct(Registrar $registrar, EntityManager $em, NavigationFacade $navigationFacade)
+	public function __construct(Registrar $registrar, EntityManager $em)
 	{
 		$this->registrar = $registrar;
 		$this->em = $em;
-		$this->navigationFacade = $navigationFacade;
 	}
 
 	public function renderDefault()
@@ -37,10 +31,9 @@ class OptionsPresenter extends BasePresenter
 		$this->template->unknown = $this->registrar->getUnknownExtensions();
 	}
 
-	public function renderNavigation()
+	public function createComponentMenuEditor(IMenuEditorFactory $factory)
 	{
-		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
-		$this->template->adminMenu = $this->navigationFacade->getItemTreeBelow($adminRoot->getId());
+		return $factory->create();
 	}
 
 	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
@@ -89,22 +82,6 @@ class OptionsPresenter extends BasePresenter
 
 		$this->flashMessage('Rozšíření bylo úspěšně odinstalováno.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
-	}
-
-	/**
-	 * FIXME: @secured
-	 */
-	public function handleUpdateNavigation($json)
-	{
-		if (!$this->isAjax()) {
-			$this->redirect('this');
-		}
-
-		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
-		$this->navigationFacade->recalculatePathsForNode($adminRoot->getId(), Nestable::resolveJson($json));
-		\Tracy\Debugger::log($json);
-
-		$this->redrawControl('adminMenu');
 	}
 
 }

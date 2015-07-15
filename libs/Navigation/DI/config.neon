@@ -1,2 +1,3 @@
 services:
+	- Navigation\IMenuEditorFactory
 	- Navigation\NavigationFacade

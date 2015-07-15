@@ -8,6 +8,8 @@ use Kdyby\Doctrine\Entities\BaseEntity;
 
 /**
  * @ORM\Entity
+ *
+ * @method setName(string $name)
  */
 class Navigation extends BaseEntity
 {
@@ -20,11 +22,7 @@ class Navigation extends BaseEntity
 	protected $name;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="NavigationItem", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="navigation_id", referencedColumnName="id")}
-	 *    )
+	 * @ORM\ManyToMany(targetEntity="NavigationItem", mappedBy="navigations", cascade={"persist"})
 	 * @var NavigationItem[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $items;

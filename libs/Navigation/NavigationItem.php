@@ -2,6 +2,7 @@
 
 namespace Navigation;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
@@ -35,5 +36,20 @@ class NavigationItem extends BaseEntity
 	 * @var \Url\Url
 	 */
 	protected $url;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Navigation", inversedBy="items", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="navigation_id", referencedColumnName="id")}
+	 *    )
+	 * @var Navigation[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $navigations;
+
+	public function __construct()
+	{
+		$this->navigations = new ArrayCollection;
+	}
 
 }
