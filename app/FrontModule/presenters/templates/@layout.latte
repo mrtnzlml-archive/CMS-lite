@@ -20,7 +20,10 @@
 	{include content}
 	{control wrapper:below}
 
-	{block scripts}{control js}{/block}
+	{block scripts}
+		<script type="text/javascript" src="{$basePath}/js/front.min.js"></script>
+		{control js}
+	{/block}
 	</body>
 	</html>
 {/block}

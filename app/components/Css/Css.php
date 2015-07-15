@@ -44,10 +44,8 @@ class Css extends Nette\Application\UI\Control
 	protected function createComponentCss()
 	{
 		$files = new WebLoader\FileCollection($this->vendor . '/css');
-		$files->addFile('bootstrap.min.css');
 		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
-		$files->addFile('front.css');
 		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
 		$compiler->addFileFilter(new WebLoader\Filter\LessFilter());
 		$compiler->addFilter(function ($code) {

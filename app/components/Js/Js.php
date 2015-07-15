@@ -45,9 +45,7 @@ class Js extends Nette\Application\UI\Control
 	{
 		$files = new WebLoader\FileCollection($this->dir . '/js');
 		$files->addRemoteFiles($this->externalScripts);
-		$files->addRemoteFile('//nette.github.io/resources/js/netteForms.min.js'); //FIXME (z vendoru)
 		$files->addFiles($this->scripts);
-		$files->addFile('main.js');
 		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\JS;

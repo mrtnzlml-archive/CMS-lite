@@ -1,7 +1,11 @@
 $(function () {
 	"use strict";
-
 	$.nette.init();
+	$(initialize);
+	$(document).bind('ajaxSuccess', initialize);
+});
+
+function initialize() {
 
 	$('.dd').nestable({
 		maxDepth: 3
@@ -42,12 +46,6 @@ $(function () {
 		$('#' + countdownId).html(remaining);
 	});
 
-	$(initialize);
-	$(document).bind('ajaxSuccess', initialize);
-});
-
-function initialize() {
-
 	$('[data-toggle="tooltip"]').tooltip({
 		'delay': {show: 700, hide: 100}
 	});
@@ -74,7 +72,7 @@ function initialize() {
 
 var nodiac = { 'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o', 'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z' };
 /** Vytvoření přátelského URL
- * @param string řetězec, ze kterého se má vytvořit URL
+ * @param s string řetězec, ze kterého se má vytvořit URL
  * @return string řetězec obsahující pouze čísla, znaky bez diakritiky, podtržítko a pomlčku
  * @copyright Jakub Vrána, http://php.vrana.cz/
  */

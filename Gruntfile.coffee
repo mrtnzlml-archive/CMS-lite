@@ -46,6 +46,12 @@ module.exports = (grunt) ->
             'vendor-client/jquery.nestable.js'
             'vendor-client/main.js'
           ]
+      front:
+        files:
+          'www/js/front.min.js': [
+            'vendor/nette/forms/src/assets/netteForms.js'
+            'vendor-client/main.js'
+          ]
 
     copy:
       main:

@@ -41,7 +41,7 @@ class NavigationFacade extends Nette\Object
 		foreach ($menuItems as $menuItem) {
 			$nodes[$menuItem[2]]['entity'] = $menuItem[0];
 		}
-		//TODO: další úrovně zanoření
+		//TODO: další úrovně zanoření a pořadí prvků
 		foreach ($menuItems as $menuItem) {
 			if (array_key_exists($menuItem[1], $nodes)) {
 				$nodes[$menuItem[1]]['descendants'][$menuItem[2]] = $menuItem[0];
