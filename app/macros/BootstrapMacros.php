@@ -16,6 +16,7 @@ class BootstrapMacros extends MacroSet
 		/** @var BootstrapMacros $macroset */
 		$macroset = new static($compiler);
 		$macroset->addMacro('row', [$macroset, 'rowBegin'], [$macroset, 'rowEnd']);
+		$macroset->addMacro('div', [$macroset, 'divBegin'], [$macroset, 'divEnd']);
 		$macroset->addMacro('col', [$macroset, 'colBegin'], [$macroset, 'colEnd']);
 		return $macroset;
 	}
@@ -28,7 +29,11 @@ class BootstrapMacros extends MacroSet
 	 */
 	public function rowBegin(MacroNode $node, PhpWriter $writer)
 	{
-		return $writer->write("echo '<div class=row>'");
+		$class = 'row';
+		if ($node->args) {
+			$class .= ' ' . $node->args;
+		}
+		return $writer->write("echo '<div class=\"$class\">'");
 	}
 
 	/**
@@ -56,15 +61,17 @@ class BootstrapMacros extends MacroSet
 		if ($node->args === '') {
 			throw new Latte\CompileException('Col arguments cannot be empty');
 		}
-		preg_match('~[-_]?([a-z0-9]{1,2})[-_\s]([a-z0-9]{1,2})~', $node->args, $matches);
-		if (is_numeric($matches[1])) {
-			$size = (int)$matches[1];
-			$type = $matches[2];
-		} else {
-			$size = (int)$matches[2];
-			$type = $matches[1];
+		preg_match_all("~[-_\s]?([a-z]{1,2})[-_\s]?([0-9]{1,2})~", $node->args, $matches);
+		$dict = ['l' => 'lg', 'm' => 'md', 's' => 'sm', 'x' => 'xs'];
+		$output = '';
+		$iterator = 0;
+		foreach ($matches[1] as $match) {
+			$output .= $iterator === 0 ? '' : ' ';
+			$output .= 'col-' . (isset($dict[$match]) ? $dict[$match] : $match);
+			$output .= '-' . $matches[2][$iterator];
+			$iterator++;
 		}
-		return $writer->write("echo '<div class=col-$type-$size>'");
+		return $writer->write("echo '<div class=\"$output\">'");
 	}
 
 	/**
