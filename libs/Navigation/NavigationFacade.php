@@ -25,33 +25,27 @@ class NavigationFacade extends Nette\Object
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($itemId)));
 		}
 		$query = $this->em->getRepository(NavigationItem::class)->createQuery('
-			SELECT n, tree.depth FROM Navigation\NavigationItem n
-				LEFT JOIN Navigation\NavigationTreePath tree
-					WITH (n.id = tree.descendant)
-				WHERE tree.ancestor = ?1 AND tree.depth > 0
+			SELECT n, IDENTITY(tree2.ancestor), IDENTITY(tree1.descendant) FROM Navigation\NavigationItem n
+			LEFT JOIN Navigation\NavigationTreePath tree1 WITH (n.id = tree1.descendant)
+			LEFT JOIN Navigation\NavigationTreePath tree2 WITH (tree2.descendant = tree1.descendant AND tree2.depth = 1)
+		  	WHERE tree1.ancestor = ?1 AND tree1.depth > 0
 		');
 		$query->setParameter(1, $itemId);
 		$menuItems = $query->getResult();
 
-		$items = [];
-		//TODO: to je na mě dnes moc
-//		$iterator = 0;
-//		foreach ($menuItems as $menuItem) {
-//			if ($menuItem['depth'] > 1) {
-//				unset($menuItem['depth']);
-//				$items[$iterator - 1]['submenu'][] = $menuItem;
-//			} else {
-//				unset($menuItem['depth']);
-//				$items[$iterator] = $menuItem;
-//			}
-//			$iterator++;
-//		}
-//
-//		\Tracy\Debugger::$maxDepth = 10;
-//		dump($items);
-//		exit;
+		// Compute graph
+		$nodes = [];
+		foreach ($menuItems as $menuItem) {
+			$nodes[$menuItem[2]]['entity'] = $menuItem[0];
+		}
+		foreach ($menuItems as $menuItem) {
+			if (array_key_exists($menuItem[1], $nodes)) {
+				$nodes[$menuItem[1]]['descendants'][$menuItem[2]] = $menuItem[0];
+				unset($nodes[$menuItem[2]]);
+			}
+		}
 
-		return $items;
+		return Nette\Utils\ArrayHash::from($nodes);
 	}
 
 	public function createItem(NavigationItem $item, $parent_id = NULL)

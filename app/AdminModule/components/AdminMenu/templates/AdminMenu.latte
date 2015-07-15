@@ -2,55 +2,43 @@
 	<nav id="navbar-main" class="navbar-default navbar-static-side" role="navigation">
 		<ul class="nav navbar-nav">
 
-			{*{define submenu}*}
-				{*<li n:foreach="$menuItems as $menuItem">*}
-					{*<a href="{plink :Pages:AdminPage:}">{$menuItem->name}</a>*}{* FIXME *}
-				{*</li>*}
-			{*{/define}*}
-
-			{*{block menu}*}
-				{*{foreach $menuItems as $menuItem}*}
-					{*{dump $menuItem}*}
-					{*{include submenu, menuItems => $menuItem}*}
-				{*{/foreach}*}
-			{*{/block}*}
-
-			<li {ifCurrent ':Admin:Dashboard:*'}class="active"{/ifCurrent}>
-				<a href="{plink :Admin:Dashboard:}" {ifCurrent ':Admin:Dashboard:*'}class="active"{/ifCurrent}>
-					<span class="icon ai-home60"></span>
-					Nástěnka
-				</a>
-			</li>
-			<li {ifCurrent ':Pages:AdminPage:*'}class="active"{/ifCurrent}>
-				<a data-toggle="dropdown" class="dropdown-toggle{ifCurrent ':Pages:AdminPage:*'} active{/ifCurrent}">
-					<span class="icon flaticon-document236"></span>
-					Obsah <span class="ico flaticon-next21"></span>
-				</a>
+			{define submenu}
 				<ul class="dropdown-menu subMenu" role="menu">
-					<li><a href="{plink :Pages:AdminPage:}">Stránky</a></li>
+					<li n:foreach="$menuItems as $menuItem">
+						<a href="{plink ":".$menuItem->url->destination}">{$menuItem->name}</a>
+					</li>
 				</ul>
-			</li>
+			{/define}
 
-			{* FIXME: vlastní modul *}
-			{*<li {ifCurrent ':Eshop:AdminProduct:*'}class="active"{/ifCurrent}>*}
-				{*<a href="{plink :Eshop:AdminProduct:default}" {ifCurrent ':Eshop:AdminProduct:*'}class="active"{/ifCurrent}>*}
-					{*<span class="icon flaticon-luggage36"></span>*}
-					{*Zboží eshop*}
+			{* TODO: ifCurrent *}
+
+			{block menu}
+				{foreach $menuItems as $menuItem}
+					<li>
+						{?$entity = $menuItem->entity}
+						<a
+								{if $entity->url}href="{plink ":".$entity->url->destination}"{/if}
+								{ifset $menuItem->descendants}data-toggle="dropdown" class="dropdown-toggle"{/ifset}
+								>
+							<span class="{$entity->icon}"></span>
+							{$entity->name}
+							{ifset $menuItem->descendants}
+								<span class="ico flaticon-next21"></span>
+							{/ifset}
+						</a>
+						{ifset $menuItem->descendants}
+							{include submenu, menuItems => $menuItem->descendants}
+						{/ifset}
+					</li>
+				{/foreach}
+			{/block}
+
+			{*<li {ifCurrent ':Admin:Dashboard:*'}class="active"{/ifCurrent}>*}
+				{*<a href="{plink :Admin:Dashboard:}" {ifCurrent ':Admin:Dashboard:*'}class="active"{/ifCurrent}>*}
+					{*<span class="icon ai-home60"></span>*}
+					{*Nástěnka*}
 				{*</a>*}
 			{*</li>*}
-
-			<li {ifCurrent ':Admin:Users:*'}class="active"{/ifCurrent}>
-				<a href="{plink :Admin:Users:default}" {ifCurrent ':Admin:Users:*'}class="active"{/ifCurrent}>
-					<span class="icon flaticon-user8"></span>
-					Uživatelé
-				</a>
-			</li>
-			<li {ifCurrent ':Admin:Options:*'}class="active"{/ifCurrent}>
-				<a href="{plink :Admin:Options:general}" {ifCurrent ':Admin:Options:*'}class="active"{/ifCurrent}>
-					<span class="icon flaticon-gear39"></span>
-					Nastavení
-				</a>
-			</li>
 		</ul>
 	</nav>
 </div>
