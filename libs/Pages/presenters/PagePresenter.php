@@ -16,9 +16,13 @@ class PagePresenter extends BasePresenter
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(EntityManager $em)
+	/** @var Nette\Application\UI\ITemplateFactory */
+	private $templateFactory;
+
+	public function __construct(EntityManager $em, Nette\Application\UI\ITemplateFactory $templateFactory)
 	{
 		$this->em = $em;
+		$this->templateFactory = $templateFactory;
 	}
 
 	public function actionDefault($id)
@@ -33,6 +37,12 @@ class PagePresenter extends BasePresenter
 		]);
 		$this->setTitle($page->individualTitle ?: $page->title);
 		$this->setMeta('description', $page->description);
+
+		$latte = $this->template->getLatte(); //Latte\Engine
+		$latte->setLoader(new Latte\Loaders\StringLoader);
+		$rendered = $latte->renderToString($page->getBody(), $this->template->getParameters());
+
+		$this->template->body = Nette\Utils\Html::el()->setHtml($rendered);
 		$this->template->page = $page;
 	}
 

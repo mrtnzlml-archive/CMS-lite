@@ -53,8 +53,6 @@ class BootstrapMacros extends MacroSet
 	 *
 	 * @return string
 	 * @throws Latte\CompileException
-	 *
-	 * TODO: ještě další varianty (md, xs)
 	 */
 	public function colBegin(MacroNode $node, PhpWriter $writer)
 	{
