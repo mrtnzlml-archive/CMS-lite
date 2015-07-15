@@ -10,7 +10,7 @@ class EshopPresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Admin:Eshop:');
+		$this->openPresenter('Eshop:AdminProduct:');
 	}
 
 	public function setUp()
