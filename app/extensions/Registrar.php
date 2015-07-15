@@ -43,8 +43,7 @@ class Registrar extends Nette\Object
 
 		$extensionsRepository = $this->em->getRepository(Extension::class);
 		foreach ($this->extensions as $extension) {
-			//FIXME: vlastní repository na tyto find dotazy
-			if ($extensionsRepository->findOneBy(['name' => $extension]) === NULL) {
+			if ($extensionsRepository->findOneByName($extension) === NULL) {
 				$unknown[md5($extension)] = $extension;
 			}
 		}
