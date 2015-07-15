@@ -14,7 +14,7 @@
 - name: Uživatelé
   icon: 'icon flaticon-user8'
   path: administrace/uzivatele
-  destination: Admin:Users:default
+  destination: Users:Users:default
 
 - name: Nastavení
   icon: 'icon flaticon-gear39'

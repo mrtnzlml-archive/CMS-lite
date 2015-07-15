@@ -1,7 +1,8 @@
 <?php
 
-namespace App\AdminModule\Presenters;
+namespace Users\Presenters;
 
+use App\AdminModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Users\Query\UsersQuery;
 use Users\User;

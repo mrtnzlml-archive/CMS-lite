@@ -2,11 +2,12 @@
 
 namespace Users\DI;
 
+use App\Extensions\CompilerExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class UsersExtension extends Nette\DI\CompilerExtension implements IEntityProvider
+class UsersExtension extends CompilerExtension implements IEntityProvider
 {
 
 	public function loadConfiguration()
@@ -14,6 +15,12 @@ class UsersExtension extends Nette\DI\CompilerExtension implements IEntityProvid
 		$builder = $this->getContainerBuilder();
 		$config = $this->loadFromFile(__DIR__ . '/services.neon');
 		$this->compiler->parseServices($builder, $config);
+	}
+
+	public function beforeCompile()
+	{
+		$builder = $this->getContainerBuilder();
+		$this->setPresenterMapping($builder, ['Users' => 'Users\\*Module\\Presenters\\*Presenter']);
 	}
 
 	/**

@@ -29,6 +29,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			}
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		} elseif (!$this->user->isAllowed($this->name, Users\Authorizator::READ)) {
+			dump($this->name);
 			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', Flashes::FLASH_DANGER);
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}

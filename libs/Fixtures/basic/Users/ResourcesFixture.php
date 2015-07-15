@@ -11,7 +11,7 @@ class ResourcesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 		$manager->persist((new \Users\Resource())->setName('Options:Options'));
 		$manager->persist((new \Users\Resource())->setName('Pages:AdminPage'));
 		$manager->persist((new \Users\Resource())->setName('Admin:Files'));
-		$manager->persist((new \Users\Resource())->setName('Admin:Users'));
+		$manager->persist((new \Users\Resource())->setName('Users:Users'));
 		$manager->flush();
 	}
 

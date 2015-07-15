@@ -1,3 +1,4 @@
 services:
 	- Users\Authorizator
 	- Users\Manager
+#	- Users\Presenters\UsersPresenter
