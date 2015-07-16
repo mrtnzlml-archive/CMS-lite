@@ -3,26 +3,14 @@
 namespace Users\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
-use Kdyby\Doctrine\EntityManager;
-use Users\Query\UsersQuery;
-use Users\User;
+use Users\Components\UsersGrid\IUsersGridFactory;
 
 class UsersPresenter extends BasePresenter
 {
 
-	/** @var EntityManager */
-	private $em;
-
-	public function __construct(EntityManager $em)
+	public function createComponentUsersGrid(IUsersGridFactory $factory)
 	{
-		$this->em = $em;
-	}
-
-	public function renderDefault()
-	{
-		$query = new UsersQuery;
-		$users = $this->em->getRepository(User::class)->fetch($query);
-		$this->template->users = $users;
+		return $factory->create();
 	}
 
 }

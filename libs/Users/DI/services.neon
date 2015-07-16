@@ -1,4 +1,5 @@
 services:
 	- Users\Authorizator
 	- Users\Manager
-#	- Users\Presenters\UsersPresenter
+	- Users\Components\UsersGrid\IUsersGridFactory
+	- Users\Presenters\UsersPresenter

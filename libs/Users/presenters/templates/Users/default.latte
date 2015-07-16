@@ -1,24 +1,6 @@
 {block title}Uživatelé{/block}
 
 {block content}
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th>Email</th>
-			<th>Role</th>
-			<th>Datum vytvoření</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr n:foreach="$users as $user">
-			<td>{$user->email}</td>
-			<td>
-				{foreach $user->roles as $role}
-					{$role->name} (dědí od {$role->parent->name}){sep}, {/sep}
-				{/foreach}
-			</td>
-			<td>{$user->createdAt|date}</td>
-		</tr>
-		</tbody>
-	</table>
+	{*<a class="btn btn-default" n:href="new">Nový uživatel</a>*}
+	{control usersGrid}
 {/block}
