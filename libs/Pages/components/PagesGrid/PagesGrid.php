@@ -6,7 +6,6 @@ use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
-use Pages\Components\MultiEdit\IMultiEditFactory;
 use Pages\Page;
 use Pages\PageFacade;
 use Pages\Query\PagesQueryAdmin;
@@ -14,25 +13,18 @@ use Pages\Query\PagesQueryAdmin;
 class PagesGrid extends AControl
 {
 
-	/** @persistent */
-	public $multiEdit = [];
-
 	/** @var EntityManager */
 	private $em;
 
 	private $pages;
 
-	/** @var IMultiEditFactory */
-	private $multiEditFactory;
-
 	/** @var PageFacade */
-	private $pageProcess;
+	private $pageFacade;
 
-	public function __construct(EntityManager $em, IMultiEditFactory $multiEditFactory, PageFacade $pageProcess)
+	public function __construct(EntityManager $em, PageFacade $pageFacade)
 	{
 		$this->em = $em;
-		$this->multiEditFactory = $multiEditFactory;
-		$this->pageProcess = $pageProcess;
+		$this->pageFacade = $pageFacade;
 	}
 
 	/** @param $presenter UI\Presenter */
@@ -57,7 +49,6 @@ class PagesGrid extends AControl
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->pages = $this->pages;
-		$this->template->multiEdit = $this->multiEdit;
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PagesGrid.latte');
 	}
 
@@ -67,30 +58,32 @@ class PagesGrid extends AControl
 
 		$checkboxes = $form->addContainer('page');
 		foreach ($this->pages as $page) {
-			$checkboxes->addCheckbox($page->id, NULL)
-				->setValue(isset($this->multiEdit[$page->id]) ? $this->multiEdit[$page->id] : NULL);
+			$checkboxes->addCheckbox($page->id, NULL);
 		}
 
 		$form->addSelect('action', NULL, [
 			'edit' => 'Editovat',
+			'delete' => 'Smazat',
 		]);
 		$form->addSubmit('submit');
 		$form->onSuccess[] = function ($_, $values) {
 			$multiEdit = [];
 			foreach ($values->page as $id => $checked) {
 				if ($checked) {
-					$multiEdit[$id] = $checked;
+					$multiEdit[$id] = $id;
 				}
 			}
-			$this->multiEdit = $multiEdit;
-			$this->redirect('this');
+			if ($values->action === 'edit') {
+				$this->presenter->redirect(':Pages:AdminPage:multiEdit', [$multiEdit]);
+			} else {
+				$this->pageFacade->onRemove[] = function () {
+					$this->em->flush();
+					$this->redirect('this');
+				};
+				$this->pageFacade->remove($multiEdit);
+			}
 		};
 		return $form;
-	}
-
-	protected function createComponentMultiEdit()
-	{
-		return $this->multiEditFactory->create($this->multiEdit);
 	}
 
 	/**
@@ -99,11 +92,11 @@ class PagesGrid extends AControl
 	public function handleDelete($id)
 	{
 		//TODO: is user allowed to delete this page? (same with edit)
-		$this->pageProcess->onRemove[] = function (PageFacade $process, Page $page) {
+		$this->pageFacade->onRemove[] = function (PageFacade $process, Page $page) {
 			$this->em->flush();
 			$this->redirect('this');
 		};
-		$this->pageProcess->remove($id);
+		$this->pageFacade->remove($id);
 	}
 
 }

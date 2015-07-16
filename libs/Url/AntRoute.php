@@ -9,6 +9,9 @@ use Nette\Application;
 use Options\Option;
 use Pages\Query\OptionsQuery;
 
+/**
+ * TODO: možnost přejmenovávat parametry v URL (GET)
+ */
 class AntRoute extends Application\Routers\RouteList
 {
 

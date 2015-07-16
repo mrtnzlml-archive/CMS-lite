@@ -38,7 +38,7 @@ class PageForm extends AControl
 	public $onException = [];
 
 	/** @var PageFacade */
-	private $pageProcess;
+	private $pageFacade;
 
 	/** @var EntityManager */
 	private $em;
@@ -49,13 +49,13 @@ class PageForm extends AControl
 	/** @var RedirectFacade */
 	private $redirectFacade;
 
-	public function __construct($editablePage, PageFacade $pageProcess, EntityManager $em, RedirectFacade $redirectFacade)
+	public function __construct($editablePage, PageFacade $pageFacade, EntityManager $em, RedirectFacade $redirectFacade)
 	{
 		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
 		}
 		$this->editablePage = $editablePage;
-		$this->pageProcess = $pageProcess;
+		$this->pageFacade = $pageFacade;
 		$this->em = $em;
 		$this->redirectFacade = $redirectFacade;
 	}
@@ -123,10 +123,10 @@ class PageForm extends AControl
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
 			$this->fillEntityWithValues($entity, $values);
-			$this->pageProcess->onSave[] = function () use ($entity) {
+			$this->pageFacade->onSave[] = function () use ($entity) {
 				$this->onSave($this, $entity);
 			};
-			$this->pageProcess->save($entity, $values);
+			$this->pageFacade->save($entity, $values);
 		} catch (DuplicateRouteException $exc) {
 			$this->presenter->flashMessage($exc->getMessage());
 			return;
@@ -146,10 +146,10 @@ class PageForm extends AControl
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
 			$this->fillEntityWithValues($entity, $values);
-			$this->pageProcess->onPublish[] = function () use ($entity) {
+			$this->pageFacade->onPublish[] = function () use ($entity) {
 				$this->onPublish($this, $entity);
 			};
-			$this->pageProcess->publish($entity, $values);
+			$this->pageFacade->publish($entity, $values);
 		} catch (DuplicateRouteException $exc) {
 			$this->presenter->flashMessage($exc->getMessage());
 			return;
@@ -172,6 +172,7 @@ class PageForm extends AControl
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
 			foreach ($values->authors as $authorId) {
+				/** @var User $authorRef */
 				$authorRef = $this->em->getPartialReference(User::class, $authorId);
 				$entity->addAuthor($authorRef);
 			}
@@ -180,6 +181,7 @@ class PageForm extends AControl
 		$entity->clearCategories();
 		if (!in_array(NULL, $values->categories)) {
 			foreach ($values->categories as $categoryId) {
+				/** @var PageCategory $categoryRef */
 				$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
 				$entity->addCategory($categoryRef);
 			}

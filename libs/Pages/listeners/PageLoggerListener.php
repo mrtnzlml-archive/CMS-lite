@@ -43,9 +43,9 @@ class PageLoggerListener extends Nette\Object implements Kdyby\Events\Subscriber
 		}
 	}
 
-	public function onRemove(PageFacade $_, Page $page)
+	public function onRemove(PageFacade $_, $page_id)
 	{
-		$this->logger->addInfo(sprintf('Page "%s" has been deleted.', $page->getTitle()));
+		$this->logger->addInfo(sprintf('Page with ID %u has been deleted.', $page_id));
 	}
 
 	public function onException(PageForm $_, \Exception $exc)

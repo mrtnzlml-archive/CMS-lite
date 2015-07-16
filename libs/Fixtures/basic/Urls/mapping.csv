@@ -6,6 +6,7 @@ administrace/soubory,Admin:Files:default
 administrace/nastaveni/general,Options:Options:general
 administrace/nova-stranka,Pages:AdminPage:new
 administrace/editovat-stranku,Pages:AdminPage:edit
+administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/nastaveni/seo,Options:Options:seo
 administrace/nastaveni/navigace,Options:Options:navigation
 nahled-stranky,Pages:Page:preview

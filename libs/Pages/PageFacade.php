@@ -17,7 +17,7 @@ use Users\User;
 /**
  * @method onSave(PageFacade $control, Page $entity)
  * @method onPublish(PageFacade $control, Page $entity)
- * @method onRemove(PageFacade $control, Page $entity)
+ * @method onRemove(PageFacade $control, $page_id)
  */
 class PageFacade extends Nette\Object
 {
@@ -70,18 +70,35 @@ class PageFacade extends Nette\Object
 		$this->onSave($this, $page);
 	}
 
+	/**
+	 * @param integer|array $page_id
+	 *
+	 * @throws \Doctrine\ORM\ORMException
+	 * @throws \Doctrine\ORM\OptimisticLockException
+	 * @throws \Doctrine\ORM\TransactionRequiredException
+	 */
 	public function remove($page_id)
 	{
-		//TODO: should set delete flag instead of actually deleting (?)
-		/** @var Page $page */
-		$page = $this->em->find(Page::class, $page_id);
-		$this->em->remove($page->getUrl());
-		$this->em->remove($page);
-		$this->onRemove($this, $page);
+		if (is_array($page_id)) {
+			foreach ($page_id as $pid) {
+				$this->removePage($pid);
+			}
+			$this->onRemove($this);
+			return;
+		}
+		$this->removePage($page_id);
+		$this->onRemove($this, $page_id);
 		// don't forget to call $em->flush() in your control
 	}
 
-	//TODO: delete (přijímá i pole a iteruje jej) - mazat i URL
+	private function removePage($page_id)
+	{
+		//TODO: should set delete flag instead of actually deleting (?)
+		/** @var Page $page */
+		$page = $this->em->find(Page::class, (int)$page_id);
+		$this->em->remove($page->getUrl());
+		$this->em->remove($page);
+	}
 
 	private function completePageEntity(Page $page)
 	{
