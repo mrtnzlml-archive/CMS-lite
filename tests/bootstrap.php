@@ -24,6 +24,6 @@ if (!is_dir(__DIR__ . '/temp/')) {
 define('TEMP_DIR', __DIR__ . '/temp/' . getmypid());
 //Tester\Helpers::purge(TEMP_DIR);
 //@chmod(TEMP_DIR, 0777);
-//Tracy\Debugger::$logDirectory = TEMP_DIR;
+Tracy\Debugger::$logDirectory = TEMP_DIR;
 
 $_ENV = $_GET = $_POST = $_FILES = [];

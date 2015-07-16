@@ -25,7 +25,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage)
 	{
 		if (PHP_SAPI === 'cli') {
-			// It's blocking Kdyby\Console...
+			// FIXME: It's blocking Kdyby\Console...
 			return;
 		}
 

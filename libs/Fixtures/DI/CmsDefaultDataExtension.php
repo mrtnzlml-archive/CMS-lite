@@ -9,7 +9,7 @@ class CmsDefaultDataExtension extends Nette\DI\CompilerExtension
 {
 
 	private $commands = [
-		'CmsDefaultDataExtension\Cli\DefaultData',
+		'Fixtures\Cli\DefaultData',
 	];
 
 	public function loadConfiguration()

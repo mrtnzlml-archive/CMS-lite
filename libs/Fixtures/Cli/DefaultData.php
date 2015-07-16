@@ -1,6 +1,6 @@
 <?php
 
-namespace CmsDefaultDataExtension\Cli;
+namespace Fixtures\Cli;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;

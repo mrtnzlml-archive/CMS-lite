@@ -41,6 +41,7 @@
   },
   "require-dev": {
     "mrtnzlml/testbench": "dev-master",
-    "nette/tester": "^1.4"
+    "nette/tester": "^1.4",
+    "kdyby/tester-extras": "@dev"
   }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "501f09d71ae063fb42a963130b033f40",
+    "hash": "e1d8cd74c7e7991b0131cb13b03c5597",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3205,6 +3205,55 @@
     ],
     "packages-dev": [
         {
+            "name": "kdyby/tester-extras",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/TesterExtras.git",
+                "reference": "ed612407eb5501d9f843d953e1648e6cfb89f75f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/TesterExtras/zipball/ed612407eb5501d9f843d953e1648e6cfb89f75f",
+                "reference": "ed612407eb5501d9f843d953e1648e6cfb89f75f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "nette/tester": "~1.3@dev",
+                "symfony/process": "~2.6"
+            },
+            "bin": [
+                "bin/composer-nette"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kdyby\\TesterExtras\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "email": "filip@prochazka.su",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Useful classes for testing Nette applications and libraries with Nette Tester",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "nette",
+                "tester"
+            ],
+            "time": "2015-05-14 21:15:01"
+        },
+        {
             "name": "mrtnzlml/testbench",
             "version": "dev-master",
             "source": {
@@ -3306,13 +3355,63 @@
                 "unit"
             ],
             "time": "2015-03-27 14:19:31"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "48aeb0e48600321c272955132d7606ab0a49adb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/48aeb0e48600321c272955132d7606ab0a49adb3",
+                "reference": "48aeb0e48600321c272955132d7606ab0a49adb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-07-01 11:25:50"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "doctrine/migrations": 20,
-        "mrtnzlml/testbench": 20
+        "mrtnzlml/testbench": 20,
+        "kdyby/tester-extras": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
