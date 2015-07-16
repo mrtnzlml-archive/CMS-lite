@@ -9,6 +9,7 @@ extensions:
     - Eshop\DI\EshopExtension
     - Migrations\DI\MigrationsExtension
     - Navigation\DI\NavigationExtension
+    - Notes\DI\NotesExtension
     - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
     - Files\DI\FilesExtension	

@@ -1,0 +1,20 @@
+<div class="box-default">
+	<div class="box-title">Prostor pro vaše poznámky <span class="ico hideBox flaticon-visibility2"></span></div>
+
+	<div n:if="!count($notes)">
+		<div class="box-content article">
+			Nemáte vytvořenou žádnou poznámku. <a>Vyzkoušejte to</a>, je to jednoduché.
+		</div>
+	</div>
+
+	<div class="box-content article" n:foreach="$notes as $note">
+		<p class="datum">{$note->createdAt|date:'j.n.Y'}</p>
+		<h3 class="tit">{$note->title}</h3>
+		<div class="text">
+			{$note->body|texy}
+		</div>
+		<p class="controlLinks">
+			<a href="">Upravit</a> / <a href="">Smazat</a> / <a href="">Skrýt</a>
+		</p>
+	</div>
+</div>
