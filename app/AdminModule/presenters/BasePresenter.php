@@ -38,6 +38,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function beforeRender()
 	{
 		$this->template->locale = $this->locale;
+		$this->template->host = $this->getHttpRequest()->getUrl()->getHost();
 	}
 
 	protected function createComponentAdminMenu(App\AdminModule\Components\IAdminMenuFactory $factory)
