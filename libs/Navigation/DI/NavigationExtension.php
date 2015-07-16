@@ -1,6 +1,6 @@
 <?php
 
-namespace Migrations\DI;
+namespace Navigation\DI;
 
 use App\Extensions\CompilerExtension;
 use Kdyby;

@@ -8,7 +8,7 @@ extensions:
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
     - Eshop\DI\EshopExtension
     - Migrations\DI\MigrationsExtension
-    - Migrations\DI\NavigationExtension
+    - Navigation\DI\NavigationExtension
     - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
     - Files\DI\FilesExtension	
