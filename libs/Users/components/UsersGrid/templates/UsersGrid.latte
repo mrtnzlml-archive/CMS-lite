@@ -11,7 +11,11 @@
 		<td>{$user->email}</td>
 		<td>
 			{foreach $user->roles as $role}
-				{$role->name} (dědí od {$role->parent->name}){sep}, {/sep}
+				{$role->name}
+				{if $role->parent}
+					(dědí od {$role->parent->name})
+				{/if}
+				{sep}, {/sep}
 			{/foreach}
 		</td>
 		<td>{$user->createdAt|date}</td>
