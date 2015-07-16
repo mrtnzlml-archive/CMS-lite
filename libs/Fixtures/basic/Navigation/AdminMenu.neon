@@ -10,6 +10,9 @@
 		- name: Stránky
 		  path: administrace/stranky
 		  destination: Pages:AdminPage:default
+		- name: Nová stránka
+		  path: administrace/nova-stranka
+		  destination: Pages:AdminPage:new
 
 - name: Uživatelé
   icon: 'icon flaticon-user8'

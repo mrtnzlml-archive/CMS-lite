@@ -4,7 +4,6 @@ auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
 administrace/soubory,Admin:Files:default
 administrace/nastaveni/general,Options:Options:general
-administrace/nova-stranka,Pages:AdminPage:new
 administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/nastaveni/seo,Options:Options:seo
