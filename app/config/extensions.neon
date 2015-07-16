@@ -5,7 +5,6 @@ extensions:
 #    - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
-    - Articles\DI\ArticlesExtension
     - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
     - Eshop\DI\EshopExtension
     - Migrations\DI\MigrationsExtension

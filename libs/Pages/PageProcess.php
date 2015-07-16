@@ -22,15 +22,12 @@ class PageProcess extends Nette\Object
 
 	/** @var EntityManager */
 	private $em;
-	/** @var \Kdyby\Doctrine\EntityRepository */
-	private $articles;
 	/** @var Nette\Security\IUserStorage */
 	private $user;
 
 	public function __construct(EntityManager $em, Nette\Security\IUserStorage $user)
 	{
 		$this->em = $em;
-		$this->articles = $em->getRepository(Page::class);
 		$this->user = $user;
 	}
 
