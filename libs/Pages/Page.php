@@ -133,7 +133,6 @@ class Page extends BaseEntity
 	protected $categories;
 
 	/**
-	 * FIXME: cascade remove
 	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
 	 * @var \Url\Url

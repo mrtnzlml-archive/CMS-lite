@@ -1,5 +1,5 @@
 services:
-	- Pages\PageProcess
+	- Pages\PageFacade
 	- Pages\PageCategoryProcess
 	- Pages\Components\MultiEdit\IMultiEditFactory
 	- Pages\Components\PageForm\IPageFormFactory

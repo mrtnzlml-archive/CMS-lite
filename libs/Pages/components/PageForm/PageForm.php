@@ -3,19 +3,17 @@
 namespace Pages\Components\PageForm;
 
 use App\Components\AControl;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
-use Nette\Utils\Strings;
 use Pages\Page;
 use Pages\PageCategory;
-use Pages\PageProcess;
+use Pages\PageFacade;
 use Url\Components\RedirectForm\IRedirectFormFactory;
 use Url\DuplicateRouteException;
-use Url\RouteGenerator;
+use Url\RedirectFacade;
 use Users\User;
 
 /**
@@ -39,7 +37,7 @@ class PageForm extends AControl
 	/** @var \Closure[] */
 	public $onException = [];
 
-	/** @var PageProcess */
+	/** @var PageFacade */
 	private $pageProcess;
 
 	/** @var EntityManager */
@@ -48,7 +46,10 @@ class PageForm extends AControl
 	/** @var Page */
 	private $editablePage;
 
-	public function __construct($editablePage, PageProcess $pageProcess, EntityManager $em)
+	/** @var RedirectFacade */
+	private $redirectFacade;
+
+	public function __construct($editablePage, PageFacade $pageProcess, EntityManager $em, RedirectFacade $redirectFacade)
 	{
 		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
@@ -56,6 +57,7 @@ class PageForm extends AControl
 		$this->editablePage = $editablePage;
 		$this->pageProcess = $pageProcess;
 		$this->em = $em;
+		$this->redirectFacade = $redirectFacade;
 	}
 
 	public function render(array $parameters = NULL)
@@ -121,12 +123,10 @@ class PageForm extends AControl
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
 			$this->fillEntityWithValues($entity, $values);
-			$this->pageProcess->onSave[] = function (PageProcess $process, Page $page) use ($entity, $values) {
-				$this->em->flush($page);
-				$this->setUrl($page, $values);
+			$this->pageProcess->onSave[] = function () use ($entity) {
 				$this->onSave($this, $entity);
 			};
-			$this->pageProcess->save($entity);
+			$this->pageProcess->save($entity, $values);
 		} catch (DuplicateRouteException $exc) {
 			$this->presenter->flashMessage($exc->getMessage());
 			return;
@@ -146,12 +146,10 @@ class PageForm extends AControl
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
 			$this->fillEntityWithValues($entity, $values);
-			$this->pageProcess->onPublish[] = function (PageProcess $process, Page $page) use ($entity, $values) {
-				$this->em->flush($page);
-				$this->setUrl($page, $values);
+			$this->pageProcess->onPublish[] = function () use ($entity) {
 				$this->onPublish($this, $entity);
 			};
-			$this->pageProcess->publish($entity);
+			$this->pageProcess->publish($entity, $values);
 		} catch (DuplicateRouteException $exc) {
 			$this->presenter->flashMessage($exc->getMessage());
 			return;
@@ -160,27 +158,6 @@ class PageForm extends AControl
 			return;
 		}
 		$this->onComplete($this);
-	}
-
-	/**
-	 * TODO: měnit jen někdy a když už, tak použít ještě \Url\RedirectFacade::createRedirect
-	 *
-	 * @param Page $page
-	 * @param ArrayHash $values
-	 *
-	 * @throws DuplicateRouteException
-	 */
-	private function setUrl(Page $page, ArrayHash $values)
-	{
-		$page->setUrl(RouteGenerator::generate(
-			empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
-			'Pages:Page:default', $page->getId()
-		));
-		try {
-			$this->em->flush($page);
-		} catch (UniqueConstraintViolationException $exc) {
-			throw new DuplicateRouteException;
-		}
 	}
 
 	private function fillEntityWithValues(Page $entity, ArrayHash $values)
@@ -212,15 +189,17 @@ class PageForm extends AControl
 	private function setDefaults(UI\Form $form)
 	{
 		if ($this->editablePage !== NULL) { //EDITING
+			$e = $this->editablePage;
 			$form->setDefaults([
-				'title' => $this->editablePage->title,
-				'editor' => $this->editablePage->body,
-				'authors' => $this->editablePage->getAuthorsIds(),
-				'categories' => $this->editablePage->getCategoriesIds(),
-				'individualTitle' => $this->editablePage->getIndividualTitle(),
-				'description' => $this->editablePage->getDescription(),
-				'index' => $this->editablePage->getIndex(),
-				'follow' => $this->editablePage->getFollow(),
+				'title' => $e->getTitle(),
+				'slug' => $e->getUrl() ? $e->getUrl()->getFakePath() : '',
+				'editor' => $e->getBody(),
+				'authors' => $e->getAuthorsIds(),
+				'categories' => $e->getCategoriesIds(),
+				'individualTitle' => $e->getIndividualTitle(),
+				'description' => $e->getDescription(),
+				'index' => $e->getIndex(),
+				'follow' => $e->getFollow(),
 			]);
 		}
 	}

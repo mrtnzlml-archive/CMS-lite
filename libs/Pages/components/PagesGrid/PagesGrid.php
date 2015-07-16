@@ -8,6 +8,7 @@ use Nette;
 use Nette\Application\UI;
 use Pages\Components\MultiEdit\IMultiEditFactory;
 use Pages\Page;
+use Pages\PageFacade;
 use Pages\Query\PagesQueryAdmin;
 
 class PagesGrid extends AControl
@@ -24,10 +25,14 @@ class PagesGrid extends AControl
 	/** @var IMultiEditFactory */
 	private $multiEditFactory;
 
-	public function __construct(EntityManager $em, IMultiEditFactory $multiEditFactory)
+	/** @var PageFacade */
+	private $pageProcess;
+
+	public function __construct(EntityManager $em, IMultiEditFactory $multiEditFactory, PageFacade $pageProcess)
 	{
 		$this->em = $em;
 		$this->multiEditFactory = $multiEditFactory;
+		$this->pageProcess = $pageProcess;
 	}
 
 	/** @param $presenter UI\Presenter */
@@ -94,13 +99,11 @@ class PagesGrid extends AControl
 	public function handleDelete($id)
 	{
 		//TODO: is user allowed to delete this page? (same with edit)
-		//TODO: should set delete flag instead of actually deleting (?)
-		//TODO: log
-		if ($page = $this->em->getPartialReference(Page::class, $id)) {
-			$this->em->remove($page);
-			$this->em->flush($page);
-		}
-		$this->redirect('this');
+		$this->pageProcess->onRemove[] = function (PageFacade $process, Page $page) {
+			$this->em->flush();
+			$this->redirect('this');
+		};
+		$this->pageProcess->remove($id);
 	}
 
 }
