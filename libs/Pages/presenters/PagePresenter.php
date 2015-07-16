@@ -38,11 +38,11 @@ class PagePresenter extends BasePresenter
 		$this->setTitle($page->individualTitle ?: $page->title);
 		$this->setMeta('description', $page->description);
 
-		$latte = $this->template->getLatte(); //Latte\Engine
-		$latte->setLoader(new Latte\Loaders\StringLoader);
-		$rendered = $latte->renderToString($page->getBody(), $this->template->getParameters());
+//		$latte = $this->getTemplate()->getLatte(); //Latte\Engine
+//		$latte->setLoader(new Latte\Loaders\StringLoader);
+//		$rendered = $latte->renderToString($page->getBody(), $this->getTemplate()->getParameters());
+//		$this->template->body = Nette\Utils\Html::el()->setHtml($rendered);
 
-		$this->template->body = Nette\Utils\Html::el()->setHtml($rendered);
 		$this->template->page = $page;
 	}
 
