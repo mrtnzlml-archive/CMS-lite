@@ -5,6 +5,7 @@ module.exports = (grunt) ->
       admin:
         files:
           'temp/grunt/admin.css': [
+            'vendor/selectize/dist/less/selectize.default.less'
             'vendor-client/admin/style.less'
             'vendor-client/admin/nestable.css'
           ]
@@ -39,6 +40,7 @@ module.exports = (grunt) ->
             'vendor/bootstrap/js/tooltip.js'
             'vendor/nette.ajax.js/nette.ajax.js'
             'vendor/nette/forms/src/assets/netteForms.js'
+            'vendor/selectize/dist/js/standalone/selectize.js'
             'vendor-client/modules/flexslider/2_2/js/jquery.flexslider-min.js'
             'vendor-client/modules/pretty_photo/js/jquery.prettyPhoto.js'
             'vendor-client/html5shiv.min.js'

@@ -11,6 +11,7 @@ use Nette\Utils\ArrayHash;
 use Pages\Page;
 use Pages\PageCategory;
 use Pages\PageFacade;
+use Pages\Tag;
 use Url\Components\RedirectForm\IRedirectFormFactory;
 use Url\DuplicateRouteException;
 use Url\RedirectFacade;
@@ -93,6 +94,9 @@ class PageForm extends AControl
 			[NULL => 'Bez kategorie'] +
 			$this->em->getRepository(PageCategory::class)->findPairs('name')
 		);
+
+		// ADVANCED:
+		$form->addText('tags', 'Štítky:');
 
 		// OPTIMIZATION:
 		$form->addText('individualTitle', 'Individuální titulek:');
@@ -186,6 +190,12 @@ class PageForm extends AControl
 				$entity->addCategory($categoryRef);
 			}
 		}
+
+		$entity->clearTags();
+		foreach (explode(',', $values->tags) as $tag) {
+			$tagEntity = (new Tag)->setName($tag);
+			$entity->addTag($tagEntity);
+		}
 	}
 
 	private function setDefaults(UI\Form $form)
@@ -202,6 +212,7 @@ class PageForm extends AControl
 				'description' => $e->getDescription(),
 				'index' => $e->getIndex(),
 				'follow' => $e->getFollow(),
+				'tags' => $e->getTagsString(),
 			]);
 		}
 	}

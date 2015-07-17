@@ -31,6 +31,7 @@ use Users\User;
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
+ * @method addTag(Tag $tag)
  *
  * //remove<name>($entity)
  * //has<name>($entity)
@@ -128,6 +129,16 @@ class Page extends BaseEntity implements ILocaleAware
 	protected $categories;
 
 	/**
+	 * @ORM\ManyToMany(targetEntity="Pages\Tag", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+	 *    )
+	 * @var \Pages\Tag[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $tags;
+
+	/**
 	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
 	 * @var \Url\Url
@@ -146,6 +157,7 @@ class Page extends BaseEntity implements ILocaleAware
 		$this->createdAt = new \DateTime();
 		$this->authors = new ArrayCollection();
 		$this->categories = new ArrayCollection();
+		$this->tags = new ArrayCollection();
 	}
 
 	public function setDeleted($deleted = TRUE)
@@ -179,6 +191,13 @@ class Page extends BaseEntity implements ILocaleAware
 		return $categoriesIds;
 	}
 
+	public function getTagsString()
+	{
+		return implode(',', array_map(function ($tag) {
+			return $tag->name;
+		}, $this->tags->toArray()));
+	}
+
 	public function clearAuthors()
 	{
 		$this->authors->clear();
@@ -187,6 +206,11 @@ class Page extends BaseEntity implements ILocaleAware
 	public function clearCategories()
 	{
 		$this->categories->clear();
+	}
+
+	public function clearTags()
+	{
+		$this->tags->clear();
 	}
 
 }

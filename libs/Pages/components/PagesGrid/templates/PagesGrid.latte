@@ -17,7 +17,12 @@
 			<td>
 				{input page-$page->id}
 			</td>
-			<td>{$page->title}</td>
+			<td>
+				{$page->title}<br>
+				{foreach $page->tags as $tag}
+					<span class="label label-default">{$tag->name}</span>
+				{/foreach}
+			</td>
 			<td>
 				{foreach $page->authors as $author}
 					{$author->email}{sep}, {/sep}

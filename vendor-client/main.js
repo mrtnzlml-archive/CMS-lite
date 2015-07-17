@@ -1,6 +1,19 @@
 $(function () {
 	"use strict";
 	$.nette.init();
+
+	$('.tags').selectize({
+		plugins: ['restore_on_backspace', 'remove_button'],
+		delimiter: ',',
+		persist: false,
+		create: function (input) {
+			return {
+				value: input,
+				text: input
+			}
+		}
+	});
+
 	$(initialize);
 	$(document).bind('ajaxSuccess', initialize);
 });
@@ -70,7 +83,23 @@ function initialize() {
 
 }
 
-var nodiac = { 'á': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'í': 'i', 'ň': 'n', 'ó': 'o', 'ř': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ý': 'y', 'ž': 'z' };
+var nodiac = {
+	'á': 'a',
+	'č': 'c',
+	'ď': 'd',
+	'é': 'e',
+	'ě': 'e',
+	'í': 'i',
+	'ň': 'n',
+	'ó': 'o',
+	'ř': 'r',
+	'š': 's',
+	'ť': 't',
+	'ú': 'u',
+	'ů': 'u',
+	'ý': 'y',
+	'ž': 'z'
+};
 /** Vytvoření přátelského URL
  * @param s string řetězec, ze kterého se má vytvořit URL
  * @return string řetězec obsahující pouze čísla, znaky bez diakritiky, podtržítko a pomlčku

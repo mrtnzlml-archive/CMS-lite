@@ -11,6 +11,7 @@
     "bootstrap": "~3.3.5",
     "nette.ajax.js": "~2.0.0",
     "nette-forms": "~2.2.0",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "selectize": "~0.12.1"
   }
 }
