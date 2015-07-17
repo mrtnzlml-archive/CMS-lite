@@ -55,6 +55,11 @@ class User extends BaseEntity
 		$this->createdAt = new \DateTime();
 	}
 
+	public function clearRoles()
+	{
+		$this->roles->clear();
+	}
+
 	public function setEmail($email)
 	{
 		$this->email = Strings::lower($email);

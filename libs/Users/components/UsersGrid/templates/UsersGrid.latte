@@ -4,6 +4,7 @@
 		<th>Email</th>
 		<th>Role</th>
 		<th>Datum vytvoření</th>
+		<th>&nbsp;</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -18,7 +19,10 @@
 				{sep}, {/sep}
 			{/foreach}
 		</td>
-		<td>{$user->createdAt|date}</td>
+		<td>{$user->createdAt|date:'j.n.Y'}</td>
+		<td>
+			<a  class="btn btn-xs btn-default" href="{plink edit $user->id}">Upravit</a>
+		</td>
 	</tr>
 	</tbody>
 </table>

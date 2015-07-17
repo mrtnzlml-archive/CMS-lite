@@ -10,19 +10,27 @@ use Users\Role;
 use Users\User;
 
 /**
- * @method onSave(UserForm $userForm, User $user)
+ * @method onCreate(UserForm $userForm, User $user)
+ * @method onUpdate(UserForm $userForm, User $user)
  */
 class UserForm extends AControl
 {
 
 	/** @var \Closure[] */
-	public $onSave = [];
+	public $onCreate = [];
+
+	/** @var \Closure[] */
+	public $onUpdate = [];
+
+	/** @var User */
+	private $editableUser;
 
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(EntityManager $entityManager)
+	public function __construct($editableUser, EntityManager $entityManager)
 	{
+		$this->editableUser = $editableUser;
 		$this->em = $entityManager;
 	}
 
@@ -46,24 +54,57 @@ class UserForm extends AControl
 		$form->addSelect('role', 'Role uživatele:',
 			$this->em->getRepository(Role::class)->findPairs('name')
 		);
-		$form->addSubmit('create', 'Založit uživatele');
+		$this->setDefaults($form);
+		if ($this->editableUser === NULL) { //NEW
+			$form->addSubmit('create', 'Založit uživatele');
+		} else {
+			$form->addSubmit('update', 'Upravit uživatele');
+		}
 		$form->onSuccess[] = $this->userFormSucceeded;
 		return $form;
 	}
 
 	public function userFormSucceeded(UI\Form $form, Nette\Utils\ArrayHash $values)
 	{
-		$newUser = new User($values->email);
-		$newUser->setPassword($values->password);
-		$newUser->addRole($this->em->getPartialReference(Role::class, $values->role));
-		$this->em->persist($newUser);
-		$this->onSave($this, $newUser);
+		if ($this->editableUser === NULL) { //NEW
+			$user = new User($values->email);
+		} else {
+			$user = $this->editableUser;
+			$user->setEmail($values->email);
+		}
+		$user->setPassword(Nette\Security\Passwords::hash($values->password));
+
+		$user->clearRoles();
+		$user->addRole($this->em->getPartialReference(Role::class, $values->role));
+
+		$this->em->persist($user);
+		if ($this->editableUser === NULL) { //NEW
+			$this->onCreate($this, $user);
+		} else {
+			$this->onUpdate($this, $user);
+		}
+	}
+
+	private function setDefaults(UI\Form $form)
+	{
+		if ($this->editableUser !== NULL) { //EDITING
+			/** @var User $e */
+			$e = $this->editableUser;
+			$form->setDefaults([
+				'email' => $e->getEmail(),
+				'role' => $e->getRoles() ? $e->getRoles()[0]->getId() : '', //FUJ
+			]);
+		}
 	}
 
 }
 
 interface IUserFormFactory
 {
-	/** @return UserForm */
-	function create();
+	/**
+	 * @param NULL|User $editableUser
+	 *
+	 * @return UserForm
+	 */
+	function create($editableUser);
 }
