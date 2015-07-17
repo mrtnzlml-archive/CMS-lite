@@ -30,6 +30,7 @@ class UsersPresenter extends BasePresenter
 			$this->redirect('new');
 		}
 		if ($editableUser = $this->em->getRepository(User::class)->find($id)) {
+			$this->template->user = $editableUser;
 			$this->editableUser = $editableUser;
 		} else {
 			$this->redirect('new');

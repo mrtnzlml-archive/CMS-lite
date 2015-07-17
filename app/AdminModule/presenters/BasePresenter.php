@@ -41,6 +41,18 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->template->host = $this->getHttpRequest()->getUrl()->getHost();
 	}
 
+	protected function createTemplate($class = NULL)
+	{
+		/** @var \Latte\Engine $template */
+		$template = parent::createTemplate($class);
+		$texy = new \Texy();
+		$template->addFilter('texy', function ($input) use ($texy) {
+			return Nette\Utils\Html::el()->setHtml($texy->process($input));
+		});
+
+		return $template;
+	}
+
 	protected function createComponentAdminMenu(App\AdminModule\Components\IAdminMenuFactory $factory)
 	{
 		return $factory->create();
