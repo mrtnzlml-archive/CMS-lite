@@ -17,28 +17,28 @@ CREATE TABLE `deliveries` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `deliveries` (`id`, `delivery_id`, `name`, `delivery_price`, `heureka`) VALUES
-(661,	'CESKA_POSTA',	'Česká pošta',	215.50,	1),
-(662,	'CESKA_POSTA_NA_POSTU',	'Česká pošta - Balík Na poštu',	206.60,	1),
-(663,	'CSAD_LOGISTIK_OSTRAVA',	'ČSAD Logistik Ostrava',	95.40,	1),
-(664,	'DPD',	'DPD',	170.20,	1),
-(665,	'DHL',	'DHL',	161.30,	1),
-(666,	'DSV',	'DSV',	120.00,	1),
-(667,	'EMS',	'EMS',	167.70,	1),
-(668,	'FOFR',	'FOFR',	142.80,	1),
-(669,	'GEBRUDER_WEISS',	'Gebrüder Weiss',	97.00,	1),
-(670,	'GEIS',	'Geis',	184.60,	1),
-(671,	'GENERAL_PARCEL',	'General Parcel',	120.80,	1),
-(672,	'GLS',	'GLS',	167.30,	1),
-(673,	'HDS',	'HDS',	95.50,	1),
-(674,	'HEUREKAPOINT',	'HeurekaPoint',	104.70,	1),
-(675,	'INTIME',	'InTime',	144.00,	1),
-(676,	'PPL',	'PPL',	219.30,	1),
-(677,	'RADIALKA',	'Radiálka',	151.80,	1),
-(678,	'SEEGMULLER',	'Seegmuller',	127.50,	1),
-(679,	'TNT',	'TNT',	193.50,	1),
-(680,	'TOPTRANS',	'TOPTRANS',	197.10,	1),
-(681,	'UPS',	'UPS',	183.60,	1),
-(682,	'VLASTNI_PREPRAVA',	'Vlastní přeprava',	112.40,	1);
+(45,	'CESKA_POSTA',	'Česká pošta',	214.00,	1),
+(46,	'CESKA_POSTA_NA_POSTU',	'Česká pošta - Balík Na poštu',	136.50,	1),
+(47,	'CSAD_LOGISTIK_OSTRAVA',	'ČSAD Logistik Ostrava',	123.50,	1),
+(48,	'DPD',	'DPD',	124.70,	1),
+(49,	'DHL',	'DHL',	211.90,	1),
+(50,	'DSV',	'DSV',	115.20,	1),
+(51,	'EMS',	'EMS',	129.80,	1),
+(52,	'FOFR',	'FOFR',	158.30,	1),
+(53,	'GEBRUDER_WEISS',	'Gebrüder Weiss',	239.90,	1),
+(54,	'GEIS',	'Geis',	105.60,	1),
+(55,	'GENERAL_PARCEL',	'General Parcel',	183.00,	1),
+(56,	'GLS',	'GLS',	191.60,	1),
+(57,	'HDS',	'HDS',	234.80,	1),
+(58,	'HEUREKAPOINT',	'HeurekaPoint',	219.30,	1),
+(59,	'INTIME',	'InTime',	181.40,	1),
+(60,	'PPL',	'PPL',	142.20,	1),
+(61,	'RADIALKA',	'Radiálka',	211.20,	1),
+(62,	'SEEGMULLER',	'Seegmuller',	180.10,	1),
+(63,	'TNT',	'TNT',	100.70,	1),
+(64,	'TOPTRANS',	'TOPTRANS',	160.30,	1),
+(65,	'UPS',	'UPS',	106.10,	1),
+(66,	'VLASTNI_PREPRAVA',	'Vlastní přeprava',	99.30,	1);
 
 DROP TABLE IF EXISTS `domain`;
 CREATE TABLE `domain` (
@@ -59,7 +59,7 @@ CREATE TABLE `extension` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `extension` (`id`, `name`) VALUES
-(4,	'Eshop\\DI\\EshopExtension');
+(1,	'Eshop\\DI\\EshopExtension');
 
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
@@ -75,6 +75,19 @@ CREATE TABLE `files` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `locale`;
+CREATE TABLE `locale` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Code of the language',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of the language',
+  `default` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `locale` (`id`, `code`, `name`, `default`) VALUES
+(5,	'cz',	'Čeština',	1),
+(6,	'en',	'English',	0);
+
 DROP TABLE IF EXISTS `navigation`;
 CREATE TABLE `navigation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +96,7 @@ CREATE TABLE `navigation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `navigation` (`id`, `name`) VALUES
-(26,	'Administrace - Hlavní menu');
+(3,	'Administrace - Hlavní menu');
 
 DROP TABLE IF EXISTS `navigation_item`;
 CREATE TABLE `navigation_item` (
@@ -97,13 +110,13 @@ CREATE TABLE `navigation_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `navigation_item` (`id`, `url_id`, `icon`, `name`) VALUES
-(187,	775,	'icon ai-home60',	'Nástěnka'),
-(188,	NULL,	NULL,	'admin_root'),
-(189,	NULL,	'icon flaticon-document236',	'Obsah'),
-(190,	776,	NULL,	'Stránky'),
-(191,	777,	NULL,	'Nová stránka'),
-(192,	778,	'icon flaticon-user8',	'Uživatelé'),
-(193,	779,	'icon flaticon-gear39',	'Nastavení');
+(15,	68,	'icon ai-home60',	'Nástěnka'),
+(16,	NULL,	NULL,	'admin_root'),
+(17,	NULL,	'icon flaticon-document236',	'Obsah'),
+(18,	69,	NULL,	'Stránky'),
+(19,	70,	NULL,	'Nová stránka'),
+(20,	71,	'icon flaticon-user8',	'Uživatelé'),
+(21,	72,	'icon flaticon-gear39',	'Nastavení');
 
 DROP TABLE IF EXISTS `navigation_item_navigation`;
 CREATE TABLE `navigation_item_navigation` (
@@ -117,24 +130,12 @@ CREATE TABLE `navigation_item_navigation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `navigation_item_navigation` (`item_id`, `navigation_id`) VALUES
-(187,	26),
-(189,	26),
-(190,	26),
-(191,	26),
-(192,	26),
-(193,	26);
-
-DROP TABLE IF EXISTS `navigation_navigation_item`;
-CREATE TABLE `navigation_navigation_item` (
-  `item_id` int(11) NOT NULL,
-  `navigation_id` int(11) NOT NULL,
-  PRIMARY KEY (`item_id`,`navigation_id`),
-  KEY `IDX_DEB00578126F525E` (`item_id`),
-  KEY `IDX_DEB0057839F79D6D` (`navigation_id`),
-  CONSTRAINT `FK_DEB00578126F525E` FOREIGN KEY (`item_id`) REFERENCES `navigation` (`id`),
-  CONSTRAINT `FK_DEB0057839F79D6D` FOREIGN KEY (`navigation_id`) REFERENCES `navigation_item` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+(15,	3),
+(17,	3),
+(18,	3),
+(19,	3),
+(20,	3),
+(21,	3);
 
 DROP TABLE IF EXISTS `navigation_tree_path`;
 CREATE TABLE `navigation_tree_path` (
@@ -150,21 +151,21 @@ CREATE TABLE `navigation_tree_path` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `navigation_tree_path` (`id`, `ancestor_id`, `descendant_id`, `depth`) VALUES
-(1410,	187,	187,	0),
-(1411,	188,	188,	0),
-(1412,	188,	187,	1),
-(1413,	189,	189,	0),
-(1414,	188,	189,	1),
-(1415,	190,	190,	0),
-(1416,	189,	190,	1),
-(1417,	188,	190,	2),
-(1419,	191,	191,	0),
-(1420,	189,	191,	1),
-(1421,	188,	191,	2),
-(1423,	192,	192,	0),
-(1424,	188,	192,	1),
-(1425,	193,	193,	0),
-(1426,	188,	193,	1);
+(35,	15,	15,	0),
+(36,	16,	16,	0),
+(37,	16,	15,	1),
+(38,	17,	17,	0),
+(39,	16,	17,	1),
+(40,	18,	18,	0),
+(41,	17,	18,	1),
+(42,	16,	18,	2),
+(44,	19,	19,	0),
+(45,	17,	19,	1),
+(46,	16,	19,	2),
+(48,	20,	20,	0),
+(49,	16,	20,	1),
+(50,	21,	21,	0),
+(51,	16,	21,	1);
 
 DROP TABLE IF EXISTS `note`;
 CREATE TABLE `note` (
@@ -179,9 +180,9 @@ CREATE TABLE `note` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `note` (`id`, `user_id`, `title`, `body`, `created_at`) VALUES
-(16,	61,	'Děláme výstavbu vašeho webu a pro vaše zákazníky',	'Prokop a nutil se Prokop chvatně. … Přesně to nevím, vycedil opovržlivě lord. Carsone, obrátil se k němu přilne celou délkou; a Prokop slézá z kozlíku, chvěje se na zem; i zachytil ji pevněji sám kolísaje jejím zdivočelým odporem. Svíjela se se.',	'2015-07-16 15:38:03'),
-(17,	61,	'Mobilizujeme návrh a přepravu webu',	'Prokop mnoho profitoval od jemného pána, obrousil se jaksi a vyspělá, o čemsi rozhodnutá, s čímsi smířená; jako by mu ztuhly údy. Tak pojďte. Šel rovnou do toho: aby ho neobjal kolem krku, a začnou se líbat. Po létech zase cítí Prokop tělesné.',	'2015-07-16 15:38:04'),
-(18,	61,	'Nabízíme nákup pro lepší svět a pro vaše zákazníky',	'Kře-mi-čitan hlinitý. Porcelán. Piksla. Já myslel, že jste v držení našich lidí, donesl jim to už je tu věcí divných a něžných! Flakónky, tyčinky, pouzdra, krémy, hračiček bezpočtu; to tedy a rozkuckala se; byl to seník či co, slzel a jedl; a.',	'2015-07-16 15:38:04');
+(7,	5,	'Zajišťujeme rychlost s inovací a vašeho webu',	'Sledoval každé její hnutí; spěchala zimničně, opět se zarážela a hleděla na něho oči v naléhavé a horoucí dopisy, jež víc tajily než povídaly. Od Paula slyšel, že polehává a opět je šedý a chladný den, červené střechy, červená stáda krav. Jak může.',	'2015-07-17 13:57:14'),
+(8,	5,	'Nabízíme prodej za hubičku',	'Prokopovi se z toho dlouho radost. Za to on políbil pažení na místě, bezvýrazná tvář se poprvé zasmála. Podala mně ruku, řekl uctivě. Slíbil jsem jí, že se ještě rozhodovat; rozvaž dobře, co dělám. Já – já nepojedu! Přistoupila k němu rty.',	'2015-07-17 13:57:16'),
+(9,	5,	'Předstihujeme údržbu zdarma a pro vaše zákazníky',	'Prokopovi; ale Prokop byl tak hrozný a zběsilý, že pan inženýr dovolí atd. Pan inženýr Prokop totiž ráčil hluboce usnout. XXVIII. To se rozumí, pane. Mohl. Ale já jsem vyrazil z bismutu tantal. Poslyšte, víte vy, kolik je vy-výkonu v jednom gramu.',	'2015-07-17 13:57:16');
 
 DROP TABLE IF EXISTS `options`;
 CREATE TABLE `options` (
@@ -196,11 +197,11 @@ CREATE TABLE `options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `options` (`id`, `category_id`, `key`, `description`) VALUES
-(151,	63,	'site_title',	'Název webu'),
-(152,	63,	'site_title_separator',	'Oddělovač titulku'),
-(153,	64,	'index',	'Indexovat web'),
-(154,	64,	'page_url_end',	'Koncovka URL stránek'),
-(155,	64,	'category_url_end',	'Koncovka URL kategorií');
+(11,	5,	'site_title',	'Název webu'),
+(12,	5,	'site_title_separator',	'Oddělovač titulku'),
+(13,	6,	'index',	'Indexovat web'),
+(14,	6,	'page_url_end',	'Koncovka URL stránek'),
+(15,	6,	'category_url_end',	'Koncovka URL kategorií');
 
 DROP TABLE IF EXISTS `option_categories`;
 CREATE TABLE `option_categories` (
@@ -212,8 +213,8 @@ CREATE TABLE `option_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `option_categories` (`id`, `name`, `full_name`) VALUES
-(63,	'general',	'Obecné'),
-(64,	'seo',	'SEO');
+(5,	'general',	'Obecné'),
+(6,	'seo',	'SEO');
 
 DROP TABLE IF EXISTS `option_value`;
 CREATE TABLE `option_value` (
@@ -227,17 +228,17 @@ CREATE TABLE `option_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `option_value` (`id`, `option_id`, `value`, `selected`) VALUES
-(331,	151,	'ANTstudio CMS',	0),
-(332,	152,	'|',	0),
-(333,	153,	'1',	0),
-(334,	154,	NULL,	0),
-(335,	154,	'/',	0),
-(336,	154,	'.htm',	0),
-(337,	154,	'.html',	0),
-(338,	155,	NULL,	0),
-(339,	155,	'/',	0),
-(340,	155,	'.htm',	0),
-(341,	155,	'.html',	0);
+(23,	11,	'ANTstudio CMS',	0),
+(24,	12,	'|',	0),
+(25,	13,	'1',	0),
+(26,	14,	NULL,	0),
+(27,	14,	'/',	0),
+(28,	14,	'.htm',	0),
+(29,	14,	'.html',	0),
+(30,	15,	NULL,	0),
+(31,	15,	'/',	0),
+(32,	15,	'.htm',	0),
+(33,	15,	'.html',	0);
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
@@ -251,6 +252,7 @@ CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `url_id` int(11) DEFAULT NULL,
+  `locale_id` int(11) DEFAULT NULL,
   `title` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT 'Title of the article',
   `individual_title` longtext COLLATE utf8_unicode_ci COMMENT 'Meta title of the article',
   `description` longtext COLLATE utf8_unicode_ci COMMENT 'Meta description of the article',
@@ -260,21 +262,22 @@ CREATE TABLE `pages` (
   `created_at` datetime NOT NULL COMMENT 'Date of the article creation',
   `published_at` datetime DEFAULT NULL COMMENT 'Date of the article publication',
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `discriminator` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_2074E57581CFDAE7` (`url_id`),
   KEY `IDX_2074E575A76ED395` (`user_id`),
-  KEY `IDX_2074E57581CFDAE7` (`url_id`),
+  KEY `IDX_2074E575E559DFD1` (`locale_id`),
   CONSTRAINT `FK_2074E57581CFDAE7` FOREIGN KEY (`url_id`) REFERENCES `urls` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `FK_2074E575A76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `FK_2074E575A76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_2074E575E559DFD1` FOREIGN KEY (`locale_id`) REFERENCES `locale` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `pages` (`id`, `user_id`, `url_id`, `title`, `individual_title`, `description`, `body`, `index`, `follow`, `created_at`, `published_at`, `deleted`, `discriminator`) VALUES
-(186,	NULL,	780,	'Laboriosam',	NULL,	NULL,	'Stál nad ohněm s rukama za zády a měřil s nelibostí své boty podobné vojenským bagančatům i své unošené nohavice. Ponořen v tyto myšlenky divže nevlezl až doprostřed tenisového hříště, zahlédl tam několik svých ručních granátů a pozoroval střídavě park, chvátajícího střevlíka a vrabce na rozhoupaných větvičkách. Jednou tam slétla dokonce červenka, a Prokop provedl znovu generální prohlídku celého bytu; řádil ve všech skříních i zásuvkách, nenacházeje krom prašiviny starých účtů, milostných.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'news'),
-(187,	NULL,	781,	'Asperiores',	NULL,	NULL,	'A tady je přes ruku ta jizva. A potom jsem chtěl s pýchou podívat na své Magnetové hoře řídí příšerně tiché bubnové bombardement celého světa; mílovými kmity si razí letící vlny cestu rozlohami, aby zachytily a rozmetaly první prášek Krakatitu kdekoliv na zemi. A tady je cíl, kaplička mezi dvěma starými lípami; je pozdní hodina, kdy pasáci začínají zpívat. Tu je k smíchu, poslyšte, tak počkejte, to je Krafft, Krafft zapomenutý v plovárně; má oči zpuchlé a rudé, jako by nemohl uvěřit, že je.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'news'),
-(188,	NULL,	782,	'Et',	NULL,	NULL,	'Anči se vrhla k vypínači a rozsvítila. A nestůj tady, hřmotil starý pán se rozčiloval, funěl a potil se na katedru vyšvihl černý mladý muž a krátkým gestem mu ukázal do své ložnice; jen ho tížilo, že musí vstát a vyhledat Jirku Tomše, který neobraceje se od Prokopa zpráva nepřicházela. Snad se ohlásí sám, napadlo ji, a v pátek… o půl jedenácté… si umane ,sám od sebe‘ explodovat. A víte co ještě? Prokop to ovšem nevěděl. Dále, pravili mu, snad ten dotyčný tu prodal jen cenné papíry; pak jeho.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'page'),
-(189,	NULL,	783,	'In',	NULL,	NULL,	'Prokop až sepjal ruce: bože, co vše jsem odhodlán učinit, abych si zasloužil tahle slova – Ó-ó, jak ten vlak pomalu jede! XV. Jakmile přistál v Praze, hnal se rukou přejížděl známé ubohé podrobnosti; všecko je, jak to měla sehrát: pravá faleš, vzít trochu dole, a není jí podobna, ujišťoval se. Zdálo se mu, že zas je rozšlapal svým příliš těžkým uvažováním. Rozmrzen praštil vším, aby se uzdravil; já… já jsem našel atomové výbuchy. Já – já – já jsem rozbil hmotu, prohlásil Prokop. Plinius nic;.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'page'),
-(190,	NULL,	784,	'Consequatur',	NULL,	NULL,	'Řekli Prokopovi, že do tří dnů udělá nový pokus o úsměv – a z toho bylo něco ohromného bílého. Anči držela, kolena se jí v prstech pivní láhev. Jakýsi tlustý cousin navrhnout Prokopovi, aby toho nechal; že zase dostane svou laboratoř a kdesi cosi. Já nevím, o čem vlastně?), když náhle, bác, má na rameni blažený dech ospalé pozornosti. Posléze se Anči vzpřímila, složila ruce v těsných, maličkých rukavičkách; chladná vůně, pohled jasný a matoucí pod sličným, pevným obočím. Ruce na klíně, ruce.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'page'),
-(191,	NULL,	785,	'Non',	NULL,	NULL,	'Prokop váhavě. Dívka se usmála, jasná a růžová jako nikdy, a nechala se dlouho a všelijak zajímavě skládat, za pozorného mžikání ohnutých řas. Co to děláš? Třaskaviny. Prosím, tu láhev, obrátil se sir Reginald Carson. Sir Carson jal se znovu okukovat laboratoř. Trochu mu to svrchovaně lhostejno: tak jednoduché si to přečti, povídal stařík zavíraje pečlivě krabici. Já zatím přinesu roští; a už mu s podivnou podrobností dehtovaný tovární plot s trochou smutné zaprášené trávy a rezavými.',	NULL,	NULL,	'2015-07-16 15:38:06',	NULL,	0,	'news');
+INSERT INTO `pages` (`id`, `user_id`, `url_id`, `locale_id`, `title`, `individual_title`, `description`, `body`, `index`, `follow`, `created_at`, `published_at`, `deleted`) VALUES
+(13,	NULL,	73,	5,	'Officia',	NULL,	NULL,	'Krafftovi přístup a obsadil s ním a povídal, že tudy se nesmí, načež ho dovedl zpátky až k oknu. Půl prstu viselo jen na obzoru žířila nízká ohnivá záplava. Ah, jsem unaven, zívl Daimon. Byl to slušný den. Pojďme dolů. LI. Daimon spěchal, aby už byl v posteli, přikryt po bradu, a upírala velikánské oči nikam. Anči, drmolil Prokop horečně; počkejte, já jim to saský kamarád z Balttinu; ale ti pitomci nemají ani ponětí o vaší chemii. Chovají to jako rozžhavené železo a hořké jako chinin;.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0),
+(14,	NULL,	74,	5,	'Placeat',	NULL,	NULL,	'Prokop ustrnul: je to čas. K jedenácté vyrazil Prokop ze sebe plytký, potrhaný hovor. Konečně tady je ten výbuch v Grottup, vysvětloval stařík; na obrázku se válely kotouče růžového dýmu vržené až do té doby, kdy se mu zatočila, neviděl už a celý svět se s těžkou kropicí konví. Zmocnil se konve a chlebovou skříň maminčinu a pootevřené dveře do kuchyně, a tam ráčil utrousit špetku své učenosti nebo hrst balistických čísel, vida, že tím mám dělat? Kamarád Daimon stanul a hleděl upřeně na.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0),
+(15,	NULL,	75,	5,	'Aut',	NULL,	NULL,	'Evropy. Prokop si honem oblékal kabát. Zdravý a užitečný, odpovídal ochotně. Tak co jste si ji sem přivezl v náručí. Skvostná holka, že? Jak se máte? Prosím, nechte mi otevřít. Stál tu uctivě, ale nedůvěřivě měřil Prokopa: Velmi rád, ale… má pán povolení? Princezna se zakabonila; bylo ovšem nemístné mluvit právě s ní slitování; uchraňte ji skandálu; což si myslíte, že to zkrátka a dobře… Chtěl se k ní a prosil, aby neplakala; pohladil, pohladil bych lehké vlasy, vlásky už rozpuštěné –.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0),
+(16,	NULL,	76,	5,	'Quae',	NULL,	NULL,	'Víš, že… Darwina nesli vévodové? Kteří to byli? Nu, na tom snad nezáleží. Políbila ho na tvářích a oslepovaly mu oči. Mluvila k němu s polibkem. Teď už to tak krásně – Štkajícími ústy mu líbala kolena. Vy… vy jste zatím někde, haha, chytal ryby, co? Báječný chlapík! Ale poslyšte, drahoušku, řekl najednou jakýmsi docela jiným hlasem: Jak? Jak je to? ptal se ho, kde bydlí pan Jiří Tomeš. Prokop si všiml, že je snad… něco lepšího než myslet. Tady člověk jenom žije… a vidí, že je.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0),
+(17,	NULL,	77,	5,	'Aspernatur',	NULL,	NULL,	'A tady v hlubině noci, uprostřed té bledé záplavy světla, pracuje zarytý, šílený člověk, skloněný nad tajemným procesem přeměny – Tomši, pozor, vykřikl Prokop; ale jeho hlas zapadl ve tmě jako kámen hozený do tůně dětskou rukou. Vyskočil třesa se úctou, hlásil Prokopovi, jenž naprosto neposlouchal, bylo lépe, než kdyby hluboce spal. IX. Nyní už tedy sedí ve vagóně u okna a je to. Dobrá, princezno, staniž se; když konec, tedy konec. Prokop vyskočil, našel potmě čistou obálku a podával.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0),
+(18,	NULL,	78,	5,	'Quo',	NULL,	NULL,	'Ale psisko už olízlo Prokopovu tvář a něco chce. Dobrá, tedy Carson. Prokop nahmatal v kapse zapečetěnou obálku. A přece se Prokop hnul, pohyboval se svých pět kroků za ním zívá a kluše pan Holz. XXXIV. Když přišel po večeři, nevěřící už a jektá ne ne ne; a už zas se zvedl a dal se sebou mluvit, a že prý – Prokop byl tak vyčerpán, že si toho tak nevšiml. Anči stála blizoučko. Budete psát? ptala se dívka. Tomeš odejel, řekl Prokop drtě mezi prsty kostky cukru. Konečně se uvelebil u.',	NULL,	NULL,	'2015-07-17 13:57:17',	NULL,	0);
 
 DROP TABLE IF EXISTS `page_categories`;
 CREATE TABLE `page_categories` (
@@ -285,11 +288,11 @@ CREATE TABLE `page_categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page_categories` (`id`, `name`, `created_at`) VALUES
-(151,	'Est',	'2015-07-16 15:38:01'),
-(152,	'Voluptatum',	'2015-07-16 15:38:01'),
-(153,	'Aliquid',	'2015-07-16 15:38:01'),
-(154,	'Molestiae',	'2015-07-16 15:38:01'),
-(155,	'Corporis',	'2015-07-16 15:38:01');
+(11,	'Voluptatem',	'2015-07-17 13:57:13'),
+(12,	'Odio',	'2015-07-17 13:57:13'),
+(13,	'Earum',	'2015-07-17 13:57:13'),
+(14,	'Dolores',	'2015-07-17 13:57:13'),
+(15,	'Tempora',	'2015-07-17 13:57:13');
 
 DROP TABLE IF EXISTS `page_category_tree_path`;
 CREATE TABLE `page_category_tree_path` (
@@ -305,21 +308,21 @@ CREATE TABLE `page_category_tree_path` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page_category_tree_path` (`id`, `ancestor_id`, `descendant_id`, `depth`) VALUES
-(568,	151,	151,	0),
-(569,	152,	152,	0),
-(570,	151,	152,	1),
-(571,	153,	153,	0),
-(572,	152,	153,	1),
-(573,	151,	153,	2),
-(575,	154,	154,	0),
-(576,	153,	154,	1),
-(577,	152,	154,	2),
-(578,	151,	154,	3),
-(579,	155,	155,	0),
-(580,	154,	155,	1),
-(581,	153,	155,	2),
-(582,	152,	155,	3),
-(583,	151,	155,	4);
+(39,	11,	11,	0),
+(40,	12,	12,	0),
+(41,	11,	12,	1),
+(42,	13,	13,	0),
+(43,	12,	13,	1),
+(44,	11,	13,	2),
+(46,	14,	14,	0),
+(47,	13,	14,	1),
+(48,	12,	14,	2),
+(49,	11,	14,	3),
+(50,	15,	15,	0),
+(51,	14,	15,	1),
+(52,	13,	15,	2),
+(53,	12,	15,	3),
+(54,	11,	15,	4);
 
 DROP TABLE IF EXISTS `page_page_category`;
 CREATE TABLE `page_page_category` (
@@ -333,12 +336,24 @@ CREATE TABLE `page_page_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page_page_category` (`page_id`, `category`) VALUES
-(186,	152),
-(186,	153),
-(188,	152),
-(188,	154),
-(189,	153),
-(190,	152);
+(13,	12),
+(13,	14),
+(14,	14),
+(16,	12),
+(17,	14),
+(18,	12);
+
+DROP TABLE IF EXISTS `page_tag`;
+CREATE TABLE `page_tag` (
+  `page_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`page_id`,`tag_id`),
+  KEY `IDX_CF36BF12C4663E4` (`page_id`),
+  KEY `IDX_CF36BF12BAD26311` (`tag_id`),
+  CONSTRAINT `FK_CF36BF12BAD26311` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`),
+  CONSTRAINT `FK_CF36BF12C4663E4` FOREIGN KEY (`page_id`) REFERENCES `pages` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `page_user`;
 CREATE TABLE `page_user` (
@@ -352,12 +367,13 @@ CREATE TABLE `page_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `page_user` (`page_id`, `author`) VALUES
-(187,	61),
-(187,	62),
-(188,	61),
-(188,	62),
-(190,	61),
-(191,	61);
+(13,	5),
+(15,	5),
+(15,	6),
+(16,	5),
+(16,	6),
+(17,	5),
+(17,	6);
 
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
@@ -369,15 +385,15 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `products` (`id`, `title`, `slug`, `description`) VALUES
-(262,	'Mobilizujeme pronájem bourací techniky a zdarma',	'mobilizujeme-pronajem-bouraci-techniky-a-zdarma',	'Vždyť ani nevíte, proč – tak, že mne to celé počínání… zůstává bez vlivu. Ale na mne přišlo, taková odvaha nebo zoufalství: zavřela jsem oči, udělala křížek a skočila. Neptej se, jak se tiskl závoj k jejím rtům! Prokop zasténal a otevřel oči, a tu se mu obzvláště příčilo, bylo, že se ještě necítil v sedle a že se vám tu líbí? Ohromně, mínil Prokop nejistě. Náramný nešika, že? řekl pan Carson podivem hvízdl. Jednoduše kouzelník. Jestli chcete, já vám opatřím prostředky. Čestné slovo..'),
-(263,	'Provozujeme zprostředkování a bezpečnost zdarma',	'provozujeme-zprostredkovani-a-bezpecnost-zdarma',	'Flakónky, tyčinky, pouzdra, krémy, hračiček bezpočtu; to tedy je řemeslo žen; oči, úsměv, vůně, vůně ostrá a lichotná – Pahýly jeho prstů se třásly na těch křehkých a tajemných věcičkách, podrážděny, jako by do ní táhnouc ho k sobě. Nesmíš, teď nesmíš, zasykla a ožehla ho plamenným pohledem. Jinaké větší škody pokusný výbuch Vicitu nezpůsobil. Shodilo to jen suky a léta a vlhkost a prach – Dědeček se usmál. Chutnalo ti? A-a, už zas se dívala jinam. Řekněte mu, že… že vy… Ale je to tak..'),
-(264,	'Nabízíme zprostředkování vašich známých a turbíny',	'nabizime-zprostredkovani-vasich-znamych-a-turbiny',	'Tu ho napadla nová myšlenka: totiž dluhy. Sebral se a utíkal k soudu, oddělení pro pohledávky. A hle, zde tuze dobře pozorovat vaše důvěrné svazky s těmi navoněnými idioty. Za tu žárlivou paličatost ho princezna Wille. Prokop se mu zdálo, že studuje veleučený článek v The Chemist. Zarazil se u zahradních vrátek a vyšel rázně na silnici; a než ho umlčeli. S mračným znechucením studoval Prokop v něčem podobném; vykládané parkety, anglický empir, vše staroučké a drahocenné, že se mu jazyk a.'),
-(265,	'Nemobilizujeme odvoz za hubičku',	'nemobilizujeme-odvoz-za-hubicku',	'Kašgar, jejž spálil povraždiv na padesát tisíc lidí, mezi nimi čínského vladaře, kterému dal utahovat namočený provaz kolem hlavy tak dlouho, až praskla jako ořech. O dalších předcích Litajových není nic známo, pokud snad nebudou přístupny archívy ve Lhase. Jeho syn Giw-khan vyplenil Chivu a řádil až po oči zahalená v modré zástěře stojí, chudák, celá rudá nad plotýnkou – Moucha masařka se bezdeše zarazila. Teď přijde… tatarská kněžna a řekne: Milý, milý, zapomněla jsem udělat křížek. Kvečeru.'),
-(266,	'Mobilizujeme zprostředkování a prodej a jsme jednička na trhu',	'mobilizujeme-zprostredkovani-a-prodej-a-jsme-jednicka-na-trhu',	'Já se tě na to. Když je člověk princezna, myslí si, že nefunguje zvonek, a jal se skládati své papíry do aktovky. Zajisté, řekl pomalu, bude lépe, navštívím-li vás jindy – Jen račte zůstat, přerušil ho Prokop chraptivě. Nu, zabreptal Carson trochu rozpačitý, ale dopadlo do dobře; Prokop se zhrozil; až tohle propukne, kam až stříkne hanba těchto nevýslovných špinavostí? Vzpomněl si na ně vyjížděl pořád mysle na zlořečený pudr. U všech všudy, co ještě máte v kapsách? ptal se vlídně a.'),
-(267,	'Děláme testování nákupních košíků',	'delame-testovani-nakupnich-kosiku',	'Egonek. Po pěti dnech mu začalo svítat; horečně studoval aromatické nitroaminy, načež se uvelebil u ohníčka, dal Prokopovi větší díl a sám se sebou, ale tak rychle to nešlo; mohli byste jej vidět, jak stojí uprostřed pokoje, máchá rukou a zašeptala: Ten balíček – Tu se probudil zarachocením klíče. Je čiročiré ráno a do toho nepletli, nebo že je nějaká souvislost mezi Tomšem a šli jsme k němu, vzal do rukou, mihlo se mu chtěly vyrvat, které se mu obzvláště příčilo, bylo, že se houpe nějaké.'),
-(268,	'Předstihujeme bezpečnost a seo a jsme jednička na trhu',	'predstihujeme-bezpecnost-a-seo-a-jsme-jednicka-na-trhu',	'Premiera za udidla. Nechte ho, žádal Prokop. Vždyť máte bolavou ruku, namítalo děvče s velikou vážností, tisknouc k prsoum bílé prádlo a zbrusu nové a zrovna vylamoval jeho křečí sevřené prsty. Vodu, křikl, a tlustý cousin navrhnout Prokopovi, aby toho nechal; že zase pracujete, mluví princezna. Co zrovna děláte? Nu, to a ono, padla na Prokopa ostrýma, zachmuřenýma očima, jež ho fascinovaly. Řezník se zvedl a podával Prokopovi ruku: Chtěl jsem jenom… poprosit, abyste mi řekli, kde.'),
-(269,	'Mobilizujeme návrh a výstavbu lampiónků a svíček',	'mobilizujeme-navrh-a-vystavbu-lampionku-a-svicek',	'A ona je vlastně jen škrobový prášek; považoval jej patrně za zemitou barvu. Nuže, škrob je výborná věc dejme tomu na včerejší odpoledne. Do poslední chvíle o taktiku. Nejspíš tam hoří. Na obzoru bylo vidět celou frontu zámku. Točila se mu prudce z dlaní. Proč bych ti půjčil, nechceš? Nech. Na to bys nestačil. Snad ještě můj tatík – Tomeš mávl rukou. Klid, řekl, jenom klid. Prokop, třeba mu bylo hladit a konejšit někoho jiného. Já vám budu sloužit, nechte mne nechte mne… já vám.'),
-(270,	'Nezajišťujeme výstavbu pro vás',	'nezajistujeme-vystavbu-pro-vas',	'Zalomcoval jimi zběsile; vůbec se to dělá… náramně diskrétně. Pan Carson jen trhl rameny. A co z příčin jistě uvážených hodláte nechat pro sebe. Znám vaši práci. Myslím, že tě odtud odvezou. Nehýbej se teď, dívá se za ruce a poskakovali rychle, rychle, pořád rychleji. Prokop vzhlédl a viděl nad sebou koňskou hlavu, i popadl cukřenku, vrhl na kavalec a spal stočen jako pes. Báječná exploze, povídal nadšen, a jen sípe, nemoha ze sebe jakési na shledanou a trapně se vytratil. Jako zloděj,.');
+(19,	'Nabízíme zprostředkování s inovací a pro vaše zákazníky',	'nabizime-zprostredkovani-s-inovaci-a-pro-vase-zakazniky',	'Prokop, udělal celým tělem jakýsi otáčivý pohyb a tak dále; ale zdá se, že princezna míní zkrátka a dobře… Chtěl se k ní po špičkách ke dveřím a otevřel; na prahu stála dívka s tváří zastřenou závojem. Bydlí tady… pan Tomeš? ptala se ho dotýká ramenem, zpomaluje krok, vázne; pak zase zrychlí chůzi, jde dva kroky zpět. Pojď, musíme dál. Dovezu tě aspoň blíž k hranicím. Kam chceš? Zpátky, skřípěl zuby, zpátky s tebou. Se mnou není… ani dopředu, ani zpátky. Copak mi nerozumíš? Musím to.'),
+(20,	'Předstihujeme pronájem a přepravu vašich stránek',	'predstihujeme-pronajem-a-prepravu-vasich-stranek',	'Podej mi ruku. Nemusíš se ještě nespustila. Vystřízlivělý Prokop se strašně mýlili. Já nejsem kavalír. Já jsem… něco mne trápilo, víte? Nesmíte na to zvyklý. Podívejte se, tady, a ukázal mlčky kolem dokola: celý svět. Je to jen suky a léta a vlhkost a prach – Dědeček se vynořil dělník strkající trakař se smeteným listím. Krafft, popaden podezřením, se do zámku, snad aby tam našel princeznu, Rohna, následníka nebo koho. Ve vestibulu se mu postavil na ramena, člověk se zahledí, omámí, zastaví;.'),
+(21,	'Nemobilizujeme bezpečnost internetu',	'nemobilizujeme-bezpecnost-internetu',	'Prokop; skutečně se chvěl slabostí a zimou. Pošťák přemýšlel a potřásal hlavou. Když to tedy přece jen švanda. Princezna s ním chcete? Musím s ním chcete? Musím s ním mluvit, drtí Prokop. Musím, slyšíte? Musím jet za panem Tomšem. Budete mít k dispozici neznámé síly, tajemné stanice a kdesi cosi; hned nařídil telefonovat do zámku, aby připravili kavalírské hostinské pokoje, chytil Prokopa pod paží. Můj milý, řekl bez hněvu, překusuje jakýsi smutek, chápu až příliš dobře vás mladé.'),
+(22,	'Realizujeme návrh lampiónků a svíček a webu',	'realizujeme-navrh-lampionku-a-svicek-a-webu',	'Na silnici před ním Carson poskakoval. Že bych ho nedohonil? napadlo ho slovo rybář, ale zjevil se mu vymknul. Odpusťte, mumlal, vysoukal se co děj. Miluji Tě tak, psala, že mně už žádná oběť nestačí, abych Ti ji přinesla. Podrob mne zkoušce, zůstaň chudý a neznámý; půjdu s Tebou jako Tvá žena, a nikdy již se řítí střemhlav dolů, dolů do tmy; prudký náraz, bolestné cuknutí v celém jejím rozsahu palčivě cuká živé maso. Přitom mu znalecky zajel rukou do kapsy svého věčného gumáku. Jdou.'),
+(23,	'Realizujeme nákup a bezpečnost vašich známých',	'realizujeme-nakup-a-bezpecnost-vasich-znamych',	'Z vytrhaných prken získal materiál pro zabednění vchodu a krom toho matku a chromou sestru, a že se jí nanic. Zatím Prokopova ruka narůstala: spousta vaty, Billrothův batist a snad ani neví. Ostatně, co s ním dělají takové okolky, když už byl doma. Kde je Whirlwind? ptal se najednou. Nesmíš, teď nesmíš, zasykla a ožehla ho plamenným pohledem. Jinaké větší škody pokusný výbuch Vicitu nezpůsobil. Shodilo to jen několik komínů na blízkých barácích a vyrazily se tlakem vzduchu nějaké okenní.'),
+(24,	'Realizujeme údržbu a zprostředkování lampiónků a svíček',	'realizujeme-udrzbu-a-zprostredkovani-lampionku-a-svicek',	'A pak ještě Carson, hl. p. Nic víc. Prokop si bleskem vzpomněl, že tu nic není; ale přec… Tati je taky den. Já ti pomohu. S námahou vlekl Tomeš svého hosta do druhého křídla zámku, kde jich bylo také třeba; neboť princezna hořela skoro čtyřiceti stupni horečky, nadobro sesutá po šedesáti hodinách bdění; mimoto silná anémie a celá hříva se jí třásla, zdálo se jí, že se jí lepí závoj, hustý závoj s rosičkou dechu – Proč je člověku tak dobře vybudovanou. I zlepšoval na ní, co budeš chtít, jen.'),
+(25,	'Realizujeme nákup se zárukou',	'realizujeme-nakup-se-zarukou',	'V tu chvíli odpouští Prokop svému zavilému nepříteli a tyranu devět desetin jeho špatností. Pan Carson chtěl vyletět, ale oncle Charles krotce, není jí dobře, a potom přechází ode dveří k oknu, pořád a pořád. Za zastřeným oknem princezniným se nehýbe ani stín. I oncle Rohn s tlustým cousinem. Pak zase nic. Stojí-li pak za to utržil pod stolem takové kopnutí do bérce, že sykl a byl by ho šel hledat, ale bál se totiž, že ztratí rovnováhu. Ve dveřích se obrátil ke stolu jako v džungli; a.'),
+(26,	'Předstihujeme odebírání webu a mrakodrapů',	'predstihujeme-odebirani-webu-a-mrakodrapu',	'Ano, vědět přesné datum, a pak provedla před zrcadlem hlubokou dvorskou poklonu. To je jedno, starouši, jen spi. Já bych tu tak chtěla zůstat, šeptá Anči. Ještě jednou bylo Prokopovi svésti němý boj s pokušením. Dobrou noc, Anči, dostal ze sebe. Počkej, teď přemýšlej; teď mysli a vzpomeň si, z čeho je ten nejčernější stín, patrně ztratili směr či co, roztroušené mezi pískovými násypy a borovými lesíky. Jeho cesta se stočila k docela osamělému domku V, 7, i zamířil k protější stěně..'),
+(27,	'Nabízíme přepravu a přepravu za nízkou cenu',	'nabizime-prepravu-a-prepravu-za-nizkou-cenu',	'Charles provázený Carsonem. Oba vypadali tak… oficiálně a slavnostně, že v některém peněžním ústavě téhož dne, kdy on, Prokop, je anarchista; a ježto věc tak velikého dosahu se nedá písemně vyřizovat, prosím, abyste nechal v Praze a vyprosit si, aby mu nevypadl umělý chrup. Prokop nervózně přešlapoval. Račte odpustit, kníže, začal konečně, ale já se budu muset na stará kolena učit fyzice; říkám boty, že? Prokop zabručel něco docela nesrozumitelného. To nevadí, prohlásil pan Carson.');
 
 DROP TABLE IF EXISTS `product_delivery`;
 CREATE TABLE `product_delivery` (
@@ -391,20 +407,19 @@ CREATE TABLE `product_delivery` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `product_delivery` (`product_id`, `delivery`) VALUES
-(262,	676),
-(263,	676),
-(264,	676),
-(264,	679),
-(264,	681),
-(265,	681),
-(266,	676),
-(266,	679),
-(268,	676),
-(268,	681),
-(269,	676),
-(269,	679),
-(269,	681),
-(270,	679);
+(19,	60),
+(19,	65),
+(20,	60),
+(20,	63),
+(21,	60),
+(21,	63),
+(22,	65),
+(24,	60),
+(24,	65),
+(25,	65),
+(26,	63),
+(26,	65),
+(27,	65);
 
 DROP TABLE IF EXISTS `product_variants`;
 CREATE TABLE `product_variants` (
@@ -419,8 +434,8 @@ CREATE TABLE `product_variants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `product_variants` (`id`, `product_id`, `variant_name`, `sku`) VALUES
-(59,	263,	'modrá-M',	'blue1'),
-(60,	264,	'červená-S',	'red1');
+(5,	20,	'modrá-M',	'blue1'),
+(6,	21,	'červená-S',	'red1');
 
 DROP TABLE IF EXISTS `product_variant_variant_value`;
 CREATE TABLE `product_variant_variant_value` (
@@ -434,10 +449,10 @@ CREATE TABLE `product_variant_variant_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `product_variant_variant_value` (`productVariant_id`, `variantValue`) VALUES
-(59,	271),
-(59,	275),
-(60,	272),
-(60,	274);
+(5,	19),
+(5,	23),
+(6,	20),
+(6,	22);
 
 DROP TABLE IF EXISTS `resources`;
 CREATE TABLE `resources` (
@@ -447,12 +462,12 @@ CREATE TABLE `resources` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `resources` (`id`, `name`) VALUES
-(167,	'Admin:Dashboard'),
-(168,	'Options:Options'),
-(169,	'Pages:AdminPage'),
-(170,	'Admin:Files'),
-(171,	'Users:Users'),
-(172,	'Eshop:AdminProduct');
+(11,	'Admin:Dashboard'),
+(12,	'Options:Options'),
+(13,	'Pages:AdminPage'),
+(14,	'Admin:Files'),
+(15,	'Users:Users'),
+(16,	'Eshop:AdminProduct');
 
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
@@ -465,10 +480,18 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `roles` (`id`, `parent_id`, `name`) VALUES
-(125,	NULL,	'guest'),
-(126,	125,	'user'),
-(127,	126,	'admin'),
-(128,	127,	'superadmin');
+(9,	NULL,	'guest'),
+(10,	9,	'user'),
+(11,	10,	'admin'),
+(12,	11,	'superadmin');
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `urls`;
 CREATE TABLE `urls` (
@@ -485,34 +508,35 @@ CREATE TABLE `urls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `urls` (`id`, `redirect_to_id`, `fake_path`, `destination`, `internal_id`) VALUES
-(761,	NULL,	'',	'Front:Homepage:default',	NULL),
-(762,	NULL,	'kontakt',	'Front:Contact:default',	NULL),
-(763,	NULL,	'auth',	'Auth:Sign:in',	NULL),
-(764,	NULL,	'odhlasit',	'Auth:Sign:out',	NULL),
-(765,	NULL,	'administrace/soubory',	'Admin:Files:default',	NULL),
-(766,	NULL,	'administrace/nastaveni/general',	'Options:Options:general',	NULL),
-(767,	NULL,	'administrace/editovat-stranku',	'Pages:AdminPage:edit',	NULL),
-(768,	NULL,	'administrace/editovat-stranky',	'Pages:AdminPage:multiEdit',	NULL),
-(769,	NULL,	'administrace/nastaveni/seo',	'Options:Options:seo',	NULL),
-(770,	NULL,	'administrace/nastaveni/navigace',	'Options:Options:navigation',	NULL),
-(771,	NULL,	'nahled-stranky',	'Pages:Page:preview',	NULL),
-(772,	NULL,	'administrace/nahrat-soubory',	'Admin:Files:upload',	NULL),
-(773,	NULL,	'administrace/editovat-soubor',	'Admin:Files:edit',	NULL),
-(774,	NULL,	'administrace/novy-uzivatel',	'Users:Users:new',	NULL),
-(775,	NULL,	'administrace',	'Admin:Dashboard:default',	NULL),
-(776,	NULL,	'administrace/stranky',	'Pages:AdminPage:default',	NULL),
-(777,	NULL,	'administrace/nova-stranka',	'Pages:AdminPage:new',	NULL),
-(778,	NULL,	'administrace/uzivatele',	'Users:Users:default',	NULL),
-(779,	NULL,	'administrace/nastaveni',	'Options:Options:default',	NULL),
-(780,	NULL,	'laboriosam',	'Pages:Page:default',	186),
-(781,	NULL,	'asperiores',	'Pages:Page:default',	187),
-(782,	NULL,	'et',	'Pages:Page:default',	188),
-(783,	NULL,	'in',	'Pages:Page:default',	189),
-(784,	NULL,	'consequatur',	'Pages:Page:default',	190),
-(785,	NULL,	'non',	'Pages:Page:default',	191),
-(786,	NULL,	'administrace/eshop/zbozi',	'Eshop:AdminProduct:default',	NULL),
-(787,	NULL,	'eshop',	'Eshop:Product:default',	NULL),
-(788,	NULL,	'produkt',	'Eshop:Product:detail',	NULL);
+(53,	NULL,	'',	'Front:Homepage:default',	NULL),
+(54,	NULL,	'kontakt',	'Front:Contact:default',	NULL),
+(55,	NULL,	'auth',	'Auth:Sign:in',	NULL),
+(56,	NULL,	'odhlasit',	'Auth:Sign:out',	NULL),
+(57,	NULL,	'administrace/soubory',	'Admin:Files:default',	NULL),
+(58,	NULL,	'administrace/nastaveni/general',	'Options:Options:general',	NULL),
+(59,	NULL,	'administrace/editovat-stranku',	'Pages:AdminPage:edit',	NULL),
+(60,	NULL,	'administrace/editovat-stranky',	'Pages:AdminPage:multiEdit',	NULL),
+(61,	NULL,	'administrace/nastaveni/seo',	'Options:Options:seo',	NULL),
+(62,	NULL,	'administrace/nastaveni/navigace',	'Options:Options:navigation',	NULL),
+(63,	NULL,	'nahled-stranky',	'Pages:Page:preview',	NULL),
+(64,	NULL,	'administrace/nahrat-soubory',	'Admin:Files:upload',	NULL),
+(65,	NULL,	'administrace/editovat-soubor',	'Admin:Files:edit',	NULL),
+(66,	NULL,	'administrace/novy-uzivatel',	'Users:Users:new',	NULL),
+(67,	NULL,	'administrace/editovat-uzivatele',	'Users:Users:edit',	NULL),
+(68,	NULL,	'administrace',	'Admin:Dashboard:default',	NULL),
+(69,	NULL,	'administrace/stranky',	'Pages:AdminPage:default',	NULL),
+(70,	NULL,	'administrace/nova-stranka',	'Pages:AdminPage:new',	NULL),
+(71,	NULL,	'administrace/uzivatele',	'Users:Users:default',	NULL),
+(72,	NULL,	'administrace/nastaveni',	'Options:Options:default',	NULL),
+(73,	NULL,	'officia',	'Pages:Page:default',	13),
+(74,	NULL,	'placeat',	'Pages:Page:default',	14),
+(75,	NULL,	'aut',	'Pages:Page:default',	15),
+(76,	NULL,	'quae',	'Pages:Page:default',	16),
+(77,	NULL,	'aspernatur',	'Pages:Page:default',	17),
+(78,	NULL,	'quo',	'Pages:Page:default',	18),
+(79,	NULL,	'administrace/eshop/zbozi',	'Eshop:AdminProduct:default',	NULL),
+(80,	NULL,	'eshop',	'Eshop:Product:default',	NULL),
+(81,	NULL,	'produkt',	'Eshop:Product:detail',	NULL);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -524,9 +548,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `email`, `password`, `created_at`) VALUES
-(61,	'admin@antstudio.cz',	'$2y$10$x13xD9SIc.EyYeOqsau9EOjqxyDt8FwBWs0kPzcGgsNMrpI07/hzK',	'2015-07-16 15:38:02'),
-(62,	'demo@antstudio.cz',	'$2y$10$efxHI3NXO95rYZcclw3FK.QsOPWbmX63pP7wv5cWBU6IZXHTxaW2.',	'2015-07-16 15:38:02'),
-(63,	'mrtnzlml@gmail.com',	'mrtnzlml@gmail.com',	'2015-07-16 15:53:44');
+(5,	'admin@antstudio.cz',	'$2y$10$WIZPGxZZXZQT15NlGXGrt.EOYAw8zuGAi3rAD1nmCZQ/Z/jeabm1a',	'2015-07-17 13:57:13'),
+(6,	'demo@antstudio.cz',	'$2y$10$xqTF7oVSHIfI7UXKU0oTo..eIpC7SfeS9nAdlOTbj.zwo4r90g0/6',	'2015-07-17 13:57:13');
 
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
@@ -540,9 +563,8 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `user_role` (`user_id`, `role`) VALUES
-(61,	128),
-(62,	126),
-(63,	125);
+(5,	12),
+(6,	10);
 
 DROP TABLE IF EXISTS `variants`;
 CREATE TABLE `variants` (
@@ -553,9 +575,9 @@ CREATE TABLE `variants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `variants` (`id`, `name`) VALUES
-(91,	'barva'),
-(93,	'materiál'),
-(92,	'velikost');
+(7,	'barva'),
+(9,	'materiál'),
+(8,	'velikost');
 
 DROP TABLE IF EXISTS `variant_values`;
 CREATE TABLE `variant_values` (
@@ -568,14 +590,14 @@ CREATE TABLE `variant_values` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `variant_values` (`id`, `variant_id`, `value`) VALUES
-(271,	91,	'modrá'),
-(272,	91,	'červená'),
-(273,	91,	'žlutá'),
-(274,	92,	'S'),
-(275,	92,	'M'),
-(276,	92,	'L'),
-(277,	93,	'bavlna'),
-(278,	93,	'dřevo'),
-(279,	93,	'polyester');
+(19,	7,	'modrá'),
+(20,	7,	'červená'),
+(21,	7,	'žlutá'),
+(22,	8,	'S'),
+(23,	8,	'M'),
+(24,	8,	'L'),
+(25,	9,	'bavlna'),
+(26,	9,	'dřevo'),
+(27,	9,	'polyester');
 
--- 2015-07-16 14:05:27
+-- 2015-07-17 11:58:50
