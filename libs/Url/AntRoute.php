@@ -9,9 +9,6 @@ use Nette\Application;
 use Options\Option;
 use Pages\Query\OptionsQuery;
 
-/**
- * TODO: možnost přejmenovávat parametry v URL (GET)
- */
 class AntRoute extends Application\Routers\RouteList
 {
 
@@ -35,6 +32,12 @@ class AntRoute extends Application\Routers\RouteList
 	private $extension;
 
 	const CACHE_NAMESPACE = 'ANT.Router';
+
+	//TODO: překlad parametrů v databázi pro SEO
+	//TODO: kontečtově závislý překlad parametrů
+	private $paramsTranslateTable = [
+		'id' => 'i',
+	];
 
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
@@ -120,6 +123,16 @@ class AntRoute extends Application\Routers\RouteList
 
 		// 3) Create Application Request
 		$params = $httpRequest->getQuery();
+
+		// 4) Translate parameters (SEO)
+		foreach ($params as $key => $_) {
+			$translateTable = array_flip($this->paramsTranslateTable);
+			if (array_key_exists($key, $translateTable)) {
+				$params[$translateTable[$key]] = $params[$key];
+				unset($params[$key]);
+			}
+		}
+
 		$params['action'] = $action;
 		if ($internalId) {
 			$params['id'] = $internalId;
@@ -219,6 +232,15 @@ class AntRoute extends Application\Routers\RouteList
 		if (!$cacheResult[1]) { //fallback in case it's not possible to find any route
 			unset($params['id']);
 		}
+
+		// 4) Translate parameters (SEO)
+		foreach ($params as $key => $_) {
+			if (array_key_exists($key, $this->paramsTranslateTable)) {
+				$params[$this->paramsTranslateTable[$key]] = $params[$key];
+				unset($params[$key]);
+			}
+		}
+
 		$sep = ini_get('arg_separator.input');
 		$query = http_build_query($params, '', $sep ? $sep[0] : '&');
 		if ($query != '') { // intentionally ==
