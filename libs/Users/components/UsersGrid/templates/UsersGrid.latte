@@ -21,7 +21,10 @@
 		</td>
 		<td>{$user->createdAt|date:'j.n.Y'}</td>
 		<td>
-			<a  class="btn btn-xs btn-default" href="{plink edit $user->id}">Upravit</a>
+			<a class="btn btn-xs btn-default" href="{plink edit $user->id}">Upravit</a>
+			<a class="btn btn-xs btn-default"
+			   n:href="deleteUser! $user->id"
+			   data-confirm="Opravdu chcete tohoto uživatele smazat?">Smazat</a>
 		</td>
 	</tr>
 	</tbody>
