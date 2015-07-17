@@ -215,8 +215,8 @@ class AntRoute extends Application\Routers\RouteList
 
 		// 3) Add parameters to the URL
 		$params = $applicationRequest->getParameters();
+		unset($params['action']);
 		if (!$cacheResult[1]) { //fallback in case it's not possible to find any route
-			unset($params['action']);
 			unset($params['id']);
 		}
 		$sep = ini_get('arg_separator.input');
