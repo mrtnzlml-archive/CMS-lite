@@ -62,7 +62,7 @@ class MenuEditor extends Control
 	}
 
 	/**
-	 * FIXME: @secured
+	 * @secured
 	 */
 	public function handleUpdateNavigation($json)
 	{
@@ -73,7 +73,7 @@ class MenuEditor extends Control
 		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
 		$this->navigationFacade->recalculatePathsForNode($adminRoot->getId(), Nestable::resolveJson($json));
 
-		$this->redrawControl('adminMenu'); //FIXME: neinvaliduje se, jak na ten snippet lépe ukázat?
+		$this->getPresenter()->redrawControl('adminMenu');
 	}
 
 }
