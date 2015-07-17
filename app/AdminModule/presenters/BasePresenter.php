@@ -45,10 +45,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		parent::startup();
 		/** @var Locale $localeEntity */
-		if ($localeEntity = $this->_em->getRepository(Locale::class)->findOneByCode($this->locale)) {
-			$filter = $this->_em->getFilters()->enable('locale');
-			$filter->setParameter('locale', $localeEntity->getId());
-		}
+//		if ($localeEntity = $this->_em->getRepository(Locale::class)->findOneByCode($this->locale)) {
+//			$filter = $this->_em->getFilters()->enable('locale');
+//			$filter->setParameter('locale', $localeEntity->getId());
+//		}
+//		TODO: umožnit rychlé vypnutí v extension
 	}
 
 	public function createComponentLocaleSelect(ILocaleSelectFactory $factory)
