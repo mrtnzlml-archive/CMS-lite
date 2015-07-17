@@ -39,6 +39,12 @@ class AntRoute extends Application\Routers\RouteList
 		'id' => 'i',
 	];
 
+	//TODO: do databáze (nejlépe spojit i s doménou)
+	private $allowedLanguages = [
+		'cs' => TRUE, //default locale
+		'en' => FALSE,
+	];
+
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
 		$this->em = $em;
@@ -91,6 +97,15 @@ class AntRoute extends Application\Routers\RouteList
 		}
 		$path = preg_replace('~' . preg_quote($this->extension, '~') . '$~', '', $path);
 
+		$locale = NULL;
+		$re = "~^(" . implode('|', array_keys($this->allowedLanguages)) . ")/~";
+		if (preg_match($re, $path, $matches)) {
+			$locale = $matches[1];
+		} else {
+			$locale = array_search(TRUE, $this->allowedLanguages);
+		}
+		$path = preg_replace($re, '', $path);
+
 		/**
 		 * 1) Load route definition (internal destination) from cache
 		 * @var Url $destination
@@ -134,9 +149,11 @@ class AntRoute extends Application\Routers\RouteList
 		}
 
 		$params['action'] = $action;
+		$params['locale'] = $locale;
 		if ($internalId) {
 			$params['id'] = $internalId;
 		}
+
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),
@@ -211,6 +228,7 @@ class AntRoute extends Application\Routers\RouteList
 		}
 
 		// 2) Construct URL
+		$params = $applicationRequest->getParameters();
 		if ($this->lastRefUrl !== $refUrl) {
 			$scheme = ($this->flags & self::SECURED ? 'https://' : 'http://');
 			$this->lastBaseUrl = $scheme . $refUrl->getAuthority() . $refUrl->getBasePath();
@@ -221,13 +239,14 @@ class AntRoute extends Application\Routers\RouteList
 		} else {
 			$fakePath = $path->redirectTo->getFakePath();
 		}
-		$url = $this->lastBaseUrl . Nette\Utils\Strings::webalize($fakePath, '/');
+		$locale = isset($params['locale']) && !$this->allowedLanguages[$params['locale']] ? $params['locale'] . '/' : NULL;
+		$url = $this->lastBaseUrl . $locale . Nette\Utils\Strings::webalize($fakePath, '/');
+		unset($params['locale']);
 		if (substr($url, -1) !== '/') {
 			$url .= $this->extension;
 		}
 
 		// 3) Add parameters to the URL
-		$params = $applicationRequest->getParameters();
 		unset($params['action']);
 		if (!$cacheResult[1]) { //fallback in case it's not possible to find any route
 			unset($params['id']);
