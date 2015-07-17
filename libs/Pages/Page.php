@@ -6,17 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
+use Localization\ILocaleAware;
 use Users\User;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="pages")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=10)
- * @ORM\DiscriminatorMap({
- *      "page" = "Page",
- *      "news" = "News"
- * })
  *
  * @method setTitle(string $title)
  * @method string getTitle()
@@ -46,7 +41,7 @@ use Users\User;
  *
  *
  */
-class Page extends BaseEntity
+class Page extends BaseEntity implements ILocaleAware
 {
 
 	use Identifier;
@@ -138,6 +133,13 @@ class Page extends BaseEntity
 	 * @var \Url\Url
 	 */
 	protected $url;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Localization\Locale", cascade={"persist"})
+	 * @ORM\JoinColumn(name="locale_id", referencedColumnName="id")
+	 * @var \Localization\Locale
+	 */
+	protected $locale;
 
 	public function __construct()
 	{

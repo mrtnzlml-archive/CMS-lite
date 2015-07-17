@@ -4,6 +4,7 @@ namespace Url;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
+use Localization\Locale;
 use Nette;
 use Nette\Application;
 use Options\Option;
@@ -39,11 +40,7 @@ class AntRoute extends Application\Routers\RouteList
 		'id' => 'i',
 	];
 
-	//TODO: do databáze (nejlépe spojit i s doménou)
-	private $allowedLanguages = [
-		'cs' => TRUE, //default locale
-		'en' => FALSE,
-	];
+	private $allowedLanguages;
 
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
 	{
@@ -56,6 +53,10 @@ class AntRoute extends Application\Routers\RouteList
 			// FIXME: It's blocking Kdyby\Console...
 			return;
 		}
+
+		$this->allowedLanguages = $this->cache->load('allowedLanguages', function () {
+			return $this->em->getRepository(Locale::class)->findPairs('default', 'code');
+		});
 
 		$query = (new OptionsQuery())->withOptions('page_url_end');
 		$values = $this->em->getRepository(Option::class)->fetchOne($query)->values;

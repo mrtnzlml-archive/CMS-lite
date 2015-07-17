@@ -4,6 +4,9 @@ namespace App\AdminModule\Presenters;
 
 use App;
 use App\Components\Flashes\Flashes;
+use Kdyby\Doctrine\EntityManager;
+use Localization\ILocaleSelectFactory;
+use Localization\Locale;
 use Nette;
 use Nextras;
 use Users;
@@ -17,6 +20,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	/** @persistent */
 	public $locale;
+
+	/** @var EntityManager @inject */
+	public $_em;
 
 	public function checkRequirements($element)
 	{
@@ -33,6 +39,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', Flashes::FLASH_DANGER);
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}
+	}
+
+	public function startup()
+	{
+		parent::startup();
+		/** @var Locale $localeEntity */
+		if ($localeEntity = $this->_em->getRepository(Locale::class)->findOneByCode($this->locale)) {
+			$filter = $this->_em->getFilters()->enable('locale');
+			$filter->setParameter('locale', $localeEntity->getId());
+		}
+	}
+
+	public function createComponentLocaleSelect(ILocaleSelectFactory $factory)
+	{
+		return $factory->create();
 	}
 
 	public function beforeRender()

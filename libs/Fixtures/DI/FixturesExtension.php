@@ -1,11 +1,11 @@
 <?php
 
-namespace CmsDefaultDataExtension\DI;
+namespace Fixtures\DI;
 
 use Kdyby;
 use Nette;
 
-class CmsDefaultDataExtension extends Nette\DI\CompilerExtension
+class FixturesExtension extends Nette\DI\CompilerExtension
 {
 
 	private $commands = [

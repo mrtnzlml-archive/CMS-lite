@@ -12,7 +12,7 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 		for ($iterator = 0; $iterator < 6; $iterator++) {
 			$title = \Nette\Utils\Strings::firstUpper($faker->word);
 			$body = $faker->realText(500);
-			$page = rand(0, 1) ? new \Pages\Page() : new \Pages\News();
+			$page = new \Pages\Page;
 			$page->setTitle($title);
 			$page->setBody($body);
 			if (rand(0, 1)) {
@@ -30,6 +30,7 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			if (rand(0, 1)) {
 				$page->addCategory($this->getReference('page-category-3'));
 			}
+			$page->setLocale($this->getReference('locale-cz'));
 			$manager->persist($page);
 			$manager->flush($page);
 			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Pages:Page:default', $page->getId()));

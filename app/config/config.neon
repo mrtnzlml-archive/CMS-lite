@@ -28,6 +28,8 @@ di:
 
 doctrine:
 	defaultRepositoryClassName: Kdyby\Doctrine\EntityRepository
+	filters:
+		locale: Localization\LocaleFilter
 	metadata:
 		App\Extensions: %appDir%/extensions
 

@@ -5,14 +5,15 @@ extensions:
 #    - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
-    - CmsDefaultDataExtension\DI\CmsDefaultDataExtension
     - Eshop\DI\EshopExtension
+    - Files\DI\FilesExtension
+    - Fixtures\DI\FixturesExtension
+    - Localization\DI\LocalizationExtension
     - Migrations\DI\MigrationsExtension
     - Navigation\DI\NavigationExtension
     - Notes\DI\NotesExtension
     - Options\DI\OptionsExtension
     - Pages\DI\PagesExtension
-    - Files\DI\FilesExtension	
     - TinyMCE\DI\TinyExtension
     - Url\DI\UrlExtension
     - Users\DI\UsersExtension
