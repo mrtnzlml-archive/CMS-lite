@@ -13,6 +13,7 @@ extensions:
     - Navigation\DI\NavigationExtension
     - Notes\DI\NotesExtension
     - Options\DI\OptionsExtension
+    - Search\DI\SearchExtension
     - Pages\DI\PagesExtension
     - TinyMCE\DI\TinyExtension
     - Url\DI\UrlExtension

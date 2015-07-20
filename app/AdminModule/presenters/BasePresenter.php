@@ -10,6 +10,7 @@ use Localization\Locale;
 use Navigation\IAdminMenuFactory;
 use Nette;
 use Nextras;
+use Search\Components\ISearchFactory;
 use Users;
 use WebLoader;
 
@@ -54,6 +55,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	}
 
 	public function createComponentLocaleSelect(ILocaleSelectFactory $factory)
+	{
+		return $factory->create();
+	}
+
+	public function createComponentSearch(ISearchFactory $factory)
 	{
 		return $factory->create();
 	}
