@@ -127,10 +127,10 @@ class AntRoute extends Application\Routers\RouteList
 
 		// 2) Extract parts of the destination
 		if ($destination->redirectTo === NULL) {
-			$internalDestination = $destination->destination;
+			$internalDestination = $destination->getDestination();
 			$internalId = $destination->getInternalId();
 		} else {
-			$internalDestination = $destination->redirectTo->destination;
+			$internalDestination = $destination->redirectTo->getDestination();
 			$internalId = $destination->redirectTo->getInternalId();
 		}
 		$pos = strrpos($internalDestination, ':');
@@ -186,7 +186,8 @@ class AntRoute extends Application\Routers\RouteList
 		$cacheResult = $this->cache->load($applicationRequest, function (& $dependencies) use ($applicationRequest) {
 			$fallback = FALSE;
 			$params = $applicationRequest->getParameters();
-			$destination = $applicationRequest->getPresenterName() . ':' . $params['action'];
+			$presenter = $applicationRequest->getPresenterName();
+			$action = $params['action'];
 			$internalId = isset($params['id']) ? $params['id'] : NULL;
 
 			// 1) pokud není předáno ID, pokusit se najít pouze path na základě destination (ID je volitelné)
@@ -194,27 +195,30 @@ class AntRoute extends Application\Routers\RouteList
 			// 3) může se stát, že je předáno ID (bod 2), ale nebylo nic nalezeno, pak předat destination, jak by ID nebylo předáno a pověsit parametry za otazník
 			if (!isset($params['id'])) {
 				$path = $this->em->getRepository(Url::class)->findOneBy([
-					'destination' => $destination,
+					'presenter' => $presenter,
+					'action' => $action,
 				]);
 			} else {
 				$path = $this->em->getRepository(Url::class)->findOneBy([
-					'destination' => $destination,
+					'presenter' => $presenter,
+					'action' => $action,
 					'internalId' => $internalId,
 				]);
 				if ($path === NULL) {
 					//FIXME: v tomto případě by se to nemělo ukládat do cache
-					$this->monolog->addWarning(sprintf('Cannot find cool route for destination %s. Fallback will be used.', $destination), [
+					$this->monolog->addWarning(sprintf('Cannot find cool route for destination %s. Fallback will be used.', $presenter . ':' . $action), [
 						'internalId' => $internalId,
 					]); //FIXME: logovat / nelogovat?
 					$fallback = TRUE;
 					$path = $this->em->getRepository(Url::class)->findOneBy([
-						'destination' => $destination,
+						'presenter' => $presenter,
+						'action' => $action,
 					]);
 				}
 			}
 
 			if ($path === NULL) {
-				$this->monolog->addError(sprintf('Cannot find route for destination %s', $destination), [
+				$this->monolog->addError(sprintf('Cannot find route for destination %s', $presenter . ':' . $action), [
 					'internalId' => $internalId,
 				]);
 				return NULL;

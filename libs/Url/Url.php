@@ -13,11 +13,11 @@ use Kdyby;
  *
  * @method setFakePath(string $path)
  * @method string getFakePath()
- * @method setDestination(string $destination)
- * @method string getDestination()
  * @method setInternalId(integer $internalId)
  * @method integer getInternalId()
  * @method setRedirectTo(Url $url)
+ *
+ * @ORM\HasLifecycleCallbacks
  */
 class Url extends Kdyby\Doctrine\Entities\BaseEntity
 {
@@ -31,10 +31,16 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	protected $fakePath;
 
 	/**
-	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Internal link destination (Module:Presenter:action)"})
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Internal link presenter (Module:Presenter)"})
 	 * @var string
 	 */
-	protected $destination = NULL;
+	private $presenter = NULL;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Internal link action"})
+	 * @var string
+	 */
+	private $action = NULL;
 
 	/**
 	 * @ORM\Column(type="integer", nullable=TRUE, options={"comment":"Internal ID passed to the action (optional)"})
@@ -48,5 +54,34 @@ class Url extends Kdyby\Doctrine\Entities\BaseEntity
 	 * @var Url
 	 */
 	protected $redirectTo = NULL;
+
+	public function getDestination()
+	{
+		return $this->presenter . ':' . $this->action;
+	}
+
+	/**
+	 * @param string $presenter Destination if you leave action blank.
+	 * @param NULL|string $action
+	 */
+	public function setDestination($presenter, $action = NULL)
+	{
+		if ($action === NULL) {
+			$destination = $presenter;
+		} else {
+			$destination = $presenter . ':' . $action;
+		}
+		$pos = strrpos($destination, ':');
+		$this->presenter = substr($destination, 0, $pos);
+		$this->action = substr($destination, $pos + 1);
+	}
+
+	public function getAbsoluteDestination($withAsterisk = FALSE)
+	{
+		if (!isset($this->presenter) || !isset($this->action)) {
+			return NULL;
+		}
+		return ':' . $this->presenter . ':' . ($withAsterisk ? '*' : $this->action);
+	}
 
 }
