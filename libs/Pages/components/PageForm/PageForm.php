@@ -99,6 +99,12 @@ class PageForm extends AControl
 		$form->addText('tags', 'Štítky:');
 		$form->addText('individual_css', 'Individuální CSS třída nebo ID:');
 
+		$form
+			->addCheckbox('protected', 'Zaheslovat stránku:')
+			->addCondition($form::EQUAL, TRUE)
+			->toggle('protected');
+		$form->addPassword('password', 'Heslo:');
+
 		// OPTIMIZATION:
 		$form->addText('individualTitle', 'Individuální titulek:');
 		$form->addTextArea('description', 'Popis stránky (Description):');
@@ -114,7 +120,8 @@ class PageForm extends AControl
 		]);
 
 		$this->setDefaults($form);
-		$form->addSubmit('save', 'Uložit')->onClick[] = $this->savePage;
+		$form->addSubmit('saveAndRedirect', 'Uložit')->onClick[] = $this->savePageAndRedirect;
+		$form->addSubmit('saveAndStay', 'Uložit a zůstat')->onClick[] = $this->savePageAndStay;
 		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
 		$form->addSubmit('preview', 'Zobrazit stránku')->onClick[] = function (SubmitButton $sender) {
 			$this->savePage($sender, TRUE);
@@ -122,7 +129,19 @@ class PageForm extends AControl
 		return $form;
 	}
 
-	public function savePage(SubmitButton $sender, $preview = FALSE)
+	public function savePageAndRedirect(SubmitButton $sender)
+	{
+		$this->savePage($sender);
+		$this->presenter->redirect('default');
+	}
+
+	public function savePageAndStay(SubmitButton $sender)
+	{
+		$page = $this->savePage($sender);
+		$this->presenter->redirect('edit', $page->getId());
+	}
+
+	private function savePage(SubmitButton $sender, $preview = FALSE)
 	{
 		try {
 			$entity = $this->editablePage;
@@ -134,15 +153,15 @@ class PageForm extends AControl
 			$this->pageFacade->save($entity, $values);
 		} catch (DuplicateRouteException $exc) {
 			$this->presenter->flashMessage($exc->getMessage());
-			return;
+			return NULL;
 		} catch (\Exception $exc) {
 			$this->onException($this, $exc);
-			return;
+			return NULL;
 		}
 		if ($preview) {
 			$this->presenter->redirect(':Pages:Page:preview', $entity->id);
 		}
-		$this->onComplete($this);
+		return $entity;
 	}
 
 	public function publishPage(SubmitButton $sender)
@@ -162,7 +181,7 @@ class PageForm extends AControl
 			$this->onException($this, $exc);
 			return;
 		}
-		$this->onComplete($this);
+		$this->redirect('default');
 	}
 
 	private function fillEntityWithValues(Page $entity, ArrayHash $values)
@@ -174,6 +193,7 @@ class PageForm extends AControl
 		$entity->setIndex($values->index);
 		$entity->setFollow($values->follow);
 		$entity->setIndividualCss($values->individual_css);
+		$entity->setProtected($values->password, $values->protected);
 
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
@@ -216,6 +236,7 @@ class PageForm extends AControl
 				'follow' => $e->getFollow(),
 				'tags' => $e->getTagsString(),
 				'individual_css' => $e->getIndividualCss(),
+				'protected' => $e->getProtected(),
 			]);
 		}
 	}

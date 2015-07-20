@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\BaseEntity;
 use Localization\ILocaleAware;
+use Nette\Security\Passwords;
 use Users\User;
 
 /**
@@ -28,6 +29,7 @@ use Users\User;
  * @method string getFollow()
  * @method setUrl(\Url\Url $url)
  * @method \Url\Url getUrl()
+ * @method boolean getProtected()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
@@ -108,6 +110,18 @@ class Page extends BaseEntity implements ILocaleAware
 	protected $individualCssClass = NULL;
 
 	/**
+	 * @ORM\Column(type="boolean", options={"comment":"Is this page protected by password?"})
+	 * @var bool
+	 */
+	protected $protected = FALSE;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
+	 */
+	protected $password;
+
+	/**
 	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})
 	 * @var boolean
 	 */
@@ -175,6 +189,16 @@ class Page extends BaseEntity implements ILocaleAware
 	public function setDeleted($deleted = TRUE)
 	{
 		$this->deleted = $deleted;
+		return $this;
+	}
+
+	public function setProtected($password, $protected = TRUE)
+	{
+		if ($password != NULL) { // intentionally !=
+			$this->password = Passwords::hash($password);
+		}
+		$this->protected = $protected;
+		return $this;
 	}
 
 	/**
