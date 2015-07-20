@@ -18,12 +18,12 @@ class Js extends Nette\Application\UI\Control
 	private $externalScripts = [];
 	private $ieOnlyScripts = []; //TODO
 
-	private $dir;
+	private $public;
 
-	public function __construct($dir)
+	public function __construct($public)
 	{
 		parent::__construct();
-		$this->dir = $dir;
+		$this->public = $public;
 	}
 
 	public function render()
@@ -31,22 +31,12 @@ class Js extends Nette\Application\UI\Control
 		$this->template->render(__DIR__ . '/templates/Js.latte');
 	}
 
-	public function renderAdmin()
-	{
-		$this->template->render(__DIR__ . '/templates/JsAdmin.latte');
-	}
-
-	public function renderCustom()
-	{
-		//TODO: nějakou vlastní komponentu, která umožní podobně přidávat custom styly (ale ne do webloaderu)
-	}
-
 	protected function createComponentJs()
 	{
-		$files = new WebLoader\FileCollection($this->dir . '/js');
+		$files = new WebLoader\FileCollection;
 		$files->addRemoteFiles($this->externalScripts);
 		$files->addFiles($this->scripts);
-		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->dir . '/temp');
+		$compiler = WebLoader\Compiler::createJsCompiler($files, $this->public . '/temp');
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\JS;
 			$minifier->add($code);
