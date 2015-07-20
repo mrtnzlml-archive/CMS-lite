@@ -7,6 +7,7 @@ use App\Components\Flashes\Flashes;
 use Kdyby\Doctrine\EntityManager;
 use Localization\ILocaleSelectFactory;
 use Localization\Locale;
+use Navigation\IAdminMenuFactory;
 use Nette;
 use Nextras;
 use Users;
@@ -75,7 +76,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $template;
 	}
 
-	protected function createComponentAdminMenu(App\AdminModule\Components\IAdminMenuFactory $factory)
+	protected function createComponentAdminMenu(IAdminMenuFactory $factory)
 	{
 		return $factory->create();
 	}

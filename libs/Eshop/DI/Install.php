@@ -4,7 +4,10 @@ namespace Eshop\DI;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
+use Navigation\NavigationFacade;
+use Navigation\NavigationItem;
 use Nette;
+use Nette\Caching\IStorage;
 use Url\AntRoute;
 use Url\Url;
 use Users\Resource;
@@ -27,11 +30,15 @@ class Install extends Nette\Object
 	/** @var Nette\Caching\Cache */
 	private $cache;
 
-	public function __construct(EntityManager $em, Logger $logger, Nette\Caching\IStorage $cacheStorage)
+	/** @var NavigationFacade */
+	private $navigationFacade;
+
+	public function __construct(EntityManager $em, Logger $logger, IStorage $cacheStorage, NavigationFacade $navigationFacade)
 	{
 		$this->em = $em;
 		$this->logger = $logger;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, AntRoute::CACHE_NAMESPACE);
+		$this->navigationFacade = $navigationFacade;
 	}
 
 	public function install()
@@ -48,9 +55,12 @@ class Install extends Nette\Object
 			}
 
 			// 2) Add resources and delete cache
-			//FIXME:
 			$this->em->persist((new Resource())->setName('Eshop:AdminProduct'));
 			$this->cache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+
+			// TODO 3) Create menu items
+//			$item = (new NavigationItem)->setName('Eshop');
+//			$this->navigationFacade->createItem($item, $navigation, md5(MainMenu::class));
 
 			$this->em->flush();
 		});
@@ -71,6 +81,10 @@ class Install extends Nette\Object
 			$resource = $this->em->getRepository(Resource::class)->findOneBy(['name' => 'Eshop:AdminProduct']);
 			$this->em->remove($resource);
 			$this->cache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+
+			// 3) Delete menu items
+			$item = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => 'Eshop']); //FIXME: to není moc dobré
+			$this->em->remove($item);
 
 			$this->em->flush();
 		});

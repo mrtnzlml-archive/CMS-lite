@@ -5,16 +5,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 class NavigationFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
-	//TODO: pak i další, než jen admin menu
-
 	public function load(ObjectManager $manager)
 	{
 		$items = \Nette\Neon\Neon::decode(file_get_contents(__DIR__ . '/AdminMenu.neon'));
 		$navigation = (new \Navigation\Navigation)->setName('Administrace - Hlavní menu');
-		$this->resolveMenu($manager, $navigation, $items);
+		$this->resolveMenu($manager, $navigation, $items, md5(\Navigation\AdminMenu::class));
+
+		$items = \Nette\Neon\Neon::decode(file_get_contents(__DIR__ . '/FrontMainMenu.neon'));
+		$navigation = (new \Navigation\Navigation)->setName('Front - Hlavní menu');
+		$this->resolveMenu($manager, $navigation, $items, md5(\Navigation\MainMenu::class));
 	}
 
-	private function resolveMenu(ObjectManager $manager, $navigation, array $items, $parent_id = NULL)
+	private function resolveMenu(ObjectManager $manager, $navigation, array $items, $root_hash, $parent_id = NULL)
 	{
 		foreach ($items as $menuItem) {
 			if (isset($menuItem['path']) && isset($menuItem['destination'])) {
@@ -27,14 +29,13 @@ class NavigationFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 			$item->setName($menuItem['name']);
 			$item->setUrl(isset($url) ? $url : NULL);
 			$item->setIcon(isset($menuItem['icon']) ? $menuItem['icon'] : NULL);
-			$item->addNavigation($navigation);
 			unset($url);
 
 			$process = new \Navigation\NavigationFacade($manager);
-			$process->createItem($item, $parent_id);
+			$process->createItem($item, $navigation, $root_hash, $parent_id);
 
 			if (isset($menuItem['subitems'])) {
-				$this->resolveMenu($manager, $navigation, $menuItem['subitems'], $item->getId());
+				$this->resolveMenu($manager, $navigation, $menuItem['subitems'], $root_hash, $item->getId());
 			}
 		}
 	}

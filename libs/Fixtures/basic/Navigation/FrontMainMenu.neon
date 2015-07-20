@@ -1,0 +1,7 @@
+- name: Home
+  path: ''
+  destination: Front:Homepage:default
+
+- name: Kontakt
+  path: kontakt
+  destination: Front:Contact:default

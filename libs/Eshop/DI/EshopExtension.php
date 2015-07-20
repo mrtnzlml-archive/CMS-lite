@@ -2,8 +2,6 @@
 
 namespace Eshop\DI;
 
-use App\Components\MainMenu\MainMenuItem;
-use App\Components\MainMenu\Providers\IMainMenuProvider;
 use App\Extensions\CompilerExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
@@ -12,9 +10,8 @@ use Nette;
 /**
  * TODO: schéma databáze při instalaci
  * TODO: default data
- * TODO: nainstalovat viditelné věci jako jsou položky menu atd...
  */
-class EshopExtension extends CompilerExtension implements IEntityProvider, IMainMenuProvider
+class EshopExtension extends CompilerExtension implements IEntityProvider
 {
 
 	const ESHOP_MENU_PRIORITY = 1000;
@@ -44,17 +41,6 @@ class EshopExtension extends CompilerExtension implements IEntityProvider, IMain
 		//TODO: schéma by se mělo postavit při instalaci rozšíření
 		return [
 			'Eshop' => __DIR__ . '/..',
-		];
-	}
-
-	public function getMenuItems()
-	{
-		//TODO: nově extensions nesmí přidávat funkcionalitu, která by se mohla prijevovat, když není rozšíření nainstalované
-		$menuItem = new MainMenuItem(self::ESHOP_MENU_PRIORITY);
-		$menuItem->setTitle('Eshop');
-		$menuItem->setLink(':Eshop:Product:default');
-		return [
-			$menuItem,
 		];
 	}
 

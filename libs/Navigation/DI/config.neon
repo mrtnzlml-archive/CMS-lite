@@ -1,3 +1,5 @@
 services:
+	- Navigation\IAdminMenuFactory
+	- Navigation\IMainMenuFactory
 	- Navigation\IMenuEditorFactory
 	- Navigation\NavigationFacade

@@ -1,10 +1,8 @@
 <?php
 
-namespace App\AdminModule\Components;
+namespace Navigation;
 
 use Kdyby\Doctrine\EntityManager;
-use Navigation\NavigationFacade;
-use Navigation\NavigationItem;
 use Nette;
 use Nette\Application\UI;
 
@@ -27,7 +25,7 @@ class AdminMenu extends UI\Control
 	public function render()
 	{
 		/** @var NavigationItem $adminRoot */
-		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => NavigationFacade::ROOT_ADMIN]);
+		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => md5(__CLASS__)]);
 		$this->template->menuItems = $this->navigation->getItemTreeBelow($adminRoot->getId());
 		$this->template->render(__DIR__ . '/templates/AdminMenu.latte');
 	}

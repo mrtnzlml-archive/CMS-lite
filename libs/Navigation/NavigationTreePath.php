@@ -17,14 +17,14 @@ class NavigationTreePath extends BaseEntity
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="NavigationItem", cascade={"persist"})
-	 * @ORM\JoinColumn(name="ancestor_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="ancestor_id", referencedColumnName="id", onDelete="CASCADE")
 	 * @var NavigationItem
 	 */
 	protected $ancestor;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="NavigationItem", cascade={"persist"})
-	 * @ORM\JoinColumn(name="descendant_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="descendant_id", referencedColumnName="id", onDelete="CASCADE")
 	 * @var NavigationItem
 	 */
 	protected $descendant;

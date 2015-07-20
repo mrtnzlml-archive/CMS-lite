@@ -31,6 +31,11 @@ class NavigationItem extends BaseEntity
 	protected $name;
 
 	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $root = FALSE;
+
+	/**
 	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id")
 	 * @var \Url\Url
@@ -50,6 +55,12 @@ class NavigationItem extends BaseEntity
 	public function __construct()
 	{
 		$this->navigations = new ArrayCollection;
+	}
+
+	public function setRoot()
+	{
+		$this->root = TRUE;
+		return $this;
 	}
 
 }

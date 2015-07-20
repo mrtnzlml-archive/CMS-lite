@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Components;
 use Kdyby;
+use Navigation\IMainMenuFactory;
 
 /**
  * !!! POZOR !!!
@@ -52,7 +53,7 @@ trait PublicComponentsTrait
 		return $factory->create();
 	}
 
-	protected function createComponentMainMenu(Components\MainMenu\IMainMenuFactory $factory)
+	protected function createComponentMainMenu(IMainMenuFactory $factory)
 	{
 		return $factory->create();
 	}

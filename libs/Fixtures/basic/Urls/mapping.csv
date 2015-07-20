@@ -1,5 +1,3 @@
-,Front:Homepage:default
-kontakt,Front:Contact:default
 auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
 administrace/soubory,Admin:Files:default

@@ -2,8 +2,6 @@
 
 namespace App\Extensions;
 
-use App\Components\MainMenu\IMainMenuFactory;
-use App\Components\MainMenu\Providers\IMainMenuProvider;
 use App\Components\Meta\IMetaFactory;
 use App\Components\Meta\Providers\IMetasProvider;
 use Nette;
@@ -26,15 +24,6 @@ class CoreExtension extends Nette\DI\CompilerExtension
 	public function beforeCompile()
 	{
 		$cb = $this->getContainerBuilder();
-		$config = $this->getConfig($this->defaultConfiguration);
-
-		/** @var IMainMenuProvider $extension */
-		foreach ($this->compiler->getExtensions(IMainMenuProvider::class) as $extension) {
-			$definition = $cb->getDefinition($cb->getByType(IMainMenuFactory::class));
-			foreach ($extension->getMenuItems() as $menuItem) {
-				$definition->addSetup('addMainMenuItem', [$menuItem]);
-			}
-		}
 
 		/** @var IMetasProvider $extension */
 		foreach ($this->compiler->getExtensions(IMetasProvider::class) as $extension) {

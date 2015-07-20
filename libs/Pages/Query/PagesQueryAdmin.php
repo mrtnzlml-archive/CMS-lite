@@ -19,14 +19,6 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 	 */
 	private $select = [];
 
-	public function onlyMenuItems()
-	{
-		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
-			$qb->select('partial page.{id, title}');
-		};
-		return $this;
-	}
-
 	public function byAuthor(User $user)
 	{
 		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($user) {
@@ -110,17 +102,6 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 			$modifier($qb);
 		}
 		return $qb;
-	}
-
-	/**
-	 * @param Kdyby\Persistence\Queryable $repository
-	 * @param \Iterator $iterator
-	 *
-	 * @see https://github.com/Kdyby/Doctrine/blob/master/docs/en/optimizing-query-objects.md
-	 */
-	public function postFetch(Kdyby\Persistence\Queryable $repository, \Iterator $iterator)
-	{
-//		$ids = array_keys(iterator_to_array($iterator, TRUE));
 	}
 
 }

@@ -11,8 +11,6 @@ use Nette;
 class NavigationFacade extends Nette\Object
 {
 
-	const ROOT_ADMIN = 'admin_root';
-
 	/** @var EntityManager */
 	private $em;
 
@@ -52,10 +50,11 @@ class NavigationFacade extends Nette\Object
 		return Nette\Utils\ArrayHash::from($nodes);
 	}
 
-	public function createItem(NavigationItem $item, $parent_id = NULL)
+	public function createItem(NavigationItem $item, $navigation, $root_hash, $parent_id = NULL)
 	{
-		return $this->em->transactional(function () use ($item, $parent_id) {
+		return $this->em->transactional(function () use ($item, $navigation, $root_hash, $parent_id) {
 			// 1) save new item
+			$item->addNavigation($navigation);
 			$this->em->persist($item);
 			$this->em->flush($item);
 
@@ -65,9 +64,10 @@ class NavigationFacade extends Nette\Object
 			$this->em->flush($leaf);
 
 			//create admin root if doesn't exist
-			$root = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => self::ROOT_ADMIN]);
+			$root = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => $root_hash]);
 			if (!$root) {
-				$root = (new NavigationItem())->setName(self::ROOT_ADMIN);
+				$root = (new NavigationItem())->setRoot()->setName($root_hash);
+				$root->addNavigation($navigation);
 				$rootPath = (new NavigationTreePath($root, $root, 0));
 				$this->em->persist($rootPath);
 				$this->em->flush($rootPath);
@@ -78,7 +78,6 @@ class NavigationFacade extends Nette\Object
 
 			// 3) generate graph
 			$this->createPath($parent_id, $item->getId());
-
 			return $item;
 		});
 	}

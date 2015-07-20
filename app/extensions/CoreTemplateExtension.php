@@ -18,12 +18,12 @@ use App\Components\Footer\IFooterFactory;
 use App\Components\Footer\Providers\IFooterTemplateProvider;
 use App\Components\Header\IHeaderFactory;
 use App\Components\Header\Providers\IHeaderTemplateProvider;
-use App\Components\MainMenu\IMainMenuFactory;
 use App\Components\MainMenu\IWrapperFactory;
 use App\Components\MainMenu\Providers\IMainMenuTemplateProvider;
 use App\Components\SignInForm\ISignInFormFactory;
 use App\Components\SignInForm\Providers\ISignInFormTemplateProvider;
 use App\Components\Wrapper\Providers\IWrapperTemplatesProvider;
+use Navigation\IMainMenuFactory;
 use Nette;
 
 class CoreTemplateExtension extends Nette\DI\CompilerExtension

@@ -14,14 +14,18 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				{if $items}
-					<li n:foreach="$items as $item" {ifCurrent $item->link}class="active"{/ifCurrent}>
-						<a href="{plink $item->link (expand) $item->linkParameters}">
-							{$item->title}
-							{ifCurrent $item->link}
-								<span class="sr-only"> ({_aktuální})</span>
-							{/ifCurrent}
-						</a>
-					</li>
+					{foreach $items as $item}
+						{?$entity = $item->entity}
+						<li n:class="$entity->url ? ($control->presenter->isLinkCurrent($entity->url->absoluteDestination) ? 'active')">
+							<a {if $entity->url}href="{plink $entity->url->absoluteDestination}"{/if}>
+								{$entity->name}
+								<span class="sr-only"
+								      n:if="$entity->url ? ($control->presenter->isLinkCurrent($entity->url->absoluteDestination) ? TRUE)">
+									({_aktuální})
+								</span>
+							</a>
+						</li>
+					{/foreach}
 				{/if}
 			</ul>
 		</div>
