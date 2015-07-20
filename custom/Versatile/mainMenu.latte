@@ -16,11 +16,16 @@
 
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li n:foreach="$items as $item" n:class="$iterator->first ? first, $iterator->last ? last">
-				<a href="{plink $item->link (expand) $item->linkParameters}">
-					{$item->title}
-				</a>
-			</li>
+			{if $items}
+				{foreach $items as $item}
+					{?$entity = $item->entity}
+					<li n:class="$iterator->first ? first, $iterator->last ? last">
+						<a {if $entity->url}href="{plink $entity->url->absoluteDestination}"{/if}>
+							{$entity->name}
+						</a>
+					</li>
+				{/foreach}
+			{/if}
 		</ul>
 	</div>
 </div>
