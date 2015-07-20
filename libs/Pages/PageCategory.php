@@ -4,7 +4,7 @@ namespace Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -12,10 +12,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  *
  * @method setName(string)
  */
-class PageCategory extends BaseEntity
+class PageCategory
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="text", options={"comment":"Name of the page category"})

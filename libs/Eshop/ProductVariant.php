@@ -5,7 +5,7 @@ namespace Eshop;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -15,10 +15,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setVariantName(string)
  * @method setSku(string)
  */
-class ProductVariant extends BaseEntity
+class ProductVariant
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="variants", cascade={"persist"})

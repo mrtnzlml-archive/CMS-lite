@@ -4,7 +4,7 @@ namespace Users;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -13,10 +13,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setName(string $name)
  * @method string getName()
  */
-class Resource extends BaseEntity
+class Resource
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", options={"comment":"Identifier of the role"})

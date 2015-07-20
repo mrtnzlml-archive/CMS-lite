@@ -4,7 +4,7 @@ namespace Eshop;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -13,10 +13,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setVariant
  * @method setValue(string)
  */
-class VariantValue extends BaseEntity
+class VariantValue
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Variant", cascade={"persist"})

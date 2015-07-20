@@ -4,16 +4,17 @@ namespace Options;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="option_categories")
  */
-class OptionCategory extends BaseEntity
+class OptionCategory
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"Name of the option category"})

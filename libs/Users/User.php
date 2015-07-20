@@ -5,7 +5,7 @@ namespace Users;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Nette\Utils\Strings;
 
 /**
@@ -15,10 +15,11 @@ use Nette\Utils\Strings;
  * @method string getPassword()
  * @method setPassword(string)
  */
-class User extends BaseEntity
+class User
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", options={"comment":"User's email"})

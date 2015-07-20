@@ -3,7 +3,8 @@
 namespace Url;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kdyby;
+use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -19,10 +20,11 @@ use Kdyby;
  *
  * @ORM\HasLifecycleCallbacks
  */
-class Url extends Kdyby\Doctrine\Entities\BaseEntity
+class Url
 {
 
-	use Kdyby\Doctrine\Entities\Attributes\Identifier;
+	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", unique=TRUE, nullable=TRUE, options={"comment":"Fake path of the URL"})

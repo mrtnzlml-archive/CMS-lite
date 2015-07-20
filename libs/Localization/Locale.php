@@ -4,7 +4,7 @@ namespace Localization;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -13,10 +13,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method string getCode()
  * @method setName(string $name)
  */
-class Locale extends BaseEntity
+class Locale
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", options={"comment":"Code of the language"})

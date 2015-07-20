@@ -4,7 +4,7 @@ namespace Eshop;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -17,10 +17,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method float getDeliveryPrice()
  * @method setHeureka(boolean)
  */
-class Delivery extends BaseEntity
+class Delivery
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"Identifier of the delivery"})

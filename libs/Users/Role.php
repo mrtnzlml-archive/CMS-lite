@@ -4,7 +4,7 @@ namespace Users;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Nette\Security\IRole;
 
 /**
@@ -16,7 +16,7 @@ use Nette\Security\IRole;
  * @method setParent(Role $parent)
  * @method Role getParent
  */
-class Role extends BaseEntity implements IRole
+class Role implements IRole
 {
 
 	const GUEST = 'guest';
@@ -25,6 +25,7 @@ class Role extends BaseEntity implements IRole
 	const SUPERADMIN = 'superadmin';
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", options={"comment":"Identifier of the role"})

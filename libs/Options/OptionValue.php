@@ -4,7 +4,7 @@ namespace Options;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * Položka v nastavení může mít více hodnot, v tom případě se jedná o <select>.
@@ -12,10 +12,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  *
  * @ORM\Entity
  */
-class OptionValue extends BaseEntity
+class OptionValue
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Option", inversedBy="values", cascade={"persist"})

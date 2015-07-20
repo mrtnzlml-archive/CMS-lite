@@ -4,7 +4,7 @@ namespace Files;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -25,10 +25,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method setType(string $type)
  * @method string getType()
  */
-class File extends BaseEntity
+class File
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	const TYPE_ATTACHMENT = 'ATTACHMENT';
 

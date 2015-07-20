@@ -5,7 +5,7 @@ namespace Eshop;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -19,10 +19,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method Delivery[] getDeliveries()
  * @method ProductVariant[] getVariants()
  */
-class Product extends BaseEntity
+class Product
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="text", options={"comment":"Title of the product"})

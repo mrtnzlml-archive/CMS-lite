@@ -5,7 +5,7 @@ namespace Pages;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Localization\ILocaleAware;
 use Users\User;
 
@@ -42,10 +42,11 @@ use Users\User;
  *
  *
  */
-class Page extends BaseEntity implements ILocaleAware
+class Page implements ILocaleAware
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="text", options={"comment":"Title of the article"})

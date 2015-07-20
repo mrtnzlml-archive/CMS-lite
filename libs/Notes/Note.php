@@ -4,7 +4,7 @@ namespace Notes;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Users\User;
 
 /**
@@ -14,10 +14,11 @@ use Users\User;
  * @method setBody(string $body)
  * @method setAuthor(User $author)
  */
-class Note extends BaseEntity
+class Note
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", options={"comment":"Title of the note"})

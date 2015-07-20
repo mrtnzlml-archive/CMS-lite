@@ -4,16 +4,17 @@ namespace Navigation;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 use Nette;
 
 /**
  * @ORM\Entity
  */
-class NavigationTreePath extends BaseEntity
+class NavigationTreePath
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="NavigationItem", cascade={"persist"})

@@ -5,7 +5,7 @@ namespace Navigation;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Kdyby\Doctrine\Entities\BaseEntity;
+use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
@@ -15,10 +15,11 @@ use Kdyby\Doctrine\Entities\BaseEntity;
  * @method string getName()
  * @method setUrl(\Url\Url $url)
  */
-class NavigationItem extends BaseEntity
+class NavigationItem
 {
 
 	use Identifier;
+	use MagicAccessors;
 
 	/**
 	 * @ORM\Column(type="string", nullable=TRUE)
