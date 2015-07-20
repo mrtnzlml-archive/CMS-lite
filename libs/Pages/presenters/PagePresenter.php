@@ -6,6 +6,7 @@ use App\FrontModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Latte;
 use Nette;
+use Nette\Application\UI;
 use Nette\Application\UI\ITemplateFactory;
 use Pages\Page;
 use Pages\Query\PagesQuery;
@@ -71,6 +72,16 @@ class PagePresenter extends BasePresenter
 		$this->setMeta('robots', 'noindex');
 		$this->template->page = $page;
 		$this->setView('default');
+	}
+
+	protected function createComponentProtected()
+	{
+		$form = new UI\Form;
+		$form->addSubmit('check', 'Ověřit heslo');
+		$form->onSuccess[] = function () {
+			$this->redirect('default', 4); //FIXME
+		};
+		return $form;
 	}
 
 }
