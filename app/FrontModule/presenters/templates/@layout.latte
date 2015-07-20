@@ -8,6 +8,7 @@
 			<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/css/front.min.css">
 			{control css}
 		{/block}
+		{control webFontLoader}
 		{control favicon}
 	</head>
 	{* FIXME: This is really bad. We should avoid empty class tag and so on. Not sure how to do it properly... *}
@@ -23,7 +24,7 @@
 	{control wrapper:below}
 
 	{block scripts}
-		<script type="text/javascript" src="{$basePath}/js/front.min.js"></script>
+		<script type="text/javascript" src="{$basePath}/js/front.min.js" async defer></script>
 		{control js}
 	{/block}
 	</body>
