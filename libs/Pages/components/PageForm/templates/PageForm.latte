@@ -52,6 +52,20 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			{input protected, class => 'form-control'}
+			<div class="form-group" id="protected">
+				{label password /}
+				{input password, class => 'form-control'}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				&nbsp;
+			</div>
+		</div>
+	</div>
 	{************* /ADVANCED - OPTIMIZATION*************}
 	<h3>Optimalizace</h3>
 	<div class="form-group">
@@ -81,9 +95,14 @@
 	</div>
 	{******************* /OPTIMIZATION *******************}
 	<div class="row">
-		<div class="col-lg-4">
+		<div class="col-lg-2">
 			<div class="form-group">
-				{input save, class => "btn btn-primary form-control"}
+				{input saveAndRedirect, class => "btn btn-primary form-control"}
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<div class="form-group">
+				{input saveAndStay, class => "btn btn-primary form-control"}
 			</div>
 		</div>
 		<div class="col-lg-4" n:if="$showPublish">

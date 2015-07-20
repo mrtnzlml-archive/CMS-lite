@@ -20,14 +20,11 @@ class Css extends Nette\Application\UI\Control
 	private $externalStyles = [];
 
 	/** @var string */
-	private $vendor;
-	/** @var string */
 	private $public;
 
-	public function __construct($vendor, $public)
+	public function __construct($public)
 	{
 		parent::__construct();
-		$this->vendor = $vendor;
 		$this->public = $public;
 	}
 
@@ -36,17 +33,12 @@ class Css extends Nette\Application\UI\Control
 		$this->template->render(__DIR__ . '/templates/Css.latte');
 	}
 
-	public function renderAdmin()
-	{
-		$this->template->render(__DIR__ . '/templates/CssAdmin.latte');
-	}
-
 	protected function createComponentCss()
 	{
-		$files = new WebLoader\FileCollection($this->vendor . '/css');
+		$files = new WebLoader\FileCollection;
 		$files->addRemoteFiles($this->externalStyles);
 		$files->addFiles($this->styles);
-		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->dir . '/temp');
+		$compiler = WebLoader\Compiler::createCssCompiler($files, $this->public . '/temp');
 		$compiler->addFileFilter(new WebLoader\Filter\LessFilter());
 		$compiler->addFilter(function ($code) {
 			$minifier = new Minify\CSS;

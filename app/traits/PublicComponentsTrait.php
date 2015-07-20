@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Components;
 use Kdyby;
 use Navigation\IMainMenuFactory;
+use WebFontLoader\Components\IWebFontLoaderFactory;
 
 /**
  * !!! POZOR !!!
@@ -17,6 +18,11 @@ trait PublicComponentsTrait
 {
 
 	use Kdyby\Autowired\AutowireComponentFactories;
+
+	protected function createComponentWebFontLoader(IWebFontLoaderFactory $factory)
+	{
+		return $factory->create();
+	}
 
 	protected function createComponentAdminBar(Components\AdminBar\IAdminBarFactory $factory)
 	{

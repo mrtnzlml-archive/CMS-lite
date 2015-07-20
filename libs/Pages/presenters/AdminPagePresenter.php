@@ -71,9 +71,6 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
 		$control->onException[] = function () {
 			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.', Flashes::FLASH_DANGER);
 		};
-		$control->onComplete[] = function () {
-			$this->redirect('default');
-		};
 		return $control;
 	}
 

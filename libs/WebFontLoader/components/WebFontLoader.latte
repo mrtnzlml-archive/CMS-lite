@@ -1,0 +1,8 @@
+<script>WebFontConfig = {l}google: {l}families: [{foreach $fonts as $font}{$font}{sep},{/sep}{/foreach}]{r}, timeout: 1000{r};
+	var el = document.documentElement;
+	el.className += ' wf-loading';
+	setTimeout(function () {
+		el.className = el.className.replace(/(^|\s)wf-loading(\s|$)/g, '')
+	}, 1000);
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js" async defer></script>
