@@ -9,7 +9,8 @@
 		{/block}
 		{control favicon}
 	</head>
-	<body>
+	{* FIXME: This is really bad. We should avoid empty class tag and so on. Not sure how to do it properly... *}
+	<body{ifset individual_css_class} class="{include individual_css_class}"{/ifset}{ifset individual_css_id} id="{include individual_css_id}"{/ifset}>
 
 	<script> document.body.className += 'js' </script>
 

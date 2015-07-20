@@ -96,6 +96,18 @@ class Page extends BaseEntity implements ILocaleAware
 	protected $publishedAt = NULL;
 
 	/**
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Individual CSS IDs in body element"})
+	 * @var string
+	 */
+	protected $individualCssId = NULL;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE, options={"comment":"Individual CSS classes in body element"})
+	 * @var string
+	 */
+	protected $individualCssClass = NULL;
+
+	/**
 	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default":"0"})
 	 * @var boolean
 	 */
@@ -171,6 +183,31 @@ class Page extends BaseEntity implements ILocaleAware
 	public function isPublished()
 	{
 		return $this->publishedAt ? TRUE : FALSE;
+	}
+
+	public function setIndividualCss($styles)
+	{
+		$classes = [];
+		$this->individualCssId = '';
+		preg_match_all('~([#.]?)([a-z][a-z0-9_-]*)~', $styles, $matches, PREG_SET_ORDER);
+		foreach ($matches as $m) {
+			if ($m[1] === '#') { // #ID
+				$this->individualCssId = $m[2];
+			} else { // .class
+				$classes[] = $m[2];
+			}
+		}
+		$this->individualCssClass = implode(' ', $classes);
+		return TRUE;
+	}
+
+	public function getIndividualCss()
+	{
+		$output = $this->individualCssId ? '#' . $this->individualCssId : '';
+		foreach (array_filter(explode(' ', $this->individualCssClass)) as $class) {
+			$output .= ' .' . $class;
+		}
+		return $output;
 	}
 
 	public function getAuthorsIds()

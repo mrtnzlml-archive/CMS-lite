@@ -97,6 +97,7 @@ class PageForm extends AControl
 
 		// ADVANCED:
 		$form->addText('tags', 'Štítky:');
+		$form->addText('individual_css', 'Individuální CSS třída nebo ID:');
 
 		// OPTIMIZATION:
 		$form->addText('individualTitle', 'Individuální titulek:');
@@ -172,6 +173,7 @@ class PageForm extends AControl
 		$entity->setDescription($values->description);
 		$entity->setIndex($values->index);
 		$entity->setFollow($values->follow);
+		$entity->setIndividualCss($values->individual_css);
 
 		$entity->clearAuthors();
 		if (!in_array(NULL, $values->authors)) {
@@ -213,6 +215,7 @@ class PageForm extends AControl
 				'index' => $e->getIndex(),
 				'follow' => $e->getFollow(),
 				'tags' => $e->getTagsString(),
+				'individual_css' => $e->getIndividualCss(),
 			]);
 		}
 	}
