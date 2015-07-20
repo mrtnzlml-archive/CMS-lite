@@ -31,10 +31,13 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 				$page->addCategory($this->getReference('page-category-3'));
 			}
 			$page->setLocale($this->getReference('locale-cz'));
-			$manager->persist($page);
-			$manager->flush($page);
+
+			$nonLockingUniqueInserter = new \Kdyby\Doctrine\Tools\NonLockingUniqueInserter($manager);
+			$nonLockingUniqueInserter->persist($page);
+			$manager->flush();
+
 			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Pages:Page:default', $page->getId()));
-			$manager->flush($page);
+			$manager->flush();
 		}
 	}
 
