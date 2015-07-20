@@ -2,7 +2,7 @@
 # http://nette.org/security-warning
 
 extensions:
-#    - Versatile\DI\VersatileExtension
+    - Versatile\DI\VersatileExtension
 
     ##### core extensions #####
     - Eshop\DI\EshopExtension
