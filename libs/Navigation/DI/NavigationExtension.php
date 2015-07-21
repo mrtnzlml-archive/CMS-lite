@@ -16,6 +16,12 @@ class NavigationExtension extends CompilerExtension implements IEntityProvider
 		$this->parseConfig($builder, __DIR__ . '/config.neon');
 	}
 
+	public function beforeCompile()
+	{
+		$builder = $this->getContainerBuilder();
+		$this->setPresenterMapping($builder, ['Navigation' => 'Navigation\\*Module\\Presenters\\*Presenter']);
+	}
+
 	/**
 	 * Returns associative array of Namespace => mapping definition
 	 *

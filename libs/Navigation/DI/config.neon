@@ -3,3 +3,6 @@ services:
 	- Navigation\IMainMenuFactory
 	- Navigation\IMenuEditorFactory
 	- Navigation\NavigationFacade
+
+	# Presenters
+	- Navigation\Presenters\NavigationPresenter

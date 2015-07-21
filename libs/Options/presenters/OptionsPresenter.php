@@ -32,11 +32,6 @@ class OptionsPresenter extends BasePresenter
 		$this->template->unknown = $this->registrar->getUnknownExtensions();
 	}
 
-	public function createComponentMenuEditor(IMenuEditorFactory $factory)
-	{
-		return $factory->create();
-	}
-
 	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
 	{
 		return $factory->create();

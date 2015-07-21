@@ -5,7 +5,6 @@ administrace/nastaveni/general,Options:Options:general
 administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/nastaveni/seo,Options:Options:seo
-administrace/nastaveni/navigace,Options:Options:navigation
 nahled-stranky,Pages:Page:preview
 administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit

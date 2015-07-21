@@ -9,12 +9,6 @@
 					</a>
 				</li>
 
-				<li {ifCurrent :Options:Options:navigation}class="active"{/ifCurrent}>
-					<a href="{plink :Options:Options:navigation}">
-						Navigace
-					</a>
-				</li>
-
 				{foreach $categories as $category}
 					<li {ifCurrent :Options:Options:$category->name}class="active"{/ifCurrent}>
 						<a href="{plink :Options:Options:$category->name}">
