@@ -2,6 +2,21 @@
 {block individual_css_id}{$page->individualCssId}{/block}
 
 {block content}
-	<h1>{$page->title}</h1>
-	{$page->body|texy}
+	{* FIXME: contenteditable pouze pro oprávněného uživatele *}
+	<h1{if $user->loggedIn} contenteditable="true" id="page_title"{/if}>{$page->title}</h1>
+	<div contenteditable="true" id="page_body" n:tag-if="$user->loggedIn">
+		{$page->body|texy}
+	</div>
+	<a class="save_contenteditable ajax btn" n:if="$user->loggedIn">Uložit změny</a>
+{/block}
+
+{block scripts}
+	{include parent}
+	<script n:if="$user->loggedIn">
+		$('.save_contenteditable').click(function () {
+			//TODO
+			console.log($('#page_title').html());
+			console.log($('#page_body').html());
+		});
+	</script>
 {/block}
