@@ -181,7 +181,7 @@ class PageForm extends AControl
 			$this->onException($this, $exc);
 			return;
 		}
-		$this->redirect('default');
+		$this->presenter->redirect('default');
 	}
 
 	private function fillEntityWithValues(Page $entity, ArrayHash $values)
