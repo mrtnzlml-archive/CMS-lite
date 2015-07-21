@@ -32,15 +32,6 @@ function initialize() {
 			data: data
 		});
 	});
-	$(".dd a").on("mousedown", function(event) { // mousedown prevent nestable click
-		event.preventDefault();
-		return false;
-	});
-	$(".dd a").on("click", function(event) { // click event
-		event.preventDefault();
-		window.location = $(this).attr("href");
-		return false;
-	});
 
 	// generuje URL na zaklade zadavaneho titulku
 	$('input[data-slug-to]').keyup(function () {

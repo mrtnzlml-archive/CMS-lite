@@ -14,6 +14,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @method setName(string $name)
  * @method string getName()
  * @method setUrl(\Url\Url $url)
+ * @method setExternalUrl(string $url)
+ * @method string getExternalUrl()
  */
 class NavigationItem
 {
@@ -42,6 +44,12 @@ class NavigationItem
 	 * @var \Url\Url
 	 */
 	protected $url;
+
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
+	 */
+	protected $externalUrl = NULL;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="Navigation", inversedBy="items", cascade={"persist"})

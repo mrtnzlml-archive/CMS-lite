@@ -6,8 +6,12 @@
 				<ul class="dropdown-menu subMenu" role="menu">
 					<li n:foreach="$menuItems as $menuItem"
 					    n:class="$menuItem->url ? ($presenter->isLinkCurrent($menuItem->url->absoluteDestination) ? 'active')">
-						<a {if $menuItem->url}href="{plink $menuItem->url->absoluteDestination}"{/if}
-						   n:class="$menuItem->url ? ($presenter->isLinkCurrent($menuItem->url->absoluteDestination) ? 'active')">{$menuItem->name}</a>
+						<a {if $menuItem->externalUrl}
+							href="{$menuItem->externalUrl}"
+						{elseif $menuItem->url}
+							href="{plink $menuItem->url->absoluteDestination}"
+						{/if}
+								n:class="$menuItem->url ? ($presenter->isLinkCurrent($menuItem->url->absoluteDestination) ? 'active')">{$menuItem->name}</a>
 					</li>
 				</ul>
 			{/define}
@@ -17,7 +21,11 @@
 					{?$entity = $menuItem->entity}
 					<li n:class="$entity->url ? ($presenter->isLinkCurrent($entity->url->getAbsoluteDestination(TRUE)) ? 'active')">
 						<a n:class="dropdown-toggle, $entity->url ? ($presenter->isLinkCurrent($entity->url->getAbsoluteDestination(TRUE)) ? 'active')"
-						   {if $entity->url}href="{plink $entity->url->absoluteDestination}"{/if}
+								{if $entity->externalUrl}
+									href="{$entity->externalUrl}"
+								{elseif $entity->url}
+									href="{plink $entity->url->absoluteDestination}"
+								{/if}
 								{ifset $menuItem->descendants}data-toggle="dropdown"{/ifset}>
 							<span class="icon {$entity->icon}"></span>
 							{$entity->name}

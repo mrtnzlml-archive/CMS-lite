@@ -122,11 +122,16 @@ class MenuEditor extends Control
 
 		$form->onSuccess[] = function ($_, ArrayHash $values) {
 			//TODO: Redirect to URL (router se to musí napřed naučit)
-			/** @var Page $page */
-			$page = $this->em->find(Page::class, $values->pages);
 			$menuItem = new NavigationItem;
-			$menuItem->setName($values->title ?: $page->getTitle());
-			$menuItem->setUrl($page->getUrl());
+			if ($values->href) {
+				$menuItem->setName($values->title);
+				$menuItem->setExternalUrl($values->href);
+			} else {
+				/** @var Page $page */
+				$page = $this->em->find(Page::class, $values->pages);
+				$menuItem->setName($values->title ?: $page->getTitle());
+				$menuItem->setUrl($page->getUrl());
+			}
 			$this->navigationFacade->createItem(
 				$menuItem,
 				$this->em->find(Navigation::class, $this->navigation),
