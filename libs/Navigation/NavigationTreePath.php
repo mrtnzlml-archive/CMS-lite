@@ -36,6 +36,12 @@ class NavigationTreePath
 	 */
 	protected $depth;
 
+	/**
+	 * @ORM\Column(type="integer")
+	 * @var int
+	 */
+	protected $item_order = 0;
+
 	public function __construct(NavigationItem $ancestor, NavigationItem $descendant, $depth)
 	{
 		if (!is_numeric($depth)) {

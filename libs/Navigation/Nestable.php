@@ -10,6 +10,12 @@ use Nette;
 class Nestable extends Nette\Object
 {
 
+	/**
+	 * @param array|string $input Array or JSON string.
+	 *
+	 * @return array
+	 * @throws Nette\Utils\JsonException
+	 */
 	public static function resolveJson($input)
 	{
 		if (is_string($input)) {

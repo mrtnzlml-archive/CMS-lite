@@ -2,6 +2,7 @@
 
 namespace Navigation;
 
+use Doctrine\DBAL\Types\Type;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 
@@ -30,6 +31,7 @@ class NavigationFacade extends Nette\Object
 			LEFT JOIN Navigation\NavigationTreePath tree1 WITH (n.id = tree1.descendant)
 			LEFT JOIN Navigation\NavigationTreePath tree2 WITH (tree2.descendant = tree1.descendant AND tree2.depth = 1)
 		  	WHERE tree1.ancestor = ?1 AND tree1.depth > 0
+		  	ORDER BY tree1.item_order ASC
 		');
 		$query->setParameter(1, $itemId);
 		$menuItems = $query->getResult();
@@ -82,41 +84,43 @@ class NavigationFacade extends Nette\Object
 		});
 	}
 
-	public function recalculatePathsForNode($nodeId, $nodeIds)
+	public function recalculatePathsForNode($nodeId, array $nodeIds)
 	{
-		//DELETE t1 FROM navigation_tree_path t1 JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = 50 AND t1.depth > 0);
 		$connection = $this->em->getConnection();
 		$stmt = $connection->prepare("
 			DELETE t1 FROM navigation_tree_path t1
 			JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = :ancestor AND t1.depth > 0);
 		");
-		$stmt->bindValue('ancestor', $nodeId, \Doctrine\DBAL\Types\Type::INTEGER);
+		$stmt->bindValue('ancestor', $nodeId, Type::INTEGER);
 		$stmt->execute();
 		$this->calculatePaths($nodeId, $nodeIds);
 	}
 
 	private function calculatePaths($root, array $nodeIds)
 	{
+		$order = 0;
 		foreach ($nodeIds as $key => $id) {
 			if (!is_array($id)) {
-				$this->createPath($root, $id);
+				$this->createPath($root, $id, $order);
 			} else {
-				$this->createPath($root, $key);
-				$this->calculatePaths($key, $id);
+				$this->createPath($root, $key, $order);
+				$this->calculatePaths($key, $id, $order);
 			}
+			$order++;
 		}
 	}
 
-	private function createPath($parent_id, $item_id)
+	private function createPath($parent_id, $item_id, $order = 0)
 	{
 		$connection = $this->em->getConnection();
 		$stmt = $connection->prepare('
-			INSERT INTO navigation_tree_path (ancestor_id, descendant_id, depth)
-			SELECT ancestor_id, :descSelect, depth+1 FROM navigation_tree_path
+			INSERT INTO navigation_tree_path (ancestor_id, descendant_id, depth, item_order)
+			SELECT ancestor_id, :descSelect, depth+1, :item_order FROM navigation_tree_path
 			WHERE descendant_id = :desc;
 		');
-		$stmt->bindValue('descSelect', $item_id, \Doctrine\DBAL\Types\Type::INTEGER);
-		$stmt->bindValue('desc', $parent_id);
+		$stmt->bindValue('descSelect', $item_id, Type::INTEGER);
+		$stmt->bindValue('desc', $parent_id, Type::INTEGER);
+		$stmt->bindValue('item_order', $order, Type::INTEGER);
 		$stmt->execute();
 	}
 
