@@ -11,3 +11,4 @@ administrace/nahrat-soubory,Admin:Files:upload
 administrace/editovat-soubor,Admin:Files:edit
 administrace/novy-uzivatel,Users:Users:new
 administrace/editovat-uzivatele,Users:Users:edit
+protected-page,Pages:Page:protected

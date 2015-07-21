@@ -2,6 +2,7 @@
 
 namespace Pages\Presenters;
 
+use App\Components\Flashes\Flashes;
 use App\FrontModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Latte;
@@ -21,6 +22,9 @@ class PagePresenter extends BasePresenter
 	/** @var ITemplateFactory */
 	private $templateFactory;
 
+	/** @var integer */
+	private $protected_page_id;
+
 	public function __construct(EntityManager $em, ITemplateFactory $templateFactory)
 	{
 		$this->em = $em;
@@ -35,8 +39,9 @@ class PagePresenter extends BasePresenter
 			$this->error('Page not found.');
 		}
 
-		if ($page->protected) {
-			$this->forward('protected', $page->getId());
+		$id = $this->getParameterId('page_authorized');
+		if ($page->protected && !$this->getSession(__CLASS__)->$id) {
+			$this->redirect('protected', $page->getId());
 		} else {
 			$this['meta']->setRobots([
 				$page->index, $page->follow,
@@ -53,9 +58,13 @@ class PagePresenter extends BasePresenter
 		}
 	}
 
-	public function actionProtected($id)
+	public function actionProtected($id = NULL)
 	{
-		dump($id);
+		if ($id === NULL) {
+			$this->redirect('default');
+		}
+		$this->getComponent('meta')->setRobots('noindex');
+		$this->protected_page_id = $id;
 	}
 
 	public function actionPreview($id)
@@ -77,9 +86,20 @@ class PagePresenter extends BasePresenter
 	protected function createComponentProtected()
 	{
 		$form = new UI\Form;
+		$form->addPassword('password', 'Heslo:')
+			->setRequired('Vyplňte prosím heslo k této stránce.');
 		$form->addSubmit('check', 'Ověřit heslo');
-		$form->onSuccess[] = function () {
-			$this->redirect('default', 4); //FIXME
+		$form->onSuccess[] = function ($_, Nette\Utils\ArrayHash $values) {
+			/** @var Page $page */
+			$page = $this->em->find(Page::class, $this->protected_page_id);
+			if (Nette\Security\Passwords::verify($values->password, $page->getPassword())) {
+				$id = $this->getParameterId('page_authorized');
+				$section = $this->getSession(__CLASS__)->setExpiration('14 days', $id);
+				$section->$id = TRUE;
+			} else {
+				$this->flashMessage('Zadané heslo není správné', Flashes::FLASH_DANGER);
+			}
+			$this->redirect('default', $this->protected_page_id);
 		};
 		return $form;
 	}

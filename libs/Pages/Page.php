@@ -30,6 +30,7 @@ use Users\User;
  * @method setUrl(\Url\Url $url)
  * @method \Url\Url getUrl()
  * @method boolean getProtected()
+ * @method string getPassword()
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
