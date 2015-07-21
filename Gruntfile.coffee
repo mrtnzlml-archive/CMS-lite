@@ -35,7 +35,8 @@ module.exports = (grunt) ->
     uglify:
       admin:
         files:
-          'www/js/admin.min.js': [
+          'www/js/admin.min.js': [# TODO: minimalizovat potřebu JS
+            'vendor/jquery/dist/jquery.js'
             'vendor/bootstrap/js/bootstrap.js'
             'vendor/bootstrap/js/tooltip.js'
             'vendor/nette.ajax.js/nette.ajax.js'
