@@ -20,9 +20,8 @@ $(function () {
 
 function initialize() {
 
-	$('.dd').nestable({
-		maxDepth: 3
-	}).on('change', function (event) {
+	//FIXME: možná také odesílat až po kliknutí na uložit, aby nedocházalo k nechtěným změnám na produkci
+	$('.dd').nestable().on('change', function (event) {
 		var list = event.length ? event : $(event.target);
 		var output = list.data('output');
 		var data = {};
@@ -32,6 +31,15 @@ function initialize() {
 			type: 'post',
 			data: data
 		});
+	});
+	$(".dd a").on("mousedown", function(event) { // mousedown prevent nestable click
+		event.preventDefault();
+		return false;
+	});
+	$(".dd a").on("click", function(event) { // click event
+		event.preventDefault();
+		window.location = $(this).attr("href");
+		return false;
 	});
 
 	// generuje URL na zaklade zadavaneho titulku

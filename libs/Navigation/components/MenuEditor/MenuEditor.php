@@ -8,9 +8,14 @@ use Nette\Application\UI;
 use Nette\Application\UI\Control;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
+use Nextras\Application\UI\SecuredLinksControlTrait;
+use Pages\Page;
+use Pages\Query\PagesQuery;
 
 class MenuEditor extends Control
 {
+
+	use SecuredLinksControlTrait;
 
 	/** @var EntityManager */
 	private $em;
@@ -18,8 +23,12 @@ class MenuEditor extends Control
 	/** @var NavigationFacade */
 	private $navigationFacade;
 
-	/** @persistent */
-	public $navigation;
+	/**
+	 * TODO: když NULL, tak nastavit defaultní navigaci
+	 * @persistent
+	 * @var NULL|integer ID of current navigation
+	 */
+	public $navigation; //FIXME: předělat na celou Navigation, ne jen ID
 
 	private $root;
 
@@ -38,7 +47,7 @@ class MenuEditor extends Control
 					'root' => 1,
 					'navigations.id' => $this->navigation,
 				]);
-				if (!$this->root) {
+				if (!$this->root) { //FIXME: ??
 					$this->navigation = NULL;
 					$this->redirect('this');
 				}
@@ -93,8 +102,45 @@ class MenuEditor extends Control
 		return $form;
 	}
 
+	public function createComponentMenuItems()
+	{
+		$form = new UI\Form;
+
+		$pages = $this->em->getRepository(Page::class)->fetch(new PagesQuery);
+		$items = [];
+		/** @var Page $page */
+		foreach ($pages as $page) {
+			$items[$page->getId()] = $page->getTitle();
+		}
+		$form->addSelect('pages', 'Publikované stránky:', $items);
+		$form->addText('title', 'Alternativní název:');
+		$form->addText('href', 'URL adresa')
+			->addCondition($form::FILLED)
+			->addRule($form::URL, 'Vyplňte prosím platnou URL adresu');
+		$form['title']->addConditionOn($form['href'], $form::FILLED)
+			->setRequired('Vyplňte prosím alternativní název odkazu.');
+
+		$form->onSuccess[] = function ($_, ArrayHash $values) {
+			//TODO: Redirect to URL (router se to musí napřed naučit)
+			/** @var Page $page */
+			$page = $this->em->find(Page::class, $values->pages);
+			$menuItem = new NavigationItem;
+			$menuItem->setName($values->title ?: $page->getTitle());
+			$menuItem->setUrl($page->getUrl());
+			$this->navigationFacade->createItem(
+				$menuItem,
+				$this->em->find(Navigation::class, $this->navigation),
+				md5(\Navigation\AdminMenu::class) //FIXME!
+			);
+			$this->redirect('this'); //If AJAX redraw menu editor
+		};
+
+		$form->addSubmit('addItem', 'Přidat do menu');
+		return $form;
+	}
+
 	/**
-	 * @secured
+	 * FIXME: @secured
 	 */
 	public function handleUpdateNavigation($json)
 	{
@@ -106,9 +152,21 @@ class MenuEditor extends Control
 			'root' => 1,
 			'navigations.id' => $this->navigation,
 		]);
+		//FIXME: ošetřit když neexistuje
 		$this->navigationFacade->recalculatePathsForNode($root->getId(), Nestable::resolveJson($json));
 
 		$this->getPresenter()->redrawControl('adminMenu');
+	}
+
+	/**
+	 * FIXME: @secured
+	 */
+	public function handleDeleteNavigationItem($id)
+	{
+		$partialEntity = $this->em->getPartialReference(NavigationItem::class, $id);
+		$this->em->remove($partialEntity);
+		$this->em->flush($partialEntity);
+		$this->redirect('this');
 	}
 
 }

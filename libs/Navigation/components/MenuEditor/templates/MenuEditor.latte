@@ -9,11 +9,6 @@
 				<li class="dd-item" data-id="{$menuItem->id}">
 					<div class="dd-handle">
 						{$menuItem->name}
-						{if $menuItem->url}
-							<span>(interní odkaz)</span>
-						{else}
-							<span>#anchor</span>
-						{/if}
 					</div>
 					{ifset $menuItem->descendants}
 						{include this, menuItems => $menuItem->descendants}
@@ -29,11 +24,9 @@
 			<li class="dd-item" data-id="{$entity->id}">
 				<div class="dd-handle">
 					{$entity->name}
-					{if $entity->url}
-						<span>(interní odkaz)</span>
-					{else}
-						<span>#anchor</span>
-					{/if}
+					<span>
+						<a n:href="deleteNavigationItem! $entity->id">Odstranit</a>
+					</span>
 				</div>
 				{ifset $menuItem->descendants}
 					{include submenu, menuItems => $menuItem->descendants}
@@ -43,3 +36,5 @@
 	</ol>
 
 </div>
+
+{control menuItems}

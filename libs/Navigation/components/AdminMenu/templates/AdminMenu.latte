@@ -19,7 +19,7 @@
 						<a n:class="dropdown-toggle, $entity->url ? ($presenter->isLinkCurrent($entity->url->getAbsoluteDestination(TRUE)) ? 'active')"
 						   {if $entity->url}href="{plink $entity->url->absoluteDestination}"{/if}
 								{ifset $menuItem->descendants}data-toggle="dropdown"{/ifset}>
-							<span class="{$entity->icon}"></span>
+							<span class="icon {$entity->icon}"></span>
 							{$entity->name}
 							{ifset $menuItem->descendants}
 								<span class="ico flaticon-next21"></span>

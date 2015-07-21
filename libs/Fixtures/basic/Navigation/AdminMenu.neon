@@ -1,11 +1,11 @@
 - name: Nástěnka
-  icon: 'icon ai-home60'
+  icon: 'ai-home60'
   path: administrace
   destination: Admin:Dashboard:default
 
 -
 	name: Obsah
-	icon: 'icon flaticon-document236'
+	icon: 'flaticon-document236'
 	subitems:
 		- name: Stránky
 		  path: administrace/stranky
@@ -15,11 +15,11 @@
 		  destination: Pages:AdminPage:new
 
 - name: Uživatelé
-  icon: 'icon flaticon-user8'
+  icon: 'flaticon-user8'
   path: administrace/uzivatele
   destination: Users:Users:default
 
 - name: Nastavení
-  icon: 'icon flaticon-gear39'
+  icon: 'flaticon-gear39'
   path: administrace/nastaveni
   destination: Options:Options:default
