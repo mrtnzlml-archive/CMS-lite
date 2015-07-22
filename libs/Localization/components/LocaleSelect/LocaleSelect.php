@@ -25,15 +25,17 @@ class LocaleSelect extends AControl
 
 	protected function createComponentLocaleSelect()
 	{
-		$locales = $this->em->getRepository(Locale::class)->findPairs('code');
+        $locales = $this->em->getRepository(Locale::class)->findPairs('code');
+        $locale  = $this->presenter->locale = 45;
 
 		$form = new UI\Form;
 		$form->addSelect('locales', NULL,
 			array_map(function ($locale) {
 				return mb_strtoupper($locale);
 			}, $locales)
-		)->setDefaultValue(array_search($this->presenter->locale, $locales));
-		$form->onSuccess[] = function (UI\Form $form, ArrayHash $values) use ($locales) {
+		)->setDefaultValue(($locale !== FALSE) ? array_search($this->presenter->locale, $locales) : NULL);
+
+        $form->onSuccess[] = function (UI\Form $form, ArrayHash $values) use ($locales) {
 			$this->presenter->locale = $locales[$values->locales];
 			$this->redirect('this');
 		};
