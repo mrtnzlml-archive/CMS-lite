@@ -4,10 +4,15 @@
         <div class="col-md-12">
             {control fineUploader}
         </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12 mt20">
+            <a n:href="default" class="btn btn-success">Přehled souborů</a>
+        </div>
     </div>
 {/block}
 
-{block css}
+{block styles}
+    {include parent}
     <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
