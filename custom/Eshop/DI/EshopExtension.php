@@ -3,6 +3,8 @@
 namespace Eshop\DI;
 
 use App\Extensions\CompilerExtension;
+use App\Extensions\Extension;
+use App\Extensions\ICustomExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
@@ -11,10 +13,19 @@ use Nette;
  * TODO: schéma databáze při instalaci
  * TODO: default data
  */
-class EshopExtension extends CompilerExtension implements IEntityProvider
+class EshopExtension extends CompilerExtension implements IEntityProvider, ICustomExtension
 {
 
-	const ESHOP_MENU_PRIORITY = 1000;
+	public function getExtensionInfo()
+	{
+		/** @var Extension $extension */
+		$extension = (new Extension)->setName('ANT Eshop');
+		$extension->setDescription(<<<DESC
+Peckový ANT Eshop, který zvládne všechno...
+DESC
+		);
+		return $extension;
+	}
 
 	public function loadConfiguration()
 	{
@@ -26,7 +37,7 @@ class EshopExtension extends CompilerExtension implements IEntityProvider
 	{
 		$builder = $this->getContainerBuilder();
 		$this->setPresenterMapping($builder, ['Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter']);
-		$this->registerExtension($builder, self::class);
+		$this->registerExtension($builder, $this->getExtensionInfo());
 		$this->addInstallEvent($builder, \Eshop\DI\Install::class, 'install');
 		$this->addUninstallEvent($builder, \Eshop\DI\Install::class, 'uninstall');
 	}

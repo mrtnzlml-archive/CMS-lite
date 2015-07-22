@@ -4,12 +4,19 @@ namespace Pages\DI;
 
 use App\Components\Js\Providers\IJsProvider;
 use App\Extensions\CompilerExtension;
+use App\Extensions\Extension;
+use App\Extensions\ICustomExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class PagesExtension extends CompilerExtension implements IEntityProvider, IJsProvider
+class PagesExtension extends CompilerExtension implements IEntityProvider, IJsProvider, ICustomExtension
 {
+
+	public function getExtensionInfo()
+	{
+		return (new Extension)->setName(self::class);
+	}
 
 	public function loadConfiguration()
 	{
@@ -20,7 +27,7 @@ class PagesExtension extends CompilerExtension implements IEntityProvider, IJsPr
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
-		$this->registerExtension($builder, self::class);
+		$this->registerExtension($builder, $this->getExtensionInfo());
 		$this->setPresenterMapping($builder, ['Pages' => 'Pages\\*Module\\Presenters\\*Presenter']);
 	}
 

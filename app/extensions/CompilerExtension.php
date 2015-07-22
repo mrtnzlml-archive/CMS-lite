@@ -47,7 +47,7 @@ class CompilerExtension extends Nette\DI\CompilerExtension
 			);
 	}
 
-	public function registerExtension(ContainerBuilder $builder, $extension)
+	public function registerExtension(ContainerBuilder $builder, Extension $extension)
 	{
 		$builder
 			->getDefinition($builder->getByType(Registrar::class))

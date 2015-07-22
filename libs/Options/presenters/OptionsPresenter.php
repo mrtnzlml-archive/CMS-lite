@@ -7,7 +7,6 @@ use App\Components\Flashes\Flashes;
 use App\Extensions\Extension;
 use App\Extensions\Registrar;
 use Kdyby\Doctrine\EntityManager;
-use Navigation\IMenuEditorFactory;
 use Options\Components\OptionsForm\IOptionsFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
@@ -28,8 +27,10 @@ class OptionsPresenter extends BasePresenter
 
 	public function renderDefault()
 	{
-		$this->template->known = $this->registrar->getKnownExtensions();
-		$this->template->unknown = $this->registrar->getUnknownExtensions();
+		$this->template->knownExtensions = $this->registrar->getKnownExtensions();
+		$this->template->unknownExtensions = $this->registrar->getUnknownExtensions();
+		$this->template->knownTemplates = $this->registrar->getKnownTemplates();
+		$this->template->unknownTemplates = $this->registrar->getUnknownTemplates();
 	}
 
 	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
@@ -53,15 +54,30 @@ class OptionsPresenter extends BasePresenter
 	public function handleInstallExtension($md5)
 	{
 		$unknown = $this->registrar->getUnknownExtensions();
-
-		$extension = new Extension;
-		$extension->setName($unknown[$md5]);
+		/** @var Extension $extension */
+		$extension = $unknown[$md5];
 		$this->em->persist($extension);
 		$this->em->flush($extension);
 
-		$this->registrar->onInstall();
+		$this->registrar->onInstall(); //FIXME: oddělené eventy pro jednotlivá rozšíření (jak?)
 
 		$this->flashMessage('Rozšíření bylo úspěšně nainstalováno.', Flashes::FLASH_SUCCESS);
+		$this->redirect('this');
+	}
+
+	/**
+	 * @secured
+	 */
+	public function handleInstallTemplate($md5)
+	{
+		$unknown = $this->registrar->getUnknownTemplates();
+		$extension = $unknown[$md5];
+		$this->em->persist($extension);
+		$this->em->flush($extension);
+
+		$this->registrar->onInstall(); //FIXME: oddělené eventy pro jednotlivá rozšíření (jak?)
+
+		$this->flashMessage('Šablona byla úspěšně nainstalována.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
 	}
 
@@ -77,6 +93,21 @@ class OptionsPresenter extends BasePresenter
 		$this->registrar->onUninstall();
 
 		$this->flashMessage('Rozšíření bylo úspěšně odinstalováno.', Flashes::FLASH_SUCCESS);
+		$this->redirect('this');
+	}
+
+	/**
+	 * @secured
+	 */
+	public function handleUninstallTemplate($id)
+	{
+		$extension = $this->em->getPartialReference(Extension::class, $id);
+		$this->em->remove($extension);
+		$this->em->flush($extension);
+
+		$this->registrar->onUninstall();
+
+		$this->flashMessage('Šablona byla úspěšně odinstalována.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
 	}
 

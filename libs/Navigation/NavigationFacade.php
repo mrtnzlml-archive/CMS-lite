@@ -52,7 +52,7 @@ class NavigationFacade extends Nette\Object
 		return Nette\Utils\ArrayHash::from($nodes);
 	}
 
-	public function createItem(NavigationItem $item, $navigation, $root_hash, $parent_id = NULL)
+	public function createItem(NavigationItem $item, Navigation $navigation, $root_hash, $parent_id = NULL)
 	{
 		return $this->em->transactional(function () use ($item, $navigation, $root_hash, $parent_id) {
 			// 1) save new item

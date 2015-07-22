@@ -2,9 +2,9 @@
 # http://nette.org/security-warning
 
 includes:
-    - extensions.neon
-    - factories.neon
-    - services.neon
+	- extensions.neon
+	- factories.neon
+	- services.neon
 
 
 latte:
@@ -23,7 +23,7 @@ application:
 
 
 di:
-    debugger: yes
+	debugger: yes
 
 
 doctrine:
@@ -44,19 +44,19 @@ session:
 
 
 core:
-    https: yes
+	https: yes
 
 
 translation:
-    default: cs
-    fallback: [cs_CZ, cs]
+	default: cs
+	fallback: [cs_CZ, cs]
 
 
 monolog:
-    name: CMS # Syslog only
-    handlers:
-    	- Monolog\Handler\RotatingFileHandler(%appDir%/../log/syslog.log, 30)
-    processors:
-    	- Monolog\Processor\IntrospectionProcessor
-    	- Monolog\Processor\WebProcessor
-    	- Monolog\Processor\GitProcessor
+	name: CMS # Syslog only
+	handlers:
+		- Monolog\Handler\RotatingFileHandler(%appDir%/../log/syslog.log, 30)
+	processors:
+		- Monolog\Processor\IntrospectionProcessor
+		- Monolog\Processor\WebProcessor
+		- Monolog\Processor\GitProcessor

@@ -7,3 +7,4 @@ services:
 		autowired: no
 	- App\AuthModule\Presenters\SignPresenter
 	- App\Extensions\Registrar
+	- App\Extensions\InstallHelper

@@ -3,12 +3,19 @@
 namespace Notes\DI;
 
 use App\Extensions\CompilerExtension;
+use App\Extensions\Extension;
+use App\Extensions\ICustomExtension;
 use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class NotesExtension extends CompilerExtension implements IEntityProvider
+class NotesExtension extends CompilerExtension implements IEntityProvider, ICustomExtension
 {
+
+	public function getExtensionInfo()
+	{
+		return (new Extension)->setName(self::class);
+	}
 
 	public function loadConfiguration()
 	{
@@ -19,7 +26,7 @@ class NotesExtension extends CompilerExtension implements IEntityProvider
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
-		$this->registerExtension($builder, self::class);
+		$this->registerExtension($builder, $this->getExtensionInfo());
 	}
 
 	/**

@@ -4,18 +4,29 @@ namespace Versatile\DI;
 
 use App\Components\Breadcrumb\Providers\IBreadcrumbTemplateProvider;
 use App\Components\Favicon\Providers\IFaviconProvider;
+use App\Extensions\CompilerExtension;
+use App\Extensions\Extension;
+use App\Extensions\ICustomExtension;
 use App\Extensions\IImageProvider;
 use App\ITemplateProvider;
 use Nette;
 use WebFontLoader\Providers\IFontProvider;
 
-class VersatileExtension extends Nette\DI\CompilerExtension implements ITemplateProvider,
+//FIXME: Tato extension je šablona!
+class VersatileExtension extends CompilerExtension implements ITemplateProvider, ICustomExtension,
 	IImageProvider, IFaviconProvider, IBreadcrumbTemplateProvider, IFontProvider
 {
 
+	public function getExtensionInfo()
+	{
+		return (new Extension)->setTemplate(TRUE)->setName(self::class);
+	}
+
 	public function beforeCompile()
 	{
-		$cb = $this->getContainerBuilder();
+		$builder = $this->getContainerBuilder();
+		$this->registerExtension($builder, $this->getExtensionInfo());
+
 //		$cb->getDefinition($cb->getByType(IContactFormFactory::class))
 //			->addSetup(
 //				'$service->onComponentCreation[] = function ($control, $form) {' . "\n" .
