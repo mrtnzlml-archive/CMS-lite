@@ -6,7 +6,7 @@ administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/nastaveni/seo,Options:Options:seo
 nahled-stranky,Pages:Page:preview
-administrace/nahrat-soubory,Admin:Files:upload
+administrace/nahrat-soubory,Files:AdminFile:upload
 administrace/editovat-soubor,Files:AdminFile:edit
 administrace/novy-uzivatel,Users:Users:new
 administrace/editovat-uzivatele,Users:Users:edit

@@ -2,6 +2,7 @@
 namespace Files\Presenters;
 
 use Files\Components\IFileFormFactory;
+use Files\Components\IFineUploaderFactory;
 use Files\FileProcess;
 use Nette;
 use App;
@@ -9,6 +10,7 @@ use App\Components\Flashes\Flashes;
 use App\AdminModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Files\File;
+use Nette\Application\Responses\JsonResponse;
 
 class AdminFilePresenter extends BasePresenter
 {
@@ -36,6 +38,11 @@ class AdminFilePresenter extends BasePresenter
         if ($this->file === null) {
             $this->redirect('default');
         }
+    }
+
+    public function renderEdit()
+    {
+        $this->template->file = $this->file;
     }
 
     public function handleDelete($id)
@@ -66,6 +73,22 @@ class AdminFilePresenter extends BasePresenter
 
         $control->onComplete[] = function () {
             $this->redirect('default');
+        };
+
+        return $control;
+    }
+
+    protected function createComponentFineUploader(IFineUploaderFactory $factory)
+    {
+        $control = $factory->create();
+
+        $control->onSuccess[] = function ($control, $file, $result) {
+            //@todo kontrola na dodatecne parametry -> napr.pridani ke strance -> jeste lepe udelat UploadPresenter
+            $this->sendResponse(new JsonResponse($result));
+        };
+
+        $control->onFailed[] = function ($control, $result) {
+            $this->sendResponse(new JsonResponse($result));
         };
 
         return $control;

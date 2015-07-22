@@ -4,6 +4,8 @@ namespace Files;
 
 use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Nette\Security\IUserStorage;
+use Users\User;
 
 /**
  * @method onUpdate(FileProcess $control, File $file)
@@ -20,11 +22,26 @@ class FileProcess extends Nette\Object
 	/** @var FileStorage */
 	private $fileStorage;
 
-	public function __construct(EntityManager $em, FileStorage $fileStorage)
+    /** @var IUserStorage */
+    private $user;
+
+	public function __construct(EntityManager $em, FileStorage $fileStorage, IUserStorage $user)
 	{
 		$this->em = $em;
 		$this->fileStorage = $fileStorage;
+        $this->user = $user;
 	}
+
+    public function create(File $file)
+    {
+        $author = $this->em->getPartialReference(User::class, $this->user->getIdentity()->getId());
+
+        if ($author) {
+            $file->setAuthor($author);
+        }
+
+        $this->em->persist($file);
+    }
 
 	public function update(File $file)
 	{

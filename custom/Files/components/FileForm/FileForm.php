@@ -42,9 +42,9 @@ class FileForm extends AControl
 	protected function createComponentForm()
 	{
 		$form = new Form;
-		$form->addText('title', 'Název souboru')
-			->setValue($this->file->getTitle());
-		$form->addTinyMCE('editor')
+        $form->addText('name', 'Název souboru')
+            ->setValue($this->file->getName());
+        $form->addTinyMCE('editor')
 			->setValue($this->file->getDescription());
 		$form->addSubmit('save', 'Uložit');
 		$form->onSuccess[] = $this->save;
@@ -79,10 +79,10 @@ class FileForm extends AControl
 
 	private function fillEntityWithValues(ArrayHash $values)
 	{
-		$title = Validators::is($values->title, 'string:1..') ? $values->title : NULL;
+		$name = Validators::is($values->name, 'string:1..') ? $values->name : NULL;
 		$description = Validators::is($values->editor, 'string:1..') ? $values->editor : NULL;
 
-		$this->file->setTitle($title);
+		$this->file->setName($name);
 		$this->file->setDescription($description);
 	}
 }
