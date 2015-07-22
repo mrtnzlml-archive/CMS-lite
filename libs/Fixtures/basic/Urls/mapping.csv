@@ -1,6 +1,6 @@
 auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
-administrace/soubory,Admin:Files:default
+administrace/soubory,Files:AdminFile:default
 administrace/nastaveni/general,Options:Options:general
 administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit

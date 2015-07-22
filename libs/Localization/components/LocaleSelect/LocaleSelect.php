@@ -26,7 +26,7 @@ class LocaleSelect extends AControl
 	protected function createComponentLocaleSelect()
 	{
         $locales = $this->em->getRepository(Locale::class)->findPairs('code');
-        $locale  = $this->presenter->locale = 45;
+        $locale  = $this->presenter->locale;
 
 		$form = new UI\Form;
 		$form->addSelect('locales', NULL,

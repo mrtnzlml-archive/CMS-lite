@@ -4,7 +4,6 @@
 # This configuration is intended only for truly core extensions.
 
 extensions:
-    files: Files\DI\FilesExtension
     fixtures: Fixtures\DI\FixturesExtension
     localization: Localization\DI\LocalizationExtension
     migrations: Migrations\DI\MigrationsExtension

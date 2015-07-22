@@ -5,3 +5,7 @@ services:
 	- Files\Components\IFileFormFactory
 	- Files\FileStorage(%wwwDir%/upload/files, \Symfony\Component\Filesystem\Filesystem())
 	- Files\FileProcess
+	
+	#Presenters in DIC
+	-	Files\Presenters\AdminFilePresenter
+		

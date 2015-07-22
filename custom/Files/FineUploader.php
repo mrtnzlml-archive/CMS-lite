@@ -26,7 +26,7 @@ class FineUploader extends \Nette\Object
 	/**
 	 * Get the original filename
 	 */
-	public function getName($santize = TRUE)
+	public function getName($sanitize = TRUE)
 	{
 		$filename = NULL;
 
@@ -39,7 +39,7 @@ class FineUploader extends \Nette\Object
 		}
 
 		if ($filename) {
-			return ($santize) ? $this->getSanitizedName($filename) : $filename;
+			return ($sanitize) ? $this->getSanitizedName($filename) : $filename;
 		}
 	}
 

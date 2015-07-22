@@ -46,7 +46,8 @@ class Authorizator implements Nette\Security\IAuthorizator
 			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/resources']];
 			return $this->em->getRepository(Resource::class)->findAll();
 		});
-		/** @var Resource $resource */
+
+        /** @var Resource $resource */
 		foreach ($resources as $resource) {
 			$acl->addResource($resource->getName());
 		}

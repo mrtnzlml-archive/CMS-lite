@@ -37,7 +37,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 			}
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		} elseif (!$this->user->isAllowed($this->name, Users\Authorizator::READ)) {
-			dump($this->name);
+			//dump($this->name);
 			$this->flashMessage('Přístup byl odepřen. Nemáte oprávnění k zobrazení této stránky.', Flashes::FLASH_DANGER);
 			$this->redirect(':Auth:Sign:in', ['backlink' => $this->storeRequest()]);
 		}
@@ -72,7 +72,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	protected function createTemplate($class = NULL)
 	{
-		/** @var \Latte\Engine $template */
+        /** @var \Latte\Engine $template */
 		$template = parent::createTemplate($class);
 		$texy = new \Texy();
 		$template->addFilter('texy', function ($input) use ($texy) {
@@ -92,7 +92,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		if ($this->layout === FALSE) {
 			return;
 		}
-		return __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '@layout.latte';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . '@layout.latte';
 	}
 
 }
