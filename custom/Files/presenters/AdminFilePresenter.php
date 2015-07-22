@@ -6,7 +6,7 @@ use App;
 use App\Components\Flashes\Flashes;
 use App\AdminModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
-use Tracy\OutputDebugger;
+use Files\File;
 
 class AdminFilePresenter extends BasePresenter
 {
@@ -20,6 +20,6 @@ class AdminFilePresenter extends BasePresenter
 
     public function renderDefault()
     {
-
+        $this->template->files = $this->em->getRepository(File::class)->findAll();
     }
 } 

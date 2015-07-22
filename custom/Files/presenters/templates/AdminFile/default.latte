@@ -1,5 +1,48 @@
 {block title}Soubory{/block}
 
 {block content}
+    <div class="row mt20">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover table-striped">
+                <thead>
+                <tr>
+                    <th class="col-md-1"></th>
+                    <th>{_'Soubor'}</th>
+                    <th>{_'Autor'}</th>
+                    <th>{_'Velikost'}</th>
+                    <th>{_'Datum'}</th>
+
+                </tr>
+                </thead>
+                {snippet files}
+                {if !empty($files)}
+                    <tbody>
+                    <tr n:foreach="$files as $file">
+                        <td><img src="{$basePath}/images/file.png"></td>
+                        <td>
+                            <a href="#">{$file->getTitle()}</a><br/>
+                            {$file->getName()}<br/><br/>
+                            <a class="btn btn-xs btn-default">upravit</a>
+                            <a class="btn btn-xs btn-default">smazat</a>
+                        </td>
+                        <td>
+                            <a href="#">{$file->getAuthor()->getEmail()}</a>
+                        </td>
+                        <td>{$file->getSize()|bytes}</td>
+                        <td>
+                            {$file->getCreatedAt()->format('d.m.Y H:i')}
+                        </td>
+
+                    </tr>
+                    </tbody>
+                {/if}
+                {/snippet}
+            </table>
+
+
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
 
 {/block}
