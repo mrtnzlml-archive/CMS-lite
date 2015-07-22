@@ -22,7 +22,7 @@
                         <td>
                             <a href="#">{$file->getTitle()}</a><br/>
                             {$file->getName()}<br/><br/>
-                            <a class="btn btn-xs btn-default">upravit</a>
+                            <a n:href="edit id => $file->getId()" class="btn btn-xs btn-default">upravit</a>
                             <a n:href="delete! id => $file->getId()" class="btn btn-xs btn-default">smazat</a>
                         </td>
                         <td>

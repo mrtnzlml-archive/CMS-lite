@@ -1,0 +1,31 @@
+{block content}
+    {*
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a n:href="default">{_'Přílohy'}</a></li>
+                <li role="presentation"><a n:href="upload">{_'Nahrát přílohy'}</a></li>
+                <li role="presentation"><a href="#">{_'Nastavení'}</a></li>
+            </ul>
+        </div>
+    </div>
+    *}
+    <div class="row mt20">
+        <div class="col-md-12">
+            {control fileForm}
+        </div>
+    </div>
+{/block}
+
+
+{block scripts}
+    {include parent}
+    {* FIXME: lépe (js:custom?) *}
+    <script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#tinymceTextarea',
+            language: 'cs'
+        });
+    </script>
+{/block}

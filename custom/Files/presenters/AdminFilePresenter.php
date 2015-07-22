@@ -1,6 +1,7 @@
 <?php
 namespace Files\Presenters;
 
+use Files\Components\IFileFormFactory;
 use Files\FileProcess;
 use Nette;
 use App;
@@ -15,6 +16,8 @@ class AdminFilePresenter extends BasePresenter
     private $em;
     /** @var FileProcess */
     private $fileProcess;
+    /** @var File */
+    private $file;
 
     public function __construct(EntityManager $em, FileProcess $fileProcess)
     {
@@ -25,6 +28,14 @@ class AdminFilePresenter extends BasePresenter
     public function renderDefault()
     {
         $this->template->files = $this->em->getRepository(File::class)->findAll();
+    }
+
+    public function actionEdit($id)
+    {
+        $this->file = $this->em->getRepository(File::class)->find((int)$id);
+        if ($this->file === null) {
+            $this->redirect('default');
+        }
     }
 
     public function handleDelete($id)
@@ -43,5 +54,20 @@ class AdminFilePresenter extends BasePresenter
 
         $this->redirect('this');
 
+    }
+
+    protected function createComponentFileForm(IFileFormFactory $factory)
+    {
+        $control = $factory->create($this->file, $this->fileProcess);
+
+        $control->onUpdate[] = function () {
+            $this->flashMessage('Změny byly uloženy', Flashes::FLASH_SUCCESS);
+        };
+
+        $control->onComplete[] = function () {
+            $this->redirect('default');
+        };
+
+        return $control;
     }
 } 

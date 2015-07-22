@@ -73,6 +73,7 @@ class FileForm extends AControl
 		}
 
 		$this->template->setFile(dirname(__FILE__) . '/templates/form.latte');
+        $this->template->file = $this->file;
 		$this->template->render();
 	}
 
