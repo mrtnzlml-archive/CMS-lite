@@ -40,7 +40,7 @@ class FileProcess extends Nette\Object
 			return TRUE;
 		}
 
-		return FALSE;
+        return FALSE;
 	}
 
 }
