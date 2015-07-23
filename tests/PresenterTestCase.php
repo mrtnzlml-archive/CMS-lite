@@ -10,8 +10,6 @@ class PresenterTestCase extends Tester\TestCase
 		Test\PresenterTester::doCreateConfiguration as parentDoCreateConfiguration;
 	}
 
-	private $running = NULL;
-
 	protected function getLocales()
 	{
 		return [
@@ -26,10 +24,9 @@ class PresenterTestCase extends Tester\TestCase
 			__DIR__ . '/../app/config/config.neon',
 			__DIR__ . '/../app/config/config.local.neon',
 			__DIR__ . '/test.neon',
-//			__DIR__ . '/config.local.neon',
 		]);
 
-//		/** @var Connection $db */
+		/** @var Connection $db */
 //		$db = $container->getByType(Doctrine\DBAL\Connection::class);
 //		$this->doSetupDatabase($db, $container);
 
@@ -51,12 +48,7 @@ class PresenterTestCase extends Tester\TestCase
 
 	protected function doSetupDatabase(Connection $db, \Nette\DI\Container $container)
 	{
-		\Tracy\Debugger::log('Trying to creating DB');
-		if ($this->running !== NULL) {
-			return;
-		}
 		\Tracy\Debugger::log('Creating DB');
-		$this->running = TRUE;
 
 		/** @var \Kdyby\Doctrine\EntityManager $em */
 		$em = $container->getByType(\Kdyby\Doctrine\EntityManager::class);

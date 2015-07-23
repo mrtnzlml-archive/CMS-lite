@@ -4,5 +4,3 @@
 doctrine:
 	driver: pdo_sqlite
 	memory: yes
-#	dbname: ant_test
-#	user: root
