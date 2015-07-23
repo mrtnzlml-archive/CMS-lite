@@ -32,6 +32,9 @@ doctrine:
 		locale: Localization\LocaleFilter
 	metadata:
 		App\Extensions: %appDir%/extensions
+	dql:
+		string:
+			match: Search\Dql\MatchAgainst
 
 
 routing:
