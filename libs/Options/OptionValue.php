@@ -11,6 +11,9 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * Pokud je hodnota jen jedna a je možné ji prohlásit za boolean, pak se vykresluje jako checkbox.
  *
  * @ORM\Entity
+ *
+ * @method setValue(string $value)
+ * @method string getValue()
  */
 class OptionValue
 {

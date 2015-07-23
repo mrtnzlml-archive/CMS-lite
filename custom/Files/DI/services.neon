@@ -3,6 +3,7 @@ services:
 	- implement: Files\Components\IFineUploaderFactory
 	  arguments: [%wwwDir%/upload/files]
 	- Files\Components\IFileFormFactory
+	- Files\Components\IFileSettingsFactory
 	- Files\FileStorage(%wwwDir%/upload/files, \Symfony\Component\Filesystem\Filesystem())
 	- Files\FileProcess
 	

@@ -21,6 +21,10 @@ class Option
 	use Identifier;
 	use MagicAccessors;
 
+    const KEY_FILE_MAXFILESIZE = 'max_filesize';
+    const KEY_FILE_DOWNLOAD_PROTECTED = 'download_protected';
+    const KEY_FILE_ALLOWED_EXTENSIONS = 'allowed_extensions';
+
 	/**
 	 * @ORM\Column(type="string", name="`key`", unique=TRUE, options={"comment":"Key of the option"})
 	 * @var string
