@@ -9,6 +9,8 @@ use Nette\Application\UI;
 use Files\FineUploader as Uploader;
 use Files\File;
 use Files\FileProcess;
+use Options\Option;
+
 
 class FineUploader extends AControl
 {
@@ -21,8 +23,11 @@ class FineUploader extends AControl
     /** @var string */
     private $dir;
 
-    public $onSuccess = array();
-    public $onFailed = array();
+    public $onSuccess = [];
+    public $onFailed = [];
+
+    private $maxFilesize;
+    private $allowedExtensions;
 
     public function __construct($dir, EntityManager $em, Uploader $uploader, FileProcess $fileProcess)
     {
@@ -30,6 +35,28 @@ class FineUploader extends AControl
         $this->em = $em;
         $this->uploader = $uploader;
         $this->fileProcess = $fileProcess;
+    }
+
+    /**
+     * @param mixed array | Option[] $options
+     */
+    public function setOptions($options)
+    {
+        if(isset($options[Option::KEY_FILE_MAXFILESIZE])) {
+            $this->maxFilesize = $options[Option::KEY_FILE_MAXFILESIZE]->getValue()->getValue();
+            $this->uploader->setSizeLimit($this->maxFilesize);
+        }
+
+        //@todo ... docasne reseni pres string
+        if(isset($options[Option::KEY_FILE_ALLOWED_EXTENSIONS])) {
+            $allowedExtensions = trim($options[Option::KEY_FILE_ALLOWED_EXTENSIONS]->getValue()->getValue());
+            if(strlen($allowedExtensions) === 0) {
+                return;
+            }
+
+            $this->allowedExtensions = explode(';', $allowedExtensions);
+            $this->uploader->setAllowedExtensions($this->allowedExtensions);
+        }
     }
 
     public function handleUpload()
@@ -44,12 +71,12 @@ class FineUploader extends AControl
 
     private function uploadProcess($result)
     {
-        if (!isset($result['success']) || $result['success'] !== true) {
+        if (!isset($result['success']) || $result['success'] !== TRUE) {
             $this->onFailed($this, $result);
         }
 
         $file = new File();
-        $name = $this->uploader->getName(false);
+        $name = $this->uploader->getName(FALSE);
         $file->setName($name);
         $file->setSanitizedName($this->uploader->getName());
         $file->setTitle(str_replace('-', ' ', $result['filename']));
@@ -63,7 +90,7 @@ class FineUploader extends AControl
         $this->onSuccess($this, $file, $result);
     }
 
-    public function render(array $parameters = null)
+    public function render(array $parameters = NULL)
     {
         if ($parameters) {
             $this->template->parameteres = Nette\Utils\ArrayHash::from($parameters);

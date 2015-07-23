@@ -54,6 +54,11 @@ class AdminFilePresenter extends BasePresenter
         $this->template->file = $this->file;
     }
 
+    public function actionUpload()
+    {
+        $this->options = $this->optionManager->getFileOptions();
+    }
+
     public function actionSettings()
     {
         $this->options = $this->optionManager->getFileOptions();
@@ -98,6 +103,7 @@ class AdminFilePresenter extends BasePresenter
     protected function createComponentFineUploader(IFineUploaderFactory $factory)
     {
         $control = $factory->create();
+        $control->setOptions($this->options);
 
         $control->onSuccess[] = function ($control, $file, $result) {
             //@todo kontrola na dodatecne parametry -> napr.pridani ke strance -> jeste lepe udelat UploadPresenter
