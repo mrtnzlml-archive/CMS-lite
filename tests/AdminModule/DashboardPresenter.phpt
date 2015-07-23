@@ -8,19 +8,18 @@ require __DIR__ . '/../bootstrap.php';
 class DashboardPresenter extends \PresenterTestCase
 {
 
-	public function __construct()
-	{
-		$this->openPresenter('Admin:Dashboard:');
-	}
-
 	public function setUp()
 	{
+		$this->openPresenter('Admin:Dashboard:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
-	public function testRenderDefault()
+	/**
+	 * @dataProvider getLocales
+	 */
+	public function testRenderDefault($param, $value)
 	{
-		$this->checkAction('default');
+		$this->checkAction('default', [$param => $value]);
 	}
 
 	public function testRenderDefaultLoggedOut()

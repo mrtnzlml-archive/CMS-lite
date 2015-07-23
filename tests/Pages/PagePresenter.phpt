@@ -13,19 +13,22 @@ class PagePresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Pages:AdminPage:');
 		$container = $this->getContainer();
 		$this->em = $container->getByType(Kdyby\Doctrine\EntityManager::class);
 	}
 
 	public function setUp()
 	{
+		$this->openPresenter('Pages:AdminPage:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
-	public function testRenderDefault()
+	/**
+	 * @dataProvider getLocales
+	 */
+	public function testRenderDefault($param, $value)
 	{
-		$this->checkAction('default');
+		$this->checkAction('default', [$param => $value]);
 	}
 
 	public function testRenderDefaultLoggedOut()
@@ -34,9 +37,12 @@ class PagePresenter extends \PresenterTestCase
 		$this->checkRedirect('default', '/auth');
 	}
 
-	public function testRenderNew()
+	/**
+	 * @dataProvider getLocales
+	 */
+	public function testRenderNew($param, $value)
 	{
-		$this->checkAction('new');
+		$this->checkAction('new', [$param => $value]);
 	}
 
 	public function testRenderNewLoggedOut()
@@ -50,13 +56,16 @@ class PagePresenter extends \PresenterTestCase
 		$this->checkRedirect('edit', '/administrace/nova-stranka');
 	}
 
-	public function testRenderEdit()
+	/**
+	 * @dataProvider getLocales
+	 */
+	public function testRenderEdit($param, $value)
 	{
 		/** @var \Pages\Page $page */
 		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
 		$this->checkAction('edit', [
-			'id' => $page->getId(),
-		]);
+				'id' => $page->getId(),
+			] + [$param => $value]);
 	}
 
 	public function testRenderEditMissingId()

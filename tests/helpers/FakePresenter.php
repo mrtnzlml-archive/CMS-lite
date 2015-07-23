@@ -4,8 +4,9 @@ namespace App\Presenters;
 
 use App\Traits\PublicComponentsTrait;
 use Nette;
+use Nette\Application\UI;
 
-class FakePresenter extends Nette\Application\UI\Presenter
+class FakePresenter extends UI\Presenter
 {
 
 	use PublicComponentsTrait;

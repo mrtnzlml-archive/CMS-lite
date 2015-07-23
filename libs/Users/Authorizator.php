@@ -24,14 +24,14 @@ class Authorizator implements Nette\Security\IAuthorizator
 
 	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage)
 	{
+		$this->em = $em;
+		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
+		$this->acl = new Permission;
+
 		if (PHP_SAPI === 'cli') {
 			// FIXME: It's blocking Kdyby\Console...
 			return;
 		}
-
-		$this->em = $em;
-		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
-		$acl = new Permission;
 
 		$roles = $this->cache->load('roles', function (& $dependencies) {
 			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/roles']];
@@ -39,7 +39,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 		});
 		/** @var Role $role */
 		foreach ($roles as $role) {
-			$acl->addRole($role->getName(), $role->getParent() ? $role->getParent()->getName() : NULL);
+			$this->acl->addRole($role->getName(), $role->getParent() ? $role->getParent()->getName() : NULL);
 		}
 
 		$resources = $this->cache->load('resources', function (& $dependencies) {
@@ -47,13 +47,12 @@ class Authorizator implements Nette\Security\IAuthorizator
 			return $this->em->getRepository(Resource::class)->findAll();
 		});
 
-        /** @var Resource $resource */
+		/** @var Resource $resource */
 		foreach ($resources as $resource) {
-			$acl->addResource($resource->getName());
+			$this->acl->addResource($resource->getName());
 		}
 
-		$acl->allow(Role::SUPERADMIN, Permission::ALL, Permission::ALL);
-		$this->acl = $acl;
+		$this->acl->allow(Role::SUPERADMIN, Permission::ALL, Permission::ALL);
 	}
 
 	/**

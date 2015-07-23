@@ -15,7 +15,7 @@ class Components extends \PresenterTestCase
 	public function __construct()
 	{
 		$this->openPresenter('Fake:');
-		$this->cssFactory = $this->getContainer()->getByType(App\Components\Css\ICssFactory::class);
+		$this->cssFactory = $this->getService(App\Components\Css\ICssFactory::class);
 	}
 
 	public function testCss()
@@ -24,7 +24,7 @@ class Components extends \PresenterTestCase
 		$control->setMedia([
 			'screen', 'projection', 'tv'
 		]);
-		$this->getPresenter()['css'] = $control;
+		$this->getPresenter()->addComponent($control, 'css');
 		$this->checkReponse();
 	}
 
@@ -66,8 +66,6 @@ class Components extends \PresenterTestCase
 		$response = $this->check('all');
 		Tester\Assert::same(200, $this->getReturnCode());
 		Tester\Assert::type('Nette\Application\Responses\TextResponse', $response);
-		Tester\Assert::type('Nette\Application\UI\ITemplate', $response->getSource());
-		Tester\Assert::type('Tester\DomQuery', @Tester\DomQuery::fromHtml($response->getSource()));
 	}
 
 }
