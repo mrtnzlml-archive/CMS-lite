@@ -45,6 +45,11 @@ class AdminFilePresenter extends BasePresenter
         $this->template->file = $this->file;
     }
 
+    public function renderSettings()
+    {
+
+    }
+
     /**
      * @secured
      */

@@ -4,10 +4,10 @@ administrace/nastaveni/general,Options:Options:general
 administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/nastaveni/seo,Options:Options:seo
-administrace/nastaveni/soubory,Options:Options:files
 nahled-stranky,Pages:Page:preview
 administrace/nahrat-soubory,Files:AdminFile:upload
 administrace/editovat-soubor,Files:AdminFile:edit
+administrace/soubory-nastaveni,Files:AdminFile:settings
 administrace/novy-uzivatel,Users:Users:new
 administrace/editovat-uzivatele,Users:Users:edit
 protected-page,Pages:Page:protected

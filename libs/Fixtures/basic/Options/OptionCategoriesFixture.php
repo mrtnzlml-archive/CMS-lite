@@ -9,7 +9,7 @@ class OptionCategoriesFixture extends \Doctrine\Common\DataFixtures\AbstractFixt
 		'general' => 'Obecné',
 		'seo' => 'SEO',
         'files' => 'Soubory'
-	];
+    ];
 
 	public function load(ObjectManager $manager)
 	{
