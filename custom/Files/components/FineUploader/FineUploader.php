@@ -42,15 +42,15 @@ class FineUploader extends AControl
      */
     public function setOptions($options)
     {
-        if(isset($options[Option::KEY_FILE_MAXFILESIZE])) {
+        if (isset($options[Option::KEY_FILE_MAXFILESIZE])) {
             $this->maxFilesize = $options[Option::KEY_FILE_MAXFILESIZE]->getValue()->getValue();
             $this->uploader->setSizeLimit($this->maxFilesize);
         }
 
         //@todo ... docasne reseni pres string
-        if(isset($options[Option::KEY_FILE_ALLOWED_EXTENSIONS])) {
+        if (isset($options[Option::KEY_FILE_ALLOWED_EXTENSIONS])) {
             $allowedExtensions = trim($options[Option::KEY_FILE_ALLOWED_EXTENSIONS]->getValue()->getValue());
-            if(strlen($allowedExtensions) === 0) {
+            if (strlen($allowedExtensions) === 0) {
                 return;
             }
 
@@ -97,6 +97,8 @@ class FineUploader extends AControl
         }
 
         $this->template->setFile(dirname(__FILE__) . '/templates/uploader.latte');
+        $this->template->maxFilesize = $this->maxFilesize;
+        $this->template->allowedExtensions = $this->allowedExtensions;
         $this->template->render();
     }
 }
