@@ -12,7 +12,14 @@ use Users\User;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="pages")
+ * @ORM\Table(
+ *      name="pages",
+ *      indexes={
+ *          @ORM\Index(columns={"title"}, flags={"fulltext"}),
+ *          @ORM\Index(columns={"body"}, flags={"fulltext"}),
+ *          @ORM\Index(columns={"title", "body"}, flags={"fulltext"})
+ *      }
+ * )
  *
  * @method setTitle(string $title)
  * @method string getTitle()
@@ -42,8 +49,6 @@ use Users\User;
  * //get<name>($entity)
  *
  * @method setRealAuthor(User $realAuthor)
- *
- *
  */
 class Page implements ILocaleAware
 {
