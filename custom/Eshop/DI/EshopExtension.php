@@ -37,9 +37,12 @@ DESC
 	{
 		$builder = $this->getContainerBuilder();
 		$this->setPresenterMapping($builder, ['Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter']);
-		$this->registerExtension($builder, $this->getExtensionInfo());
-		$this->addInstallEvent($builder, \Eshop\DI\Install::class, 'install');
-		$this->addUninstallEvent($builder, \Eshop\DI\Install::class, 'uninstall');
+	}
+
+	public function install()
+	{
+		dump('ok');
+		exit;
 	}
 
 	/**

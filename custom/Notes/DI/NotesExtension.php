@@ -23,12 +23,6 @@ class NotesExtension extends CompilerExtension implements IEntityProvider, ICust
 		$this->parseConfig($builder, __DIR__ . '/config.neon');
 	}
 
-	public function beforeCompile()
-	{
-		$builder = $this->getContainerBuilder();
-		$this->registerExtension($builder, $this->getExtensionInfo());
-	}
-
 	/**
 	 * Returns associative array of Namespace => mapping definition
 	 *

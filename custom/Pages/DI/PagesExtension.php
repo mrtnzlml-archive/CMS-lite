@@ -27,7 +27,6 @@ class PagesExtension extends CompilerExtension implements IEntityProvider, IJsPr
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
-		$this->registerExtension($builder, $this->getExtensionInfo());
 		$this->setPresenterMapping($builder, ['Pages' => 'Pages\\*Module\\Presenters\\*Presenter']);
 	}
 

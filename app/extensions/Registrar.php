@@ -13,81 +13,46 @@ use Nette;
 class Registrar extends Nette\Object
 {
 
-	private $extensions = [];
-
+	/** @var \Closure[] */
 	public $onExtensionRegistration = [];
-
-	/** @var \Closure[] function(); Occurs when extension is being installed */
-	public $onInstall = [];
-
-	/** @var \Closure[] function(); Occurs when extension is being uninstalled */
-	public $onUninstall = [];
 
 	/** @var EntityManager */
 	private $em;
+
+	/** @var array [md5 => Extension $extension] */
+	private $extensions = [];
 
 	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
 	}
 
-	public function registerExtension(Extension $extension)
+	/**
+	 * This function is called on event "onExtensionRegistration" and it's used for collect known extensions in CMS
+	 * environment. Valid extension is extension which implements ICustomExtension interface and is instantiable.
+	 */
+	public function registerExtensionNames(array $extensionNames)
 	{
-		$this->extensions[] = $extension;
+		$tmp = [];
+		foreach ($extensionNames as $extensionName) {
+			$tmp[md5($extensionName)] = (new $extensionName)->getExtensionInfo();
+		}
+		$this->extensions = $tmp;
 	}
 
-	public function getKnownExtensions()
-	{
-		return $this->em->getRepository(Extension::class)->findBy(['template' => FALSE]);
-	}
-
-	public function getKnownTemplates()
-	{
-		return $this->em->getRepository(Extension::class)->findBy(['template' => TRUE]);
-	}
-
-	public function getUnknownExtensions()
+	public function getExtensions()
 	{
 		$this->onExtensionRegistration($this);
-
-		$extensionsRepository = $this->em->getRepository(Extension::class);
-		/** @var Extension $extension */
-		foreach ($this->extensions as $extension) {
-			if ($extension->getTemplate()) {
-				continue;
-			}
-			if ($extensionsRepository->findOneBy([
-					'name' => $extension->getName(),
-					'template' => FALSE,
-				]) === NULL
-			) {
-				$unknown[md5($extension->getName())] = $extension;
-			}
-		}
-
-		return isset($unknown) ? $unknown : NULL;
+		return $this->extensions;
 	}
 
-	public function getUnknownTemplates()
+	public function getExtensionNames($key = NULL)
 	{
-		$this->onExtensionRegistration($this); //FIXME: event pro šablony
-
-		$extensionsRepository = $this->em->getRepository(Extension::class);
-		/** @var Extension $extension */
-		foreach ($this->extensions as $extension) {
-			if (!$extension->getTemplate()) {
-				continue;
-			}
-			if ($extensionsRepository->findOneBy([
-					'name' => $extension->getName(),
-					'template' => TRUE,
-				]) === NULL
-			) {
-				$unknown[md5($extension->getName())] = $extension;
-			}
+		$this->onExtensionRegistration($this);
+		if ($key === NULL) {
+			return $this->extensions;
 		}
-
-		return isset($unknown) ? $unknown : NULL;
+		return $this->extensions[$key];
 	}
 
 }

@@ -26,7 +26,6 @@ class FilesExtension extends CompilerExtension implements IEntityProvider, ICust
     public function beforeCompile()
     {
         $builder = $this->getContainerBuilder();
-        $this->registerExtension($builder, $this->getExtensionInfo());
         $this->setPresenterMapping($builder, ['Files' => 'Files\\*Module\\Presenters\\*Presenter']);
     }
 

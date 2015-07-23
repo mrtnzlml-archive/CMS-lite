@@ -24,9 +24,6 @@ class VersatileExtension extends CompilerExtension implements ITemplateProvider,
 
 	public function beforeCompile()
 	{
-		$builder = $this->getContainerBuilder();
-		$this->registerExtension($builder, $this->getExtensionInfo());
-
 //		$cb->getDefinition($cb->getByType(IContactFormFactory::class))
 //			->addSetup(
 //				'$service->onComponentCreation[] = function ($control, $form) {' . "\n" .

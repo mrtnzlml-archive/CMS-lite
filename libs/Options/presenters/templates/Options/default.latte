@@ -2,52 +2,18 @@
 
 {block content}
 	{control optionsMenu}
-	<div class="row">
-		<div class="col-lg-6">
-			{if $knownExtensions}
-				<h3>Nainstalovaná rozšíření</h3>
-				{foreach $knownExtensions as $ext}
-					<h4>
-						{$ext->name}
-						<small><a n:href="uninstallExtension! $ext->id">Odinstalovat</a></small>
-					</h4>
-					<p>{$ext->description}</p>
-				{/foreach}
-			{/if}
-			<hr>
-			{if $unknownExtensions}
-				<h3>Nenainstalovaná rozšíření</h3>
-				{foreach $unknownExtensions as $md5 => $uext}
-					<h4>
-						{$uext->name}
-						<small><a n:href="installExtension! $md5">Nainstalovat</a></small>
-					</h4>
-					<p>{$uext->description}</p>
-				{/foreach}
-			{/if}
-		</div>
-		<div class="col-lg-6">
-			{if $knownTemplates}
-				<h3>Nainstalované šablony</h3>
-				{foreach $knownTemplates as $template}
-					<h4>
-						{$template->name}
-						<small><a n:href="uninstallTemplate! $template->id">Odinstalovat</a></small>
-					</h4>
-					<p>{$template->description}</p>
-				{/foreach}
-			{/if}
-			<hr>
-			{if $unknownTemplates}
-				<h3>Nenainstalované šablony</h3>
-				{foreach $unknownTemplates as $md5 => $uext}
-					<h4>
-						{$uext->name}
-						<small><a n:href="installTemplate! $md5">Nainstalovat</a></small>
-					</h4>
-					<p>{$uext->description}</p>
-				{/foreach}
-			{/if}
-		</div>
+	<div class="alert alert-danger">
+		Rozšíření zatím není možné nainstalovat!
 	</div>
+	{if $extensions}
+		<h3>Rozšíření</h3>
+		{foreach $extensions as $key => $ext}
+			<h4>
+				{$ext->name}
+				{*<small>*}
+					{*<a n:href="installExtension! $key">Nainstalovat</a>*}
+				{*</small>*}
+			</h4>
+		{/foreach}
+	{/if}
 {/block}

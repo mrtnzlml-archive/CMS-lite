@@ -9,11 +9,11 @@ use Url\AntRoute;
 use Url\Url;
 use Users\Resource;
 
-class InstallHelper
+class InstallHelper extends Nette\Object
 {
 
 	/** @var EntityManager */
-	private $em;
+	protected $em;
 
 	/** @var Logger TODO */
 	private $logger;

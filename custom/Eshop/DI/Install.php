@@ -3,7 +3,6 @@
 namespace Eshop\DI;
 
 use App\Extensions\InstallHelper;
-use Kdyby\Doctrine\EntityManager;
 use Nette;
 
 class Install extends Nette\Object
@@ -15,15 +14,11 @@ class Install extends Nette\Object
 		'produkt' => 'Eshop:Product:detail',
 	];
 
-	/** @var EntityManager */
-	private $em;
-
 	/** @var InstallHelper */
 	private $install;
 
-	public function __construct(EntityManager $em, InstallHelper $install)
+	public function __construct(InstallHelper $install)
 	{
-		$this->em = $em;
 		$this->install = $install;
 	}
 

@@ -5,7 +5,6 @@ namespace App\Extensions;
 use App\Components\Meta\IMetaFactory;
 use App\Components\Meta\Providers\IMetasProvider;
 use Nette;
-use Pages\DI\PagesExtension;
 
 class CoreExtension extends Nette\DI\Extensions\ExtensionsExtension
 {
@@ -24,13 +23,12 @@ class CoreExtension extends Nette\DI\Extensions\ExtensionsExtension
 
 	public function loadConfiguration()
 	{
-//		$this->compiler->addExtension('dynamic.0', new PagesExtension());
-
 		$iterator = 0;
 		foreach ($this->robotLoader->getIndexedClasses() as $class => $file) {
 			$reflection = Nette\Reflection\ClassType::from($class);
 			//TODO: bylo by fajn, kdyby šlo mít extension a vůbec ji do DIC neregistrovat, pokud není nainstalované
 			//TODO: zatím nevím jak, ale je to nutné kvůli tomu, že jsou tam třídy, které tam nemají být, pokud není nainstalováno
+			//@see: https://github.com/Kdyby/Doctrine/blob/master/src/Kdyby/Doctrine/DI/OrmExtension.php#L828-L839
 			if ($reflection->implementsInterface(ICustomExtension::class) && $reflection->isInstantiable()) {
 				$this->compiler->addExtension('dynamic.' . $iterator++, new $class);
 			}
@@ -47,18 +45,20 @@ class CoreExtension extends Nette\DI\Extensions\ExtensionsExtension
 			$definition->addSetup('setMetas', [$extension->getMetas()]);
 		}
 
-//		foreach ($this->robotLoader->getIndexedClasses() as $class => $file) {
-//			$reflection = Nette\Reflection\ClassType::from($class);
-//			if ($reflection->implementsInterface(ICustomExtension::class) && $reflection->isInstantiable()) {
-//				$builder
-//					->getDefinition($builder->getByType(Registrar::class))
-//					->addSetup(
-//						'?->onExtensionRegistration[] = function ($registrar) {' . "\n" .
-//						"\t" . '$registrar->registerExtension(?);' . "\n" .
-//						'}', ['@self', (new $class)->getExtensionInfo()] //FIXME: z ICustomExtension
-//					);
-//			}
-//		}
+		$extensionNames = [];
+		foreach ($this->robotLoader->getIndexedClasses() as $class => $file) {
+			$reflection = Nette\Reflection\ClassType::from($class);
+			if ($reflection->implementsInterface(ICustomExtension::class) && $reflection->isInstantiable()) {
+				$extensionNames[] = $class;
+			}
+		}
+		$builder
+			->getDefinition($builder->getByType(Registrar::class))
+			->addSetup(
+				'?->onExtensionRegistration[] = function ($registrar) {' . "\n" .
+				"\t" . '$registrar->registerExtensionNames(?);' . "\n" .
+				'}', ['@self', $extensionNames]
+			);
 	}
 
 	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)

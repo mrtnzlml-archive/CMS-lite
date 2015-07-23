@@ -25,39 +25,6 @@ class CompilerExtension extends Nette\DI\CompilerExtension
 		}
 	}
 
-	public function addInstallEvent(ContainerBuilder $builder, $className, $method)
-	{
-		$builder
-			->getDefinition($builder->getByType(Registrar::class))
-			->addSetup(
-				'?->onInstall[] = function () {' . "\n" .
-				"\t" . '$this->getService(?)->?();' . "\n" .
-				'}', ['@self', $builder->getServiceName('@' . $className), $method]
-			);
-	}
-
-	public function addUninstallEvent(ContainerBuilder $builder, $className, $method)
-	{
-		$builder
-			->getDefinition($builder->getByType(Registrar::class))
-			->addSetup(
-				'?->onUninstall[] = function () {' . "\n" .
-				"\t" . '$this->getService(?)->?();' . "\n" .
-				'}', ['@self', $builder->getServiceName('@' . $className), $method]
-			);
-	}
-
-	public function registerExtension(ContainerBuilder $builder, Extension $extension)
-	{
-		$builder
-			->getDefinition($builder->getByType(Registrar::class))
-			->addSetup(
-				'?->onExtensionRegistration[] = function ($registrar) {' . "\n" .
-				"\t" . '$registrar->registerExtension(?);' . "\n" .
-				'}', ['@self', $extension]
-			);
-	}
-
 	public function setPresenterMapping(ContainerBuilder $builder, array $mapping)
 	{
 		$builder
