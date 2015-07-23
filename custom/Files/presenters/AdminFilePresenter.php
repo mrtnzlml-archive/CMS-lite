@@ -45,6 +45,9 @@ class AdminFilePresenter extends BasePresenter
         $this->template->file = $this->file;
     }
 
+    /**
+     * @secured
+     */
     public function handleDelete($id)
     {
         //@todo permission
