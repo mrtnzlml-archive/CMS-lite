@@ -15,7 +15,7 @@
 		  destination: Pages:AdminPage:new
 		- name: Soubory
 		  path: administrace/soubory
-		  destination:  Files:AdminFile:default
+		  destination: Files:AdminFile:default
 
 - name: Navigace
   path: administrace/navigace
