@@ -1,2 +1,4 @@
 services:
 	- Search\Components\ISearchFactory
+	- Search\Presenters\SearchPresenter
+	- Search\SearchFacade

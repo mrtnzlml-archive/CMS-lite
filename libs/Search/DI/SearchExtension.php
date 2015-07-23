@@ -13,4 +13,10 @@ class SearchExtension extends CompilerExtension
 		$this->parseConfig($builder, __DIR__ . '/config.neon');
 	}
 
+	public function beforeCompile()
+	{
+		$builder = $this->getContainerBuilder();
+		$this->setPresenterMapping($builder, ['Search' => 'Search\\*Module\\Presenters\\*Presenter']);
+	}
+
 }

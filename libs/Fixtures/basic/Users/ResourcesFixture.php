@@ -5,14 +5,21 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ResourcesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
+	private $resources = [
+		'Admin:Dashboard',
+		'Files:AdminFile',
+		'Navigation:Navigation',
+		'Options:Options',
+		'Pages:AdminPage',
+		'Search:Search',
+		'Users:Users',
+	];
+
 	public function load(ObjectManager $manager)
 	{
-		$manager->persist((new \Users\Resource())->setName('Admin:Dashboard'));
-		$manager->persist((new \Users\Resource())->setName('Options:Options'));
-		$manager->persist((new \Users\Resource())->setName('Pages:AdminPage'));
-		$manager->persist((new \Users\Resource())->setName('Files:AdminFile'));
-		$manager->persist((new \Users\Resource())->setName('Users:Users'));
-		$manager->persist((new \Users\Resource())->setName('Navigation:Navigation'));
+		foreach ($this->resources as $resource) {
+			$manager->persist((new \Users\Resource())->setName($resource));
+		}
 		$manager->flush();
 	}
 

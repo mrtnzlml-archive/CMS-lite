@@ -1,13 +1,13 @@
 <div class="searchWrap fr mr25">
-	<form class="navbar-form" role="search">
+	{form search, class => 'navbar-form', role => 'search'}
 		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Hledej v administraci" name="srch-term" id="srch-term">
+			<input n:name="text" class="form-control" placeholder="Hledej v administraci">
 
 			<div class="input-group-btn">
-				<button class="btn btn-default" type="submit">
+				<button n:name="send" class="btn btn-default">
 					<i class="glyphicon glyphicon-search"></i>
 				</button>
 			</div>
 		</div>
-	</form>
+	{/form}
 </div>

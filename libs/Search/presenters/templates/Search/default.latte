@@ -1,0 +1,9 @@
+{block title}Výsledky vyhledávání{/block}
+
+{block content}
+	<h3>Stránky</h3>
+	{foreach $result as $page}
+		<h4>{$page->title}</h4>
+		<p>{$page->body}</p>
+	{/foreach}
+{/block}
