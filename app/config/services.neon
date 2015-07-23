@@ -2,6 +2,9 @@
 # http://nette.org/security-warning
 
 services:
+	latte.latteFactory:
+		setup:
+			- addFilter('texy', [App\AntTexy(), process])
 	antFileStorage:
 		class: Caching\AntFileStorage(%tempDir%/cache)
 		autowired: no
