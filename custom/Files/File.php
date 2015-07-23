@@ -26,6 +26,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @method int getSize()
  * @method setType(string $type)
  * @method string getType()
+ * @method boolean getIsProtected()
+ * @method setIsProtected(boolean $isProtected)
  * @method User getAuthor()
  * @method setAuthor(User $author)
  */
@@ -89,6 +91,12 @@ class File
      * @var \DateTime
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @var bool
+     */
+    protected $isProtected = FALSE;
 
     /**
      * @ORM\Column(type="string")

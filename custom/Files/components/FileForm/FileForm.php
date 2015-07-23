@@ -46,7 +46,9 @@ class FileForm extends AControl
             ->setValue($this->file->getTitle());
         $form->addTinyMCE('editor')
 			->setValue($this->file->getDescription());
-		$form->addSubmit('save', 'Uložit');
+        $form->addCheckbox('protected')
+            ->setValue($this->file->getIsProtected());
+        $form->addSubmit('save', 'Uložit');
 		$form->onSuccess[] = $this->save;
 		return $form;
 	}
@@ -84,6 +86,7 @@ class FileForm extends AControl
 
 		$this->file->setTitle($title);
 		$this->file->setDescription($description);
+        $this->file->setIsProtected($values->protected);
 	}
 }
 
