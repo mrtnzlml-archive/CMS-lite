@@ -9,6 +9,7 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
 use Localization\ILocaleAware;
 use Nette\Security\Passwords;
 use Users\User;
+use Files\File;
 
 /**
  * @ORM\Entity
@@ -35,6 +36,7 @@ use Users\User;
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
  * @method addTag(Tag $tag)
+ * @method addFile(File $file)
  *
  * //remove<name>($entity)
  * //has<name>($entity)
@@ -180,12 +182,24 @@ class Page implements ILocaleAware
 	 */
 	protected $locale;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Files\File", cascade={"persist"})
+     * @ORM\JoinTable(
+     *      name="page_has_file",
+     *      joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id", onDelete="CASCADE")}
+     * )
+     * @var \Files\File[]\Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $files;
+
 	public function __construct()
 	{
 		$this->createdAt = new \DateTime();
 		$this->authors = new ArrayCollection();
 		$this->categories = new ArrayCollection();
 		$this->tags = new ArrayCollection();
+        $this->files = new ArrayCollection();
 	}
 
 	public function setDeleted($deleted = TRUE)
@@ -275,5 +289,10 @@ class Page implements ILocaleAware
 	{
 		$this->tags->clear();
 	}
+
+    public function clearFiles()
+    {
+        $this->files->clear();
+    }
 
 }

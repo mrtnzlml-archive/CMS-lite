@@ -51,7 +51,7 @@ class FileProcess extends Nette\Object
 
 	public function delete(File $file)
 	{
-		if ($this->fileStorage->delete($file->getUuid())) {
+        if ($this->fileStorage->delete($file->getUuid())) {
 			$this->em->remove($file);
 			$this->em->flush($file);
 			return TRUE;

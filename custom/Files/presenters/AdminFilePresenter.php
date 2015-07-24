@@ -106,7 +106,6 @@ class AdminFilePresenter extends BasePresenter
         $control->setOptions($this->options);
 
         $control->onSuccess[] = function ($control, $file, $result) {
-            //@todo kontrola na dodatecne parametry -> napr.pridani ke strance -> jeste lepe udelat UploadPresenter
             $this->sendResponse(new JsonResponse($result));
         };
 
