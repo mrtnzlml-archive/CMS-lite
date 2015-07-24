@@ -2,6 +2,7 @@
 namespace Files\Presenters;
 
 use Files\Components\IFileFormFactory;
+use Files\Components\IFileSettingsFactory;
 use Files\Components\IFineUploaderFactory;
 use Files\FileProcess;
 use Nette;
@@ -11,6 +12,9 @@ use App\AdminModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Files\File;
 use Nette\Application\Responses\JsonResponse;
+use Options\Option;
+use Options\OptionManager;
+use Pages\Query\OptionsQuery;
 
 class AdminFilePresenter extends BasePresenter
 {
@@ -18,13 +22,18 @@ class AdminFilePresenter extends BasePresenter
     private $em;
     /** @var FileProcess */
     private $fileProcess;
+    /** @var OptionManager */
+    private $optionManager;
     /** @var File */
     private $file;
+    /** @var Option[] */
+    private $options;
 
-    public function __construct(EntityManager $em, FileProcess $fileProcess)
+    public function __construct(EntityManager $em, FileProcess $fileProcess, OptionManager $optionManager)
     {
         $this->em = $em;
         $this->fileProcess = $fileProcess;
+        $this->optionManager = $optionManager;
     }
 
     public function renderDefault()
@@ -34,8 +43,8 @@ class AdminFilePresenter extends BasePresenter
 
     public function actionEdit($id)
     {
-        $this->file = $this->em->getRepository(File::class)->find((int)$id);
-        if ($this->file === null) {
+        $this->file = $this->em->getRepository(File::class)->find((int) $id);
+        if ($this->file === NULL) {
             $this->redirect('default');
         }
     }
@@ -45,6 +54,16 @@ class AdminFilePresenter extends BasePresenter
         $this->template->file = $this->file;
     }
 
+    public function actionUpload()
+    {
+        $this->options = $this->optionManager->getFileOptions();
+    }
+
+    public function actionSettings()
+    {
+        $this->options = $this->optionManager->getFileOptions();
+    }
+
     /**
      * @secured
      */
@@ -52,15 +71,15 @@ class AdminFilePresenter extends BasePresenter
     {
         //@todo permission
 
-        $file = $this->em->getRepository(File::class)->find((int)$id);
-        if ($file === null) {
+        $file = $this->em->getRepository(File::class)->find((int) $id);
+        if ($file === NULL) {
             $this->redirect('this');
         }
 
         $deleted = $this->fileProcess->delete($file);
 
-        ($deleted !== false)    ? $this->flashMessage(_('Soubor byl smazán'), Flashes::FLASH_SUCCESS)
-                                : $this->flashMessage(_('Soubor nebyl smazán'), Flashes::FLASH_DANGER);
+        ($deleted !== FALSE) ? $this->flashMessage(_('Soubor byl smazán'), Flashes::FLASH_SUCCESS)
+            : $this->flashMessage(_('Soubor nebyl smazán'), Flashes::FLASH_DANGER);
 
         $this->redirect('this');
 
@@ -84,6 +103,7 @@ class AdminFilePresenter extends BasePresenter
     protected function createComponentFineUploader(IFineUploaderFactory $factory)
     {
         $control = $factory->create();
+        $control->setOptions($this->options);
 
         $control->onSuccess[] = function ($control, $file, $result) {
             //@todo kontrola na dodatecne parametry -> napr.pridani ke strance -> jeste lepe udelat UploadPresenter
@@ -94,6 +114,12 @@ class AdminFilePresenter extends BasePresenter
             $this->sendResponse(new JsonResponse($result));
         };
 
+        return $control;
+    }
+
+    protected function createComponentFileSettings(IFileSettingsFactory $factory)
+    {
+        $control = $factory->create($this->options);
         return $control;
     }
 } 

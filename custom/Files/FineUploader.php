@@ -2,11 +2,14 @@
 
 namespace Files;
 
-class FineUploader extends \Nette\Object
+use Nette\Object;
+use Nette\Utils\Strings;
+
+class FineUploader extends Object
 {
 
-    public $allowedExtensions = array();
-    public $sizeLimit = null;
+    public $allowedExtensions = [];
+    public $sizeLimit = NULL;
     public $inputName = 'qqfile';
     public $chunksFolder = 'chunks';
     public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg
@@ -18,17 +21,29 @@ class FineUploader extends \Nette\Object
         $this->sizeLimit = $this->toBytes(ini_get('upload_max_filesize'));
     }
 
+    public function setSizeLimit($sizeLimit)
+    {
+        if ((int) $sizeLimit > 0) {
+            $this->sizeLimit = $this->toBytes($sizeLimit . 'm');
+        }
+    }
+
+    public function setAllowedExtensions(array $allowedExtensions)
+    {
+        $this->allowedExtensions = $allowedExtensions;
+    }
+
     private function getSanitizedName($name)
     {
-        return trim(\Nette\Utils\Strings::webalize($name, '.', false), '.-');
+        return trim(Strings::webalize($name, '.', FALSE), '.-');
     }
 
     /**
      * Get the original filename
      */
-    public function getName($sanitize = true)
+    public function getName($sanitize = TRUE)
     {
-        $filename = null;
+        $filename = NULL;
 
         if (isset($_REQUEST['qqfilename'])) {
             $filename = $_REQUEST['qqfilename'];
@@ -56,8 +71,8 @@ class FineUploader extends \Nette\Object
         $uuid = $_POST['qquuid'];
         $name = $this->getName();
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
-        $target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
+        $target = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
         if (!file_exists($target)) {
             mkdir(dirname($target));
@@ -74,15 +89,15 @@ class FineUploader extends \Nette\Object
             unlink($targetFolder . DIRECTORY_SEPARATOR . $i);
         }
         rmdir($targetFolder);
-        return array("success" => true, "uuid" => $uuid);
+        return ["success" => TRUE, "uuid" => $uuid];
     }
 
     /**
      * Process the upload.
      * @param string $uploadDirectory Target directory.
-     * @param string $name Overwrites the name of the file.
+     * @param string $name            Overwrites the name of the file.
      */
-    public function handleUpload($uploadDirectory, $name = null)
+    public function handleUpload($uploadDirectory, $name = NULL)
     {
         if (is_writable($this->chunksFolder) &&
             1 == mt_rand(1, 1 / $this->chunksCleanupProbability)
@@ -96,38 +111,38 @@ class FineUploader extends \Nette\Object
             $this->toBytes(ini_get('upload_max_filesize')) < $this->sizeLimit
         ) {
             $size = max(1, $this->sizeLimit / 1024 / 1024) . 'M';
-            return array('error' => "Server error. Increase post_max_size and upload_max_filesize to " . $size);
+            return ['error' => "Server error. Increase post_max_size and upload_max_filesize to " . $size];
         }
         if ($this->isInaccessible($uploadDirectory)) {
-            return array('error' => "Server error. Uploads directory isn't writable");
+            return ['error' => "Server error. Uploads directory isn't writable"];
         }
         $type = $_SERVER['CONTENT_TYPE'];
         if (isset($_SERVER['HTTP_CONTENT_TYPE'])) {
             $type = $_SERVER['HTTP_CONTENT_TYPE'];
         }
         if (!isset($type)) {
-            return array('error' => "No files were uploaded.");
+            return ['error' => "No files were uploaded."];
         } else {
             if (strpos(strtolower($type), 'multipart/') !== 0) {
-                return array('error' => "Server error. Not a multipart request. Please set forceMultipart to default value (true).");
+                return ['error' => "Server error. Not a multipart request. Please set forceMultipart to default value (true)."];
             }
         }
         // Get size and name
         $file = $_FILES[$this->inputName];
         $size = $file['size'];
-        if ($name === null) {
+        if ($name === NULL) {
             $name = $this->getName();
         }
         // Validate name
-        if ($name === null || $name === '') {
-            return array('error' => 'File name empty.');
+        if ($name === NULL || $name === '') {
+            return ['error' => 'File name empty.'];
         }
         // Validate file size
         if ($size == 0) {
-            return array('error' => 'File is empty.');
+            return ['error' => 'File is empty.'];
         }
         if ($size > $this->sizeLimit) {
-            return array('error' => 'File is too large.');
+            return ['error' => 'File is too large.'];
         }
         // Validate file extension
         $pathinfo = pathinfo($name);
@@ -135,17 +150,17 @@ class FineUploader extends \Nette\Object
         if ($this->allowedExtensions && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))
         ) {
             $these = implode(', ', $this->allowedExtensions);
-            return array('error' => 'File has an invalid extension, it should be one of ' . $these . '.');
+            return ['error' => 'File has an invalid extension, it should be one of ' . $these . '.'];
         }
         // Save a chunk
-        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int)$_REQUEST['qqtotalparts'] : 1;
+        $totalParts = isset($_REQUEST['qqtotalparts']) ? (int) $_REQUEST['qqtotalparts'] : 1;
         $uuid = $_REQUEST['qquuid'];
         if ($totalParts > 1) {
             # chunked upload
             $chunksFolder = $this->chunksFolder;
-            $partIndex = (int)$_REQUEST['qqpartindex'];
+            $partIndex = (int) $_REQUEST['qqpartindex'];
             if (!is_writable($chunksFolder) && !is_executable($uploadDirectory)) {
-                return array('error' => "Server error. Chunks directory isn't writable or executable.");
+                return ['error' => "Server error. Chunks directory isn't writable or executable."];
             }
             $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
             if (!file_exists($targetFolder)) {
@@ -153,16 +168,16 @@ class FineUploader extends \Nette\Object
             }
             $target = $targetFolder . '/' . $partIndex;
             $success = move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $target);
-            return array(
-                "success" => true,
-                "uuid" => $uuid,
-                'size' => $size,
-                'filename' => $pathinfo['filename'],
+            return [
+                "success"   => TRUE,
+                "uuid"      => $uuid,
+                'size'      => $size,
+                'filename'  => $pathinfo['filename'],
                 'extension' => $pathinfo['extension']
-            );
+            ];
         } else {
             # non-chunked upload
-            $target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+            $target = join(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
             //$target = $this->getUniqueTargetPath($uploadDirectory, $name);
             if ($target) {
                 $this->uploadName = basename($target);
@@ -170,19 +185,19 @@ class FineUploader extends \Nette\Object
                     mkdir(dirname($target));
                 }
                 if (move_uploaded_file($file['tmp_name'], $target)) {
-                    return array(
-                        'success' => true,
-                        "uuid" => $uuid,
-                        'size' => $size,
-                        'filename' => $pathinfo['filename'],
+                    return [
+                        'success'   => TRUE,
+                        "uuid"      => $uuid,
+                        'size'      => $size,
+                        'filename'  => $pathinfo['filename'],
                         'extension' => $pathinfo['extension']
-                    );
+                    ];
                 }
             }
-            return array(
+            return [
                 'error' => 'Could not save uploaded file.' .
                     'The upload was cancelled, or server error encountered'
-            );
+            ];
         }
     }
 
@@ -190,28 +205,28 @@ class FineUploader extends \Nette\Object
      * Process a delete.
      * @param string $uploadDirectory Target directory.
      * @params string $name Overwrites the name of the file.
-     *
+     * @return array
      */
-    public function handleDelete($uploadDirectory, $name = null)
+    public function handleDelete($uploadDirectory, $name = NULL)
     {
         if ($this->isInaccessible($uploadDirectory)) {
-            return array('error' => "Server error. Uploads directory isn't writable" . ((!$this->isWindows()) ? " or executable." : "."));
+            return ['error' => "Server error. Uploads directory isn't writable" . ((!$this->isWindows()) ? " or executable." : ".")];
         }
         $targetFolder = $uploadDirectory;
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $tokens = explode('/', $url);
         $uuid = $tokens[sizeof($tokens) - 1];
-        $target = join(DIRECTORY_SEPARATOR, array($targetFolder, $uuid));
+        $target = join(DIRECTORY_SEPARATOR, [$targetFolder, $uuid]);
         // print_r($target);
         if (is_dir($target)) {
             $this->removeDir($target);
-            return array("success" => true, "uuid" => $uuid);
+            return ["success" => TRUE, "uuid" => $uuid];
         } else {
-            return array(
-                "success" => false,
-                "error" => "File not found! Unable to delete." . $url,
-                "path" => $uuid
-            );
+            return [
+                "success" => FALSE,
+                "error"   => "File not found! Unable to delete." . $url,
+                "path"    => $uuid
+            ];
         }
     }
 
@@ -219,7 +234,7 @@ class FineUploader extends \Nette\Object
      * Returns a path to use with this upload. Check that the name does not exist,
      * and appends a suffix otherwise.
      * @param string $uploadDirectory Target directory
-     * @param string $filename The name of the file to use.
+     * @param string $filename        The name of the file to use.
      */
     protected function getUniqueTargetPath($uploadDirectory, $filename)
     {
@@ -245,7 +260,7 @@ class FineUploader extends \Nette\Object
         // Create an empty target file
         if (!touch($result)) {
             // Failed
-            $result = false;
+            $result = FALSE;
         }
         if (function_exists('sem_acquire')) {
             sem_release($lock);
@@ -286,7 +301,7 @@ class FineUploader extends \Nette\Object
             if (is_dir($item)) {
                 $this->removeDir($item);
             } else {
-                unlink(join(DIRECTORY_SEPARATOR, array($dir, $item)));
+                unlink(join(DIRECTORY_SEPARATOR, [$dir, $item]));
             }
         }
         rmdir($dir);

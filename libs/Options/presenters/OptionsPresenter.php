@@ -29,7 +29,7 @@ class OptionsPresenter extends BasePresenter
 		$this->template->extensions = $this->registrar->getExtensions();
 	}
 
-	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
+    protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
 	{
 		return $factory->create();
 	}

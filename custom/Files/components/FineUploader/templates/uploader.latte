@@ -3,3 +3,19 @@
         {include 'qq-template.latte'}
     </script>
 </div>
+
+<div class="clearfix"></div>
+{ifset $maxFilesize}
+    <div class="mt20">Povolená velikost jednoho souboru je {$maxFilesize}MB</div>
+{/ifset}
+
+{ifset $allowedExtensions}
+    <div class="mt20">
+        Povolené přílohy :
+        <div class="mt10">
+            <span n:foreach="$allowedExtensions as $extension" class="label label-primary ml5 label-lg">
+                {$extension}
+            </span>
+        </div>
+    </div>
+{/ifset}

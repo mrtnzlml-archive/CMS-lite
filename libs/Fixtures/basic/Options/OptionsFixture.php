@@ -18,6 +18,10 @@ class OptionsFixture extends \Doctrine\Common\DataFixtures\AbstractFixture imple
 		'category_url_end' => ['seo', 'Koncovka URL kategorií', [
 			NULL, '/', '.htm', '.html',
 		]],
+        'download_protected' => ['files', 'Zabezpečené stahování příloh', 0],
+        'max_filesize' => ['files', 'Maximální velikost přílohy / souboru', 5],
+        'allowed_extensions' => ['files',  'Povolené přílohy',  'pdf;odt;doc;xls;xlxs']
+
 	];
 
 	public function load(ObjectManager $manager)
