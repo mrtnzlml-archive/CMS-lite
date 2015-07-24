@@ -5,7 +5,6 @@ namespace Options\Presenters;
 use App\AdminModule\Presenters\BasePresenter;
 use App\Components\Flashes\Flashes;
 use App\Extensions\Registrar;
-use Kdyby\Doctrine\EntityManager;
 use Options\Components\OptionsForm\IOptionsFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 
@@ -15,13 +14,9 @@ class OptionsPresenter extends BasePresenter
 	/** @var Registrar */
 	public $registrar;
 
-	/** @var EntityManager */
-	private $em;
-
-	public function __construct(Registrar $registrar, EntityManager $em)
+	public function __construct(Registrar $registrar)
 	{
 		$this->registrar = $registrar;
-		$this->em = $em;
 	}
 
 	public function renderDefault()
@@ -29,7 +24,7 @@ class OptionsPresenter extends BasePresenter
 		$this->template->extensions = $this->registrar->getExtensions();
 	}
 
-    protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
+	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
 	{
 		return $factory->create();
 	}
@@ -49,13 +44,18 @@ class OptionsPresenter extends BasePresenter
 	 */
 	public function handleInstallExtension($md5)
 	{
-		$extension = $this->registrar->getExtensionNames($md5);
-		$method = 'install';
-		if (method_exists($extension, $method)) {
-			(new $extension)->$method();
-		}
-
+		$this->registrar->installExtension($md5);
 		$this->flashMessage('Rozšíření bylo úspěšně nainstalováno.', Flashes::FLASH_SUCCESS);
+		$this->redirect('this');
+	}
+
+	/**
+	 * @secured
+	 */
+	public function handleUninstallExtension($id)
+	{
+		$this->registrar->uninstallExtension($id);
+		$this->flashMessage('Rozšíření bylo úspěšně odinstalováno.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
 	}
 

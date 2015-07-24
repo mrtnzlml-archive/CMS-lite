@@ -14,7 +14,7 @@ class FilesExtension extends CompilerExtension implements IEntityProvider, ICust
 
     public function getExtensionInfo()
     {
-        return (new Extension)->setName(self::class);
+        return [(new Extension)->setName(self::class)];
     }
 
     public function loadConfiguration()

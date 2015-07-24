@@ -20,7 +20,7 @@ class Resource
 	use MagicAccessors;
 
 	/**
-	 * @ORM\Column(type="string", options={"comment":"Identifier of the role"})
+	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"Identifier of the role"})
 	 * @var string
 	 */
 	protected $name;

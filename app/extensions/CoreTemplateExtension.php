@@ -33,6 +33,8 @@ class CoreTemplateExtension extends Nette\DI\CompilerExtension
 	{
 		$cb = $this->getContainerBuilder();
 
+		//TODO: kontrolovat, jestli je rozšíření nainstalované (?)
+
 		/** @var IAdminBarTemplateProvider $extension */
 		foreach ($this->compiler->getExtensions(IAdminBarTemplateProvider::class) as $extension) {
 			$definition = $cb->getDefinition($cb->getByType(IAdminBarFactory::class));

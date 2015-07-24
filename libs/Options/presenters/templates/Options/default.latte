@@ -2,17 +2,15 @@
 
 {block content}
 	{control optionsMenu}
-	<div class="alert alert-danger">
-		Rozšíření zatím není možné nainstalovat!
-	</div>
 	{if $extensions}
 		<h3>Rozšíření</h3>
 		{foreach $extensions as $key => $ext}
 			<h4>
 				{$ext->name}
-				{*<small>*}
-					{*<a n:href="installExtension! $key">Nainstalovat</a>*}
-				{*</small>*}
+				<small>
+					<a n:href="installExtension! $key">Nainstalovat</a>
+					<a n:href="uninstallExtension! $key">Odinstalovat</a>
+				</small>
 			</h4>
 		{/foreach}
 	{/if}

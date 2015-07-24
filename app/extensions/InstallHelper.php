@@ -15,7 +15,7 @@ class InstallHelper extends Nette\Object
 	/** @var EntityManager */
 	protected $em;
 
-	/** @var Logger TODO */
+	/** @var Logger */
 	private $logger;
 
 	/** @var Nette\Caching\Cache */
@@ -38,13 +38,18 @@ class InstallHelper extends Nette\Object
 			$url = new Url;
 			$url->setFakePath($fakePath);
 			$url->setDestination($destination);
-			$this->em->persist($url);
+			$this->logger->addInfo('Installing URL ' . $fakePath);
+			$this->em->safePersist($url);
 			$this->routeCache->clean([Nette\Caching\Cache::TAGS => ['route/' . $url->getId()]]);
 			return;
 		}
+		// Uninstall:
 		$url = $this->em->getRepository(Url::class)->findOneBy(['fakePath' => $fakePath]);
-		$this->em->remove($url);
-		$this->routeCache->clean([Nette\Caching\Cache::TAGS => ['route/' . $url->getId()]]);
+		if ($url) {
+			$this->logger->addInfo('Uninstalling URL ' . $fakePath);
+			$this->em->remove($url);
+			$this->routeCache->clean([Nette\Caching\Cache::TAGS => ['route/' . $url->getId()]]);
+		}
 	}
 
 	public function resource($resource_name, $reverse = FALSE)
@@ -52,13 +57,18 @@ class InstallHelper extends Nette\Object
 		if (!$reverse) {
 			$resource = new Resource();
 			$resource->setName($resource_name);
-			$this->em->persist($resource);
+			$this->logger->addInfo('Installing resource ' . $resource_name);
+			$this->em->safePersist($resource);
 			$this->resourceCache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
 			return;
 		}
+		// Uninstall:
 		$resource = $this->em->getRepository(Resource::class)->findOneBy(['name' => $resource_name]);
-		$this->em->remove($resource);
-		$this->resourceCache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+		if ($resource) {
+			$this->logger->addInfo('Uninstalling resource ' . $resource_name);
+			$this->em->remove($resource);
+			$this->resourceCache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);
+		}
 	}
 
 }

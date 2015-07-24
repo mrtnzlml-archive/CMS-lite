@@ -9,23 +9,8 @@ use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-/**
- * TODO: schéma databáze při instalaci
- * TODO: default data
- */
 class EshopExtension extends CompilerExtension implements IEntityProvider, ICustomExtension
 {
-
-	public function getExtensionInfo()
-	{
-		/** @var Extension $extension */
-		$extension = (new Extension)->setName('ANT Eshop');
-		$extension->setDescription(<<<DESC
-Peckový ANT Eshop, který zvládne všechno...
-DESC
-		);
-		return $extension;
-	}
 
 	public function loadConfiguration()
 	{
@@ -39,22 +24,22 @@ DESC
 		$this->setPresenterMapping($builder, ['Eshop' => 'Eshop\\*Module\\Presenters\\*Presenter']);
 	}
 
-	public function install()
-	{
-		dump('ok');
-		exit;
-	}
-
-	/**
-	 * Returns associative array of Namespace => mapping definition
-	 *
-	 * @return array
-	 */
 	public function getEntityMappings()
 	{
-		//TODO: schéma by se mělo postavit při instalaci rozšíření
+		return ['Eshop' => __DIR__ . '/..'];
+	}
+
+	public function getExtensionInfo()
+	{
+		/** @var Extension $extension */
+		$extension = (new Extension)->setName('ANT Eshop');
+		$extension->setDescription(<<<DESC
+Peckový ANT Eshop, který zvládne všechno...
+DESC
+		);
 		return [
-			'Eshop' => __DIR__ . '/..',
+			$extension,
+			Install::class,
 		];
 	}
 

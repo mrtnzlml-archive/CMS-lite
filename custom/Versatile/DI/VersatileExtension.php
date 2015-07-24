@@ -12,14 +12,13 @@ use App\ITemplateProvider;
 use Nette;
 use WebFontLoader\Providers\IFontProvider;
 
-//FIXME: Tato extension je šablona!
 class VersatileExtension extends CompilerExtension implements ITemplateProvider, ICustomExtension,
 	IImageProvider, IFaviconProvider, IBreadcrumbTemplateProvider, IFontProvider
 {
 
 	public function getExtensionInfo()
 	{
-		return (new Extension)->setTemplate(TRUE)->setName(self::class);
+		return [(new Extension)->setTemplate(TRUE)->setName(self::class)];
 	}
 
 	public function beforeCompile()

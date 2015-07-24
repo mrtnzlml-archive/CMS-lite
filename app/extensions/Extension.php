@@ -11,6 +11,7 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  *
  * @method setName(string $name)
  * @method string getName()
+ * @method setHash(string $hash)
  * @method setDescription(string $description)
  * @method boolean getTemplate()
  */
@@ -27,16 +28,22 @@ class Extension
 	protected $name;
 
 	/**
-	 * @ORM\Column(type="boolean")
-	 * @var boolean
+	 * @ORM\Column(type="string", unique=TRUE)
+	 * @var string
 	 */
-	protected $template = FALSE;
+	protected $hash;
 
 	/**
 	 * @ORM\Column(type="text", nullable=TRUE)
 	 * @var string
 	 */
 	protected $description = NULL;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 * @var boolean
+	 */
+	protected $template = FALSE;
 
 	public function setTemplate($template = TRUE)
 	{

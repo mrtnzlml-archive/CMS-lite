@@ -26,10 +26,8 @@ class CoreExtension extends Nette\DI\Extensions\ExtensionsExtension
 		$iterator = 0;
 		foreach ($this->robotLoader->getIndexedClasses() as $class => $file) {
 			$reflection = Nette\Reflection\ClassType::from($class);
-			//TODO: bylo by fajn, kdyby šlo mít extension a vůbec ji do DIC neregistrovat, pokud není nainstalované
-			//TODO: zatím nevím jak, ale je to nutné kvůli tomu, že jsou tam třídy, které tam nemají být, pokud není nainstalováno
-			//@see: https://github.com/Kdyby/Doctrine/blob/master/src/Kdyby/Doctrine/DI/OrmExtension.php#L828-L839
 			if ($reflection->implementsInterface(ICustomExtension::class) && $reflection->isInstantiable()) {
+				//FIXME: přidávat jen někdy (pokud nainstalováno)
 				$this->compiler->addExtension('dynamic.' . $iterator++, new $class);
 			}
 		}
@@ -68,6 +66,18 @@ class CoreExtension extends Nette\DI\Extensions\ExtensionsExtension
 		if ($config['https']) {
 			$initialize->addBody('Nette\Application\Routers\Route::$defaultFlags = Nette\Application\Routers\Route::SECURED;');
 		}
+
+//		$dic = $this->evalAndInstantiateContainer($generatedContainer);
 	}
+
+//	private function evalAndInstantiateContainer(Nette\PhpGenerator\ClassType $generatedContainer)
+//	{
+//		$containerCopy = clone $generatedContainer;
+//		$containerCopy->setName($className = $generatedContainer->getName() . '_' . rand());
+//		return call_user_func(function () use ($className, $containerCopy) {
+//			eval("$containerCopy");
+//			return new $className();
+//		});
+//	}
 
 }

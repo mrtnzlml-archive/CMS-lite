@@ -15,7 +15,7 @@ class PagesExtension extends CompilerExtension implements IEntityProvider, IJsPr
 
 	public function getExtensionInfo()
 	{
-		return (new Extension)->setName(self::class);
+		return [(new Extension)->setName(self::class)];
 	}
 
 	public function loadConfiguration()
