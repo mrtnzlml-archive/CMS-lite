@@ -3,6 +3,7 @@ odhlasit,Auth:Sign:out
 administrace/nastaveni/general,Options:Options:general
 administrace/editovat-stranku,Pages:AdminPage:edit
 administrace/editovat-stranky,Pages:AdminPage:multiEdit
+administrace/prilohy-stranky,Pages:AdminPage:attachments
 administrace/nastaveni/seo,Options:Options:seo
 nahled-stranky,Pages:Page:preview
 administrace/nahrat-soubory,Files:AdminFile:upload
