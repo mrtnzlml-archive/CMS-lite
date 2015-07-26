@@ -9,16 +9,17 @@
 					</a>
 				</li>
 
-				{foreach $categories as $category}
-					<li {ifCurrent :Options:Options:$category->name}class="active"{/ifCurrent}>
-						<a href="{plink :Options:Options:$category->name}">
-							{_$category->fullName}
-							{ifCurrent :Options:Options:$category->name}
-								<span class="sr-only"> ({_aktuální})</span>
-							{/ifCurrent}
-						</a>
-					</li>
-				{/foreach}
+				<li {ifCurrent :Options:Options:general}class="active"{/ifCurrent}>
+					<a href="{plink :Options:Options:general}">
+						Obecné nastavení
+					</a>
+				</li>
+
+				<li {ifCurrent :Options:Options:seo}class="active"{/ifCurrent}>
+					<a href="{plink :Options:Options:seo}">
+						Základní SEO
+					</a>
+				</li>
 
 			</ul>
 		</div>

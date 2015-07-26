@@ -9,8 +9,6 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 use Nette\Application\Responses\JsonResponse;
-use Options\Option;
-use Options\OptionManager;
 use Pages\Components\MultiEdit\IMultiEditFactory;
 use Pages\Components\PageForm\IPageFormFactory;
 use Pages\Components\PagesGrid\IPagesGridFactory;
@@ -22,25 +20,18 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
     /** @var EntityManager */
     private $em;
 
-    /** @var OptionManager */
-    private $optionManager;
-
     /** @var Page|NULL */
     private $editablePage = NULL;
 
     /** @var array */
     private $multiEdit;
 
-    /** @var Option[] */
-    private $options;
-
     private $multiEditFactory;
 
-    public function __construct(EntityManager $em, IMultiEditFactory $multiEditFactory, OptionManager $optionManager)
+    public function __construct(EntityManager $em, IMultiEditFactory $multiEditFactory)
     {
         $this->em = $em;
         $this->multiEditFactory = $multiEditFactory;
-        $this->optionManager = $optionManager;
     }
 
     public function actionEdit($id = NULL)
@@ -61,7 +52,6 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
     public function actionAttachments($id = NULL)
     {
         $this->loadEditablePage($id);
-        $this->options = $this->optionManager->getFileOptions();
     }
 
     public function renderAttachments()
@@ -98,7 +88,6 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
     protected function createComponentFineUploader(IFineUploaderFactory $factory)
     {
         $control = $factory->create();
-        $control->setOptions($this->options);
 
         $control->onSuccess[] = function ($control, $file, $result) {
             $this->editablePage->addFile($file);

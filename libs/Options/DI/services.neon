@@ -1,5 +1,6 @@
 services:
-    - Options\Components\OptionsForm\IOptionsFormFactory
-    - Options\Components\OptionsMenu\IOptionsMenuFactory
-    - Options\Presenters\OptionsPresenter
-    - Options\OptionManager
+	- Options\Components\GeneralForm\IGeneralFormFactory
+	- Options\Components\OptionsMenu\IOptionsMenuFactory
+	- Options\Components\SeoForm\ISeoFormFactory
+	- Options\Presenters\OptionsPresenter
+	- Options\OptionFacade(..., @antFileStorage)

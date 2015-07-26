@@ -5,7 +5,6 @@ namespace Options\Components\OptionsMenu;
 use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use Options\OptionCategory;
 
 class OptionsMenu extends AControl
 {
@@ -23,7 +22,6 @@ class OptionsMenu extends AControl
 		if ($parameters) {
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
-		$this->template->categories = $this->em->getRepository(OptionCategory::class)->findAll();
 		$this->template->render($this->templatePath ?: __DIR__ . '/templates/OptionsMenu.latte');
 	}
 

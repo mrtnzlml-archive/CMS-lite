@@ -10,6 +10,7 @@ use Files\FineUploader as Uploader;
 use Files\File;
 use Files\FileProcess;
 use Options\Option;
+use Options\OptionFacade;
 
 
 class FineUploader extends AControl
@@ -20,6 +21,8 @@ class FineUploader extends AControl
     private $uploader;
     /** @var FileProcess */
     private $fileProcess;
+    /** @var OptionFacade */
+    private $optionFacade;
     /** @var string */
     private $dir;
 
@@ -29,33 +32,24 @@ class FineUploader extends AControl
     private $maxFilesize;
     private $allowedExtensions;
 
-    public function __construct($dir, EntityManager $em, Uploader $uploader, FileProcess $fileProcess)
+    public function __construct($dir, EntityManager $em, Uploader $uploader, FileProcess $fileProcess, OptionFacade $optionFacade)
     {
         $this->dir = $dir;
         $this->em = $em;
         $this->uploader = $uploader;
         $this->fileProcess = $fileProcess;
-    }
+        $this->optionFacade = $optionFacade;
 
-    /**
-     * @param mixed array | Option[] $options
-     */
-    public function setOptions($options)
-    {
-        if (isset($options[Option::KEY_FILE_MAXFILESIZE])) {
-            $this->maxFilesize = $options[Option::KEY_FILE_MAXFILESIZE]->getValue()->getValue();
-            $this->uploader->setSizeLimit($this->maxFilesize);
+        $maxFileSize = $this->optionFacade->getOption('max_filesize');
+        if($maxFileSize !== NULL) {
+            $this->maxFilesize = $maxFileSize;
+            $this->uploader->setSizeLimit($maxFileSize);
         }
 
-        //@todo ... docasne reseni pres string
-        if (isset($options[Option::KEY_FILE_ALLOWED_EXTENSIONS])) {
-            $allowedExtensions = trim($options[Option::KEY_FILE_ALLOWED_EXTENSIONS]->getValue()->getValue());
-            if (strlen($allowedExtensions) === 0) {
-                return;
-            }
-
-            $this->allowedExtensions = explode(';', $allowedExtensions);
-            $this->uploader->setAllowedExtensions($this->allowedExtensions);
+        $allowedExtensions = $this->optionFacade->getOption('allowed_extensions');
+        if($allowedExtensions !== NULL) {
+            $this->allowedExtensions = $allowedExtensions;
+            $this->uploader->setAllowedExtensions($allowedExtensions);
         }
     }
 

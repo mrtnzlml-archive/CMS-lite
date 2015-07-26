@@ -6,8 +6,7 @@ use App\Components;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
-use Options\Option;
-use Pages\Query\OptionsQuery;
+use Options\OptionFacade;
 
 class Title extends Components\AControl
 {
@@ -15,11 +14,15 @@ class Title extends Components\AControl
 	/** @var EntityManager */
 	private $em;
 
+	/** @var OptionFacade */
+	private $optionFacade;
+
 	private $title = NULL;
 
-	public function __construct(EntityManager $em)
+	public function __construct(EntityManager $em, OptionFacade $optionFacade)
 	{
 		$this->em = $em;
+		$this->optionFacade = $optionFacade;
 	}
 
 	public function render(array $parameters = NULL)
@@ -41,15 +44,14 @@ class Title extends Components\AControl
 
 	private function getTitle()
 	{
-		$query = (new OptionsQuery)->withOptions([
-			'site_title',
-			'site_title_separator',
-		]);
-		$options = Nette\Utils\ArrayHash::from($this->em->getRepository(Option::class)->fetch($query));
-		$separator = isset($options->site_title_separator)
-			? ($this->title ? $options->site_title_separator->getValue()->value : NULL)
-			: ($this->title ? '|' : NULL);
-		return "$this->title $separator {$options->site_title->getValue()->value}"; //FIXME: to je ale pěkná hovadina
+		$separator = $this->optionFacade->getOption('site_title_separator');
+		if ($separator === NULL) {
+			$separator = $this->title ? '|' : NULL;
+		} else {
+			$separator = $this->title ? $separator : NULL;
+		}
+		$site_title = $this->optionFacade->getOption('site_title');
+		return "$this->title $separator $site_title";
 	}
 
 }

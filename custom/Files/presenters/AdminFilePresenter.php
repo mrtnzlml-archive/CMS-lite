@@ -1,40 +1,34 @@
 <?php
+
 namespace Files\Presenters;
 
+use App;
+use App\AdminModule\Presenters\BasePresenter;
+use App\Components\Flashes\Flashes;
 use Files\Components\IFileFormFactory;
 use Files\Components\IFileSettingsFactory;
 use Files\Components\IFineUploaderFactory;
-use Files\FileProcess;
-use Nette;
-use App;
-use App\Components\Flashes\Flashes;
-use App\AdminModule\Presenters\BasePresenter;
-use Kdyby\Doctrine\EntityManager;
 use Files\File;
+use Files\FileProcess;
+use Kdyby\Doctrine\EntityManager;
+use Nette;
 use Nette\Application\Responses\JsonResponse;
-use Options\Option;
-use Options\OptionManager;
-use Pages\Query\OptionsQuery;
 
 class AdminFilePresenter extends BasePresenter
 {
-    /** @var EntityManager */
-    private $em;
-    /** @var FileProcess */
-    private $fileProcess;
-    /** @var OptionManager */
-    private $optionManager;
-    /** @var File */
-    private $file;
-    /** @var Option[] */
-    private $options;
 
-    public function __construct(EntityManager $em, FileProcess $fileProcess, OptionManager $optionManager)
-    {
-        $this->em = $em;
-        $this->fileProcess = $fileProcess;
-        $this->optionManager = $optionManager;
-    }
+	/** @var EntityManager */
+	private $em;
+	/** @var FileProcess */
+	private $fileProcess;
+	/** @var File */
+	private $file;
+
+	public function __construct(EntityManager $em, FileProcess $fileProcess)
+	{
+		$this->em = $em;
+		$this->fileProcess = $fileProcess;
+	}
 
     public function renderDefault()
     {
@@ -52,16 +46,6 @@ class AdminFilePresenter extends BasePresenter
     public function renderEdit()
     {
         $this->template->file = $this->file;
-    }
-
-    public function actionUpload()
-    {
-        $this->options = $this->optionManager->getFileOptions();
-    }
-
-    public function actionSettings()
-    {
-        $this->options = $this->optionManager->getFileOptions();
     }
 
     /**
@@ -103,7 +87,6 @@ class AdminFilePresenter extends BasePresenter
     protected function createComponentFineUploader(IFineUploaderFactory $factory)
     {
         $control = $factory->create();
-        $control->setOptions($this->options);
 
         $control->onSuccess[] = function ($control, $file, $result) {
             $this->sendResponse(new JsonResponse($result));
@@ -116,9 +99,8 @@ class AdminFilePresenter extends BasePresenter
         return $control;
     }
 
-    protected function createComponentFileSettings(IFileSettingsFactory $factory)
-    {
-        $control = $factory->create($this->options);
-        return $control;
-    }
-} 
+	protected function createComponentFileSettings(IFileSettingsFactory $factory)
+	{
+		return $factory->create();
+	}
+}

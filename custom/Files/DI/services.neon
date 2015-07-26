@@ -6,7 +6,6 @@ services:
 	- Files\Components\IFileSettingsFactory
 	- Files\FileStorage(%wwwDir%/upload/files, \Symfony\Component\Filesystem\Filesystem())
 	- Files\FileProcess
-	
+
 	#Presenters in DIC
-	-	Files\Presenters\AdminFilePresenter
-		
+	- Files\Presenters\AdminFilePresenter

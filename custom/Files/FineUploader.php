@@ -12,8 +12,8 @@ class FineUploader extends Object
     public $sizeLimit = NULL;
     public $inputName = 'qqfile';
     public $chunksFolder = 'chunks';
-    public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg
-    public $chunksExpireIn = 604800; // One week
+    public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg (FIXME: -> config)
+    public $chunksExpireIn = 604800; // One week (FIXME: -> config)
     protected $uploadName;
 
     function __construct()

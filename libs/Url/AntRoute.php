@@ -7,8 +7,7 @@ use Kdyby\Monolog\Logger;
 use Localization\Locale;
 use Nette;
 use Nette\Application;
-use Options\Option;
-use Pages\Query\OptionsQuery;
+use Options\OptionFacade;
 
 class AntRoute extends Application\Routers\RouteList
 {
@@ -21,6 +20,9 @@ class AntRoute extends Application\Routers\RouteList
 
 	/** @var Logger */
 	private $monolog;
+
+	/** @var OptionFacade */
+	private $optionFacade;
 
 	private $flags;
 
@@ -42,11 +44,12 @@ class AntRoute extends Application\Routers\RouteList
 
 	private $allowedLanguages;
 
-	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog)
+	public function __construct(EntityManager $em, Nette\Caching\IStorage $cacheStorage, Logger $monolog, OptionFacade $optionFacade)
 	{
 		$this->em = $em;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 		$this->monolog = $monolog;
+		$this->optionFacade = $optionFacade;
 		$this->flags = Nette\Application\Routers\Route::$defaultFlags;
 
 		if (PHP_SAPI === 'cli') {
@@ -58,14 +61,7 @@ class AntRoute extends Application\Routers\RouteList
 			return $this->em->getRepository(Locale::class)->findPairs('default', 'code');
 		});
 
-		$query = (new OptionsQuery())->withOptions('page_url_end');
-		$values = $this->em->getRepository(Option::class)->fetchOne($query)->values;
-		foreach ($values as $value) {
-			if ($value->selected) {
-				$this->extension = $value->value;
-			}
-		}
-//		$this->extension = '.přípona';
+		$this->extension = $this->optionFacade->getOption('page_url_end');
 	}
 
 	/**
