@@ -87,12 +87,13 @@ class NavigationFacade extends Nette\Object
 	public function recalculatePathsForNode($nodeId, array $nodeIds)
 	{
 		$connection = $this->em->getConnection();
-		$stmt = $connection->prepare("
-			DELETE t1 FROM navigation_tree_path t1
-			JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = :ancestor AND t1.depth > 0);
-		");
-		$stmt->bindValue('ancestor', $nodeId, Type::INTEGER);
-		$stmt->execute();
+
+		$sql = <<<SQL
+DELETE t1 FROM navigation_tree_path t1
+JOIN navigation_tree_path t2 USING (descendant_id) WHERE (t2.ancestor_id = :ancestor AND t1.depth > 0);
+SQL;
+
+		$connection->executeUpdate($sql, ['ancestor' => $nodeId], ['ancestor' => Type::INTEGER]);
 		$this->calculatePaths($nodeId, $nodeIds);
 	}
 
@@ -104,24 +105,38 @@ class NavigationFacade extends Nette\Object
 				$this->createPath($root, $id, $order);
 			} else {
 				$this->createPath($root, $key, $order);
-				$this->calculatePaths($key, $id, $order);
+				$this->calculatePaths($key, $id);
 			}
 			$order++;
 		}
 	}
 
+	/**
+	 * @param $parent_id
+	 * @param $item_id
+	 * @param int $order
+	 *
+	 * @return int affected rows
+	 */
 	private function createPath($parent_id, $item_id, $order = 0)
 	{
 		$connection = $this->em->getConnection();
-		$stmt = $connection->prepare('
-			INSERT INTO navigation_tree_path (ancestor_id, descendant_id, depth, item_order)
-			SELECT ancestor_id, :descSelect, depth+1, :item_order FROM navigation_tree_path
-			WHERE descendant_id = :desc;
-		');
-		$stmt->bindValue('descSelect', $item_id, Type::INTEGER);
-		$stmt->bindValue('desc', $parent_id, Type::INTEGER);
-		$stmt->bindValue('item_order', $order, Type::INTEGER);
-		$stmt->execute();
+
+		$sql = <<<SQL
+INSERT INTO navigation_tree_path (ancestor_id, descendant_id, depth, item_order)
+SELECT ancestor_id, :descSelect, depth+1, :item_order FROM navigation_tree_path
+WHERE descendant_id = :desc;
+SQL;
+
+		return $connection->executeUpdate($sql, [
+			'descSelect' => $item_id,
+			'desc' => $parent_id,
+			'item_order' => $order,
+		], [
+			'descSelect' => Type::INTEGER,
+			'desc' => Type::INTEGER,
+			'item_order' => Type::INTEGER,
+		]);
 	}
 
 }

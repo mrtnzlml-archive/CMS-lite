@@ -2,6 +2,7 @@
 
 namespace Pages;
 
+use Doctrine\DBAL\Types\Type;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 
@@ -26,9 +27,8 @@ class PageCategoryProcess extends Nette\Object
 		}
 		$query = $this->em->getRepository(PageCategory::class)->createQuery('
 			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\PageCategory c
-				LEFT JOIN \Pages\PageCategoryTreePath tree
-					WITH (c.id = tree.descendant)
-				WHERE tree.ancestor = ?1
+			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.descendant)
+			WHERE tree.ancestor = ?1
 		');
 		$query->setParameter(1, $categoryId);
 		return $query->getResult();
@@ -41,9 +41,8 @@ class PageCategoryProcess extends Nette\Object
 		}
 		$query = $this->em->getRepository(PageCategory::class)->createQuery('
 			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\PageCategory c
-				LEFT JOIN \Pages\PageCategoryTreePath tree
-					WITH (c.id = tree.ancestor)
-				WHERE tree.descendant = ?1
+			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.ancestor)
+			WHERE tree.descendant = ?1
 		');
 		$query->setParameter(1, $categoryId);
 		return $query->getResult();
@@ -73,14 +72,17 @@ class PageCategoryProcess extends Nette\Object
 			if ($parent_id !== NULL) {
 				$table = $this->em->getClassMetadata(PageCategoryTreePath::class)->getTableName();
 				$connection = $this->em->getConnection();
-				$stmt = $connection->prepare("
-					INSERT INTO $table (ancestor_id, descendant_id, depth)
-						SELECT ancestor_id, :descSelect, depth+1 FROM $table
-							WHERE descendant_id = :desc;
-				");
-				$stmt->bindValue('descSelect', $id, \Doctrine\DBAL\Types\Type::INTEGER);
-				$stmt->bindValue('desc', $parent_id);
-				$stmt->execute();
+
+				$sql = <<<SQL
+INSERT INTO $table (ancestor_id, descendant_id, depth)
+SELECT ancestor_id, :descSelect, depth+1 FROM $table
+WHERE descendant_id = :desc;
+SQL;
+
+				$connection->executeUpdate($sql, [
+					'descSelect' => $id,
+					'desc' => $parent_id,
+				], ['descSelect' => Type::INTEGER]);
 			}
 
 			return $category;
