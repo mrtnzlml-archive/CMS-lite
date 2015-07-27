@@ -1,2 +1,3 @@
 services:
 	- Dashboard\Presenters\DashboardPresenter
+	- Dashboard\Components\IAdvertisementFactory

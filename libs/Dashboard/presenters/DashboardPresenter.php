@@ -4,6 +4,7 @@ namespace Dashboard\Presenters;
 
 use App\AdminModule\Presenters\BasePresenter;
 use App\Components\Flashes\Flashes;
+use Dashboard\Components\IAdvertisementFactory;
 use Error\Components\ErrorGrid\IErrorGridFactory;
 use Eshop\Components\ILastOrdersFactory;
 use Notes\Components\INotesFactory;
@@ -23,10 +24,17 @@ class DashboardPresenter extends BasePresenter
 
 	public function createComponentLastOrders(ILastOrdersFactory $factory)
 	{
-		return $factory->create();
+		$control = $factory->create();
+		return $control;
 	}
 
 	protected function createComponentErrorGrid(IErrorGridFactory $factory)
+	{
+		$control = $factory->create();
+		return $control;
+	}
+
+	protected function createComponentAdvertisement(IAdvertisementFactory $factory)
 	{
 		$control = $factory->create();
 		return $control;
