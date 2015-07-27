@@ -21,6 +21,14 @@ class NavigationFacade extends Nette\Object
 		//TODO: cache
 	}
 
+	public function findRoot($navigation_id)
+	{
+		return $this->em->getRepository(NavigationItem::class)->findOneBy([
+			'root' => TRUE,
+			'navigations.id' => $navigation_id,
+		]);
+	}
+
 	public function getItemTreeBelow($itemId)
 	{
 		if (!is_numeric($itemId)) {
@@ -52,9 +60,9 @@ class NavigationFacade extends Nette\Object
 		return Nette\Utils\ArrayHash::from($nodes);
 	}
 
-	public function createItem(NavigationItem $item, Navigation $navigation, $root_hash, $parent_id = NULL)
+	public function createItem(NavigationItem $item, Navigation $navigation, $parent_id = NULL)
 	{
-		return $this->em->transactional(function () use ($item, $navigation, $root_hash, $parent_id) {
+		return $this->em->transactional(function () use ($item, $navigation, $parent_id) {
 			// 1) save new item
 			$item->addNavigation($navigation);
 			$this->em->persist($item);
@@ -66,9 +74,10 @@ class NavigationFacade extends Nette\Object
 			$this->em->flush($leaf);
 
 			//create admin root if doesn't exist
-			$root = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => $root_hash]);
+			/** @var NavigationItem $root */
+			$root = $this->findRoot($navigation->getId());
 			if (!$root) {
-				$root = (new NavigationItem())->setRoot()->setName($root_hash);
+				$root = (new NavigationItem())->setRoot()->setName(md5($navigation->getName()));
 				$root->addNavigation($navigation);
 				$rootPath = (new NavigationTreePath($root, $root, 0));
 				$this->em->persist($rootPath);

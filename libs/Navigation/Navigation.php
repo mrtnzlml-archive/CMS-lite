@@ -10,6 +10,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @ORM\Entity
  *
  * @method setName(string $name)
+ * @method string getName()
+ * @method setIdentifier(string $identifier)
  */
 class Navigation
 {
@@ -27,5 +29,10 @@ class Navigation
 	 * @var NavigationItem[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $items;
+
+	/**
+	 * @ORM\Column(type="string", unique=TRUE)
+	 */
+	protected $identifier;
 
 }

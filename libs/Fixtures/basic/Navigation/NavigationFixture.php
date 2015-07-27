@@ -8,15 +8,19 @@ class NavigationFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 	public function load(ObjectManager $manager)
 	{
 		$items = \Nette\Neon\Neon::decode(file_get_contents(__DIR__ . '/AdminMenu.neon'));
-		$navigation = (new \Navigation\Navigation)->setName('Administrace - Hlavní menu');
-		$this->resolveMenu($manager, $navigation, $items, md5(\Navigation\AdminMenu::class));
+		$navigation = (new \Navigation\Navigation)
+			->setName('Administrace - Hlavní menu')
+			->setIdentifier('admin');
+		$this->resolveMenu($manager, $navigation, $items);
 
 		$items = \Nette\Neon\Neon::decode(file_get_contents(__DIR__ . '/FrontMainMenu.neon'));
-		$navigation = (new \Navigation\Navigation)->setName('Front - Hlavní menu');
-		$this->resolveMenu($manager, $navigation, $items, md5(\Navigation\MainMenu::class));
+		$navigation = (new \Navigation\Navigation)
+			->setName('Front - Hlavní menu')
+			->setIdentifier('front');
+		$this->resolveMenu($manager, $navigation, $items);
 	}
 
-	private function resolveMenu(ObjectManager $manager, $navigation, array $items, $root_hash, $parent_id = NULL)
+	private function resolveMenu(ObjectManager $manager, $navigation, array $items, $parent_id = NULL)
 	{
 		foreach ($items as $menuItem) {
 			if (isset($menuItem['path']) && isset($menuItem['destination'])) {
@@ -32,10 +36,10 @@ class NavigationFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 			unset($url);
 
 			$process = new \Navigation\NavigationFacade($manager);
-			$process->createItem($item, $navigation, $root_hash, $parent_id);
+			$process->createItem($item, $navigation, $parent_id);
 
 			if (isset($menuItem['subitems'])) {
-				$this->resolveMenu($manager, $navigation, $menuItem['subitems'], $root_hash, $item->getId());
+				$this->resolveMenu($manager, $navigation, $menuItem['subitems'], $item->getId());
 			}
 		}
 	}

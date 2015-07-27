@@ -25,8 +25,9 @@ class AdminMenu extends UI\Control
 	public function render()
 	{
 		/** @var NavigationItem $adminRoot */
-		$adminRoot = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => md5(__CLASS__)]);
-		$this->template->menuItems = $this->navigation->getItemTreeBelow($adminRoot->getId());
+		$adminNavigation = $this->em->getRepository(Navigation::class)->findOneBy(['identifier' => 'admin']);
+		$adminItemRoot = $this->navigation->findRoot($adminNavigation->getId());
+		$this->template->menuItems = $this->navigation->getItemTreeBelow($adminItemRoot->getId());
 		$this->template->render(__DIR__ . '/templates/AdminMenu.latte');
 	}
 

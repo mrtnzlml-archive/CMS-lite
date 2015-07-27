@@ -46,10 +46,7 @@ class MenuEditor extends Control
 			if ($this->navigation_id === NULL) {
 				$this->navigation_id = $this->em->getRepository(Navigation::class)->findOneBy([])->getId();
 			}
-			$this->item_root = $this->em->getRepository(NavigationItem::class)->findOneBy([
-				'root' => TRUE,
-				'navigations.id' => $this->navigation_id,
-			]);
+			$this->item_root = $this->navigationFacade->findRoot($this->navigation_id);
 		}
 	}
 
@@ -127,8 +124,7 @@ class MenuEditor extends Control
 			}
 			$this->navigationFacade->createItem(
 				$menuItem,
-				$this->em->find(Navigation::class, $this->navigation_id),
-				md5(\Navigation\AdminMenu::class) //FIXME!
+				$this->em->find(Navigation::class, $this->navigation_id)
 			);
 			$this->redirect('this'); //If AJAX redraw menu editor
 		};
@@ -145,13 +141,7 @@ class MenuEditor extends Control
 		if (!$this->presenter->isAjax()) {
 			$this->redirect('this');
 		}
-
-		$root = $this->em->getRepository(NavigationItem::class)->findOneBy([
-			'root' => 1,
-			'navigations.id' => $this->navigation_id,
-		]);
-		$this->navigationFacade->recalculatePathsForNode($root->getId(), Nestable::resolveJson($json));
-
+		$this->navigationFacade->recalculatePathsForNode($this->item_root->getId(), Nestable::resolveJson($json));
 		$this->getPresenter()->redrawControl('adminMenu');
 	}
 
