@@ -1,6 +1,13 @@
 <div class="box-default">
 	<div class="box-title">404 - výpis chyb <span class="ico hideBox flaticon-visibility2"></span></div>
-	<div class="box-content padding0">
+
+	<div n:if="!count($errors)">
+		<div class="box-content article">
+			Zatím nenastala žádná chyba. Výborně!
+		</div>
+	</div>
+
+	<div class="box-content padding0" n:if="$errors">
 		<table class="w100 formatTable-classic">
 			<tr n:foreach="$errors as $error">
 				<td n:class="$iterator->first ? w75">{$error->path}</td>
