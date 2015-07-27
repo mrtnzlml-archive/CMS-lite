@@ -44,13 +44,8 @@ class FileSettings extends AControl
 
     public function saveOptions(Form $_, ArrayHash $values)
     {
-        foreach ($values as $optionName => $optionValue) {
-            if ($optionName === 'allowed_extensions') {
-                $optionValue = array_unique(preg_split('/\s*,\s*/', $optionValue));
-            }
-            $this->optionFacade->setOption($optionName, $optionValue);
-        }
-        $this->em->flush();
+        $values->allowed_extensions = array_unique(array_filter(preg_split('~\s*,\s*~', $values->allowed_extensions)));
+        $this->optionFacade->setOptions($values);
         $this->presenter->flashMessage('Změny byly uloženy', Flashes::FLASH_SUCCESS);
         $this->presenter->redirect('this');
     }

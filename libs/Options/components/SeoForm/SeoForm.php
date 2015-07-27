@@ -59,10 +59,7 @@ class SeoForm extends AControl
 	 */
 	public function formSucceeded(UI\Form $_, Nette\Utils\ArrayHash $values)
 	{
-		foreach ($values as $optionName => $optionValue) {
-			$this->optionFacade->setOption($optionName, $optionValue);
-		}
-		$this->em->flush();
+		$this->optionFacade->setOptions($values);
 		$this->presenter->flashMessage('Nastavení bylo úspěšně uloženo.', Flashes::FLASH_SUCCESS);
 		$this->redirect('this');
 	}

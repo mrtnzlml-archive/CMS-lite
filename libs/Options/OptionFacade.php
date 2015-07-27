@@ -6,6 +6,7 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Caching\IStorage;
 use Nette\Object;
+use Nette\Utils\ArrayHash;
 
 class OptionFacade extends Object
 {
@@ -24,21 +25,23 @@ class OptionFacade extends Object
 		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
 	}
 
-	public function setOption($optionName, $optionValue)
+	/**
+	 * It's able to save options even if the form contains nested containers (nested ArrayHashes).
+	 *
+	 * @param ArrayHash $values
+	 *
+	 * @throws \Exception
+	 */
+	public function setOptions(ArrayHash $values)
 	{
-		$optionValue = is_array($optionValue) ? serialize($optionValue) : $optionValue;
-		$optionRepository = $this->em->getRepository(Option::class);
-		/** @var Option $option */
-		$option = $optionRepository->findOneBy(['key eq' => $optionName]);
-		if (!$option) {
-			$option = new Option($optionName, $optionValue);
-			$this->em->persist($option);
-			$this->em->flush($option);
-			return;
+		foreach ($values as $key => $value) {
+			if ($value instanceof ArrayHash) {
+				$this->setOptions($value);
+			} else {
+				$this->setOption($key, $value);
+			}
 		}
-		$option->setValue($optionValue);
-		$this->em->persist($option);
-		$this->cache->clean([Nette\Caching\Cache::TAGS => [$optionName]]);
+		$this->em->flush();
 	}
 
 	/**
@@ -62,6 +65,23 @@ class OptionFacade extends Object
 			return $value;
 		});
 		return $option;
+	}
+
+	private function setOption($optionName, $optionValue)
+	{
+		$optionValue = is_array($optionValue) ? serialize($optionValue) : $optionValue;
+		$optionRepository = $this->em->getRepository(Option::class);
+		/** @var Option $option */
+		$option = $optionRepository->findOneBy(['key eq' => $optionName]);
+		if (!$option) {
+			$option = new Option($optionName, $optionValue);
+			$this->em->persist($option);
+			$this->em->flush($option);
+			return;
+		}
+		$option->setValue($optionValue);
+		$this->em->persist($option);
+		$this->cache->clean([Nette\Caching\Cache::TAGS => [$optionName]]);
 	}
 
 	private function isSerialized($string)
