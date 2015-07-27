@@ -2,6 +2,7 @@
 
 namespace Url;
 
+use Error\Error;
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
 use Localization\Locale;
@@ -112,6 +113,11 @@ class AntRoute extends Application\Routers\RouteList
 			$destination = $this->em->getRepository(Url::class)->findOneBy(['fakePath' => $path]);
 			if ($destination === NULL) {
 				$this->monolog->addError(sprintf('Cannot find route for path %s', $path));
+				$error = new Error;
+				$error->setCode(404);
+				$error->setPath($path);
+				$this->em->persist($error);
+				$this->em->flush($error);
 				return NULL;
 			}
 			$dependencies = [Nette\Caching\Cache::TAGS => ['route/' . $destination->getId()]];
