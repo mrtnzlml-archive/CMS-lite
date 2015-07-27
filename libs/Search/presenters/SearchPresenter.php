@@ -19,7 +19,7 @@ class SearchPresenter extends BasePresenter
 	public function renderDefault($search = NULL)
 	{
 		if ($search === NULL) {
-			$this->redirect(':Admin:Dashboard:default');
+			$this->redirect(':Dashboard:Dashboard:default');
 		}
 		$this->template->result = $this->sf->fulltext($search);
 	}

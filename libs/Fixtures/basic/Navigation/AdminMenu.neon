@@ -1,7 +1,7 @@
 - name: Nástěnka
   icon: 'ai-home60'
   path: administrace
-  destination: Admin:Dashboard:default
+  destination: Dashboard:Dashboard:default
 
 -
 	name: Obsah

@@ -4,6 +4,7 @@
 # This configuration is intended only for truly core extensions.
 
 extensions:
+	dashboard: Dashboard\DI\DashboardExtension
 	error: Error\DI\ErrorExtension
 	fixtures: Fixtures\DI\FixturesExtension
 	localization: Localization\DI\LocalizationExtension

@@ -55,7 +55,7 @@ class SignInForm extends AControl
 		}
 
 		$this->presenter->restoreRequest($this->backlink);
-		$this->presenter->redirect(':Admin:Dashboard:');
+		$this->presenter->redirect(':Dashboard:Dashboard:');
 	}
 
 }

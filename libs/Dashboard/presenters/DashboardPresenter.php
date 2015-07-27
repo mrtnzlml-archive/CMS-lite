@@ -1,7 +1,8 @@
 <?php
 
-namespace App\AdminModule\Presenters;
+namespace Dashboard\Presenters;
 
+use App\AdminModule\Presenters\BasePresenter;
 use App\Components\Flashes\Flashes;
 use Error\Components\ErrorGrid\IErrorGridFactory;
 use Eshop\Components\ILastOrdersFactory;

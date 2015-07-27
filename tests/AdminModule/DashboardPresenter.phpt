@@ -10,7 +10,7 @@ class DashboardPresenter extends \PresenterTestCase
 
 	public function setUp()
 	{
-		$this->openPresenter('Admin:Dashboard:');
+		$this->openPresenter('Dashboard:Dashboard:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 

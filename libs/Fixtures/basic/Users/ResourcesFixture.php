@@ -6,7 +6,7 @@ class ResourcesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 {
 
 	private $resources = [
-		'Admin:Dashboard',
+		'Dashboard:Dashboard',
 		'Files:AdminFile',
 		'Navigation:Navigation',
 		'Options:Options',

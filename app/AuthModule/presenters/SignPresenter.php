@@ -25,7 +25,7 @@ class SignPresenter extends App\FrontModule\Presenters\BasePresenter
 	{
 		parent::startup();
 		if ($this->action != 'out' && $this->user->isLoggedIn()) {
-			$this->redirect(':Admin:Dashboard:');
+			$this->redirect(':Dashboard:Dashboard:');
 		}
 	}
 
