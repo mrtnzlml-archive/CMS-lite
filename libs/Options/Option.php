@@ -26,7 +26,7 @@ class Option
 	protected $key;
 
 	/**
-	 * @ORM\Column(type="string", name="`value`", nullable=TRUE, options={"comment":"Selected value of the key"})
+	 * @ORM\Column(type="text", name="`value`", nullable=TRUE, options={"comment":"Selected value of the key"})
 	 * @var string
 	 */
 	protected $value = NULL;
