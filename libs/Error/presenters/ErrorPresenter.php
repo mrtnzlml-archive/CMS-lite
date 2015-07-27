@@ -1,15 +1,13 @@
 <?php
 
-namespace App\FrontModule\Presenters;
+namespace Error\Presenters;
 
-use App\Traits\PublicComponentsTrait;
+use App\FrontModule\Presenters\BasePresenter;
 use Nette;
 use Tracy\ILogger;
 
 class ErrorPresenter extends BasePresenter
 {
-
-	use PublicComponentsTrait;
 
 	/** @var ILogger */
 	private $logger;

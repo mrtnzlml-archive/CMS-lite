@@ -17,7 +17,7 @@ php:
 
 
 application:
-	errorPresenter: Front:Error
+	errorPresenter: Error:Error
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 

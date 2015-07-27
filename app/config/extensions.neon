@@ -4,24 +4,25 @@
 # This configuration is intended only for truly core extensions.
 
 extensions:
-    fixtures: Fixtures\DI\FixturesExtension
-    localization: Localization\DI\LocalizationExtension
-    migrations: Migrations\DI\MigrationsExtension
-    navigation: Navigation\DI\NavigationExtension
-    options: Options\DI\OptionsExtension
-    search: Search\DI\SearchExtension
-    tinymce: TinyMCE\DI\TinyExtension
-    url: Url\DI\UrlExtension
-    users: Users\DI\UsersExtension
-    fontloader: WebFontLoader\DI\WebFontLoaderExtension
-    annotations: Kdyby\Annotations\DI\AnnotationsExtension
-    console: Kdyby\Console\DI\ConsoleExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
-    events: Kdyby\Events\DI\EventsExtension
-    translation: Kdyby\Translation\DI\TranslationExtension
-    monolog: Kdyby\Monolog\DI\MonologExtension
-    - App\Extensions\CoreTemplateExtension
-    - App\Extensions\FontsExtension
-    - App\Extensions\ImageExtension(%wwwDir%)
-    - App\Extensions\JavascriptExtension
-    - App\Extensions\StylesheetExtension
+	error: Error\DI\ErrorExtension
+	fixtures: Fixtures\DI\FixturesExtension
+	localization: Localization\DI\LocalizationExtension
+	migrations: Migrations\DI\MigrationsExtension
+	navigation: Navigation\DI\NavigationExtension
+	options: Options\DI\OptionsExtension
+	search: Search\DI\SearchExtension
+	tinymce: TinyMCE\DI\TinyExtension
+	url: Url\DI\UrlExtension
+	users: Users\DI\UsersExtension
+	fontloader: WebFontLoader\DI\WebFontLoaderExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	console: Kdyby\Console\DI\ConsoleExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
+	events: Kdyby\Events\DI\EventsExtension
+	translation: Kdyby\Translation\DI\TranslationExtension
+	monolog: Kdyby\Monolog\DI\MonologExtension
+	- App\Extensions\CoreTemplateExtension
+	- App\Extensions\FontsExtension
+	- App\Extensions\ImageExtension(%wwwDir%)
+	- App\Extensions\JavascriptExtension
+	- App\Extensions\StylesheetExtension
