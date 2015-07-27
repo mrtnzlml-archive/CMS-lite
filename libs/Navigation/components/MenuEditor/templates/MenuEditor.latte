@@ -19,7 +19,7 @@
 	{/define}
 
 	<ol class="dd-list">
-		{foreach $adminMenu as $menuItem}
+		{foreach $menuItems as $menuItem}
 			{?$entity = $menuItem->entity}
 			<li class="dd-item" data-id="{$entity->id}">
 				<div class="dd-handle">

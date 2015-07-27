@@ -24,13 +24,13 @@ class MenuEditor extends Control
 	private $navigationFacade;
 
 	/**
-	 * TODO: když NULL, tak nastavit defaultní navigaci
 	 * @persistent
-	 * @var NULL|integer ID of current navigation
+	 * @var null|Navigation
 	 */
-	public $navigation; //FIXME: předělat na celou Navigation, ne jen ID
+	public $navigation_id = NULL;
 
-	private $root;
+	/** @var NavigationItem */
+	private $item_root;
 
 	public function __construct(EntityManager $em, NavigationFacade $navigationFacade)
 	{
@@ -41,25 +41,21 @@ class MenuEditor extends Control
 	public function attached($presenter)
 	{
 		parent::attached($presenter);
+
 		if ($presenter instanceof UI\Presenter) {
-			if ($this->navigation) {
-				$this->root = $this->em->getRepository(NavigationItem::class)->findOneBy([
-					'root' => 1,
-					'navigations.id' => $this->navigation,
-				]);
-				if (!$this->root) { //FIXME: ??
-					$this->navigation = NULL;
-					$this->redirect('this');
-				}
-			} else { //default fallback
-				$this->root = $this->em->getRepository(NavigationItem::class)->findOneBy(['root' => 1]);
+			if ($this->navigation_id === NULL) {
+				$this->navigation_id = $this->em->getRepository(Navigation::class)->findOneBy([])->getId();
 			}
+			$this->item_root = $this->em->getRepository(NavigationItem::class)->findOneBy([
+				'root' => TRUE,
+				'navigations.id' => $this->navigation_id,
+			]);
 		}
 	}
 
 	public function render()
 	{
-		$this->template->adminMenu = $this->navigationFacade->getItemTreeBelow($this->root->getId());
+		$this->template->menuItems = $this->navigationFacade->getItemTreeBelow($this->item_root->getId());
 		$this->template->render(__DIR__ . '/templates/MenuEditor.latte');
 	}
 
@@ -84,7 +80,7 @@ class MenuEditor extends Control
 		$form = new UI\Form;
 		$form->addSelect('navigation', 'Navigace',
 			$this->em->getRepository(Navigation::class)->findPairs('name')
-		)->setDefaultValue($this->navigation ?: NULL);
+		)->setDefaultValue($this->navigation_id ?: NULL);
 		$form->addSubmit('delete', 'Smazat zvolenou navigaci')->onClick[] = function (SubmitButton $submitButton) {
 			$values = $submitButton->getForm()->getValues();
 			$partialEntity = $this->em->getPartialReference(Navigation::class, $values->navigation);
@@ -95,9 +91,7 @@ class MenuEditor extends Control
 		};
 		$form->addSubmit('load', 'Načíst')->onClick[] = function (SubmitButton $submitButton) {
 			$values = $submitButton->getForm()->getValues();
-			$this->redirect('this', [
-				'navigation' => $values->navigation,
-			]);
+			$this->redirect('this', ['navigation_id' => $values->navigation]);
 		};
 		return $form;
 	}
@@ -121,7 +115,6 @@ class MenuEditor extends Control
 			->setRequired('Vyplňte prosím alternativní název odkazu.');
 
 		$form->onSuccess[] = function ($_, ArrayHash $values) {
-			//TODO: Redirect to URL (router se to musí napřed naučit)
 			$menuItem = new NavigationItem;
 			if ($values->href) {
 				$menuItem->setName($values->title);
@@ -134,7 +127,7 @@ class MenuEditor extends Control
 			}
 			$this->navigationFacade->createItem(
 				$menuItem,
-				$this->em->find(Navigation::class, $this->navigation),
+				$this->em->find(Navigation::class, $this->navigation_id),
 				md5(\Navigation\AdminMenu::class) //FIXME!
 			);
 			$this->redirect('this'); //If AJAX redraw menu editor
@@ -155,9 +148,8 @@ class MenuEditor extends Control
 
 		$root = $this->em->getRepository(NavigationItem::class)->findOneBy([
 			'root' => 1,
-			'navigations.id' => $this->navigation,
+			'navigations.id' => $this->navigation_id,
 		]);
-		//FIXME: ošetřit když neexistuje
 		$this->navigationFacade->recalculatePathsForNode($root->getId(), Nestable::resolveJson($json));
 
 		$this->getPresenter()->redrawControl('adminMenu');
