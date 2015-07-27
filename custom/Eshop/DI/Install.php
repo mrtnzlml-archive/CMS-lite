@@ -5,13 +5,15 @@ namespace Eshop\DI;
 use App\Extensions\IInstallExtension;
 use App\Extensions\InstallHelper;
 use Kdyby\Doctrine\EntityManager;
+use Navigation\NavigationItem;
 use Nette;
+use Url\Url;
 
 class Install extends Nette\Object implements IInstallExtension
 {
 
 	private $urls = [
-		'administrace/eshop/zbozi' => 'Eshop:AdminProduct:default',
+//		'administrace/eshop/zbozi' => 'Eshop:AdminProduct:default',
 		'eshop' => 'Eshop:Product:default',
 		'produkt' => 'Eshop:Product:detail',
 	];
@@ -38,9 +40,11 @@ class Install extends Nette\Object implements IInstallExtension
 		// 2) Add resources
 		$this->install->resource('Eshop:AdminProduct');
 
-		// 3) Create menu items - FIXME: Nebo jen zaregistrovat menu item?
-//		$item = (new NavigationItem)->setName('Eshop');
-//		$this->navigationFacade->createItem($item, $navigation, md5(MainMenu::class));
+		// 3) Create menu items
+		$item = new NavigationItem;
+		$item->setName('Eshop');
+		$item->setUrl((new Url)->setDestination('Eshop:AdminProduct:default')->setFakePath('administrace/eshop/zbozi'));
+		$this->install->navigationItem($item, 'admin');
 
 		//TODO: instalace schéma databáze
 
@@ -60,8 +64,8 @@ class Install extends Nette\Object implements IInstallExtension
 		$this->install->resource('Eshop:AdminProduct', TRUE);
 
 		// 3) Delete menu items
-//		$item = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => 'Eshop']); //FIXME: to není moc dobré
-//		$this->em->remove($item);
+		$item = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => 'Eshop']); //FIXME: to není moc dobré
+		$this->install->navigationItem($item, 'admin', TRUE);
 
 		$this->em->flush();
 	}

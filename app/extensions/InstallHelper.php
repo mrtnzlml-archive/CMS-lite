@@ -4,7 +4,11 @@ namespace App\Extensions;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\Monolog\Logger;
+use Navigation\Navigation;
+use Navigation\NavigationFacade;
+use Navigation\NavigationItem;
 use Nette;
+use Nette\Caching\IStorage;
 use Url\AntRoute;
 use Url\Url;
 use Users\Resource;
@@ -24,12 +28,28 @@ class InstallHelper extends Nette\Object
 	/** @var Nette\Caching\Cache */
 	private $resourceCache;
 
-	public function __construct(EntityManager $entityManager, Logger $logger, Nette\Caching\IStorage $cacheStorage)
+	/** @var NavigationFacade */
+	private $navigationFacade;
+
+	public function __construct(EntityManager $entityManager, Logger $logger, IStorage $cacheStorage, NavigationFacade $navigationFacade)
 	{
 		$this->em = $entityManager;
 		$this->logger = $logger;
 		$this->routeCache = new Nette\Caching\Cache($cacheStorage, AntRoute::CACHE_NAMESPACE);
 		$this->resourceCache = new Nette\Caching\Cache($cacheStorage, AntRoute::CACHE_NAMESPACE);
+		$this->navigationFacade = $navigationFacade;
+	}
+
+	public function navigationItem(NavigationItem $item, $menuIdentifier, $reverse = FALSE)
+	{
+		if (!$reverse) {
+			$this->logger->addInfo('Installing navigationItem ' . $item->getName());
+			$this->navigationFacade->createItem($item, $this->em->getRepository(Navigation::class)->findOneBy(['identifier' => $menuIdentifier]));
+			return;
+		}
+		// Uninstall:
+		$this->logger->addInfo('Uninstalling navigationItem ' . $item->getName());
+		$this->em->remove($item); //TODO: menuIdentifier
 	}
 
 	public function url($fakePath, $destination, $reverse = FALSE)

@@ -65,6 +65,8 @@ class Url
 	/**
 	 * @param string $presenter Destination if you leave action blank.
 	 * @param NULL|string $action
+	 *
+	 * @return $this
 	 */
 	public function setDestination($presenter, $action = NULL)
 	{
@@ -76,6 +78,7 @@ class Url
 		$pos = strrpos($destination, ':');
 		$this->presenter = substr($destination, 0, $pos);
 		$this->action = substr($destination, $pos + 1);
+		return $this;
 	}
 
 	public function getAbsoluteDestination($withAsterisk = FALSE)
