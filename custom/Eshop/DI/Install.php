@@ -49,8 +49,6 @@ class Install extends Nette\Object implements IInstallExtension
 		//TODO: instalace schéma databáze
 
 		//TODO: defaultní data
-
-		$this->em->flush();
 	}
 
 	public function uninstall()
@@ -66,8 +64,6 @@ class Install extends Nette\Object implements IInstallExtension
 		// 3) Delete menu items
 		$item = $this->em->getRepository(NavigationItem::class)->findOneBy(['name' => 'Eshop']); //FIXME: to není moc dobré
 		$this->install->navigationItem($item, 'admin', TRUE);
-
-		$this->em->flush();
 	}
 
 }

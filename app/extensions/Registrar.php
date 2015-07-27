@@ -74,7 +74,10 @@ class Registrar extends Nette\Object
 
 		if (isset($extension[1])) {
 			$installer = $this->serviceLocator->getByType($extension[1]);
-			$installer->install();
+			$this->em->transactional(function () use ($installer) {
+				$installer->install();
+			});
+			$this->em->flush();
 		}
 	}
 
@@ -88,7 +91,10 @@ class Registrar extends Nette\Object
 
 		if (isset($extension[1])) {
 			$installer = $this->serviceLocator->getByType($extension[1]);
-			$installer->uninstall();
+			$this->em->transactional(function () use ($installer) {
+				$installer->uninstall();
+			});
+			$this->em->flush();
 		}
 	}
 

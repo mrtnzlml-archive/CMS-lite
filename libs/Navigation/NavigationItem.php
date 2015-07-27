@@ -39,7 +39,7 @@ class NavigationItem
 	protected $root = FALSE;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Url\Url", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Url\Url", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id")
 	 * @var \Url\Url
 	 */
