@@ -30,4 +30,20 @@ class Error
 	 */
 	protected $path;
 
+	/**
+	 * @ORM\Column(type="datetime", options={"comment":"Date when this error occurs"})
+	 * @var \DateTime
+	 */
+	private $createdAt;
+
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime;
+	}
+
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
+
 }

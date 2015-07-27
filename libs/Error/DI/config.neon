@@ -1,2 +1,3 @@
 services:
 	- Error\Presenters\ErrorPresenter
+	- Error\Components\ErrorGrid\IErrorGridFactory
