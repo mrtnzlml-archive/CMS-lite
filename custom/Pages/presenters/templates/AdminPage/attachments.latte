@@ -1,46 +1,45 @@
 {block title}Přidat přílohy ke stránce{/block}
 
 {block content}
-    <ul class="nav nav-tabs">
-        <li role="presentation"><a n:href="edit id => $page->getId()">Definice stránky</a></li>
-        <li role="presentation" class="active"><a n:href="attachments">Přílohy</a></li>
-    </ul>
+	<ul class="nav nav-tabs">
+		<li role="presentation"><a n:href="edit id => $page->getId()">Definice stránky</a></li>
+		<li role="presentation" class="active"><a n:href="attachments">Přílohy</a></li>
+	</ul>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <div id="upload-form">
-                {control fineUploader}
-            </div>
-        </div>
-    </div>
+	<div class="row mt20">
+		<div class="col-md-12">
+			<div id="upload-form">
+				{control fineUploader}
+			</div>
+		</div>
+	</div>
 {/block}
 
 {block styles}
-    {include parent}
-    <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
+	{include parent}
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
 {/block}
 
 {block scripts}
-    {include parent}
-    <script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
-    <script>
-        $(function () {
-            $('#image-uploader').fineUploader({
-                debug: true,
+	{include parent}
+	<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
+	<script>
+		$(function () {
+			$('#image-uploader').fineUploader({
+				debug: true,
 
-                request: {
-                    endpoint: 'prilohy-stranky?action=attachments&i={$page->getId()}&do=fineUploader-upload',
-                },
-                resume: {
-                    enabled: true
-                },
-                retry: {
-                    enableAuto: false
-                }
-            });
-        });
-    </script>
+				request: {
+					endpoint: 'prilohy-stranky?action=attachments&i={$page->getId()}&do=fineUploader-upload',
+				},
+				resume: {
+					enabled: true
+				},
+				retry: {
+					enableAuto: false
+				}
+			});
+		});
+	</script>
 {/block}
-

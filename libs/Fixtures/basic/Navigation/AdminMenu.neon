@@ -13,9 +13,6 @@
 		- name: Nová stránka
 		  path: administrace/nova-stranka
 		  destination: Pages:AdminPage:new
-		- name: Soubory
-		  path: administrace/soubory
-		  destination: Files:AdminFile:default
 
 - name: Navigace
   path: administrace/navigace

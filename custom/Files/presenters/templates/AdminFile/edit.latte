@@ -1,21 +1,21 @@
 {block title}Editace souboru{/block}
 {block content}
-    <div class="row">
-        <div class="col-md-12">
-            {control fileForm}
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12">
+			{control fileForm}
+		</div>
+	</div>
 {/block}
 
 
 {block scripts}
-    {include parent}
-    {* FIXME: lépe (js:custom?) *}
-    <script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
-    <script>
-        tinymce.init({
-            selector: '#tinymceTextarea',
-            language: 'cs'
-        });
-    </script>
+	{include parent}
+	{* FIXME: lépe (js:custom?) *}
+	<script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+	<script>
+		tinymce.init({
+			selector: '#tinymceTextarea',
+			language: 'cs'
+		});
+	</script>
 {/block}

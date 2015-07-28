@@ -5,6 +5,7 @@ namespace Files;
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\MagicAccessors;
+use Users\User;
 
 /**
  * @ORM\Entity
@@ -34,86 +35,86 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
 class File
 {
 
-    use Identifier;
-    use MagicAccessors;
+	use Identifier;
+	use MagicAccessors;
 
-    const TYPE_ATTACHMENT = 'ATTACHMENT';
+	const TYPE_ATTACHMENT = 'ATTACHMENT';
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime();
+	}
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $name;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $name;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $sanitizedName;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $sanitizedName;
 
-    /**
-     * @ORM\Column(type="string", nullable=TRUE)
-     * @var string
-     */
-    protected $title;
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
+	 */
+	protected $title;
 
-    /**
-     * @ORM\Column(type="text", nullable=TRUE)
-     * @var string
-     */
-    protected $description;
+	/**
+	 * @ORM\Column(type="text", nullable=TRUE)
+	 * @var string
+	 */
+	protected $description;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $uuid;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $uuid;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $extension;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $extension;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @var string
-     */
-    protected $size;
+	/**
+	 * @ORM\Column(type="integer")
+	 * @var string
+	 */
+	protected $size;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @var \DateTime
-     */
-    private $createdAt;
+	/**
+	 * @ORM\Column(type="datetime")
+	 * @var \DateTime
+	 */
+	private $createdAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @var bool
-     */
-    protected $isProtected = FALSE;
+	/**
+	 * @ORM\Column(type="boolean")
+	 * @var bool
+	 */
+	protected $isProtected = FALSE;
 
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $type = self::TYPE_ATTACHMENT;
+	/**
+	 * @ORM\Column(type="string")
+	 * @var string
+	 */
+	protected $type = self::TYPE_ATTACHMENT;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Users\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @var \Users\User
-     */
-    protected $author;
+	/**
+	 * @ORM\ManyToOne(targetEntity="Users\User", cascade={"persist"})
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @var \Users\User
+	 */
+	protected $author;
 
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
+	}
 
 }
