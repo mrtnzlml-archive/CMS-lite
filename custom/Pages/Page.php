@@ -198,6 +198,13 @@ class Page implements ILocaleAware
      */
     protected $files;
 
+    /**
+     * @ORM\OneToOne(targetEntity="OpenGraph", cascade={"persist"})
+     * @ORM\JoinColumn(name="open_graph_id", referencedColumnName="id")
+     * @var OpenGraph
+     */
+    protected $openGraph;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
