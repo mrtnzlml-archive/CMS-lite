@@ -44,6 +44,7 @@ use Users\User;
  * @method addCategory(PageCategory $category)
  * @method addTag(Tag $tag)
  * @method addFile(File $file)
+ * @method addOpenGraph(OpenGraph $og)
  *
  * @method setRealAuthor(User $realAuthor)
  */
@@ -193,6 +194,16 @@ class Page implements ILocaleAware
 	 */
 	protected $files;
 
+	/**
+	 * @ORM\ManyToMany(targetEntity="OpenGraph", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="open_graph_id", referencedColumnName="id")}
+	 *    )
+	 * @var OpenGraph[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $openGraphs; //FIXME: zamezit duplikacím v kolekcích (a prázdným záznamům)
+
 	public function __construct()
 	{
 		$this->createdAt = new \DateTime();
@@ -200,6 +211,7 @@ class Page implements ILocaleAware
 		$this->categories = new ArrayCollection();
 		$this->tags = new ArrayCollection();
 		$this->files = new ArrayCollection();
+		$this->openGraphs = new ArrayCollection();
 	}
 
 	public function setDeleted($deleted = TRUE)
@@ -293,6 +305,11 @@ class Page implements ILocaleAware
 	public function clearFiles()
 	{
 		$this->files->clear();
+	}
+
+	public function clearOpenGraphs()
+	{
+		$this->openGraphs->clear();
 	}
 
 }

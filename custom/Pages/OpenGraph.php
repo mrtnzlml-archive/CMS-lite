@@ -27,4 +27,10 @@ class OpenGraph
 	 */
 	protected $content;
 
+	public function __construct($property, $content)
+	{
+		$this->property = $property;
+		$this->content = $content;
+	}
+
 }

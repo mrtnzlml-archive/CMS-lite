@@ -8,6 +8,7 @@ use Nette;
 use Nette\Application\UI;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
+use Pages\OpenGraph;
 use Pages\Page;
 use Pages\PageCategory;
 use Pages\PageFacade;
@@ -119,6 +120,10 @@ class PageForm extends AControl
 			'nofollow' => 'Nesledovat (nofollow)',
 		]);
 
+		// FCBk:
+		$form->addText('fcbk_title', 'Individuální titulek příspěvku na Facebooku:');
+		$form->addTextArea('fcbk_description', 'Popis stránky v příspěvku na Facebooku:');
+
 		$this->setDefaults($form);
 		$form->addSubmit('saveAndRedirect', 'Uložit')->onClick[] = $this->savePageAndRedirect;
 		$form->addSubmit('saveAndStay', 'Uložit a zůstat')->onClick[] = $this->savePageAndStay;
@@ -138,7 +143,9 @@ class PageForm extends AControl
 	public function savePageAndStay(SubmitButton $sender)
 	{
 		$page = $this->savePage($sender);
-		$this->presenter->redirect('edit', $page->getId());
+		if ($page) {
+			$this->presenter->redirect('edit', $page->getId());
+		}
 	}
 
 	private function savePage(SubmitButton $sender, $preview = FALSE)
@@ -218,6 +225,10 @@ class PageForm extends AControl
 			$tagEntity = (new Tag)->setName($tag);
 			$entity->addTag($tagEntity);
 		}
+
+		$entity->clearOpenGraphs();
+		$entity->addOpenGraph(new OpenGraph('og:title', $values->fcbk_title));
+		$entity->addOpenGraph(new OpenGraph('og:description', $values->fcbk_description));
 	}
 
 	private function setDefaults(UI\Form $form)
