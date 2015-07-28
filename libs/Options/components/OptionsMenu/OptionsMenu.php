@@ -22,7 +22,7 @@ class OptionsMenu extends AControl
 		if ($parameters) {
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/OptionsMenu.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/OptionsMenu.latte');
 	}
 
 }

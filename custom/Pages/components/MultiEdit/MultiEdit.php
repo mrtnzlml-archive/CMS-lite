@@ -27,7 +27,7 @@ class MultiEdit extends UI\Control
 
 	public function render()
 	{
-		$this->template->render(__DIR__ . '/templates/MultiEdit.latte');
+		$this->template->render(__DIR__ . '/MultiEdit.latte');
 	}
 
 	protected function createComponentMultiEdit()

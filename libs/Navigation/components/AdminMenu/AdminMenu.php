@@ -28,7 +28,7 @@ class AdminMenu extends UI\Control
 		$adminNavigation = $this->em->getRepository(Navigation::class)->findOneBy(['identifier' => 'admin']);
 		$adminItemRoot = $this->navigation->findRoot($adminNavigation->getId());
 		$this->template->menuItems = $this->navigation->getItemTreeBelow($adminItemRoot->getId());
-		$this->template->render(__DIR__ . '/templates/AdminMenu.latte');
+		$this->template->render(__DIR__ . '/AdminMenu.latte');
 	}
 
 }

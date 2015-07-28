@@ -30,7 +30,7 @@ class GeneralForm extends AControl
 		if ($parameters) {
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/GeneralForm.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/GeneralForm.latte');
 	}
 
 	public function createComponentForm()

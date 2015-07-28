@@ -49,7 +49,7 @@ class PagesGrid extends AControl
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->pages = $this->pages;
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PagesGrid.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/PagesGrid.latte');
 	}
 
 	protected function createComponentGridForm()

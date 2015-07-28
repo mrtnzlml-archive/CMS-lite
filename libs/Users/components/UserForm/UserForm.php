@@ -39,7 +39,7 @@ class UserForm extends AControl
 		if ($parameters !== NULL) {
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/UserForm.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/UserForm.latte');
 	}
 
 	protected function createComponentUserForm()

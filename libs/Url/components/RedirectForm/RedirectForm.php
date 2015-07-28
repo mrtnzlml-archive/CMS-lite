@@ -52,7 +52,7 @@ class RedirectForm extends UI\Control
 			$this->template->redirects = $this->em->getRepository(Url\Url::class)->findBy(['redirectTo' => $this->currentUrl->getId()]);
 		}
 
-		$this->template->render(__DIR__ . '/templates/RedirectForm.latte');
+		$this->template->render(__DIR__ . '/RedirectForm.latte');
 	}
 
 	protected function createComponentRedirectForm()

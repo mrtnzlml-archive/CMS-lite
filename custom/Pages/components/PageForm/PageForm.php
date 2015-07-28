@@ -67,7 +67,7 @@ class PageForm extends AControl
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
 		$this->template->showPublish = $this->editablePage->isPublished() ? FALSE : TRUE;
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/PageForm.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/PageForm.latte');
 	}
 
 	protected function createComponentRedirectForm(IRedirectFormFactory $factory)

@@ -31,7 +31,7 @@ class Title extends Components\AControl
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->title = $this->getTitle();
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/Title.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/Title.latte');
 	}
 
 	public function setTitle($title)

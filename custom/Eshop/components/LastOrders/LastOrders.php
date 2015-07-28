@@ -10,7 +10,7 @@ class LastOrders extends AControl
 	public function render(array $parameters = NULL)
 	{
 
-		$this->template->render(__DIR__ . '/templates/LastOrders.latte');
+		$this->template->render(__DIR__ . '/LastOrders.latte');
 	}
 
 }

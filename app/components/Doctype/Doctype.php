@@ -18,7 +18,7 @@ class Doctype extends Nette\Application\UI\Control
 	public function render()
 	{
 		$this->template->doctype = Nette\Utils\Html::el()->setHtml($this->selected);
-		$this->template->render(__DIR__ . '/templates/Doctype.latte');
+		$this->template->render(__DIR__ . '/Doctype.latte');
 	}
 
 	public function setDoctype($doctype)

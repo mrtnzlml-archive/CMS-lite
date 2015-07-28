@@ -30,7 +30,7 @@ class SeoForm extends AControl
 		if ($parameters) {
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
-		$this->template->render($this->templatePath ?: __DIR__ . '/templates/SeoForm.latte');
+		$this->template->render($this->templatePath ?: __DIR__ . '/SeoForm.latte');
 	}
 
 	public function createComponentForm()
