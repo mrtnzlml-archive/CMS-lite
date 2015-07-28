@@ -38,7 +38,7 @@ class AntRoute extends Application\Routers\RouteList
 	const CACHE_NAMESPACE = 'ANT.Router';
 
 	//TODO: překlad parametrů v databázi pro SEO
-	//TODO: kontečtově závislý překlad parametrů
+	//TODO: kontextově závislý překlad parametrů
 	private $paramsTranslateTable = [
 		'id' => 'i',
 	];
@@ -207,10 +207,9 @@ class AntRoute extends Application\Routers\RouteList
 					'internalId' => $internalId,
 				]);
 				if ($path === NULL) {
-					//FIXME: v tomto případě by se to nemělo ukládat do cache
 					$this->monolog->addWarning(sprintf('Cannot find cool route for destination %s. Fallback will be used.', $presenter . ':' . $action), [
 						'internalId' => $internalId,
-					]); //FIXME: logovat / nelogovat?
+					]);
 					$fallback = TRUE;
 					$path = $this->em->getRepository(Url::class)->findOneBy([
 						'presenter' => $presenter,
