@@ -50,7 +50,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 		});
 		/** @var Resource $resource */
 		foreach ($resources as $resource) {
-			$this->acl->addResource($resource->getName());
+			$this->acl->addResource($resource->getResource());
 		}
 
 		$permissions = $this->cache->load('permissions', function (& $dependencies) {
@@ -61,16 +61,16 @@ class Authorizator implements Nette\Security\IAuthorizator
 		foreach ($permissions as $permission) {
 			$method = $permission->getAllow() ? 'allow' : 'deny';
 			if ($permission->getRead()) {
-				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::READ);
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getResource(), self::READ);
 			}
 			if ($permission->getWrite()) {
-				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::WRITE);
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getResource(), self::WRITE);
 			}
 			if ($permission->getCreate()) {
-				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::CREATE);
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getResource(), self::CREATE);
 			}
 			if ($permission->getDelete()) {
-				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::DELETE);
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getResource(), self::DELETE);
 			}
 		}
 		$this->acl->allow(Role::SUPERADMIN, Nette\Security\Permission::ALL, Nette\Security\Permission::ALL);

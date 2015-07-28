@@ -5,6 +5,7 @@ namespace Options\Presenters;
 use App\AdminModule\Presenters\BasePresenter;
 use App\Components\Flashes\Flashes;
 use App\Extensions\Registrar;
+use Options\Components\AclForm\IAclFactory;
 use Options\Components\GeneralForm\IGeneralFormFactory;
 use Options\Components\OptionsMenu\IOptionsMenuFactory;
 use Options\Components\SeoForm\ISeoFormFactory;
@@ -27,17 +28,27 @@ class OptionsPresenter extends BasePresenter
 
 	protected function createComponentOptionsMenu(IOptionsMenuFactory $factory)
 	{
-		return $factory->create();
+		$control = $factory->create();
+		return $control;
 	}
+
+	protected function createComponentAclForm(IAclFactory $factory)
+	{
+		$control = $factory->create();
+		return $control;
+	}
+
 
 	protected function createComponentGeneral(IGeneralFormFactory $factory)
 	{
-		return $factory->create();
+		$control = $factory->create();
+		return $control;
 	}
 
 	protected function createComponentSeo(ISeoFormFactory $factory)
 	{
-		return $factory->create();
+		$control = $factory->create();
+		return $control;
 	}
 
 	/**

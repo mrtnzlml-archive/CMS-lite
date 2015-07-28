@@ -1,0 +1,33 @@
+<form n:name=aclForm>
+	<ul class=error n:if="$form->ownErrors">
+		<li n:foreach="$form->ownErrors as $error">{$error}</li>
+	</ul>
+
+	<table style="width:100%">
+		<tr>
+			<th>Role</th>
+			<th>Zdroj</th>
+			<th>Metoda</th>
+			<th>Read</th>
+			<th>Write</th>
+			<th>Create</th>
+			<th>Delete</th>
+			<th>&nbsp;</th>
+		</tr>
+		<tr n:foreach="$permissions as $permission">
+			<td>{$permission->role->name}</td>
+			<td>{$permission->resource->name} (<code>{$permission->resource->resource}</code>)</td>
+			<td>{input 'method_' . $permission->getId()}</td>
+			<td>{input 'read_' . $permission->getId()}</td>
+			<td>{input 'write_' . $permission->getId()}</td>
+			<td>{input 'create_' . $permission->getId()}</td>
+			<td>{input 'delete_' . $permission->getId()}</td>
+			<td>
+				<a n:href="delete! $permission->getId()"
+				   data-confirm="Opravdu chcete toto pravidlo smazat?">Smazat pravidlo</a>
+			</td>
+		</tr>
+	</table>
+
+	{input save}
+</form>

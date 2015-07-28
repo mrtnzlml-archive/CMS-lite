@@ -12,6 +12,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  *
  * @method setName(string $name)
  * @method string getName()
+ * @method setResource(string $resource)
+ * @method string getResource()
  */
 class Resource
 {
@@ -20,9 +22,15 @@ class Resource
 	use MagicAccessors;
 
 	/**
-	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"Identifier of the role"})
+	 * @ORM\Column(type="string")
 	 * @var string
 	 */
 	protected $name;
+
+	/**
+	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"Identifier of the role"})
+	 * @var string
+	 */
+	protected $resource;
 
 }

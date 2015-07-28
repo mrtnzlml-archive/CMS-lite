@@ -76,7 +76,7 @@ class InstallHelper extends Nette\Object
 	{
 		if (!$reverse) {
 			$resource = new Resource();
-			$resource->setName($resource_name);
+			$resource->setResource($resource_name);
 			$this->logger->addInfo('Installing resource ' . $resource_name);
 			$this->em->safePersist($resource);
 			$this->resourceCache->clean([Nette\Caching\Cache::TAGS => [\Users\Authorizator::CACHE_NAMESPACE . '/resources']]);

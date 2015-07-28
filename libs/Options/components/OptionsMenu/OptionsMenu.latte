@@ -3,6 +3,12 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 
+				<li {ifCurrent :Options:Options:acl}class="active"{/ifCurrent}>
+					<a href="{plink :Options:Options:acl}">
+						ACL
+					</a>
+				</li>
+
 				<li {ifCurrent :Options:Options:default}class="active"{/ifCurrent}>
 					<a href="{plink :Options:Options:default}">
 						Rozšíření

@@ -1,4 +1,5 @@
 services:
+	- Options\Components\AclForm\IAclFactory
 	- Options\Components\GeneralForm\IGeneralFormFactory
 	- Options\Components\OptionsMenu\IOptionsMenuFactory
 	- Options\Components\SeoForm\ISeoFormFactory

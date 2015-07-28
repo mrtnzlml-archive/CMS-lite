@@ -8,19 +8,21 @@ class ResourcesFixture extends AbstractFixture implements DependentFixtureInterf
 {
 
 	private $resources = [
-		'Dashboard:Dashboard',
-		'Files:AdminFile',
-		'Navigation:Navigation',
-		'Options:Options',
-		'Pages:AdminPage',
-		'Search:Search',
-		'Users:Users',
+		'Dashboard' => 'Dashboard:Dashboard',
+		'Soubory' => 'Files:AdminFile',
+		'Navigace' => 'Navigation:Navigation',
+		'Nastavení' => 'Options:Options',
+		'Stránky' => 'Pages:AdminPage',
+		'Vyhledávání' => 'Search:Search',
+		'Uživatelé' => 'Users:Users',
 	];
 
 	public function load(ObjectManager $manager)
 	{
-		foreach ($this->resources as $resource) {
-			$res = (new \Users\Resource())->setName($resource);
+		foreach ($this->resources as $name => $resource) {
+			/** @var \Users\Resource $res */
+			$res = (new \Users\Resource())->setResource($resource);
+			$res->setName($name);
 			$manager->persist($res);
 
 			$permission = new \Users\Permission;
