@@ -10,12 +10,12 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @ORM\Entity
  * @ORM\Table(name="deliveries")
  *
- * @method setDeliveryId(string)
+ * @method setDeliveryId(string $deliveryId)
  * @method string getDeliveryId()
- * @method setName(string)
- * @method setDeliveryPrice(float)
+ * @method setName(string $name)
+ * @method setDeliveryPrice(float $deliveryPrice)
  * @method float getDeliveryPrice()
- * @method setHeureka(boolean)
+ * @method setHeureka(boolean $heureka)
  */
 class Delivery
 {
