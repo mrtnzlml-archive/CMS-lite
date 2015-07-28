@@ -1,8 +1,10 @@
 <?php
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ResourcesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class ResourcesFixture extends AbstractFixture implements DependentFixtureInterface
 {
 
 	private $resources = [
@@ -18,9 +20,27 @@ class ResourcesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 	public function load(ObjectManager $manager)
 	{
 		foreach ($this->resources as $resource) {
-			$manager->persist((new \Users\Resource())->setName($resource));
+			$res = (new \Users\Resource())->setName($resource);
+			$manager->persist($res);
+
+			$permission = new \Users\Permission;
+			$permission->setRole($this->getReference('admin-role'));
+			$permission->setResource($res);
+			$permission->setRead()->setWrite()->setCreate();
+			$manager->persist($permission);
+
+			$permission = new \Users\Permission;
+			$permission->setRole($this->getReference('user-role'));
+			$permission->setResource($res);
+			$permission->setRead();
+			$manager->persist($permission);
 		}
 		$manager->flush();
+	}
+
+	function getDependencies()
+	{
+		return [RolesFixture::class];
 	}
 
 }

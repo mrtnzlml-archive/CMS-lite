@@ -4,12 +4,14 @@ namespace Users;
 
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use Nette\Security\Permission;
 
 class Authorizator implements Nette\Security\IAuthorizator
 {
 
 	const READ = 'read';
+	const WRITE = 'write';
+	const CREATE = 'create';
+	const DELETE = 'delete';
 
 	/** @var EntityManager */
 	private $em;
@@ -17,7 +19,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 	/** @var Nette\Caching\Cache */
 	private $cache;
 
-	/** @var Permission */
+	/** @var Nette\Security\Permission */
 	private $acl;
 
 	const CACHE_NAMESPACE = 'ANT.Users';
@@ -26,7 +28,7 @@ class Authorizator implements Nette\Security\IAuthorizator
 	{
 		$this->em = $em;
 		$this->cache = new Nette\Caching\Cache($cacheStorage, self::CACHE_NAMESPACE);
-		$this->acl = new Permission;
+		$this->acl = new Nette\Security\Permission;
 
 		if (PHP_SAPI === 'cli') {
 			// FIXME: It's blocking Kdyby\Console...
@@ -46,13 +48,32 @@ class Authorizator implements Nette\Security\IAuthorizator
 			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/resources']];
 			return $this->em->getRepository(Resource::class)->findAll();
 		});
-
 		/** @var Resource $resource */
 		foreach ($resources as $resource) {
 			$this->acl->addResource($resource->getName());
 		}
 
-		$this->acl->allow(Role::SUPERADMIN, Permission::ALL, Permission::ALL);
+		$permissions = $this->cache->load('permissions', function (& $dependencies) {
+			$dependencies = [Nette\Caching\Cache::TAGS => [self::CACHE_NAMESPACE . '/permissions']];
+			return $this->em->getRepository(\Users\Permission::class)->findAll();
+		});
+		/** @var \Users\Permission $permission */
+		foreach ($permissions as $permission) {
+			$method = $permission->getAllow() ? 'allow' : 'deny';
+			if ($permission->getRead()) {
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::READ);
+			}
+			if ($permission->getWrite()) {
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::WRITE);
+			}
+			if ($permission->getCreate()) {
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::CREATE);
+			}
+			if ($permission->getDelete()) {
+				$this->acl->$method($permission->getRole()->getName(), $permission->getResource()->getName(), self::DELETE);
+			}
+		}
+		$this->acl->allow(Role::SUPERADMIN, Nette\Security\Permission::ALL, Nette\Security\Permission::ALL);
 	}
 
 	/**
