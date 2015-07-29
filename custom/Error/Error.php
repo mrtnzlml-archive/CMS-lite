@@ -7,7 +7,7 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(readOnly=TRUE)
  *
  * @method setCode(integer $code)
  * @method setPath(string $path)
