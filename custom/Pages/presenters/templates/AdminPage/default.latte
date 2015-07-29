@@ -1,6 +1,10 @@
-{block title}Stránky{/block}
+{block title}Výpis stránek{/block}
+
+{block controlButtons}
+	<a class="btn btn-default" n:href="new"><span class="ico flaticon-plus32"></span>Nová stránka</a>
+	{*<a class="btn btn-default" href=""><span class="ico flaticon-plus32"></span>Nová kategorie</a>*}
+{/block}
 
 {block content}
-	<a class="btn btn-default" n:href="new">Nová stránka</a>
 	{control pagesGrid}
 {/block}
