@@ -4,10 +4,8 @@ namespace Pages\Presenters;
 
 use App;
 use App\Components\Flashes\Flashes;
-use Files\Components\IFineUploaderFactory;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
-use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI;
 use Pages\Components\MultiEdit\IMultiEditFactory;
 use Pages\Components\PageForm\IPageFormFactory;
@@ -82,23 +80,6 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
 			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.',
 				Flashes::FLASH_DANGER);
 		};
-		return $control;
-	}
-
-	protected function createComponentFineUploader(IFineUploaderFactory $factory)
-	{
-		$control = $factory->create();
-
-		$control->onSuccess[] = function ($control, $file, $result) {
-			$this->editablePage->addFile($file);
-			$this->em->flush($this->editablePage);
-			$this->sendResponse(new JsonResponse($result));
-		};
-
-		$control->onFailed[] = function ($control, $result) {
-			$this->sendResponse(new JsonResponse($result));
-		};
-
 		return $control;
 	}
 

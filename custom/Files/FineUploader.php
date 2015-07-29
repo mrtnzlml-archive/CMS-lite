@@ -3,7 +3,7 @@
 namespace Files;
 
 use Nette\Object;
-use Nette\Utils\Strings;
+use Options\OptionFacade;
 
 class FineUploader extends Object
 {
@@ -12,20 +12,19 @@ class FineUploader extends Object
 	public $sizeLimit = NULL;
 	public $inputName = 'qqfile';
 	public $chunksFolder = 'chunks';
-	public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg (FIXME: -> config)
-	public $chunksExpireIn = 604800; // One week (FIXME: -> config)
+	public $chunksCleanupProbability = 0.001; // Once in 1000 requests on avg
+	public $chunksExpireIn = 604800; // One week
+
 	protected $uploadName;
 
-	function __construct()
-	{
-		$this->sizeLimit = $this->toBytes(ini_get('upload_max_filesize'));
-	}
+	/** @var OptionFacade */
+	private $optionFacade;
 
-	public function setSizeLimit($sizeLimit)
+	function __construct(OptionFacade $optionFacade)
 	{
-		if ((int)$sizeLimit > 0) {
-			$this->sizeLimit = $this->toBytes($sizeLimit . 'm');
-		}
+		$this->optionFacade = $optionFacade;
+		$sizeLimit = min((int)$optionFacade->getOption('upload_max_filesize'), $this->toBytes(ini_get('upload_max_filesize')));
+		$this->sizeLimit = $sizeLimit;
 	}
 
 	public function setAllowedExtensions(array $allowedExtensions)
@@ -33,29 +32,19 @@ class FineUploader extends Object
 		$this->allowedExtensions = $allowedExtensions;
 	}
 
-	private function getSanitizedName($name)
-	{
-		return trim(Strings::webalize($name, '.', FALSE), '.-');
-	}
-
 	/**
 	 * Get the original filename
 	 */
-	public function getName($sanitize = TRUE)
+	public function getName()
 	{
 		$filename = NULL;
-
 		if (isset($_REQUEST['qqfilename'])) {
 			$filename = $_REQUEST['qqfilename'];
 		}
-
-		if (isset($_FILES[$this->inputName])) {
+		if (NULL === $filename && isset($_FILES[$this->inputName])) {
 			$filename = $_FILES[$this->inputName]['name'];
 		}
-
-		if ($filename) {
-			return ($sanitize) ? $this->getSanitizedName($filename) : $filename;
-		}
+		return $filename;
 	}
 
 	/**
@@ -188,7 +177,7 @@ class FineUploader extends Object
 				if (move_uploaded_file($file['tmp_name'], $target)) {
 					return [
 						'success' => TRUE,
-						"uuid" => $uuid,
+						'uuid' => $uuid,
 						'size' => $size,
 						'filename' => $pathinfo['filename'],
 						'extension' => $pathinfo['extension']

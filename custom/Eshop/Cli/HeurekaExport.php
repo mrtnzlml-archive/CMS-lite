@@ -21,7 +21,8 @@ class HeurekaExport extends Command
 
 	protected function configure()
 	{
-		$this->setName('cms:eshop:heureka:export');
+		$this->setName('cms:eshop:heureka:export')
+			->setDescription('Generate Heureka XML feed.');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)

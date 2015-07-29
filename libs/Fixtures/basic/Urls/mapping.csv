@@ -6,9 +6,6 @@ administrace/editovat-stranky,Pages:AdminPage:multiEdit
 administrace/prilohy-stranky,Pages:AdminPage:attachments
 administrace/nastaveni/seo,Options:Options:seo
 nahled-stranky,Pages:Page:preview
-administrace/nahrat-soubory,Files:AdminFile:upload
-administrace/editovat-soubor,Files:AdminFile:edit
-administrace/soubory-nastaveni,Files:AdminFile:settings
 administrace/novy-uzivatel,Users:Users:new
 administrace/editovat-uzivatele,Users:Users:edit
 protected-page,Pages:Page:protected

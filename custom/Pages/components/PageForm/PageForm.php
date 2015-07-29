@@ -3,8 +3,11 @@
 namespace Pages\Components\PageForm;
 
 use App\Components\AControl;
+use Files\Components\IUploaderFactory;
+use Files\File;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
+use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
@@ -47,6 +50,7 @@ class PageForm extends AControl
 
 	/** @var Page */
 	private $editablePage;
+	private $edit = TRUE;
 
 	/** @var RedirectFacade */
 	private $redirectFacade;
@@ -55,6 +59,7 @@ class PageForm extends AControl
 	{
 		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
+			$this->edit = FALSE;
 		}
 		$this->editablePage = $editablePage;
 		$this->pageFacade = $pageFacade;
@@ -68,12 +73,48 @@ class PageForm extends AControl
 			$this->template->parameters = ArrayHash::from($parameters);
 		}
 		$this->template->showPublish = $this->editablePage->isPublished() ? FALSE : TRUE;
+		$this->template->page = $this->editablePage;
+		$this->template->edit = $this->edit;
 		$this->template->render($this->templatePath ?: __DIR__ . '/PageForm.latte');
 	}
 
 	protected function createComponentRedirectForm(IRedirectFormFactory $factory)
 	{
 		return $factory->create($this->editablePage->getId());
+	}
+
+	protected function createComponentPicturesUploader(IUploaderFactory $factory)
+	{
+		$control = $factory->create(TRUE);
+
+		$control->onSuccess[] = function ($_, File $file, array $result) {
+			$this->editablePage->addFile($file);
+			$this->em->flush($this->editablePage);
+			$this->presenter->sendResponse(new JsonResponse($result));
+		};
+
+		$control->onFailed[] = function ($_, array $result) {
+			$this->presenter->sendResponse(new JsonResponse($result));
+		};
+
+		return $control;
+	}
+
+	protected function createComponentFilesUploader(IUploaderFactory $factory)
+	{
+		$control = $factory->create();
+
+		$control->onSuccess[] = function ($_, File $file, array $result) {
+			$this->editablePage->addFile($file);
+			$this->em->flush($this->editablePage);
+			$this->presenter->sendResponse(new JsonResponse($result));
+		};
+
+		$control->onFailed[] = function ($_, array $result) {
+			$this->presenter->sendResponse(new JsonResponse($result));
+		};
+
+		return $control;
 	}
 
 	protected function createComponentPageForm()

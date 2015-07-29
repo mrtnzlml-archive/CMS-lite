@@ -1,24 +1,63 @@
 {block title}Upravit stránku{/block}
 
 {block content}
-    <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#">Definice stránky</a></li>
-    <li role="presentation"><a n:href="attachments id => $page->getId()">Přílohy</a></li>
-</ul>
-    {control pageForm}
-
-
+	{control pageForm}
 {/block}
 
 {block scripts}
-    {include parent}
-    {* FIXME: lépe (js:custom?) *}
-    <script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
-    <script>
-        tinymce.init({
-            selector: '#tinymceTextarea',
-            language: 'cs'
-        });
+	{include parent}
+	{* FIXME: lépe (js:custom?) *}
+	<script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+	<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
+	<script>
+		tinymce.init({
+			selector: '#tinymceTextarea',
+			language: 'cs'
+		});
 
-    </script>
+		$(function () {
+			$('#image-uploader').fineUploader({
+				//debug: true,
+				request: {
+					endpoint: {link pageForm-picturesUploader-upload!} //FIXME: via getParameterId
+				},
+				retry: {
+					enableAuto: true
+				},
+				failedUploadTextDisplay: {
+					mode: 'custom',
+					responseProperty: 'error'
+				},
+				validation: {
+					//allowedExtensions: ['pdf'],
+					//sizeLimit: 5242880 // 50 MB = 50 * 1024 * 1024 bytes
+				}
+			});
+
+			$('#file-uploader').fineUploader({
+				//debug: true,
+				request: {
+					endpoint: {link pageForm-filesUploader-upload!} //FIXME: via getParameterId
+				},
+				retry: {
+					enableAuto: true
+				},
+				failedUploadTextDisplay: {
+					mode: 'custom',
+					responseProperty: 'error'
+				},
+				validation: {
+					//allowedExtensions: ['pdf'],
+					//sizeLimit: 5242880 // 50 MB = 50 * 1024 * 1024 bytes
+				}
+			});
+		});
+	</script>
+{/block}
+
+{block styles}
+	{include parent}
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">
 {/block}

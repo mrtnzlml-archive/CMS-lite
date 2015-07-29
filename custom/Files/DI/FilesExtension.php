@@ -33,4 +33,5 @@ class FilesExtension extends CompilerExtension implements IEntityProvider, ICust
 	{
 		return ['Files' => __DIR__ . '/..'];
 	}
+
 }

@@ -13,10 +13,8 @@ use Users\User;
  *
  * @method setName(string $name)
  * @method string getName()
- * @method setSanitizedName(string $sanitizedName)
- * @method string getSanitizedName()
- * @method setTitle(string $title)
- * @method string getTitle()
+ * @method setFakeName(string $fakeName)
+ * @method string getFakeName()
  * @method setDescription(string)
  * @method string getDescription()
  * @method setUuid(string $uuid)
@@ -25,10 +23,6 @@ use Users\User;
  * @method string getExtension()
  * @method setSize(int $size)
  * @method int getSize()
- * @method setType(string $type)
- * @method string getType()
- * @method boolean getIsProtected()
- * @method setIsProtected(boolean $isProtected)
  * @method User getAuthor()
  * @method setAuthor(User $author)
  */
@@ -38,30 +32,17 @@ class File
 	use Identifier;
 	use MagicAccessors;
 
-	const TYPE_ATTACHMENT = 'ATTACHMENT';
-
-	public function __construct()
-	{
-		$this->createdAt = new \DateTime();
-	}
-
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", options={"comment":"Original name of the file"})
 	 * @var string
 	 */
 	protected $name;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", options={"comment":"Fake name of the file"})
 	 * @var string
 	 */
-	protected $sanitizedName;
-
-	/**
-	 * @ORM\Column(type="string", nullable=TRUE)
-	 * @var string
-	 */
-	protected $title;
+	protected $fakeName;
 
 	/**
 	 * @ORM\Column(type="text", nullable=TRUE)
@@ -70,40 +51,28 @@ class File
 	protected $description;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", unique=TRUE, options={"comment":"UUID is used for storing files (unique filename)"})
 	 * @var string
 	 */
 	protected $uuid;
 
 	/**
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", options={"comment":"Extension of the file"})
 	 * @var string
 	 */
 	protected $extension;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"comment":"File size in bytes (B)"})
 	 * @var string
 	 */
 	protected $size;
 
 	/**
-	 * @ORM\Column(type="datetime")
-	 * @var \DateTime
-	 */
-	private $createdAt;
-
-	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", options={"comment":"Is it picture file?"})
 	 * @var bool
 	 */
-	protected $isProtected = FALSE;
-
-	/**
-	 * @ORM\Column(type="string")
-	 * @var string
-	 */
-	protected $type = self::TYPE_ATTACHMENT;
+	protected $picture = FALSE;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Users\User", cascade={"persist"})
@@ -112,9 +81,26 @@ class File
 	 */
 	protected $author;
 
+	/**
+	 * @ORM\Column(type="datetime", options={"comment":"Date of the file first creation"}))
+	 * @var \DateTime
+	 */
+	private $createdAt;
+
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime();
+	}
+
 	public function getCreatedAt()
 	{
 		return $this->createdAt;
+	}
+
+	public function setPicture($picture = TRUE)
+	{
+		$this->picture = $picture;
+		return $this;
 	}
 
 }

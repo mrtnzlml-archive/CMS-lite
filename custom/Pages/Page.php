@@ -186,7 +186,6 @@ class Page implements ILocaleAware
 	/**
 	 * @ORM\ManyToMany(targetEntity="Files\File", cascade={"persist"})
 	 * @ORM\JoinTable(
-	 *      name="page_has_file",
 	 *      joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")},
 	 *      inverseJoinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id", onDelete="CASCADE")}
 	 * )

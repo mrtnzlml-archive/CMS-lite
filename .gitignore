@@ -1,9 +1,6 @@
 /.idea/
 /vendor/
 /www/upload/
-/nbproject/
-/log/
-/temp/
 /node_modules/
 /www/css/
 /www/fonts/

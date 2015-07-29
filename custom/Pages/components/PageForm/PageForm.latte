@@ -105,6 +105,26 @@
 		{input fcbk_description, class => "form-control"}
 	</div>
 	{********************** /FCBk ***********************}
+	<div n:if="$edit" class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				{control picturesUploader}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				{control filesUploader}
+			</div>
+		</div>
+	</div>
+
+
+	{* TODO *}
+	{foreach $page->files as $file}
+		{dump $file}
+	{/foreach}
+
+
 	<div class="row">
 		<div class="col-lg-2">
 			<div class="form-group">
