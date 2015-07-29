@@ -1,52 +1,99 @@
-<form n:name="gridForm">
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th>
-				<input type="checkbox" id="selectAll">
-			</th>
-			<th>Titulek</th>
-			<th>Autoři</th>
-			<th>Kategorie</th>
-			<th>Publikována</th>
-			<th>&nbsp;</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr n:foreach="$pages as $page">
-			<td>
-				{input page-$page->id}
-			</td>
-			<td>
-				{$page->title}<br>
-				{foreach $page->tags as $tag}
-					<span class="label label-default">{$tag->name}</span>
-				{/foreach}
-			</td>
-			<td>
-				{foreach $page->authors as $author}
-					{$author->email}{sep}, {/sep}
-				{/foreach}
-			</td>
-			<td>
-				{foreach $page->categories as $category}
-					{$category->name}{sep}, {/sep}
-				{/foreach}
-			</td>
-			<td>
-				{if $page->publishedAt}
-					<span class="label label-success">ANO</span>
-				{else}
-					<span class="label label-danger">NE - uložena</span>
-				{/if}
-			</td>
-			<td>
-				<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
-				<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
-			</td>
-		</tr>
-		</tbody>
-	</table>
-	{input action}
-	{input submit}
-</form>
+<p class="overview">
+	<a class="item" href="">Celkem<span class="num">24</span></a>
+	<a class="item" href="">Veřejných<span class="num">24</span></a>
+	<a class="item" href="">Rozepsaných<span class="num">24</span></a>
+</p>
+
+<div class="col-lg-12 box-default pt20 pl20 pr20">
+	<form n:name="gridForm">
+		<table class="table table-bordered table-hover">
+			<thead>
+			<tr>
+				<th class="tdCheck valignM">
+					<input type="checkbox" id="selectAll">
+				</th>
+				<th class="valignM">Název</th>
+				<th class="valignM alignC">Kategorie</th>
+				<th class="valignM alignC">Štítky</th>
+				<th class="valignM alignC">Autoři</th>
+				<th class="valignM alignC">Datum</th>
+				<th class="valignM alignC">ID</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr n:foreach="$pages as $page">
+				<td class="tdCheck valignM">
+					{input page-$page->id}
+				</td>
+				<td class="valignM">
+					<a class="bold" href="{plink edit $page->id}">
+						{$page->title}
+					</a>
+				</td>
+				<td class="valignM alignC">
+					{foreach $page->categories as $category}
+						{$category->name}{sep}, {/sep}
+					{/foreach}
+				</td>
+				<td class="valignM alignC">
+					{foreach $page->tags as $tag}
+						<span class="label label-default">{$tag->name}</span>
+					{/foreach}
+				</td>
+				<td class="valignM alignC">
+					{foreach $page->authors as $author}
+						{$author->email}{sep}, {/sep}
+					{/foreach}
+				</td>
+				<td class="valignM alignC">
+					{$page->createdAt|date:'j.n.Y'}
+				</td>
+				<td class="valignM alignC">
+					{* TODO *}
+				</td>
+				{*
+				<td class="valignM alignC">
+					<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
+					<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
+				</td>
+				*}
+			</tr>
+			</tbody>
+		</table>
+		{*{input action}*}
+		{*{input submit}*}
+	</form>
+</div>
+
+<div class="filters mb10 mt10">
+	<div class="col-lg-4">
+		<div class="fl mr10">
+			<select class="form-control">
+				<option>Hromadné úpravy</option>
+				<option>KateXX</option>
+				<option>KatYYY</option>
+				<option>KateZZZ</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<nav>
+	<ul class="pagination fr mt0">
+		<li class="disabled">
+			<a href="#" aria-label="Previous">
+				<span aria-hidden="false">&laquo;</span>
+			</a>
+		</li>
+		<li class="active"><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li>
+			<a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+	</ul>
+</nav>
