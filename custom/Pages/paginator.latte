@@ -1,0 +1,36 @@
+<nav n:if="$paginator->getPageCount() > 1" class="no-grid-paginator">
+	<ul class="pagination fr mt0">
+
+		{if $paginator->isFirst()}
+			<li class="disabled">
+				<a aria-label="Previous">
+					<span aria-hidden="false">&laquo;</span>
+				</a>
+			</li>
+		{else}
+			<li><a href="{link this!, 'page' => $paginator->getPage() - 1}">«</a></li>
+		{/if}
+
+		{foreach $steps as $step}
+			{if $step == $paginator->getPage()}
+				<li class="active"><a>{$step}</a></li>
+			{else}
+				<li><a href="{link this!, 'page' => $step}">{$step}</a></li>
+			{/if}
+			{if $iterator->nextValue > $step + 1}
+				<li class="disabled"><a>&hellip;</a></li>
+			{/if}
+		{/foreach}
+
+		{if $paginator->isLast()}
+			<li class="disabled">
+				<a aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		{else}
+			<li><a href="{link this!, 'page' => $paginator->getPage() + 1}">»</a></li>
+		{/if}
+
+	</ul>
+</nav>

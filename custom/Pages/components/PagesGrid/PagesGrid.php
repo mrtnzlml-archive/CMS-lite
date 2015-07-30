@@ -3,6 +3,8 @@
 namespace Pages\Components\PagesGrid;
 
 use App\Components\AControl;
+use Carrooi\NoGrid\DataSource\DoctrineQueryObjectDataSource;
+use Carrooi\NoGrid\INoGridFactory;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
@@ -30,10 +32,14 @@ class PagesGrid extends AControl
 	/** @var PageFacade */
 	private $pageFacade;
 
-	public function __construct(EntityManager $em, PageFacade $pageFacade)
+	/** @var INoGridFactory */
+	private $gridFactory;
+
+	public function __construct(EntityManager $em, PageFacade $pageFacade, INoGridFactory $gridFactory)
 	{
 		$this->em = $em;
 		$this->pageFacade = $pageFacade;
+		$this->gridFactory = $gridFactory;
 	}
 
 	/** @param $presenter UI\Presenter */
@@ -41,6 +47,7 @@ class PagesGrid extends AControl
 	{
 		parent::attached($presenter);
 
+		//TODO: zde odstranit a převelet na nogrid
 		$query = (new PagesQueryAdmin())
 			->withCategories($this->category_id)
 			->withTags($this->tag_id)
@@ -56,6 +63,18 @@ class PagesGrid extends AControl
 		}
 		$this->template->pages = $this->pages;
 		$this->template->render($this->templatePath ?: __DIR__ . '/PagesGrid.latte');
+	}
+
+	protected function createComponentGrid()
+	{
+		$query = (new PagesQueryAdmin())
+			->withCategories($this->category_id)
+			->withTags($this->tag_id)
+			->withAuthors($this->author_id);
+		$dataSource = new DoctrineQueryObjectDataSource($this->em->getRepository(Page::class), $query);
+
+		$grid = $this->gridFactory->create($dataSource);
+		return $grid;
 	}
 
 	protected function createComponentGridForm()

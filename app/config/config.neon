@@ -63,3 +63,9 @@ monolog:
 		- Monolog\Processor\IntrospectionProcessor
 		- Monolog\Processor\WebProcessor
 		- Monolog\Processor\GitProcessor
+
+
+grid:
+	itemsPerPage: 4
+	paginator:
+		template: %appDir%/../custom/Pages/paginator.latte

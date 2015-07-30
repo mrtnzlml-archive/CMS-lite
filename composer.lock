@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dafed42d4587165e30f04bdd33bc7a7d",
+    "hash": "8f042697923cd157f1bf23ee11a96773",
     "packages": [
+        {
+            "name": "carrooi/no-grid",
+            "version": "dev-composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrtnzlml/Nette-NoGrid.git",
+                "reference": "076cf52d1007c73518d22ef253da746bca338350"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrtnzlml/Nette-NoGrid/zipball/076cf52d1007c73518d22ef253da746bca338350",
+                "reference": "076cf52d1007c73518d22ef253da746bca338350",
+                "shasum": ""
+            },
+            "require": {
+                "kdyby/doctrine": ">=2.3",
+                "latte/latte": "~2.2",
+                "nette/application": "~2.2",
+                "nette/di": "~2.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.0",
+                "nette/bootstrap": "~2.2",
+                "nette/mail": "~2.2",
+                "nette/safe-stream": "~2.2",
+                "nette/tester": "~1.5",
+                "tracy/tracy": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Carrooi\\NoGrid\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Kudera",
+                    "homepage": "http://davidkudera.com",
+                    "email": "kudera.d@gmail.com"
+                }
+            ],
+            "description": "Not a grid for Nette framework",
+            "homepage": "https://github.com/Carrooi/Nette-NoGrid",
+            "keywords": [
+                "data",
+                "grid",
+                "nette",
+                "source",
+                "table"
+            ],
+            "support": {
+                "issues": "https://github.com/Carrooi/Nette-NoGrid/issues",
+                "source": "https://github.com/mrtnzlml/Nette-NoGrid/tree/composer"
+            },
+            "time": "2015-07-30 12:23:31"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.6",
@@ -3389,6 +3448,7 @@
     "stability-flags": {
         "kdyby/doctrine": 20,
         "doctrine/migrations": 20,
+        "carrooi/no-grid": 20,
         "mrtnzlml/testbench": 20,
         "kdyby/tester-extras": 20
     },

@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="col-lg-12 box-default pt20 pl20 pr20">
-		<table class="table table-bordered table-hover">
+		<table class="table table-bordered table-hover" n:no-grid="grid">
 			<thead>
 			<tr>
 				<th class="tdCheck valignM">
@@ -48,7 +48,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr n:foreach="$pages as $page">
+			<tr n:no-grid-data-as="$page">
 				<td class="tdCheck valignM">
 					{input page-$page->id}
 				</td>
@@ -92,22 +92,4 @@
 	</div>
 </form>
 
-<nav>
-	<ul class="pagination fr mt0">
-		<li class="disabled">
-			<a href="#" aria-label="Previous">
-				<span aria-hidden="false">&laquo;</span>
-			</a>
-		</li>
-		<li class="active"><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>
-		<li><a href="#">5</a></li>
-		<li>
-			<a href="#" aria-label="Next">
-				<span aria-hidden="true">&raquo;</span>
-			</a>
-		</li>
-	</ul>
-</nav>
+{control grid:paginator}

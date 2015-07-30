@@ -22,6 +22,7 @@ extensions:
 	events: Kdyby\Events\DI\EventsExtension
 	translation: Kdyby\Translation\DI\TranslationExtension
 	monolog: Kdyby\Monolog\DI\MonologExtension
+	grid: Carrooi\NoGrid\DI\NoGridExtension
 	- App\Extensions\CoreTemplateExtension
 	- App\Extensions\FontsExtension
 	- App\Extensions\ImageExtension(%wwwDir%)
