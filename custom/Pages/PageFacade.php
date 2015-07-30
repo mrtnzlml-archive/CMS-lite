@@ -56,7 +56,7 @@ class PageFacade extends Nette\Object
 		$page->publishedAt = new \DateTime();
 		$this->completePageEntity($page);
 		$this->em->persist($page);
-		$this->em->flush($page);
+		$this->em->flush();
 		$this->setUrl($page, $values);
 		$this->onPublish($this, $page);
 	}
@@ -65,7 +65,7 @@ class PageFacade extends Nette\Object
 	{
 		$this->completePageEntity($page);
 		$this->em->persist($page);
-		$this->em->flush($page);
+		$this->em->flush();
 		$this->setUrl($page, $values);
 		$this->onSave($this, $page);
 	}

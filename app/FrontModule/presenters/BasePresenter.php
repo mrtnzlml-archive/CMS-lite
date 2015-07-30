@@ -4,6 +4,7 @@ namespace App\FrontModule\Presenters;
 
 use App\Traits\PublicComponentsTrait;
 use Nette;
+use Options\OptionFacade;
 use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
@@ -14,9 +15,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @persistent */
 	public $locale;
 
+	/** @var OptionFacade @inject */
+	public $optionFacade;
+
 	protected function beforeRender()
 	{
 		$this->template->locale = $this->locale;
+		$this->setMeta('og:url', $this->link('//this'));
+		$this->setMeta('og:site_name', $this->optionFacade->getOption('site_title'));
 	}
 
 	protected function setTitle($title)

@@ -44,7 +44,6 @@ use Users\User;
  * @method addCategory(PageCategory $category)
  * @method addTag(Tag $tag)
  * @method addFile(File $file)
- * @method addOpenGraph(OpenGraph $og)
  *
  * @method setRealAuthor(User $realAuthor)
  */
@@ -194,14 +193,10 @@ class Page implements ILocaleAware
 	protected $files;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="OpenGraph", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="open_graph_id", referencedColumnName="id")}
-	 *    )
+	 * @ORM\OneToMany(targetEntity="OpenGraph", mappedBy="page", cascade={"persist", "remove"})
 	 * @var OpenGraph[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
-	protected $openGraphs; //FIXME: zamezit duplikacím v kolekcích (a prázdným záznamům)
+	protected $openGraphs;
 
 	public function __construct()
 	{
@@ -211,6 +206,11 @@ class Page implements ILocaleAware
 		$this->tags = new ArrayCollection();
 		$this->files = new ArrayCollection();
 		$this->openGraphs = new ArrayCollection();
+	}
+
+	public function getCreatedAt()
+	{
+		return $this->createdAt;
 	}
 
 	public function setDeleted($deleted = TRUE)
@@ -306,9 +306,29 @@ class Page implements ILocaleAware
 		$this->files->clear();
 	}
 
-	public function clearOpenGraphs()
+	public function setOpenGraph(OpenGraph $og)
 	{
-		$this->openGraphs->clear();
+		$og->setPage($this);
+		$this->openGraphs->add($og);
+	}
+
+	public function getOpenGraph($property)
+	{
+		$ogs = $this->getOpenGraphs();
+		return isset($ogs[$property]) ? $ogs[$property] : NULL;
+	}
+
+	/**
+	 * @return array of [property => content]
+	 */
+	public function getOpenGraphs()
+	{
+		$ogs = [];
+		/** @var OpenGraph $og */
+		foreach ($this->openGraphs as $og) {
+			$ogs[$og->getProperty()] = $og;
+		}
+		return $ogs;
 	}
 
 }

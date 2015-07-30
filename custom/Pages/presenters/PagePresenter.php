@@ -9,6 +9,7 @@ use Latte;
 use Nette;
 use Nette\Application\UI;
 use Nette\Application\UI\ITemplateFactory;
+use Pages\OpenGraph;
 use Pages\Page;
 use Pages\Query\PagesQuery;
 use Pages\Query\PagesQueryAdmin;
@@ -35,6 +36,7 @@ class PagePresenter extends BasePresenter
 	public function actionDefault($id)
 	{
 		$pageQuery = (new PagesQuery)->byId($id);
+		/** @var Page $page */
 		$page = $this->em->getRepository(Page::class)->fetchOne($pageQuery);
 		if ($page === NULL) {
 			$this->error('Page not found.');
@@ -45,10 +47,15 @@ class PagePresenter extends BasePresenter
 			$this->redirect('protected', $page->getId());
 		} else {
 			$this['meta']->setRobots([
-				$page->index, $page->follow,
+				$page->getIndex(), $page->getFollow(),
 			]);
-			$this->setTitle($page->individualTitle ?: $page->title);
-			$this->setMeta('description', $page->description);
+			$this->setTitle($page->getIndividualTitle() ?: $page->getTitle());
+			$this->setMeta('description', $page->getDescription());
+			/** @var OpenGraph $og */
+			foreach ($page->getOpenGraphs() as $og) {
+				//TODO: pokud není nějaký og:meta vyplněn, je nutné nastavit jinak
+				$this->setMeta($og->getProperty(), $og->getContent());
+			}
 
 //		    $latte = $this->getTemplate()->getLatte(); //Latte\Engine
 //		    $latte->setLoader(new Latte\Loaders\StringLoader);

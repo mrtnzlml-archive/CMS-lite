@@ -8,6 +8,10 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
+ *
+ * @method string getProperty()
+ * @method string getContent()
+ * @method setPage(Page $page)
  */
 class OpenGraph
 {
@@ -26,6 +30,13 @@ class OpenGraph
 	 * @var string
 	 */
 	protected $content;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Page", inversedBy="openGraphs", cascade={"persist"})
+	 * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+	 * @var Page
+	 */
+	protected $page;
 
 	public function __construct($property, $content)
 	{

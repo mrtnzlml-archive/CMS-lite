@@ -262,14 +262,23 @@ class PageForm extends AControl
 		}
 
 		$entity->clearTags();
-		foreach (explode(',', $values->tags) as $tag) {
+		foreach (array_filter(explode(',', $values->tags)) as $tag) {
 			$tagEntity = (new Tag)->setName($tag);
 			$entity->addTag($tagEntity);
 		}
 
-		$entity->clearOpenGraphs();
-		$entity->addOpenGraph(new OpenGraph('og:title', $values->fcbk_title));
-		$entity->addOpenGraph(new OpenGraph('og:description', $values->fcbk_description));
+		//Save OG tags:
+		$ogs = $this->editablePage->getOpenGraphs();
+		$mapping = ['og:title' => 'fcbk_title', 'og:description' => 'fcbk_description'];
+		foreach ($mapping as $key => $value) {
+			if (array_key_exists($key, $ogs)) {
+				$ogs[$key]->content = $values[$value];
+				$entity->setOpenGraph($ogs[$key]);
+			} else { //new entry
+				$og = new OpenGraph($key, $values[$value]);
+				$entity->setOpenGraph($og);
+			}
+		}
 	}
 
 	private function setDefaults(UI\Form $form)
@@ -289,6 +298,8 @@ class PageForm extends AControl
 				'tags' => $e->getTagsString(),
 				'individual_css' => $e->getIndividualCss(),
 				'protected' => $e->getProtected(),
+				'fcbk_title' => $e->getOpenGraph('og:title')->getContent(),
+				'fcbk_description' => $e->getOpenGraph('og:description')->getContent(),
 			]);
 		}
 	}
