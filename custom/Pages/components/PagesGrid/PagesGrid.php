@@ -13,6 +13,15 @@ use Pages\Query\PagesQueryAdmin;
 class PagesGrid extends AControl
 {
 
+	/** @persistent */
+	public $category_id = NULL;
+
+	/** @persistent */
+	public $tag_id = NULL;
+
+	/** @persistent */
+	public $author_id = NULL;
+
 	/** @var EntityManager */
 	private $em;
 
@@ -32,15 +41,12 @@ class PagesGrid extends AControl
 	{
 		parent::attached($presenter);
 
-		$query = (new PagesQueryAdmin())->withAllAuthors()->withAllCategories();
+		$query = (new PagesQueryAdmin())
+			->withCategories($this->category_id)
+			->withTags($this->tag_id)
+			->withAuthors($this->author_id);
 		$this->pages = $this->em->getRepository(Page::class)->fetch($query);
 		$this->pages->applyPaging(0, 100)->setFetchJoinCollection(FALSE);
-
-		/** @var \App\Components\Css\Css $component */
-		foreach ($presenter->getComponents(FALSE, \App\Components\Js\Js::class) as $component) {
-			//dump($component);
-			//TODO: nějakou vlastní komponentu, která umožní podobně přidávat custom styly (ale ne do webloaderu)
-		}
 	}
 
 	public function render(array $parameters = NULL)
@@ -55,39 +61,77 @@ class PagesGrid extends AControl
 	protected function createComponentGridForm()
 	{
 		$form = new UI\Form();
+		$form->addProtection();
 
 		$checkboxes = $form->addContainer('page');
+
+		$categories = $tags = $authors = [];
+		/** @var Page $page */
 		foreach ($this->pages as $page) {
 			$checkboxes->addCheckbox($page->id, NULL);
+			foreach ($page->categories as $category) { //FIXME: toto není moc pěkné
+				$categories[$category->getId()] = $category->getName();
+			}
+			foreach ($page->tags as $tag) { //FIXME: toto není moc pěkné
+				$tags[$tag->getId()] = $tag->getName();
+			}
+			foreach ($page->authors as $author) { //FIXME: toto není moc pěkné
+				$authors[$author->getId()] = $author->email;
+			}
 		}
 
-		$form->addSelect('action', NULL, [
+		$form->addSelect('actionAbove', NULL, $actions = [
+			NULL => 'Hromadné úpravy',
 			'edit' => 'Editovat',
-			'delete' => 'Smazat',
+			'delete' => 'Smazat', //TODO js:alert
 		]);
-		$form->addSubmit('submit');
-		$form->onSuccess[] = function ($_, $values) {
-			$multiEdit = [];
-			foreach ($values->page as $id => $checked) {
-				if ($checked) {
-					$multiEdit[$id] = $id;
-				}
-			}
-			if ($values->action === 'edit') {
-				$this->presenter->redirect(':Pages:AdminPage:multiEdit', [$multiEdit]);
-			} else {
-				$this->pageFacade->onRemove[] = function () {
-					$this->em->flush();
-					$this->redirect('this');
-				};
-				$this->pageFacade->remove($multiEdit);
-			}
-		};
+		$form->addSelect('actionBelow', NULL, $actions);
+
+		$form->addSelect('categories', NULL, [
+				NULL => 'Kategorie',
+			] + $categories)->setDefaultValue($this->category_id);
+		$form->addSelect('tags', NULL, [
+				NULL => 'Štítky',
+			] + $tags)->setDefaultValue($this->tag_id);
+		$form->addSelect('authors', NULL, [
+				NULL => 'Autor',
+			] + $authors)->setDefaultValue($this->author_id);
+
+//		$form->addSubmit('submit');
+
+		$form->onSuccess[] = $this->gridFormSucceeded;
 		return $form;
+	}
+
+	public function gridFormSucceeded($_, Nette\Utils\ArrayHash $values)
+	{
+		$this->category_id = $values->categories;
+		$this->tag_id = $values->tags;
+		$this->author_id = $values->authors;
+
+		$multiEdit = [];
+		foreach ($values->page as $id => $checked) {
+			if ($checked) {
+				$multiEdit[$id] = $id;
+			}
+		}
+		$action = $values->actionBelow ?: $values->actionAbove;
+		if ($action === 'edit') {
+			$this->presenter->redirect(':Pages:AdminPage:multiEdit', [$multiEdit]);
+		} elseif ($action === 'delete') {
+			$this->pageFacade->onRemove[] = function () {
+				$this->em->flush();
+				$this->redirect('this');
+			};
+			$this->pageFacade->remove($multiEdit);
+		} else {
+			$this->redirect('this');
+		}
 	}
 
 	/**
 	 * @secured
+	 * @deprecated
 	 */
 	public function handleDelete($id)
 	{

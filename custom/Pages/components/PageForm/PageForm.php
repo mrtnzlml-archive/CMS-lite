@@ -261,7 +261,7 @@ class PageForm extends AControl
 			}
 		}
 
-		$entity->clearTags();
+		$entity->clearTags(); //FIXME: ošetřit násobné zakládání tagů
 		foreach (array_filter(explode(',', $values->tags)) as $tag) {
 			$tagEntity = (new Tag)->setName($tag);
 			$entity->addTag($tagEntity);
@@ -298,8 +298,8 @@ class PageForm extends AControl
 				'tags' => $e->getTagsString(),
 				'individual_css' => $e->getIndividualCss(),
 				'protected' => $e->getProtected(),
-				'fcbk_title' => $e->getOpenGraph('og:title')->getContent(),
-				'fcbk_description' => $e->getOpenGraph('og:description')->getContent(),
+				'fcbk_title' => $e->getOpenGraphContent('og:title'),
+				'fcbk_description' => $e->getOpenGraphContent('og:description'),
 			]);
 		}
 	}

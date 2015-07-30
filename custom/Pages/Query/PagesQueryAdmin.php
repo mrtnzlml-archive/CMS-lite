@@ -44,20 +44,38 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 		return $this;
 	}
 
-	public function withAllAuthors()
+	public function withAuthors($author_id = NULL)
 	{
-		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
-			// leftJoin, because author is optional (innerJoin otherwise)
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($author_id) {
 			$qb->leftJoin('page.authors', 'authors')->addSelect('authors');
+			if ($author_id !== NULL) {
+				$qb->leftJoin('page.authors', 'ax');
+				$qb->andWhere('ax = :aid')->setParameter('aid', (int)$author_id);
+			}
 		};
 		return $this;
 	}
 
-	public function withAllCategories()
+	public function withCategories($category_id = NULL)
 	{
-		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) {
-			// leftJoin, because category is optional (innerJoin otherwise)
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($category_id) {
 			$qb->leftJoin('page.categories', 'categories')->addSelect('categories');
+			if ($category_id !== NULL) {
+				$qb->leftJoin('page.categories', 'cx');
+				$qb->andWhere('cx = :cid')->setParameter('cid', (int)$category_id);
+			}
+		};
+		return $this;
+	}
+
+	public function withTags($tag_id = NULL)
+	{
+		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($tag_id) {
+			$qb->leftJoin('page.tags', 'tags')->addSelect('tags');
+			if ($tag_id !== NULL) {
+				$qb->leftJoin('page.tags', 'tx');
+				$qb->andWhere('tx = :tid')->setParameter('tid', (int)$tag_id);
+			}
 		};
 		return $this;
 	}

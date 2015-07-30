@@ -312,10 +312,10 @@ class Page implements ILocaleAware
 		$this->openGraphs->add($og);
 	}
 
-	public function getOpenGraph($property)
+	public function getOpenGraphContent($property)
 	{
 		$ogs = $this->getOpenGraphs();
-		return isset($ogs[$property]) ? $ogs[$property] : NULL;
+		return isset($ogs[$property]) ? $ogs[$property]->getContent() : NULL;
 	}
 
 	/**

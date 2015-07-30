@@ -1,11 +1,38 @@
 <p class="overview">
+	{* TODO *}
 	<a class="item" href="">Celkem<span class="num">24</span></a>
 	<a class="item" href="">Veřejných<span class="num">24</span></a>
 	<a class="item" href="">Rozepsaných<span class="num">24</span></a>
 </p>
 
-<div class="col-lg-12 box-default pt20 pl20 pr20">
-	<form n:name="gridForm">
+<form n:name="gridForm">
+	<div class="filters mb10 mt10">
+		<div class="col-lg-4">
+			<div class="fl mr10">
+				{input actionAbove, class => 'form-control', onchange => 'this.form.submit()'}
+			</div>
+			<div class="fl">
+				<input class="form-control" type="text">
+			</div>
+			<!-- /input-group -->
+		</div>
+		<div class="col-lg-2">
+			{input categories, class => 'form-control', onchange => 'this.form.submit()'}
+		</div>
+		<div class="col-lg-2">
+			{input tags, class => 'form-control', onchange => 'this.form.submit()'}
+		</div>
+		<div class="col-lg-2">
+			{input authors, class => 'form-control', onchange => 'this.form.submit()'}
+		</div>
+		<div class="col-lg-2">
+			<input class="form-control" type="date" disabled>
+		</div>
+
+		<div class="cleaner"></div>
+	</div>
+
+	<div class="col-lg-12 box-default pt20 pl20 pr20">
 		<table class="table table-bordered table-hover">
 			<thead>
 			<tr>
@@ -49,34 +76,21 @@
 					{$page->createdAt|date:'j.n.Y'}
 				</td>
 				<td class="valignM alignC">
-					{* TODO *}
+					{$page->getId()}
 				</td>
-				{*
-				<td class="valignM alignC">
-					<a class="btn btn-xs btn-default" href="{plink edit $page->id}">{_Upravit}</a>
-					<a class="btn btn-xs btn-default" n:href="delete! $page->id" data-confirm="{_"Skutečně chcete tuto stránku nenávratně smazat?"}">{_Smazat}</a>
-				</td>
-				*}
 			</tr>
 			</tbody>
 		</table>
-		{*{input action}*}
-		{*{input submit}*}
-	</form>
-</div>
+	</div>
 
-<div class="filters mb10 mt10">
-	<div class="col-lg-4">
-		<div class="fl mr10">
-			<select class="form-control">
-				<option>Hromadné úpravy</option>
-				<option>KateXX</option>
-				<option>KatYYY</option>
-				<option>KateZZZ</option>
-			</select>
+	<div class="filters mb10 mt10">
+		<div class="col-lg-4">
+			<div class="fl mr10">
+				{input actionBelow, class => 'form-control', onchange => 'this.form.submit()'}
+			</div>
 		</div>
 	</div>
-</div>
+</form>
 
 <nav>
 	<ul class="pagination fr mt0">

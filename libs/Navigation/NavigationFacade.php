@@ -34,6 +34,7 @@ class NavigationFacade extends Nette\Object
 		if (!is_numeric($itemId)) {
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($itemId)));
 		}
+		//FIXME: toto se musí trošku předělat (přiJOIN url adresy) a cache (?)
 		$query = $this->em->getRepository(NavigationItem::class)->createQuery('
 			SELECT n, IDENTITY(tree2.ancestor), IDENTITY(tree1.descendant) FROM Navigation\NavigationItem n
 			LEFT JOIN Navigation\NavigationTreePath tree1 WITH (n.id = tree1.descendant)
