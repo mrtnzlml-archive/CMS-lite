@@ -15,6 +15,7 @@
 		  destination: Pages:AdminPage:new
 
 - name: Navigace
+  icon: 'flaticon-compass44'
   path: administrace/navigace
   destination: Navigation:Navigation:default
 
