@@ -1,9 +1,17 @@
 {block title}Výsledky vyhledávání{/block}
 
 {block content}
-	<h3>Stránky</h3>
-	{foreach $result as $page}
-		<h4>{$page->title}</h4>
-		<p>{$page->body}</p>
-	{/foreach}
+	<div class="row">
+		<div class="col-lg-7 box-default pt20 pl20 pr20">
+			<h3>Stránky</h3>
+			{foreach $result as $page}
+				<h4>{$page->title}</h4>
+				<p>{$page->body}</p>
+			{/foreach}
+		</div>
+		<div class="col-lg-4 pt20 pl20 pr20">
+			<h3>Navigace</h3>
+			&hellip;
+		</div>
+	</div>
 {/block}

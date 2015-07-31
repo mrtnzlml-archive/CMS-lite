@@ -3,12 +3,15 @@
 namespace Search;
 
 use Kdyby\Doctrine\EntityManager;
+use Kdyby\Doctrine\Mapping\ResultSetMappingBuilder;
 use Nette;
 use Nette\Utils\Strings;
+use Pages\Page;
 
 class SearchFacade extends Nette\Object
 {
 
+	/** @var EntityManager */
 	private $em;
 
 	public function __construct(EntityManager $em)
@@ -29,13 +32,23 @@ class SearchFacade extends Nette\Object
 		}, $words);
 		$string = implode(' ', $words);
 
-		$qb = $this->em->createQueryBuilder();
-		$qb->select('p')
-			->from('Pages\Page', 'p')
-			->andWhere('MATCH (p.title, p.body) AGAINST (:search BOOLEAN) > 0')//FIXME: >0 jen kvůli DQL
-			->orderBy('MATCH(p.title) AGAINST (:search)')//FIXME: ORDER BY 5 * MATCH(nadpis) AGAINST ('$search') + MATCH(clanek) AGAINST ('$search') DESC
-			->setParameter('search', $string . '*');
-		return $qb->getQuery()->getResult();
+		$rsm = new ResultSetMappingBuilder($this->em);
+		//FIXME - nefunfguje: $rsm->addRootEntityFromClassMetadata(Page::class, 'p');
+		$rsm->addEntityResult(Page::class, 'p');
+		$rsm->addFieldResult('p', 'id', 'id');
+		$rsm->addFieldResult('p', 'title', 'title');
+		$rsm->addFieldResult('p', 'body', 'body');
+
+		$sql = <<<SQL
+SELECT p.*, 5 * MATCH(p.title) AGAINST (:search IN BOOLEAN MODE) + MATCH(p.title) AGAINST (:search IN BOOLEAN MODE) AS score
+FROM pages p
+WHERE MATCH(p.title, p.body) AGAINST (:search IN BOOLEAN MODE)
+ORDER BY score DESC
+SQL;
+
+		$query = $this->em->getRepository(Page::class)->createNativeQuery($sql, $rsm);
+		$query->setParameter('search', $string . '*');
+		return $query->getResult();
 	}
 
 }
