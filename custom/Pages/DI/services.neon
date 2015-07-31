@@ -5,6 +5,7 @@ services:
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
 	- Pages\Query\PagesQuery
+	- Pages\Query\CategoryQuery
 	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]
 	- Pages\Components\CategoryGrid\ICategoryGridFactory

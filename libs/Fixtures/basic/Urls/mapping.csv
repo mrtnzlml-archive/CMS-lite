@@ -11,4 +11,4 @@ administrace/editovat-uzivatele,Users:Users:edit
 protected-page,Pages:Page:protected
 administrace/vyhledavani,Search:Search:default
 administrace/nastaveni/opravneni,Options:Options:acl
-administrace/nova-kategorie,Pages:Admin:Category:new
+administrace/editovat-kategorii,Pages:Admin:Category:edit

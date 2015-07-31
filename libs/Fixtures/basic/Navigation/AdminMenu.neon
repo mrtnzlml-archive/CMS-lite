@@ -16,6 +16,9 @@
 		- name: Kategorie
 		  path: administrace/kategorie
 		  destination: Pages:Admin:Category:default
+		- name: Nová kategorie
+		  path: administrace/nova-kategorie
+		  destination: Pages:Admin:Category:new
 
 - name: Navigace
   icon: 'flaticon-compass44'
