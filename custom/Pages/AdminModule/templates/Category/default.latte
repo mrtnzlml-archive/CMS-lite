@@ -1,5 +1,10 @@
 {block title}Kategorie{/block}
 
+{block controlButtons}
+	<a class="btn btn-default" n:href="new"><span class="ico flaticon-plus32"></span>Nová kategorie</a>
+	<a class="btn btn-default" n:href=":Pages:Admin:Page:new"><span class="ico flaticon-plus32"></span>Nová stránka</a>
+{/block}
+
 {block content}
 	{control categoryGrid}
 {/block}

@@ -10,7 +10,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @ORM\Entity
  * @ORM\Table(name="page_categories")
  *
- * @method setName(string)
+ * @method setName(string $name)
+ * @method string getName()
  */
 class PageCategory
 {

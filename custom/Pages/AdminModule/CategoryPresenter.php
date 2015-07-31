@@ -4,6 +4,7 @@ namespace Pages\AdminModule\Presenters;
 
 use App;
 use Kdyby\Doctrine\EntityManager;
+use Pages\Components\CategoryForm\ICategoryFormFactory;
 use Pages\Components\CategoryGrid\ICategoryGridFactory;
 use Pages\PageCategory;
 
@@ -37,5 +38,12 @@ class CategoryPresenter extends App\AdminModule\Presenters\BasePresenter
 		$control = $factory->create();
 		return $control;
 	}
+
+	protected function createComponentCategoryForm(ICategoryFormFactory $factory)
+	{
+		$control = $factory->create($this->categoryEntity);
+		return $control;
+	}
+
 
 }

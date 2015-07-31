@@ -9,6 +9,7 @@ services:
 	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]
 	- Pages\Components\CategoryGrid\ICategoryGridFactory
+	- Pages\Components\CategoryForm\ICategoryFormFactory
 
 	# Presenters in DIC - TODO: přidávat automaticky
 	- Pages\AdminModule\Presenters\PagePresenter
