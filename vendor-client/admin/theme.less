@@ -37,6 +37,13 @@
 //** Padding between columns. Gets divided in half for the left and right.
 @grid-gutter-width:         20px;
 
+/*********/
+/* BUTONS */
+/*********/
+
+@btn-default-color:              #fff;
+@btn-default-bg:                 @brand-secondary;
+@btn-default-border:             @brand-secondary;
 
 /**********/
 /* LAYOUT */
@@ -346,9 +353,13 @@ footer {
 
 .dashboard-header{
 
-  .ico{
+  &.pageTitle .ico{
     cursor: pointer;
     color: #a8a9ab;
+  }
+
+  .btn .ico {
+    color: #fff;
   }
 
   .arrowDown:before{
@@ -368,7 +379,7 @@ footer {
 }
 
 
-input[type=text], select{
+.searchWrap input[type=text], .searchWrap select{
   height: 39px;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
