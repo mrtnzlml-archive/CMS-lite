@@ -1,8 +1,7 @@
 <p class="overview">
-	{* TODO *}
-	<a class="item" href="">Celkem<span class="num">24</span></a>
-	<a class="item" href="">Veřejných<span class="num">24</span></a>
-	<a class="item" href="">Rozepsaných<span class="num">24</span></a>
+	<a class="item" href="">Celkem<span class="num">{$total_pages}</span></a>
+	{*<a class="item" href="">Veřejných<span class="num">24</span></a>*}
+	{*<a class="item" href="">Rozepsaných<span class="num">24</span></a>*}
 </p>
 
 <form n:name="gridForm">
@@ -14,7 +13,6 @@
 			<div class="fl">
 				<input class="form-control" type="text">
 			</div>
-			<!-- /input-group -->
 		</div>
 		<div class="col-lg-2">
 			{input categories, class => 'form-control', onchange => 'this.form.submit()'}
@@ -44,7 +42,6 @@
 				<th class="valignM alignC">Štítky</th>
 				<th class="valignM alignC">Autoři</th>
 				<th class="valignM alignC">Datum</th>
-				<th class="valignM alignC">ID</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -74,9 +71,6 @@
 				</td>
 				<td class="valignM alignC">
 					{$page->createdAt|date:'j.n.Y'}
-				</td>
-				<td class="valignM alignC">
-					{$page->getId()}
 				</td>
 			</tr>
 			</tbody>

@@ -35,6 +35,8 @@ class PagesGrid extends AControl
 	/** @var INoGridFactory */
 	private $gridFactory;
 
+	private $total_pages;
+
 	public function __construct(EntityManager $em, PageFacade $pageFacade, INoGridFactory $gridFactory)
 	{
 		$this->em = $em;
@@ -52,8 +54,10 @@ class PagesGrid extends AControl
 			->withCategories($this->category_id)
 			->withTags($this->tag_id)
 			->withAuthors($this->author_id);
-		$this->pages = $this->em->getRepository(Page::class)->fetch($query);
+		$result = $this->em->getRepository(Page::class)->fetch($query);
+		$this->pages = $result;
 		$this->pages->applyPaging(0, 100)->setFetchJoinCollection(FALSE);
+		$this->total_pages = $result->getTotalCount();
 	}
 
 	public function render(array $parameters = NULL)
@@ -62,6 +66,7 @@ class PagesGrid extends AControl
 			$this->template->parameters = Nette\Utils\ArrayHash::from($parameters);
 		}
 		$this->template->pages = $this->pages;
+		$this->template->total_pages = $this->total_pages;
 		$this->template->render($this->templatePath ?: __DIR__ . '/PagesGrid.latte');
 	}
 
