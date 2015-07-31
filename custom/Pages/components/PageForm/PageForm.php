@@ -261,10 +261,26 @@ class PageForm extends AControl
 			}
 		}
 
-		$entity->clearTags(); //FIXME: ošetřit násobné zakládání tagů
-		foreach (array_filter(explode(',', $values->tags)) as $tag) {
-			$tagEntity = (new Tag)->setName($tag);
-			$entity->addTag($tagEntity);
+		//Save tags and remove old relations:
+		$knownTags = [];
+		/** @var Tag $tag */
+		foreach ($this->em->getRepository(Tag::class)->findAll() as $tag) {
+			$knownTags[$tag->getName()] = $tag;
+		}
+
+		$newTags = array_filter(array_unique(preg_split('/\s*,\s*/', $values->tags)));
+		foreach ($newTags as $tag) {
+			if (array_key_exists($tag, $knownTags)) {
+				$entity->addTag($knownTags[$tag]);
+			} else {
+				$tagEntity = (new Tag)->setName($tag);
+				$entity->addTag($tagEntity);
+			}
+		}
+		foreach ($knownTags as $key => $tag) {
+			if (!in_array($key, $newTags)) {
+				$entity->removeTag($tag);
+			}
 		}
 
 		//Save OG tags:

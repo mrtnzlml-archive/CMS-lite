@@ -76,9 +76,12 @@ class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
 		$control->onPublish[] = function () {
 			$this->flashMessage('Stránka byla úspěšně uložena a publikována.', Flashes::FLASH_SUCCESS);
 		};
-		$control->onException[] = function () {
-			$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.',
-				Flashes::FLASH_DANGER);
+		$control->onException[] = function ($_, \Exception $exc) {
+			if (!\Tracy\Debugger::$productionMode) {
+				$this->flashMessage($exc->getMessage(), Flashes::FLASH_DANGER);
+			} else {
+				$this->flashMessage('Stránku se nepodařilo uložit. Kontaktujte prosím technickou podporu.', Flashes::FLASH_DANGER);
+			}
 		};
 		return $control;
 	}

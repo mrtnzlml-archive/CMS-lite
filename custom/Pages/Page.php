@@ -42,7 +42,6 @@ use Users\User;
  *
  * @method addAuthor(User $author)
  * @method addCategory(PageCategory $category)
- * @method addTag(Tag $tag)
  * @method addFile(File $file)
  *
  * @method setRealAuthor(User $realAuthor)
@@ -159,7 +158,7 @@ class Page implements ILocaleAware
 	protected $categories;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Pages\Tag", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Pages\Tag", inversedBy="pages", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
 	 *        inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
@@ -296,9 +295,18 @@ class Page implements ILocaleAware
 		$this->categories->clear();
 	}
 
-	public function clearTags()
+	public function addTag(Tag $tag)
 	{
-		$this->tags->clear();
+		if (!$this->tags->contains($tag)) {
+			$tag->addPage($this);
+			$this->tags[] = $tag;
+		}
+	}
+
+	public function removeTag(Tag $tag)
+	{
+		$tag->removePage($this);
+		$this->tags->removeElement($tag);
 	}
 
 	public function clearFiles()
