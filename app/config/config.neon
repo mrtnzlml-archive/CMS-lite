@@ -66,6 +66,6 @@ monolog:
 
 
 grid:
-	itemsPerPage: 4
+	itemsPerPage: 20
 	paginator:
 		template: %appDir%/../custom/Pages/paginator.latte
