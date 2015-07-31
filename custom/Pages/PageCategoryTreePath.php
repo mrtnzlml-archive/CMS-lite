@@ -34,6 +34,12 @@ class PageCategoryTreePath extends Nette\Object
 	 */
 	protected $depth;
 
+	/**
+	 * @ORM\Column(type="integer")
+	 * @var int
+	 */
+	protected $item_order = 0;
+
 	public function __construct(PageCategory $ancestor, PageCategory $descendant, $depth)
 	{
 		if (!is_numeric($depth)) {
