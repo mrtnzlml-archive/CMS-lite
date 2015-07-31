@@ -1,15 +1,16 @@
 <?php
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture implements DependentFixtureInterface
+class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 {
 
 	public function load(ObjectManager $manager)
 	{
 		$faker = Faker\Factory::create('cs_CZ');
-		for ($iterator = 0; $iterator < 6; $iterator++) {
+		for ($iterator = 0; $iterator < 50; $iterator++) {
 			$title = \Nette\Utils\Strings::firstUpper($faker->word);
 			$body = $faker->realText(500);
 			$page = new \Pages\Page;
@@ -32,11 +33,14 @@ class PagesFixture extends \Doctrine\Common\DataFixtures\AbstractFixture impleme
 			}
 			$page->setLocale($this->getReference('locale-cz'));
 
-			$nonLockingUniqueInserter = new \Kdyby\Doctrine\Tools\NonLockingUniqueInserter($manager);
-			$nonLockingUniqueInserter->persist($page);
+			$manager->persist($page);
 			$manager->flush();
 
-			$page->setUrl(\Url\RouteGenerator::generate(Nette\Utils\Strings::webalize($title), 'Pages:Page:default', $page->getId()));
+			$page->setUrl(\Url\RouteGenerator::generate(
+				Nette\Utils\Strings::webalize($title . ' - ' . $iterator), //fakePath
+				'Pages:Page:default', //destination
+				$page->getId() //internalId
+			));
 			$manager->flush();
 		}
 	}
