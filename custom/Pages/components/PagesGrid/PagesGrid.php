@@ -141,7 +141,7 @@ class PagesGrid extends AControl
 		}
 		$action = $values->actionBelow ?: $values->actionAbove;
 		if ($action === 'edit') {
-			$this->presenter->redirect(':Pages:AdminPage:multiEdit', [$multiEdit]);
+			$this->presenter->redirect(':Pages:Admin:Page:multiEdit', [$multiEdit]);
 		} elseif ($action === 'delete') {
 			$this->pageFacade->onRemove[] = function () {
 				$this->em->flush();

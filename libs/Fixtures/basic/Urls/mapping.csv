@@ -1,9 +1,9 @@
 auth,Auth:Sign:in
 odhlasit,Auth:Sign:out
 administrace/nastaveni/general,Options:Options:general
-administrace/editovat-stranku,Pages:AdminPage:edit
-administrace/editovat-stranky,Pages:AdminPage:multiEdit
-administrace/prilohy-stranky,Pages:AdminPage:attachments
+administrace/editovat-stranku,Pages:Admin:Page:edit
+administrace/editovat-stranky,Pages:Admin:Page:multiEdit
+administrace/prilohy-stranky,Pages:Admin:Page:attachments
 administrace/nastaveni/seo,Options:Options:seo
 nahled-stranky,Pages:Page:preview
 administrace/novy-uzivatel,Users:Users:new
@@ -11,3 +11,4 @@ administrace/editovat-uzivatele,Users:Users:edit
 protected-page,Pages:Page:protected
 administrace/vyhledavani,Search:Search:default
 administrace/nastaveni/opravneni,Options:Options:acl
+administrace/nova-kategorie,Pages:Admin:Category:new

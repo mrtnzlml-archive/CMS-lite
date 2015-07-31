@@ -12,7 +12,8 @@ class ResourcesFixture extends AbstractFixture implements DependentFixtureInterf
 		'Soubory' => 'Files:AdminFile',
 		'Navigace' => 'Navigation:Navigation',
 		'Nastavení' => 'Options:Options',
-		'Stránky' => 'Pages:AdminPage',
+		'Stránky' => 'Pages:Admin:Page',
+		'Kategorie' => 'Pages:Admin:Category',
 		'Vyhledávání' => 'Search:Search',
 		'Uživatelé' => 'Users:Users',
 	];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pages\Presenters;
+namespace Pages\AdminModule\Presenters;
 
 use App;
 use App\Components\Flashes\Flashes;
@@ -12,7 +12,7 @@ use Pages\Components\PageForm\IPageFormFactory;
 use Pages\Components\PagesGrid\IPagesGridFactory;
 use Pages\Page;
 
-class AdminPagePresenter extends App\AdminModule\Presenters\BasePresenter
+class PagePresenter extends App\AdminModule\Presenters\BasePresenter
 {
 
 	/** @var EntityManager */

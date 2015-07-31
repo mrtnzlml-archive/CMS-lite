@@ -9,10 +9,13 @@
 	subitems:
 		- name: Stránky
 		  path: administrace/stranky
-		  destination: Pages:AdminPage:default
+		  destination: Pages:Admin:Page:default
 		- name: Nová stránka
 		  path: administrace/nova-stranka
-		  destination: Pages:AdminPage:new
+		  destination: Pages:Admin:Page:new
+		- name: Kategorie
+		  path: administrace/kategorie
+		  destination: Pages:Admin:Category:default
 
 - name: Navigace
   icon: 'flaticon-compass44'
