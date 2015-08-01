@@ -12,6 +12,7 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  *
  * @method setName(string $name)
  * @method string getName()
+ * @method boolean getVirtual()
  */
 class PageCategory
 {
@@ -24,6 +25,12 @@ class PageCategory
 	 * @var string
 	 */
 	protected $name;
+
+	/**
+	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default": 0})
+	 * @var bool
+	 */
+	protected $virtual = FALSE;
 
 	/**
 	 * @ORM\Column(type="datetime", options={"comment":"Date of the page category creation"})
@@ -39,6 +46,12 @@ class PageCategory
 	public function getCreatedAt()
 	{
 		return $this->createdAt;
+	}
+
+	public function setVirtual($virtual = TRUE)
+	{
+		$this->virtual = $virtual;
+		return $this;
 	}
 
 }

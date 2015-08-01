@@ -46,6 +46,7 @@ class CategoryForm extends UI\Control
 		$form->addProtection();
 
 		$form->addText('name', 'Název kategorie:')->setRequired('Vyplňte prosím název kategorie.');
+		$form->addCheckbox('virtual', 'Virtuální kategorie'); //TODO: ->toggle
 
 		$form->addSubmit('send', 'Odeslat');
 		if ($this->categoryEntity->getName()) { //EDIT
@@ -54,16 +55,16 @@ class CategoryForm extends UI\Control
 		$form->onSuccess[] = function (UI\Form $form, ArrayHash $values) {
 			if ($this->categoryEntity->getName()) { //EDIT
 				$this->categoryEntity->setName($values->name);
+				$this->categoryEntity->setVirtual($values->virtual);
 				$this->em->persist($this->categoryEntity);
 				$this->em->flush($this->categoryEntity);
 				$this->presenter->flashMessage('Kategorie byla úspěšně upravena.', Flashes::FLASH_SUCCESS);
 				$this->presenter->redirect('default');
 			} else {
 				$category = $this->categoryProcess->createCategory($values->name);
-				if ($category) {
-					$this->presenter->flashMessage('Kategorie byla úspěšně vytvořena.', Flashes::FLASH_SUCCESS);
-					$this->presenter->redirect('edit', $category->id);
-				}
+				$category->setVirtual($values->virtual);
+				$this->presenter->flashMessage('Kategorie byla úspěšně vytvořena.', Flashes::FLASH_SUCCESS);
+				$this->presenter->redirect('edit', $category->id);
 			}
 		};
 		return $form;
@@ -73,6 +74,7 @@ class CategoryForm extends UI\Control
 	{
 		$form->setDefaults([
 			'name' => $category->getName(),
+			'virtual' => $category->getVirtual(),
 		]);
 	}
 
