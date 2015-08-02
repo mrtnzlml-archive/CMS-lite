@@ -11,3 +11,4 @@ services:
 	- App\AuthModule\Presenters\SignPresenter
 	- App\Extensions\Registrar
 	- App\Extensions\InstallHelper
+	cache.journal: Nette\Caching\Storages\FileJournal(%tempDir%) #FIXME: https://github.com/nette/caching/issues/28
