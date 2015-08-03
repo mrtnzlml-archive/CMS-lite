@@ -28,6 +28,7 @@ class CategoryPresenter extends BasePresenter
 		if (!$category) {
 			$this->error();
 		}
+		$this->template->category = $category;
 		$query = (new PagesQuery)->byCategoryId($id);
 		$this->template->pages = $this->em->getRepository(Page::class)->fetch($query);
 	}

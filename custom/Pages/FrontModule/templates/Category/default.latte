@@ -1,8 +1,22 @@
 {block content}
+	{block|texy}
+		{$category->textBefore}
+	{/block}
+
 	{foreach $pages as $page}
 		<a href="{plink $page->url->absoluteDestination, $page->url->internalId}">
 			<h2>{$page->title}</h2>
 		</a>
-		<p>{$page->body|truncate:1000}</p>
+		{$page->body|truncate:1000}
 	{/foreach}
+
+	{if !count($pages)}
+		<div class="alert alert-danger">
+			Tato kategorie neobsahuje žádné stránky.
+		</div>
+	{/if}
+
+	{block|texy}
+		{$category->textAfter}
+	{/block}
 {/block}
