@@ -16,7 +16,7 @@ class TinyControl extends Nette\Forms\Controls\TextArea
 	{
 		/** @var Nette\Forms\Controls\TextArea $control */
 		$control = parent::getControl();
-		$control->id = 'tinymceTextarea';
+		$control->class = 'tinymceTextarea';
 		return $control;
 	}
 

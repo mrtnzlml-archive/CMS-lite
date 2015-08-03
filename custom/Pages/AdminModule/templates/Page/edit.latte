@@ -6,15 +6,9 @@
 
 {block scripts}
 	{include parent}
-	{* FIXME: lépe (js:custom?) *}
-	<script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+	{* FIXME: lépe (js:admin) *}
 	<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
 	<script>
-		tinymce.init({
-			selector: '#tinymceTextarea',
-			language: 'cs'
-		});
-
 		$(function () {
 			$('#image-uploader').fineUploader({
 				//debug: true,
