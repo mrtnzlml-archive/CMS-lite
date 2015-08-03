@@ -12,7 +12,6 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  *      @ORM\Index(columns={"fake_path"})
  * })
  *
- * @method setFakePath(string $path)
  * @method string getFakePath()
  * @method setInternalId(integer $internalId)
  * @method integer getInternalId()
@@ -56,6 +55,11 @@ class Url
 	 * @var Url
 	 */
 	protected $redirectTo = NULL;
+
+	public function setFakePath($path)
+	{
+		$this->fakePath = trim($path, " \t\n\r\0\x0B/");
+	}
 
 	public function getDestination()
 	{
