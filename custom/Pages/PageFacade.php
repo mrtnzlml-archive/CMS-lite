@@ -123,7 +123,7 @@ class PageFacade extends Nette\Object
 	{
 		if ($page->getUrl() === NULL) { //URL doesn't exist
 			$page->setUrl(RouteGenerator::generate(
-				empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
+				empty($values->fakePath) ? Strings::webalize($values->title) : Strings::webalize($values->fakePath),
 				'Pages:Front:Page:default', $page->getId()
 			));
 			try {
@@ -135,10 +135,10 @@ class PageFacade extends Nette\Object
 		} else { //URL does exist, check if it's needed to create redirect
 			/** @var Url $oldUrl */
 			$oldUrl = $page->getUrl();
-			if ($values->slug !== $oldUrl->getFakePath()) {
+			if ($values->fakePath !== $oldUrl->getFakePath()) {
 				//We got new URL so we should create it and redirect the old one
 				$newUrl = RouteGenerator::generate(
-					empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
+					empty($values->fakePath) ? Strings::webalize($values->title) : Strings::webalize($values->fakePath),
 					'Pages:Front:Page:default', $page->getId()
 				);
 				$page->setUrl($newUrl);
