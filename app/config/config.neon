@@ -20,6 +20,10 @@ application:
 	errorPresenter: Error:Error
 	mapping:
 		*: App\*Module\Presenters\*Presenter
+	scanDirs:
+		- %appDir%
+		- %appDir%/../custom
+		- %appDir%/../libs
 
 
 di:

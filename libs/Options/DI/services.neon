@@ -3,5 +3,4 @@ services:
 	- Options\Components\GeneralForm\IGeneralFormFactory
 	- Options\Components\OptionsMenu\IOptionsMenuFactory
 	- Options\Components\SeoForm\ISeoFormFactory
-	- Options\Presenters\OptionsPresenter
 	- Options\OptionFacade(..., @antFileStorage)
