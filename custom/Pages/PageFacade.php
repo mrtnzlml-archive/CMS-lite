@@ -124,7 +124,7 @@ class PageFacade extends Nette\Object
 		if ($page->getUrl() === NULL) { //URL doesn't exist
 			$page->setUrl(RouteGenerator::generate(
 				empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
-				'Pages:Page:default', $page->getId()
+				'Pages:Front:Page:default', $page->getId()
 			));
 			try {
 				$this->em->flush($page);
@@ -139,7 +139,7 @@ class PageFacade extends Nette\Object
 				//We got new URL so we should create it and redirect the old one
 				$newUrl = RouteGenerator::generate(
 					empty($values->slug) ? Strings::webalize($values->title) : Strings::webalize($values->slug),
-					'Pages:Page:default', $page->getId()
+					'Pages:Front:Page:default', $page->getId()
 				);
 				$page->setUrl($newUrl);
 				try {

@@ -148,7 +148,7 @@ class Page implements ILocaleAware
 	protected $realAuthor;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", inversedBy="pages", cascade={"persist"})
 	 * @ORM\JoinTable(
 	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
 	 *        inverseJoinColumns={@ORM\JoinColumn(name="category")}

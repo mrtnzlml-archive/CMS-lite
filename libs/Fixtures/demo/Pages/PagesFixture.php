@@ -38,7 +38,7 @@ class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 
 			$page->setUrl(\Url\RouteGenerator::generate(
 				Nette\Utils\Strings::webalize($title . ' - ' . $iterator), //fakePath
-				'Pages:Page:default', //destination
+				'Pages:Front:Page:default', //destination
 				$page->getId() //internalId
 			));
 			$manager->flush();

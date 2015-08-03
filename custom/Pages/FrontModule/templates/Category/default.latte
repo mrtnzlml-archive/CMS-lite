@@ -1,0 +1,8 @@
+{block content}
+	{foreach $pages as $page}
+		<a href="{plink $page->url->absoluteDestination, $page->url->internalId}">
+			<h2>{$page->title}</h2>
+		</a>
+		<p>{$page->body|truncate:1000}</p>
+	{/foreach}
+{/block}

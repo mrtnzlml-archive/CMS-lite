@@ -35,6 +35,15 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 		return $this;
 	}
 
+	public function byCategoryId($id)
+	{
+		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($id) {
+			$qb->leftJoin('page.categories', 'categories')->addSelect('categories');
+			$qb->andWhere('categories.id = :category_id')->setParameter('category_id', $id);
+		};
+		return $this;
+	}
+
 	public function preview($pageId, $userId)
 	{
 		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($pageId, $userId) {

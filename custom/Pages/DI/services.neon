@@ -13,5 +13,5 @@ services:
 
 	# Presenters in DIC - TODO: přidávat automaticky
 	- Pages\AdminModule\Presenters\PagePresenter
-	- Pages\Presenters\PagePresenter
 	- Pages\AdminModule\Presenters\CategoryPresenter
+	- Pages\FrontModule\Presenters\PagePresenter

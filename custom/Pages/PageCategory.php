@@ -13,6 +13,8 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @method setName(string $name)
  * @method string getName()
  * @method boolean getVirtual()
+ * @method setUrl(\Url\Url $url)
+ * @method \Url\Url getUrl()
  */
 class PageCategory
 {
@@ -31,6 +33,23 @@ class PageCategory
 	 * @var bool
 	 */
 	protected $virtual = FALSE;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Page", mappedBy="categories", cascade={"persist"})
+	 * @ORM\JoinTable(
+	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+	 *        inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+	 *    )
+	 * @var Page[]|\Doctrine\Common\Collections\ArrayCollection
+	 */
+	protected $pages;
+
+	/**
+	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
+	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
+	 * @var \Url\Url
+	 */
+	protected $url;
 
 	/**
 	 * @ORM\Column(type="datetime", options={"comment":"Date of the page category creation"})

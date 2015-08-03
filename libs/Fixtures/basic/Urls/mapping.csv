@@ -5,10 +5,11 @@ administrace/editovat-stranku,Pages:Admin:Page:edit
 administrace/editovat-stranky,Pages:Admin:Page:multiEdit
 administrace/prilohy-stranky,Pages:Admin:Page:attachments
 administrace/nastaveni/seo,Options:Options:seo
-nahled-stranky,Pages:Page:preview
+nahled-stranky,Pages:Front:Page:preview
 administrace/novy-uzivatel,Users:Users:new
 administrace/editovat-uzivatele,Users:Users:edit
-protected-page,Pages:Page:protected
+protected-page,Pages:Front:Page:protected
 administrace/vyhledavani,Search:Search:default
 administrace/nastaveni/opravneni,Options:Options:acl
 administrace/editovat-kategorii,Pages:Admin:Category:edit
+kategorie,Pages:Front:Category:default

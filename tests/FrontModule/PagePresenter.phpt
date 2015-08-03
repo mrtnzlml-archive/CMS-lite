@@ -14,7 +14,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function __construct()
 	{
-		$this->openPresenter('Pages:Page:');
+		$this->openPresenter('Pages:Front:Page:');
 		$this->em = $this->getService(Kdyby\Doctrine\EntityManager::class);
 	}
 

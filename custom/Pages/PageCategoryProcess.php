@@ -65,6 +65,12 @@ class PageCategoryProcess extends Nette\Object
 			$this->em->flush($category);
 			$id = $category->getId();
 
+			$category->setUrl(\Url\RouteGenerator::generate( //FIXME: generovat pouze pokud neexistuje
+				Nette\Utils\Strings::webalize($name), //fakePath
+				'Pages:Front:Category:detail', //destination
+				$id //internalId
+			));
+
 			$leaf = new PageCategoryTreePath($category, $category, 0);
 			$this->em->persist($leaf);
 			$this->em->flush($leaf);

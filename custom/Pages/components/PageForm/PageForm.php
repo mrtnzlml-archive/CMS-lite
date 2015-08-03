@@ -207,7 +207,7 @@ class PageForm extends AControl
 			return NULL;
 		}
 		if ($preview) {
-			$this->presenter->redirect(':Pages:Page:preview', $entity->id);
+			$this->presenter->redirect(':Pages:Front:Page:preview', $entity->id);
 		}
 		return $entity;
 	}

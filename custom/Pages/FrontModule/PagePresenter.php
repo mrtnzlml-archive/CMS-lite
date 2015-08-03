@@ -1,6 +1,6 @@
 <?php
 
-namespace Pages\Presenters;
+namespace Pages\FrontModule\Presenters;
 
 use App\Components\Flashes\Flashes;
 use App\FrontModule\Presenters\BasePresenter;
@@ -13,7 +13,6 @@ use Pages\OpenGraph;
 use Pages\Page;
 use Pages\Query\PagesQuery;
 use Pages\Query\PagesQueryAdmin;
-
 
 class PagePresenter extends BasePresenter
 {
