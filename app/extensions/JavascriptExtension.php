@@ -3,6 +3,7 @@
 namespace App\Extensions;
 
 use App\Components\Js\IJsFactory;
+use App\Components\Js\Providers\IJsAdminProvider;
 use App\Components\Js\Providers\IJsProvider;
 use Nette;
 
@@ -28,7 +29,28 @@ class JavascriptExtension extends Nette\DI\CompilerExtension
 					}
 				}
 			} else {
-				throw new Nette\InvalidArgumentException(sprintf('Scripts must be in array or traversable object, %s given.', gettype($scripts)));
+				throw new Nette\InvalidArgumentException(
+					sprintf('Scripts must be in array or traversable object, %s given.', gettype($scripts))
+				);
+			}
+		}
+
+		/** @var IJsAdminProvider $extension */
+		foreach ($this->compiler->getExtensions(IJsAdminProvider::class) as $extension) {
+			$definition = $cb->getDefinition($cb->getByType(IJsFactory::class));
+			$scripts = $extension->getJsAdminScripts();
+			if ($scripts instanceof \Traversable || is_array($scripts)) {
+				foreach ($extension->getJsAdminScripts() as $key => $script) {
+					if (Nette\Utils\Validators::isUrl($script)) {
+						$definition->addSetup('addExternalAdminScript', [$script]);
+					} else {
+						$definition->addSetup('addAdminScript', [$script]);
+					}
+				}
+			} else {
+				throw new Nette\InvalidArgumentException(
+					sprintf('Scripts must be in array or traversable object, %s given.', gettype($scripts))
+				);
 			}
 		}
 	}
