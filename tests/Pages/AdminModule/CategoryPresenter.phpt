@@ -1,11 +1,16 @@
 <?php
 
-require __DIR__ . '/../bootstrap.php';
+namespace Tests\Pages\AdminModule;
+
+use Kdyby;
+use Pages\PageCategory;
+
+require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @testCase
  */
-class PagePresenter extends \PresenterTestCase
+class CategoryPresenter extends \PresenterTestCase
 {
 
 	/** @var Kdyby\Doctrine\EntityManager */
@@ -19,7 +24,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function setUp()
 	{
-		$this->openPresenter('Pages:AdminPage:');
+		$this->openPresenter('Pages:Admin:Category:');
 		$this->logIn(1, 'superadmin'); //TODO: lépe (?)
 	}
 
@@ -53,7 +58,7 @@ class PagePresenter extends \PresenterTestCase
 
 	public function testRenderEmptyEditRedirect()
 	{
-		$this->checkRedirect('edit', '/administrace/nova-stranka');
+		$this->checkRedirect('edit', '/administrace/nova-kategorie');
 	}
 
 	/**
@@ -61,20 +66,20 @@ class PagePresenter extends \PresenterTestCase
 	 */
 	public function testRenderEdit($param, $value)
 	{
-		/** @var \Pages\Page $page */
-		$page = $this->em->getRepository(\Pages\Page::class)->findOneBy([]);
+		/** @var PageCategory $category */
+		$category = $this->em->getRepository(PageCategory::class)->findOneBy([]);
 		$this->checkAction('edit', [
-				'id' => $page->getId(),
+				'id' => $category->getId(),
 			] + [$param => $value]);
 	}
 
 	public function testRenderEditMissingId()
 	{
-		$this->checkRedirect('edit', '/administrace/nova-stranka', [
+		$this->checkRedirect('edit', '/administrace/nova-kategorie', [
 			'id' => 'missing'
 		]);
 	}
 
 }
 
-(new PagePresenter())->run();
+(new CategoryPresenter())->run();

@@ -42,7 +42,7 @@ class PagePresenter extends \PresenterTestCase
 	{
 		Tester\Assert::exception(function () {
 			$this->checkAction('default', [
-				'slug' => md5('this-slug-probably-does-not-exist'),
+				'fakePath' => md5('this-fake-path-probably-does-not-exist'),
 			]);
 		}, Nette\Application\BadRequestException::class, 'Page not found.');
 	}

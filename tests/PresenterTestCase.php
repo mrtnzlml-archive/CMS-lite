@@ -54,11 +54,7 @@ class PresenterTestCase extends Tester\TestCase
 		$em = $container->getByType(\Kdyby\Doctrine\EntityManager::class);
 
 		$schemaTool = new Doctrine\ORM\Tools\SchemaTool($em);
-		try {
-			$schemaTool->createSchema($em->getMetadataFactory()->getAllMetadata());
-		} catch (\Doctrine\ORM\Tools\ToolsException $exc) {
-			$schemaTool->updateSchema($em->getMetadataFactory()->getAllMetadata());
-		}
+		$schemaTool->createSchema($em->getMetadataFactory()->getAllMetadata());
 
 		$application = $container->getByType(Kdyby\Console\Application::class);
 		$application->run(new \Symfony\Component\Console\Input\ArrayInput([
@@ -66,6 +62,8 @@ class PresenterTestCase extends Tester\TestCase
 			'--no-interaction' => TRUE,
 			'--demo' => TRUE,
 		]), new \Kdyby\Console\StringOutput());
+
+		\Tracy\Debugger::log('DB created');
 	}
 
 }

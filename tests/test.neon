@@ -1,2 +1,7 @@
 services:
 	authorizator: AuthorizatorMock
+
+
+#doctrine:
+#	driver: pdo_sqlite
+#	memory: yes
