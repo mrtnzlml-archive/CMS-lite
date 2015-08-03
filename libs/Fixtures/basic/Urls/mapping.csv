@@ -12,4 +12,3 @@ protected-page,Pages:Front:Page:protected
 administrace/vyhledavani,Search:Search:default
 administrace/nastaveni/opravneni,Options:Options:acl
 administrace/editovat-kategorii,Pages:Admin:Category:edit
-kategorie,Pages:Front:Category:default
