@@ -55,8 +55,12 @@ class PageForm extends AControl
 	/** @var RedirectFacade */
 	private $redirectFacade;
 
-	public function __construct($editablePage, PageFacade $pageFacade, EntityManager $em, RedirectFacade $redirectFacade)
-	{
+	public function __construct(
+		$editablePage,
+		PageFacade $pageFacade,
+		EntityManager $em,
+		RedirectFacade $redirectFacade
+	) {
 		if ($editablePage === NULL) { //NEW
 			$editablePage = new Page;
 			$this->edit = FALSE;
@@ -122,7 +126,8 @@ class PageForm extends AControl
 		$form = new UI\Form;
 		$form->addProtection();
 		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
-		$form->addText('slug', 'URL stránky:');
+		$form->addText('fakePath', 'URL stránky:')
+			->addRule(\App\Validator::FAKE_PATH, 'URL cesta může obsahovat pouze písmena, čísla, lomítko a pomlčku.');
 		$form->addTinyMCE('editor', NULL)
 			->setRequired('Je zapotřebí napsat nějaký text.');
 
@@ -303,7 +308,7 @@ class PageForm extends AControl
 			$e = $this->editablePage;
 			$form->setDefaults([
 				'title' => $e->getTitle(),
-				'slug' => $e->getUrl() ? $e->getUrl()->getFakePath() : '',
+				'fakePath' => $e->getUrl() ? $e->getUrl()->getFakePath() : '',
 				'editor' => $e->getBody(),
 				'authors' => $e->getAuthorsIds(),
 				'categories' => $e->getCategoriesIds(),
