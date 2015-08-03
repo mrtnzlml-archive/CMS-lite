@@ -3,3 +3,4 @@ services:
 	- Url\RedirectFacade
 	- Url\RouteGenerator
 	- Url\Components\RedirectForm\IRedirectFormFactory
+	- Url\AntPanel

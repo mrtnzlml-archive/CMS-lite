@@ -29,4 +29,15 @@ class UrlExtension extends Nette\DI\CompilerExtension implements IEntityProvider
 		];
 	}
 
+
+	public function afterCompile(Nette\PhpGenerator\ClassType $generatedContainer)
+	{
+		$cb = $this->getContainerBuilder();
+		$initialize = $generatedContainer->getMethod('initialize');
+
+		$initialize->addBody($cb->formatPhp('?;', [
+			new Nette\DI\Statement('@Tracy\Bar::addPanel', [new Nette\DI\Statement('Url\AntPanel')])
+		]));
+	}
+
 }
