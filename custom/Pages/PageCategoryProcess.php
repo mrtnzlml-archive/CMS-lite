@@ -67,7 +67,7 @@ class PageCategoryProcess extends Nette\Object
 
 			$category->setUrl(\Url\RouteGenerator::generate( //FIXME: generovat pouze pokud neexistuje
 				Nette\Utils\Strings::webalize($name), //fakePath
-				'Pages:Front:Category:detail', //destination
+				'Pages:Front:Category:default', //destination
 				$id //internalId
 			));
 
