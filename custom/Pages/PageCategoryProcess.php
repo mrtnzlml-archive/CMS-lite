@@ -26,7 +26,7 @@ class PageCategoryProcess extends Nette\Object
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($categoryId)));
 		}
 		$query = $this->em->getRepository(Category::class)->createQuery('
-			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
+			SELECT NEW CategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
 			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.descendant)
 			WHERE tree.ancestor = ?1
 		');
@@ -40,7 +40,7 @@ class PageCategoryProcess extends Nette\Object
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($categoryId)));
 		}
 		$query = $this->em->getRepository(Category::class)->createQuery('
-			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
+			SELECT NEW CategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
 			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.ancestor)
 			WHERE tree.descendant = ?1
 		');

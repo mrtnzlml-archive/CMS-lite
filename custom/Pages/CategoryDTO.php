@@ -4,7 +4,7 @@ namespace Pages;
 
 use Nette;
 
-class PageCategoryDTO extends Nette\Object
+class CategoryDTO extends Nette\Object
 {
 
 	protected $categoryId;
