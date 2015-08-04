@@ -41,6 +41,7 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 
 			$qb->innerJoin('page.pageCategories', 'ppc')->addSelect('ppc');
 			$qb->innerJoin('ppc.category', 'categories')->addSelect('categories');
+			$qb->addOrderBy('ppc.pageOrder', 'ASC');
 
 			$qb->andWhere('categories.id = :category_id')->setParameter('category_id', $id);
 		};
@@ -74,6 +75,7 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 
 			$qb->innerJoin('page.pageCategories', 'ppc')->addSelect('ppc');
 			$qb->innerJoin('ppc.category', 'categories')->addSelect('categories');
+			$qb->addOrderBy('ppc.pageOrder', 'ASC');
 
 			if ($category_id !== NULL) {
 				$qb->leftJoin('page.categories', 'cx');
