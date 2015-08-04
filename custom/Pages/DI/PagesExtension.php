@@ -2,7 +2,7 @@
 
 namespace Pages\DI;
 
-use App\Components\Js\Providers\IJsProvider;
+use App\Components\Js\Providers\IJsAdminProvider;
 use App\Extensions\CompilerExtension;
 use App\Extensions\Extension;
 use App\Extensions\ICustomExtension;
@@ -10,7 +10,7 @@ use Kdyby;
 use Kdyby\Doctrine\DI\IEntityProvider;
 use Nette;
 
-class PagesExtension extends CompilerExtension implements IEntityProvider, IJsProvider, ICustomExtension
+class PagesExtension extends CompilerExtension implements IEntityProvider, IJsAdminProvider, ICustomExtension
 {
 
 	public function getExtensionInfo()
@@ -42,9 +42,8 @@ class PagesExtension extends CompilerExtension implements IEntityProvider, IJsPr
 		];
 	}
 
-	public function getJsScripts()
+	public function getJsAdminScripts()
 	{
-		//TODO: bude potřeba celé toto přidávání vyřešit lépe (záleží na pořadí)
 		yield __DIR__ . '/../assets/grid.js';
 	}
 
