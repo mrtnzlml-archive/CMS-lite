@@ -23,8 +23,16 @@ class FineUploader extends Object
 	function __construct(OptionFacade $optionFacade)
 	{
 		$this->optionFacade = $optionFacade;
-		$sizeLimit = min((int)$optionFacade->getOption('upload_max_filesize'), $this->toBytes(ini_get('upload_max_filesize')));
+		$sizeLimit = min(
+			(int)$optionFacade->getOption('upload_max_filesize'),
+			$this->toBytes(ini_get('upload_max_filesize'))
+		);
 		$this->sizeLimit = $sizeLimit;
+	}
+
+	public function getSizeLimit()
+	{
+		return $this->sizeLimit;
 	}
 
 	public function setAllowedExtensions(array $allowedExtensions)
@@ -85,7 +93,8 @@ class FineUploader extends Object
 	 * Process the upload.
 	 *
 	 * @param string $uploadDirectory Target directory.
-	 * @param string $name Overwrites the name of the file.
+	 * @param string|null $name Overwrites the name of the file.
+	 * @return array
 	 */
 	public function handleUpload($uploadDirectory, $name = NULL)
 	{
@@ -208,8 +217,7 @@ class FineUploader extends Object
 		$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 		$tokens = explode('/', $url);
 		$uuid = $tokens[sizeof($tokens) - 1];
-		$target = join(DIRECTORY_SEPARATOR, [$targetFolder, $uuid]);
-		// print_r($target);
+		$target = implode(DIRECTORY_SEPARATOR, [$targetFolder, $uuid]);
 		if (is_dir($target)) {
 			$this->removeDir($target);
 			return ["success" => TRUE, "uuid" => $uuid];
@@ -228,6 +236,7 @@ class FineUploader extends Object
 	 *
 	 * @param string $uploadDirectory Target directory
 	 * @param string $filename The name of the file to use.
+	 * @return bool|string
 	 */
 	protected function getUniqueTargetPath($uploadDirectory, $filename)
 	{
@@ -305,6 +314,7 @@ class FineUploader extends Object
 	 * Converts a given size with units to bytes.
 	 *
 	 * @param string $str
+	 * @return int|string
 	 */
 	protected function toBytes($str)
 	{
@@ -331,6 +341,7 @@ class FineUploader extends Object
 	 * otherwise, it checks additionally for executable status (like before).
 	 *
 	 * @param string $directory The target directory to test access
+	 * @return bool
 	 */
 	protected function isInaccessible($directory)
 	{
