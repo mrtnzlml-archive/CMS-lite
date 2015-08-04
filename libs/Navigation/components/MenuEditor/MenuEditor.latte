@@ -6,9 +6,10 @@
 	{define submenu}
 		<ol class="dd-list">
 			{foreach $menuItems as $menuItem}
-				<li class="dd-item" data-id="{$menuItem->id}">
+				{?$entity = $menuItem->entity}
+				<li class="dd-item" data-id="{$entity->id}">
 					<div class="dd-handle">
-						{$menuItem->name}
+						{$entity->name}
 					</div>
 					{ifset $menuItem->descendants}
 						{include this, menuItems => $menuItem->descendants}

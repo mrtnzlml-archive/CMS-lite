@@ -21,7 +21,9 @@ $(function () {
 function initialize() {
 
 	//FIXME: možná také odesílat až po kliknutí na uložit, aby nedocházalo k nechtěným změnám na produkci
-	$('.dd').nestable().on('change', function (event) {
+	$('.dd').nestable({
+		maxDepth: 100
+	}).on('change', function (event) {
 		var list = event.length ? event : $(event.target);
 		var output = list.data('output');
 		var data = {};

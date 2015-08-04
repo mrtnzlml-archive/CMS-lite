@@ -4,15 +4,17 @@
 
 			{define submenu}
 				<ul class="dropdown-menu subMenu" role="menu">
-					<li n:foreach="$menuItems as $menuItem"
-					    n:class="$menuItem->url ? ($presenter->isLinkCurrent($menuItem->url->absoluteDestination) ? 'active')">
-						<a {if $menuItem->externalUrl}
-							href="{$menuItem->externalUrl}"
-						{elseif $menuItem->url}
-							href="{plink $menuItem->url->absoluteDestination}"
-						{/if}
-								n:class="$menuItem->url ? ($presenter->isLinkCurrent($menuItem->url->absoluteDestination) ? 'active')">{$menuItem->name}</a>
-					</li>
+					{foreach $menuItems as $menuItem}
+						{?$entity = $menuItem->entity}
+						<li n:class="$entity->url ? ($presenter->isLinkCurrent($entity->url->absoluteDestination) ? 'active')">
+							<a {if $entity->externalUrl}
+								href="{$entity->externalUrl}"
+							{elseif $entity->url}
+								href="{plink $entity->url->absoluteDestination}"
+							{/if}
+									n:class="$entity->url ? ($presenter->isLinkCurrent($entity->url->absoluteDestination) ? 'active')">{$entity->name}</a>
+						</li>
+					{/foreach}
 				</ul>
 			{/define}
 

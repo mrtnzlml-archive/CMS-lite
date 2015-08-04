@@ -32,7 +32,9 @@ class NavigationFacade extends Nette\Object
 	public function getItemTreeBelow($itemId)
 	{
 		if (!is_numeric($itemId)) {
-			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($itemId)));
+			throw new Nette\InvalidArgumentException(
+				sprintf('Category ID should be numeric, %s given.', gettype($itemId))
+			);
 		}
 		//FIXME: toto se musí trošku předělat (přiJOIN url adresy) a cache (?)
 		$query = $this->em->getRepository(NavigationItem::class)->createQuery('
@@ -49,14 +51,25 @@ class NavigationFacade extends Nette\Object
 		$nodes = [];
 		foreach ($menuItems as $menuItem) {
 			$nodes[$menuItem[2]]['entity'] = $menuItem[0];
+			$nodes[$menuItem[2]]['ancestor'] = (int)$menuItem[1];
 		}
-		//TODO: další úrovně zanoření a pořadí prvků
-		foreach ($menuItems as $menuItem) {
-			if (array_key_exists($menuItem[1], $nodes)) {
-				$nodes[$menuItem[1]]['descendants'][$menuItem[2]] = $menuItem[0];
-				unset($nodes[$menuItem[2]]);
+
+		$createTree = function (&$nodes) {
+			//Check
+			foreach ($nodes as $entity_id => $node_info) {
+				if (array_key_exists($node_info['ancestor'], $nodes)) {
+					$nodes[$node_info['ancestor']]['descendants'][$entity_id] = $node_info;
+				}
 			}
-		}
+			//And stack
+			foreach ($nodes as $entity_id => $node_info) {
+				if (array_key_exists($node_info['ancestor'], $nodes)) {
+					$nodes[$node_info['ancestor']]['descendants'][$entity_id] = $node_info;
+					unset($nodes[$entity_id]);
+				}
+			}
+		};
+		$createTree($nodes);
 
 		return Nette\Utils\ArrayHash::from($nodes);
 	}
