@@ -7,7 +7,7 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 use Pages\Page;
-use Pages\PageCategory;
+use Pages\Category;
 use Users\User;
 
 class MultiEdit extends UI\Control
@@ -41,7 +41,7 @@ class MultiEdit extends UI\Control
 			[NULL => 'Bez autora'] + $this->em->getRepository(User::class)->findPairs('email')
 		);
 		$form->addMultiSelect('categories', 'Kategorie:',
-			[NULL => 'Bez kategorie'] + $this->em->getRepository(PageCategory::class)->findPairs('name')
+			[NULL => 'Bez kategorie'] + $this->em->getRepository(Category::class)->findPairs('name')
 		);
 		$form->addSelect('index', 'Indexace stránky:', [ //FIXME: DRY
 			NULL => 'Výchozí',
@@ -76,8 +76,8 @@ class MultiEdit extends UI\Control
 			$page->clearCategories();
 			if (!in_array(NULL, $values->categories)) {
 				foreach ($values->categories as $categoryId) {
-					/** @var PageCategory $categoryRef */
-					$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
+					/** @var Category $categoryRef */
+					$categoryRef = $this->em->getPartialReference(Category::class, $categoryId);
 					$page->addCategory($categoryRef);
 				}
 			}

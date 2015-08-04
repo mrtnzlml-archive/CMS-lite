@@ -41,7 +41,6 @@ use Users\User;
  * @method string getPassword()
  *
  * @method addAuthor(User $author)
- * @method addCategory(PageCategory $category)
  * @method addFile(File $file)
  *
  * @method setRealAuthor(User $realAuthor)
@@ -148,14 +147,10 @@ class Page implements ILocaleAware
 	protected $realAuthor;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Pages\PageCategory", inversedBy="pages", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="page_id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="category")}
-	 * )
-	 * @var \Pages\PageCategory[]|ArrayCollection
+	 * @ORM\OneToMany(targetEntity="PageCategory", mappedBy="page", cascade={"persist"})
+	 * @var PageCategory[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
-	protected $categories;
+	protected $pageCategories;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="Pages\Tag", inversedBy="pages", cascade={"persist"})
@@ -201,7 +196,7 @@ class Page implements ILocaleAware
 	{
 		$this->createdAt = new \DateTime();
 		$this->authors = new ArrayCollection();
-		$this->categories = new ArrayCollection();
+		$this->pageCategories = new ArrayCollection();
 		$this->tags = new ArrayCollection();
 		$this->files = new ArrayCollection();
 		$this->openGraphs = new ArrayCollection();
@@ -260,6 +255,44 @@ class Page implements ILocaleAware
 		return $output;
 	}
 
+	///// CATEGORIES /////
+
+	public function addPageCategory(PageCategory $category)
+	{
+		if (!$this->pageCategories->contains($category)) {
+			$this->pageCategories->add($category);
+			$category->setPage($this);
+		}
+		return $this;
+	}
+
+	public function getCategories()
+	{
+		return array_map(
+			function ($pageCategory) {
+				return $pageCategory->category;
+			},
+			$this->pageCategories->toArray()
+		);
+	}
+
+	public function getCategoriesIds()
+	{
+		$categoriesIds = [];
+		/** @var PageCategory $category */
+		foreach ($this->getCategories() as $category) {
+			$categoriesIds[] = $category->getId();
+		}
+		return $categoriesIds;
+	}
+
+	public function clearCategories()
+	{
+		$this->categories->clear();
+	}
+
+	///// AUTHORS /////
+
 	public function getAuthorsIds()
 	{
 		$authorIds = [];
@@ -269,30 +302,18 @@ class Page implements ILocaleAware
 		return $authorIds;
 	}
 
-	public function getCategoriesIds()
+	public function clearAuthors()
 	{
-		$categoriesIds = [];
-		foreach ($this->categories as $category) {
-			$categoriesIds[] = $category->id;
-		}
-		return $categoriesIds;
+		$this->authors->clear();
 	}
+
+	///// TAGS /////
 
 	public function getTagsString()
 	{
 		return implode(',', array_map(function ($tag) {
 			return $tag->name;
 		}, $this->tags->toArray()));
-	}
-
-	public function clearAuthors()
-	{
-		$this->authors->clear();
-	}
-
-	public function clearCategories()
-	{
-		$this->categories->clear();
 	}
 
 	public function addTag(Tag $tag)
@@ -309,10 +330,14 @@ class Page implements ILocaleAware
 		$this->tags->removeElement($tag);
 	}
 
+	///// FILES ////
+
 	public function clearFiles()
 	{
 		$this->files->clear();
 	}
+
+	///// OPEN GRAPH /////
 
 	public function setOpenGraph(OpenGraph $og)
 	{

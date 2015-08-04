@@ -3,7 +3,7 @@
 namespace Tests\Pages\AdminModule;
 
 use Kdyby;
-use Pages\PageCategory;
+use Pages\Category;
 
 require __DIR__ . '/../../bootstrap.php';
 
@@ -66,8 +66,8 @@ class CategoryPresenter extends \PresenterTestCase
 	 */
 	public function testRenderEdit($param, $value)
 	{
-		/** @var PageCategory $category */
-		$category = $this->em->getRepository(PageCategory::class)->findOneBy([]);
+		/** @var Category $category */
+		$category = $this->em->getRepository(Category::class)->findOneBy([]);
 		$this->checkAction('edit', [
 				'id' => $category->getId(),
 			] + [$param => $value]);

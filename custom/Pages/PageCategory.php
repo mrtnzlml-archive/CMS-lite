@@ -2,25 +2,18 @@
 
 namespace Pages;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Files\File;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\MagicAccessors;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="page_categories")
+ * @ORM\Table(name="page_page_categories", uniqueConstraints={
+ *      @ORM\UniqueConstraint(columns={"page_id", "category_id"})
+ * })
  *
- * @method setName(string $name)
- * @method string getName()
- * @method setTextBefore(string $before)
- * @method setTextAfter(string $after)
- * @method boolean getVirtual()
- * @method setUrl(\Url\Url $url)
- * @method \Url\Url getUrl()
- *
- * @method addFile(File $file)
+ * @method setPageOrder(integer $order)
+ * @method integer getPageOrder()
  */
 class PageCategory
 {
@@ -29,76 +22,34 @@ class PageCategory
 	use MagicAccessors;
 
 	/**
-	 * @ORM\Column(type="text", options={"comment":"Name of the page category"})
-	 * @var string
+	 * @ORM\ManyToOne(targetEntity="Page", inversedBy="pageCategories", cascade={"persist"})
+	 * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+	 * @var Page
 	 */
-	protected $name;
+	protected $page;
 
 	/**
-	 * @ORM\Column(type="text", nullable=TRUE)
-	 * @var string
+	 * @ORM\ManyToOne(targetEntity="Category", inversedBy="pageCategories", cascade={"persist"})
+	 * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+	 * @var Category
 	 */
-	protected $textBefore;
+	protected $category;
 
 	/**
-	 * @ORM\Column(type="text", nullable=TRUE)
-	 * @var string
+	 * @ORM\Column(type="integer", options={"default": 0})
+	 * @var int
 	 */
-	protected $textAfter;
+	protected $pageOrder = 0;
 
-	/**
-	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default": 0})
-	 * @var bool
-	 */
-	protected $virtual = FALSE;
-
-	/**
-	 * @ORM\ManyToMany(targetEntity="Page", mappedBy="categories", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-	 *        inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
-	 *    )
-	 * @var Page[]|\Doctrine\Common\Collections\ArrayCollection
-	 */
-	protected $pages;
-
-	/**
-	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
-	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
-	 * @var \Url\Url
-	 */
-	protected $url;
-
-	/**
-	 * @ORM\ManyToMany(targetEntity="Files\File", cascade={"persist"})
-	 * @ORM\JoinTable(
-	 *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")},
-	 *      inverseJoinColumns={@ORM\JoinColumn(name="file_id", referencedColumnName="id", onDelete="CASCADE")}
-	 * )
-	 * @var \Files\File[]\Doctrine\Common\Collections\ArrayCollection
-	 */
-	protected $files;
-
-	/**
-	 * @ORM\Column(type="datetime", options={"comment":"Date of the page category creation"})
-	 * @var \DateTime
-	 */
-	private $createdAt;
-
-	public function __construct()
+	public function setPage(Page $page)
 	{
-		$this->createdAt = new \DateTime();
-		$this->files = new ArrayCollection();
+		$this->page = $page;
+		return $this;
 	}
 
-	public function getCreatedAt()
+	public function setCategory(Category $category)
 	{
-		return $this->createdAt;
-	}
-
-	public function setVirtual($virtual = TRUE)
-	{
-		$this->virtual = $virtual;
+		$this->category = $category;
 		return $this;
 	}
 

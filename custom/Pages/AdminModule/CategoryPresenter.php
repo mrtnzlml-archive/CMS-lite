@@ -6,7 +6,7 @@ use App;
 use Kdyby\Doctrine\EntityManager;
 use Pages\Components\CategoryForm\ICategoryFormFactory;
 use Pages\Components\CategoryGrid\ICategoryGridFactory;
-use Pages\PageCategory;
+use Pages\Category;
 
 class CategoryPresenter extends App\AdminModule\Presenters\BasePresenter
 {
@@ -26,7 +26,7 @@ class CategoryPresenter extends App\AdminModule\Presenters\BasePresenter
 		if (NULL === $id) {
 			$this->redirect('new');
 		}
-		if ($categoryEntity = $this->em->getRepository(PageCategory::class)->find($id)) {
+		if ($categoryEntity = $this->em->getRepository(Category::class)->find($id)) {
 			$this->categoryEntity = $categoryEntity;
 		} else {
 			$this->redirect('new');

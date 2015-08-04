@@ -38,7 +38,10 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 	public function byCategoryId($id)
 	{
 		$this->filter[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($id) {
-			$qb->leftJoin('page.categories', 'categories')->addSelect('categories');
+
+			$qb->innerJoin('page.pageCategories', 'ppc')->addSelect('ppc');
+			$qb->innerJoin('ppc.category', 'categories')->addSelect('categories');
+
 			$qb->andWhere('categories.id = :category_id')->setParameter('category_id', $id);
 		};
 		return $this;
@@ -68,7 +71,10 @@ class PagesQueryAdmin extends Kdyby\Doctrine\QueryObject
 	public function withCategories($category_id = NULL)
 	{
 		$this->select[] = function (Kdyby\Doctrine\QueryBuilder $qb) use ($category_id) {
-			$qb->leftJoin('page.categories', 'categories')->addSelect('categories');
+
+			$qb->innerJoin('page.pageCategories', 'ppc')->addSelect('ppc');
+			$qb->innerJoin('ppc.category', 'categories')->addSelect('categories');
+
 			if ($category_id !== NULL) {
 				$qb->leftJoin('page.categories', 'cx');
 				$qb->andWhere('cx = :cid')->setParameter('cid', (int)$category_id);

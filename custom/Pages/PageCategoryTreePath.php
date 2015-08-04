@@ -15,16 +15,16 @@ class PageCategoryTreePath extends Nette\Object
 	use Identifier;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="PageCategory", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Category", cascade={"persist"})
 	 * @ORM\JoinColumn(name="ancestor_id", referencedColumnName="id")
-	 * @var PageCategory
+	 * @var Category
 	 */
 	protected $ancestor;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="PageCategory", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Category", cascade={"persist"})
 	 * @ORM\JoinColumn(name="descendant_id", referencedColumnName="id")
-	 * @var PageCategory
+	 * @var Category
 	 */
 	protected $descendant;
 
@@ -40,7 +40,7 @@ class PageCategoryTreePath extends Nette\Object
 	 */
 	protected $item_order = 0;
 
-	public function __construct(PageCategory $ancestor, PageCategory $descendant, $depth)
+	public function __construct(Category $ancestor, Category $descendant, $depth)
 	{
 		if (!is_numeric($depth)) {
 			throw new Nette\InvalidArgumentException(sprintf('Depth should be numeric, %s given.', gettype($depth)));

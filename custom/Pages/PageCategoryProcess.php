@@ -25,8 +25,8 @@ class PageCategoryProcess extends Nette\Object
 		if (!is_numeric($categoryId)) {
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($categoryId)));
 		}
-		$query = $this->em->getRepository(PageCategory::class)->createQuery('
-			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\PageCategory c
+		$query = $this->em->getRepository(Category::class)->createQuery('
+			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
 			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.descendant)
 			WHERE tree.ancestor = ?1
 		');
@@ -39,8 +39,8 @@ class PageCategoryProcess extends Nette\Object
 		if (!is_numeric($categoryId)) {
 			throw new Nette\InvalidArgumentException(sprintf('Category ID should be numeric, %s given.', gettype($categoryId)));
 		}
-		$query = $this->em->getRepository(PageCategory::class)->createQuery('
-			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\PageCategory c
+		$query = $this->em->getRepository(Category::class)->createQuery('
+			SELECT NEW PageCategoryDTO(c.id, c.name, c.createdAt, tree.depth) FROM \Pages\Category c
 			LEFT JOIN \Pages\PageCategoryTreePath tree WITH (c.id = tree.ancestor)
 			WHERE tree.descendant = ?1
 		');
@@ -52,15 +52,15 @@ class PageCategoryProcess extends Nette\Object
 	 * @param $name
 	 * @param null $parent_id
 	 *
-	 * @return bool|PageCategory
+	 * @return bool|Category
 	 * @throws \Exception
 	 */
 	public function createCategory($name, $parent_id = NULL)
 	{
 		return $this->em->transactional(function () use ($name, $parent_id) {
 
-			/** @var PageCategory $category */
-			$category = (new PageCategory)->setName($name);
+			/** @var Category $category */
+			$category = (new Category)->setName($name);
 			$this->em->persist($category);
 			$this->em->flush($category);
 			$id = $category->getId();

@@ -5,7 +5,7 @@ namespace Pages\FrontModule\Presenters;
 use App\FrontModule\Presenters\BasePresenter;
 use Kdyby\Doctrine\EntityManager;
 use Pages\Page;
-use Pages\PageCategory;
+use Pages\Category;
 use Pages\Query\PagesQuery;
 
 class CategoryPresenter extends BasePresenter
@@ -24,7 +24,7 @@ class CategoryPresenter extends BasePresenter
 		if (NULL === $id) {
 			$this->redirect(':Front:Homepage:default');
 		}
-		$category = $this->em->getRepository(PageCategory::class)->find($id);
+		$category = $this->em->getRepository(Category::class)->find($id);
 		if (!$category) {
 			$this->error();
 		}

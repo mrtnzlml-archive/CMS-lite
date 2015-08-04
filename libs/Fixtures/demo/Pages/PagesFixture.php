@@ -10,7 +10,7 @@ class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 	public function load(ObjectManager $manager)
 	{
 		$faker = Faker\Factory::create('cs_CZ');
-		for ($iterator = 0; $iterator < 50; $iterator++) {
+		for ($iterator = 0; $iterator <= 50; $iterator++) {
 			$title = \Nette\Utils\Strings::firstUpper($faker->word);
 			$body = $faker->realText(500);
 			$page = new \Pages\Page;
@@ -22,17 +22,9 @@ class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 			if (rand(0, 1)) {
 				$page->addAuthor($this->getReference('demo-user'));
 			}
-			if (rand(0, 1)) {
-				$page->addCategory($this->getReference('page-category-1'));
-			}
-			if (rand(0, 1)) {
-				$page->addCategory($this->getReference('page-category-2'));
-			}
-			if (rand(0, 1)) {
-				$page->addCategory($this->getReference('page-category-3'));
-			}
 			$page->setLocale($this->getReference('locale-cz'));
 
+			$this->addReference('page-' . $iterator, $page);
 			$manager->persist($page);
 			$manager->flush();
 
@@ -41,6 +33,7 @@ class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 				'Pages:Front:Page:default', //destination
 				$page->getId() //internalId
 			));
+
 			$manager->flush();
 		}
 	}
@@ -49,7 +42,6 @@ class PagesFixture extends AbstractFixture implements DependentFixtureInterface
 	{
 		return [
 			\UsersFixture::class,
-			\PageCategoryFixture::class,
 		];
 	}
 

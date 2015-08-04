@@ -1,22 +1,46 @@
 <?php
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class PageCategoryFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
+class PageCategoryFixture extends AbstractFixture implements DependentFixtureInterface
 {
-
-	private $lastId = NULL;
 
 	public function load(ObjectManager $manager)
 	{
-		$faker = Faker\Factory::create('cs_CZ');
-		$process = new \Pages\PageCategoryProcess($manager);
+		for ($iterator = 0; $iterator <= 50; $iterator++) {
+			/** @var \Pages\Page $page */
+			$page = $this->getReference('page-' . rand(0, 50));
+			/** @var \Pages\Category $category */
+			$category = $this->getReference('category-' . rand(0, 10));
 
-		for ($iterator = 0; $iterator < 5; $iterator++) {
-			$category = $process->createCategory(\Nette\Utils\Strings::firstUpper($faker->word), $this->lastId);
-			$this->lastId = $category->getId();
-			$this->addReference('page-category-' . $iterator, $category);
+			$pageCategory = new \Pages\PageCategory;
+			$pageCategory->setPageOrder(rand(0, 10));
+
+			$page->addPageCategory($pageCategory);
+			$category->addPageCategory($pageCategory);
+
+			$duplication = $manager->getRepository(\Pages\PageCategory::class)->findBy([
+				'page' => $page,
+				'category' => $category,
+			]);
+			if ($duplication) {
+				$iterator--;
+				$manager->clear();
+				continue;
+			}
+
+			$manager->flush();
 		}
+	}
+
+	public function getDependencies()
+	{
+		return [
+			\PagesFixture::class,
+			\CategoryFixture::class,
+		];
 	}
 
 }

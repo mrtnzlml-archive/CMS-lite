@@ -7,7 +7,7 @@ use Carrooi\NoGrid\INoGridFactory;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
-use Pages\PageCategory;
+use Pages\Category;
 use Pages\Query\CategoryQuery;
 
 class CategoryGrid extends UI\Control
@@ -27,7 +27,7 @@ class CategoryGrid extends UI\Control
 		$this->gridFactory = $gridFactory;
 
 		$query = new CategoryQuery;
-		$categories = $this->em->getRepository(PageCategory::class)->fetch($query);
+		$categories = $this->em->getRepository(Category::class)->fetch($query);
 		$this->categories = $categories;
 	}
 
@@ -39,7 +39,7 @@ class CategoryGrid extends UI\Control
 	public function createComponentGrid()
 	{
 		$grid = $this->gridFactory->create(new DoctrineQueryObjectDataSource(
-			$this->em->getRepository(PageCategory::class),
+			$this->em->getRepository(Category::class),
 			new CategoryQuery
 		));
 		return $grid;

@@ -8,6 +8,7 @@ use Carrooi\NoGrid\INoGridFactory;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
+use Pages\Category;
 use Pages\Page;
 use Pages\PageFacade;
 use Pages\Query\PagesQueryAdmin;
@@ -93,7 +94,8 @@ class PagesGrid extends AControl
 		/** @var Page $page */
 		foreach ($this->pages as $page) {
 			$checkboxes->addCheckbox($page->id, NULL);
-			foreach ($page->categories as $category) { //FIXME: toto není moc pěkné
+			/** @var Category $category */
+			foreach ($page->getCategories() as $category) {
 				$categories[$category->getId()] = $category->getName();
 			}
 			foreach ($page->tags as $tag) { //FIXME: toto není moc pěkné

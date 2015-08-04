@@ -13,7 +13,7 @@ use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 use Pages\OpenGraph;
 use Pages\Page;
-use Pages\PageCategory;
+use Pages\Category;
 use Pages\PageFacade;
 use Pages\Tag;
 use Url\Components\RedirectForm\IRedirectFormFactory;
@@ -139,7 +139,7 @@ class PageForm extends AControl
 
 		$form->addMultiSelect('categories', 'Kategorie:',
 			[NULL => 'Bez kategorie'] +
-			$this->em->getRepository(PageCategory::class)->findPairs('name')
+			$this->em->getRepository(Category::class)->findPairs('name')
 		);
 
 		// ADVANCED:
@@ -260,8 +260,8 @@ class PageForm extends AControl
 		$entity->clearCategories();
 		if (!in_array(NULL, $values->categories)) {
 			foreach ($values->categories as $categoryId) {
-				/** @var PageCategory $categoryRef */
-				$categoryRef = $this->em->getPartialReference(PageCategory::class, $categoryId);
+				/** @var Category $categoryRef */
+				$categoryRef = $this->em->getPartialReference(Category::class, $categoryId);
 				$entity->addCategory($categoryRef);
 			}
 		}
