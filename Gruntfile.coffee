@@ -6,7 +6,7 @@ module.exports = (grunt) ->
         files:
           'temp/grunt/admin.css': [
             'vendor/selectize/dist/less/selectize.default.less'
-            'vendor-client/admin/style.less'
+            'vendor-client/admin/assets/less/style.less'
             'vendor-client/admin/nestable.css'
           ]
       front:
@@ -22,8 +22,10 @@ module.exports = (grunt) ->
         files:
           'www/css/admin.min.css': [
             'temp/grunt/admin.css'
-            'vendor-client/admin/aicons/styles.css'
-            'vendor-client/admin/aicons/flaticon.css'
+            'vendor-client/admin/assets/css/ant-icons-content.css'
+            'vendor-client/admin/assets/css/bootstrap-tagsinput.css'
+            'vendor-client/admin/media/aicons/styles.css'
+            'vendor-client/admin/media/aicons/flaticon.css'
           ]
       front:
         files:
@@ -37,13 +39,11 @@ module.exports = (grunt) ->
         files:
           'www/js/admin.min.js': [# TODO: minimalizovat potřebu JS
             'vendor/jquery/dist/jquery.js'
-            'vendor/bootstrap/js/bootstrap.js'
+            'vendor/bootstrap/dist/js/bootstrap.js'
             'vendor/bootstrap/js/tooltip.js'
             'vendor/nette.ajax.js/nette.ajax.js'
             'vendor/nette/forms/src/assets/netteForms.js'
             'vendor/selectize/dist/js/standalone/selectize.js'
-            'vendor-client/modules/flexslider/2_2/js/jquery.flexslider-min.js'
-            'vendor-client/modules/pretty_photo/js/jquery.prettyPhoto.js'
             'vendor-client/html5shiv.min.js'
             'vendor-client/respond.min.js'
             'vendor-client/jquery.nestable.js'
@@ -61,7 +61,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           flatten: true
-          src: 'vendor-client/admin/aicons/fonts/*'
+          src: 'vendor-client/admin/media/aicons/fonts/*'
           dest: 'www/css/fonts/'
         ,
           expand: true

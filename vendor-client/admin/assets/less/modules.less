@@ -1,0 +1,301 @@
+
+/* hlavicka web*/
+
+.webInfo{
+  max-width: 400px;
+  margin-left: 11px;
+  padding-top: 22px;
+  position: relative;
+
+  .open-nav{
+    color: @brand-primary;
+    font-size: 30px;
+    margin-right: 12px;
+    cursor: pointer;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+
+  > p{
+    line-height: 125%;
+  }
+
+}
+
+.userInfo{
+
+  color: @brand-primary;
+  padding-right: 20px;
+  padding-top: 21px;
+  padding-bottom: 20px;
+  
+  span.ico:before{
+    .rotate90;
+    display: inline-block;
+   font-size: 10px;
+    margin-left: 15px;
+  }
+
+  .cont{
+
+    background: #fff;
+    position: absolute;
+    top: 75px;
+    z-index: 6;
+    color: #2d3644;;
+    min-width:174px;
+    border-radius: 5px;
+    padding: 20px 27px 20px 18px;
+    .box-shadow(0px 0px 65px -10px #bbb);
+    visibility:hidden;
+    opacity:0;
+    transition:visibility 0s linear 0.3s,opacity 0.3s linear;
+
+    ul{
+      list-style: none;
+
+      li{
+        margin-bottom: 18px;
+
+        a{
+          color: #2d3644;
+          display: inline-block;
+
+        }
+      }
+      
+      li:before{
+        font-family: Flaticon;
+        content: "\e014";
+        margin-right: 10px;
+        font-size:10px;
+        .seda;
+      }
+
+    }
+
+
+    &:after{
+      position: absolute;
+      top: -8px;
+      left: 80px;
+      display: inline-block;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #fff;
+      content: " ";
+
+    }
+
+  }
+
+  &:hover{
+    color: @brand-secondary;
+    
+    .badge-def{
+      background: @brand-secondary;
+    }
+
+    .cont{
+      visibility:visible;
+      opacity:1;
+      transition-delay:0s;
+    }
+
+  }
+  
+
+}
+
+.langSet{
+  float: right;
+  margin-right: 31px;
+  margin-top: 21px;
+  
+  select{
+    height: 39px;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    padding-left: 10px;
+  }
+}
+
+.searchWrap{
+  margin-top: 12px;
+
+
+  input[type=text]{
+    border-right: 0px;
+    font-size: @font-size-default;
+  }
+
+  button{
+    background: none;
+    color: #000;
+    border: 1px solid #e6e6e6;
+    border-left: 0px;
+    height: 39px;
+
+    .glyphicon{
+      font-size: 17px;
+    }
+
+    &:hover{
+      background: @brand-secondary;
+      color: #fff;
+
+    }
+  }
+
+}
+
+/* end hlavicka*/
+
+/* vypis stranek */
+
+.pageTitle  .controlButtons {
+
+}
+
+.dashboard-header .ico,
+.controlButtons .btn ¸.ico {
+  color:white;
+}
+
+.overview .item{
+
+  font-size:13px;
+  margin-right: 20px;
+
+}
+
+/*tabulka výpisu*/
+
+td a.nazevClanku {
+  .bold;
+}
+
+.noPublic td a.nazevClanku {text-decoration: line-through;}
+.tdCheck           {width:30px;}
+.settings          {visibility:hidden;  }
+tr:hover .settings {visibility:visible;}
+
+.add {
+  .fr;
+  text-align:right;
+  margin-top:-15px;
+}
+
+/* end vypis stranek */
+
+
+
+/* detail stranky */
+
+#popis {
+  width:100%;
+  height:250px;
+  margin-top:5px;
+  margin-bottom:15px;
+}
+
+
+/* end detail stranky */
+
+
+
+
+/* tips v zahlavi*/
+
+#tipsContent{
+  padding: 20px;
+  background: @brand-primary;
+  border-radius: 3px;
+  max-width: 358px;
+  color: #fff;
+  position: absolute;
+  z-index: 5;
+  text-align: center;
+  top: 77px;
+  right: -251px;
+  display: none;
+
+  a{
+    color: #fff;
+  }
+  
+  p{
+    line-height: 180%;
+  }
+
+  .btnBorder {
+    .num {
+      margin-left: -14px;
+      vertical-align: top;
+      margin-right: 5px;
+    }
+
+    &.ico:before{
+      font-size: 26px;
+      vertical-align: middle;
+      margin: 5px 0px;
+      display: inline-block;
+    }
+
+  }
+}
+
+
+#tipsContent:after{
+  position: absolute;
+  top: -8px;
+  left: 78px;
+  display: inline-block;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid @brand-primary;
+  content: " ";
+}
+
+/* end content tips v zahlavi*/
+
+/* helpBtns v dolni casti napoveda/problem*/
+
+.helpBtns{
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  
+  a{
+    background: @brand-primary;
+    color: #fff;
+    height:39px;
+    line-height:39px ;
+    padding: 0px 15px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: -1px;
+    border-right: 1px solid #555c67;
+    
+    span.text{
+      margin-left: 10px;
+      display: inline-block;
+    }
+    
+    span.ico:before{
+      font-weight: normal;
+      font-size: 16px;
+      vertical-align: middle;
+    
+    }
+    
+    &:hover{
+      background: @brand-secondary;
+      text-decoration: none;
+    }
+  }
+}
+
+/* end helpBtns v dolni casti napoveda/problem*/

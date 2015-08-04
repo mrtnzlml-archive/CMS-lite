@@ -1,15 +1,152 @@
-{form pageForm, onsubmit => 'cleanPageLocationStorage()'}
-	<h3>Základní obsah</h3>
+{form pageForm} {*onsubmit => 'cleanPageLocationStorage()'*}
 	<ul class="alert alert-danger" n:if="$form->errors">
 		<li n:foreach="$form->errors as $error">{$error}</li>
 	</ul>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label title /}
-				{input title, class => "form-control", data-slug-to => "slug"}
+	<div class="row padding20">
+		<div class="col-lg-9">
+			<div class="row">
+				{input title, class => "form-control input-lg", data-slug-to => "slug", placeholder => "Zadejte nadpis stránky"}
+				<div class="cleaner"></div>
+				<div id="url-adresa " class="ml10 mt10">Adresa stránky: http://www.domena.cz/kategorie/url-stranky</div>
+				<div class="cleaner"></div>
+
+				<div class="mt20 mb20 ml10">
+					<a class="mr10" role="button" data-toggle="collapse" href="#kratky_nazev_colapsed"
+					   aria-expanded="false"
+					   aria-controls="collapseExample">Krátký název</a>
+					<a class="mr10" href="">Titulek (54)</a>
+					<a class="mr10" href="">Stručný popis (230)</a>
+					<a class="mr10" role="button" data-toggle="collapse" href="#poznamka_colapsed" aria-expanded="false"
+					   aria-controls="collapseExample">Poznámka</a>
+
+					<div class="collapse mt10" id="kratky_nazev_colapsed">
+						<input type="text" class="form-control input-lg" placeholder="doplňte krátký název"/>
+					</div>
+					<div class="collapse mt10" id="poznamka_colapsed">
+						<input type="text" class="form-control input-lg" placeholder="Poznámka"/>
+					</div>
+				</div>
+
+				<div class="mt20">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#obsah" aria-controls="obsah" role="tab"
+						                                          data-toggle="tab">Základní obsah</a></li>
+						<li role="presentation"><a href="#rozsirene" aria-controls="rozsirene" role="tab"
+						                           data-toggle="tab">Rozšířené</a>
+						</li>
+						<li role="presentation"><a href="#optimalizace" aria-controls="optimalizace" role="tab"
+						                           data-toggle="tab">Optimalizace</a></li>
+						<li role="presentation"><a href="#socialni-site" aria-controls="socialni-site" role="tab"
+						                           data-toggle="tab">Sociální sítě</a></li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+
+						<!-- Tab obsah -->
+						<div role="tabpanel" class="tab-pane active" id="obsah">
+							{input editor}
+
+							<div class="cleaner"></div>
+							Vložit předpřipravený obsah
+
+							<div n:if="$edit" class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										{control picturesUploader}
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										{control filesUploader}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Tab rozšířené -->
+						<div role="tabpanel" class="tab-pane" id="rozsirene">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										{label individual_css /}
+										{input individual_css, class => 'form-control'}
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									{input protected, class => 'form-control'}
+									<div class="form-group" id="protected">
+										{label password /}
+										{input password, class => 'form-control'}
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										&nbsp;
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Tab optimalizace -->
+						<div role="tabpanel" class="tab-pane" id="optimalizace">
+							<div class="form-group">
+								{label individualTitle /}
+								<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown-title"></span></span>
+								{input individualTitle, class => "form-control", data-countdown-to => "countdown-title", data-countdown-max => 55}
+							</div>
+							<div class="form-group">
+								{label description /}
+								<span>Popis je ve vyhledávání nejčastěji omezen na 156 znaků, zbývá: <span id="countdown-desc"></span></span>
+								{input description, class => "form-control", data-countdown-to => "countdown-desc", data-countdown-max => 156}
+							</div>
+							{*{control redirectForm}*}
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										{label index /}
+										{input index, class => "form-control"}
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										{label follow /}
+										{input follow, class => "form-control"}
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Tab socialní sítě-->
+						<div role="tabpanel" class="tab-pane" id="socialni-site">
+							<h3>Sociální sítě</h3>
+							<div class="form-group">
+								{label fcbk_title /}
+								{input fcbk_title, class => "form-control"}
+							</div>
+							<div class="form-group">
+								{label fcbk_description /}
+								{input fcbk_description, class => "form-control"}
+							</div>
+						</div>
+					</div>
+
+				</div>
+
 			</div>
 		</div>
+
+		{include sidebar.latte _form => $_form}
+
+		<div class="cleaner"></div>
+	</div>
+
+	<hr style="border-color:red">
+
+	<div class="row">
 		<div class="col-lg-6">
 			<div class="form-group">
 				{label fakePath /}
@@ -20,145 +157,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="form-group">
-		{input editor}
-	</div>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label authors /}
-				{input authors, class => "form-control"}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label categories /}
-				{input categories, class => "form-control"}
-			</div>
-		</div>
-	</div>
-	{********************* ADVANCED ********************}
-	<h3>Rozšířené</h3>
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label tags /}
-				{input tags, class => 'tags'}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label individual_css /}
-				{input individual_css, class => 'form-control'}
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-6">
-			{input protected, class => 'form-control'}
-			<div class="form-group" id="protected">
-				{label password /}
-				{input password, class => 'form-control'}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="form-group">
-				&nbsp;
-			</div>
-		</div>
-	</div>
-	{************* /ADVANCED - OPTIMIZATION*************}
-	<h3>Optimalizace</h3>
-	<div class="form-group">
-		{label individualTitle /}
-		<span>Optimální délka nadpisu ve vyhledávání je do 55 znaků, zbývá: <span id="countdown-title"></span></span>
-		{input individualTitle, class => "form-control", data-countdown-to => "countdown-title", data-countdown-max => 55}
-	</div>
-	<div class="form-group">
-		{label description /}
-		<span>Popis je ve vyhledávání nejčastěji omezen na 156 znaků, zbývá: <span id="countdown-desc"></span></span>
-		{input description, class => "form-control", data-countdown-to => "countdown-desc", data-countdown-max => 156}
-	</div>
-	{*{control redirectForm}*}
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label index /}
-				{input index, class => "form-control"}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="form-group">
-				{label follow /}
-				{input follow, class => "form-control"}
-			</div>
-		</div>
-	</div>
-	{*************** /OPTIMIZATION - FCBk ***************}
-	<h3>Sociální sítě</h3>
-	<div class="form-group">
-		{label fcbk_title /}
-		{input fcbk_title, class => "form-control"}
-	</div>
-	<div class="form-group">
-		{label fcbk_description /}
-		{input fcbk_description, class => "form-control"}
-	</div>
-	{********************** /FCBk ***********************}
-	<div n:if="$edit" class="row">
-		<div class="col-lg-6">
-			<div class="form-group">
-				{control picturesUploader}
-			</div>
-		</div>
-		<div class="col-lg-6">
-			<div class="form-group">
-				{control filesUploader}
-			</div>
-		</div>
-	</div>
-
-
-	{* TODO *}
-	{foreach $page->files as $file}
-		{dump $file}
-	{/foreach}
-
-
-	<div class="row">
-		<div class="col-lg-2">
-			<div class="form-group">
-				{input saveAndRedirect, class => "btn btn-primary form-control"}
-			</div>
-		</div>
-		<div class="col-lg-2">
-			<div class="form-group">
-				{input saveAndStay, class => "btn btn-primary form-control"}
-			</div>
-		</div>
-		<div class="col-lg-4" n:if="$showPublish">
-			<div class="form-group">
-				{input publish, class => "btn btn-primary form-control"}
-			</div>
-		</div>
-		<div class="col-lg-4">
-			<div class="form-group">
-				{input preview, class => "btn btn-default form-control"}
-			</div>
-		</div>
-	</div>
 {/form}
 
-{*{block scripts}*}
-{*{include parent}*}
-{* TODO *}
-{*<script>*}
-{*function cleanPageLocationStorage() {*}
-{*if (window.localStorage) {*}
-{*localStorage.removeItem('content:' + location.pathname);*}
-{*localStorage.removeItem('title:' + location.pathname);*}
-{*localStorage.removeItem('slug:' + location.pathname);*}
-{*}*}
-{*}*}
-{*</script>*}
-{*{/block}*}
+{*block scripts}
+	{include parent}
+	TODO
+	<script>
+		function cleanPageLocationStorage() {
+			if (window.localStorage) {
+				localStorage.removeItem('content:' + location.pathname);
+				localStorage.removeItem('title:' + location.pathname);
+				localStorage.removeItem('slug:' + location.pathname);
+			}
+		}
+	</script>
+{/block*}

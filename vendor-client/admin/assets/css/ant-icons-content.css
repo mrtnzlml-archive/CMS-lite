@@ -1,0 +1,54 @@
+/* --------------------------------------------------------- */
+/* spolecne indiv. CSS styly pro ikony pomoci http://fontastic.me  */
+/* --------------------------------------------------------- */
+.mceContentBody ul.ant-iconStyle,
+ul.ant-iconStyle {
+    padding-left: 0px;
+    padding-top:1%;
+}
+
+.mceContentBody ul.ant-iconStyle > li,
+ul.ant-iconStyle > li {
+    list-style-type: none;
+    padding-bottom: 2%;
+    background: none;
+    padding-left: 0;
+}
+
+.mceContentBody .ant-iconStyle,
+.ant-iconStyle {
+    display:inline-block;
+    vertical-align: middle;
+}
+/* --------------------------------------------------------- */
+
+/* ----------------------------------- */
+/* zobrazeni vsech ikon v test obsahu  */
+/* ----------------------------------- */
+.iconlist .name-icon-text {
+    word-wrap: break-word;
+}
+
+.iconlist-item-content {
+    margin-bottom: 0;
+    display: table;
+    width: 100%;
+}
+
+.iconlist-item-content-in {
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+}
+
+@media (max-width: 400px) {
+    .iconlist .iconlist-item {
+        clear: both;
+        float: none;
+        width: 100%;
+    }
+
+    .iconlist-item-content-in {
+        height: auto;
+    }
+}

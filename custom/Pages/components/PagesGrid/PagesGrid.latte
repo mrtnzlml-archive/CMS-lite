@@ -5,26 +5,36 @@
 </p>
 
 <form n:name="gridForm">
-	<div class="filters mb10 mt10">
+	<div class="filters mb10 mt10 mt20">
 		<div class="col-lg-4">
-			<div class="fl mr10">
-				{input actionAbove, class => 'form-control', onchange => 'this.form.submit()'}
+			<div class="row">
+				<div class="col-xs-4">
+					{input actionAbove, class => 'form-control input-sm', onchange => 'this.form.submit()'}
+				</div>
+				<div class="col-xs-2">
+					<a href="" class="btn btn-default btn-sm">Použít</a>
+				</div>
+				<div class="col-xs-6">
+					<div class="input-group padding0">
+						<input type="text" class="form-control input-sm" placeholder="Hledej název" name="srch-term" id="srch-term">
+						<div class="input-group-btn">
+							<button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="fl">
-				<input class="form-control" type="text">
-			</div>
 		</div>
 		<div class="col-lg-2">
-			{input categories, class => 'form-control', onchange => 'this.form.submit()'}
+			{input categories, class => 'form-control input-sm', onchange => 'this.form.submit()'}
 		</div>
 		<div class="col-lg-2">
-			{input tags, class => 'form-control', onchange => 'this.form.submit()'}
+			{input tags, class => 'form-control input-sm', onchange => 'this.form.submit()'}
 		</div>
 		<div class="col-lg-2">
-			{input authors, class => 'form-control', onchange => 'this.form.submit()'}
+			{input authors, class => 'form-control input-sm', onchange => 'this.form.submit()'}
 		</div>
 		<div class="col-lg-2">
-			<input class="form-control" type="date" disabled>
+			<input class="form-control input-sm" type="date" disabled>
 		</div>
 
 		<div class="cleaner"></div>
@@ -50,9 +60,15 @@
 					{input page-$page->id}
 				</td>
 				<td class="valignM">
-					<a class="bold" href="{plink edit $page->id}">
-						{$page->title}
-					</a>
+					<a href="{plink edit $page->id}" class="nazevClanku"> {$page->title}</a>
+					<div class="settings">
+						<a href="{plink edit $page->id}">Upravit</a>
+						<a href="#">Odstranit</a>
+						<a href="#">Zobrazit</a>
+					</div>
+					<div class="add">
+						<span class="ico"></span>
+					</div>
 				</td>
 				<td class="valignM alignC">
 					{foreach $page->categories as $category}

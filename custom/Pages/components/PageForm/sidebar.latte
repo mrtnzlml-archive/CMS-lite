@@ -1,0 +1,68 @@
+<div id="sidebar" class="col-lg-3">
+	<div class="box-default">
+		<div class="box-title">Publikování <span class="ico hideBox flaticon-gear39"></span></div>
+		<div class="box-content padding15">
+			<div class="row">
+				<div class="col-lg-12">
+					<button n:name="preview" class="btn btn-default">
+						<span class="ico flaticon-visibility1"> Zobrazit stránku
+					</button>
+					<span class="ico hideBox flaticon-move26"></span>
+				</div>
+				<div class="col-lg-6">
+					<button n:name="saveAndRedirect" class="btn btn-primary">
+						<span class="ico flaticon-floppydisk2"></span> Uložit
+					</button>
+					<button n:name="saveAndStay" class="btn btn-primary">
+						<span class="ico flaticon-floppydisk2"></span> Uložit a zůstat
+					</button>
+				</div>
+				<div class="col-lg-6" n:if="$showPublish">
+					<button n:name="publish" class="btn btn-primary">
+						<span class="ico flaticon-megaphones6"></span> Publikovat
+					</button>
+				</div>
+			</div>
+			<div class="cleaner"></div>
+
+			Stav: <a href="">Koncept</a><br>
+			Viditelnost: <a href="">Veřejné</a><br>
+			Starší verze: <a href="">Porovnat</a>
+
+			<div class="cleaner"></div>
+
+			<a href="" class="btn btn-lg fr"><span class="ico flaticon-megaphones6"></span> <del>Smazat</del></a>
+
+			<div class="cleaner"></div>
+		</div>
+	</div>
+
+	<div class="box-default">
+		<div class="box-title">Zařazení do struktury <span class="ico hideBox flaticon-gear39"></span></div>
+		<div class="box-content padding15">
+			{input categories, class => "form-control"}
+		</div>
+	</div>
+
+	<div class="box-default">
+		<div class="box-title">Autoři <span class="ico hideBox flaticon-gear39"></span></div>
+		<div class="box-content padding15">
+			{input authors, class => "form-control"}
+		</div>
+	</div>
+
+	<div class="box-default">
+		<div class="box-title">Štítky<span class="ico hideBox flaticon-gear39"></span></div>
+		<div class="box-content padding15">
+			{input tags, class => 'tags'}
+		</div>
+	</div>
+
+	<div class="box-default">
+		<div class="box-title">Parametry <span class="ico hideBox flaticon-gear39"></span></div>
+		<div class="box-content padding15">
+			Stránka nepoužívá žádné parametry,
+			můžete je přidat.
+		</div>
+	</div>
+</div>
