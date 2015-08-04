@@ -4,7 +4,6 @@ namespace Files\Components;
 
 use Files\File;
 use Files\FileProcess;
-use Files\FineUploader;
 use Files\FineUploaderException;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
@@ -18,12 +17,6 @@ use Options\OptionFacade;
 class Uploader extends UI\Control
 {
 
-	/** @var EntityManager */
-	private $em;
-
-	/** @var Uploader */
-	private $uploader;
-
 	/** @var FileProcess */
 	private $fileProcess;
 
@@ -35,10 +28,12 @@ class Uploader extends UI\Control
 
 	private $pictureUploader = FALSE;
 
-	public function __construct($pictureUploader, EntityManager $em, FineUploader $uploader, FileProcess $fileProcess, OptionFacade $optionFacade)
-	{
-		$this->em = $em;
-		$this->uploader = $uploader;
+	public function __construct(
+		$pictureUploader,
+		EntityManager $em,
+		FileProcess $fileProcess,
+		OptionFacade $optionFacade
+	) {
 		$this->fileProcess = $fileProcess;
 		$this->optionFacade = $optionFacade;
 		$this->pictureUploader = $pictureUploader;
@@ -52,7 +47,7 @@ class Uploader extends UI\Control
 			$this->onFailed($this, $exc->getResult());
 			exit;
 		}
-		$this->onSuccess($this, $result[0]/*file*/, $result[1]);
+		$this->onSuccess($this, $result[0]/*file*/, $result[1]/*result array*/);
 	}
 
 	public function render(array $parameters = NULL)
@@ -60,9 +55,14 @@ class Uploader extends UI\Control
 		if ($parameters) {
 			$this->template->parameteres = Nette\Utils\ArrayHash::from($parameters);
 		}
+		$this->template->sizeLimit = $this->fileProcess->getSizeLimit();
 		if ($this->pictureUploader) {
+			$allowedExtensions = $this->optionFacade->getOption('allowed_picture_extensions');
+			$this->template->allowedExtensions = implode(';', $allowedExtensions);
 			$template = __DIR__ . '/templates/image-uploader.latte';
 		} else {
+			$allowedExtensions = $this->optionFacade->getOption('allowed_file_extensions');
+			$this->template->allowedExtensions = implode(';', $allowedExtensions);
 			$template = __DIR__ . '/templates/file-uploader.latte';
 		}
 		$this->template->render($template);

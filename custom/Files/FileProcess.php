@@ -32,8 +32,13 @@ class FileProcess extends Nette\Object
 
 	private $directory;
 
-	public function __construct($directory, EntityManager $em, IUserStorage $user, FineUploader $fineUploader, OptionFacade $optionFacade)
-	{
+	public function __construct(
+		$directory,
+		EntityManager $em,
+		IUserStorage $user,
+		FineUploader $fineUploader,
+		OptionFacade $optionFacade
+	) {
 		$this->em = $em;
 		$this->user = $user;
 		$this->directory = $directory;
@@ -59,7 +64,9 @@ class FileProcess extends Nette\Object
 		$name = $this->fineUploader->getName();
 
 		if ($pictures) {
-			$this->resizeImage($this->directory . DIRECTORY_SEPARATOR . 'pictures' . DIRECTORY_SEPARATOR . $result['uuid'], $name);
+			$this->resizeImage(
+				$this->directory . DIRECTORY_SEPARATOR . 'pictures' . DIRECTORY_SEPARATOR . $result['uuid'], $name
+			);
 		}
 
 		$file = new File;
@@ -108,6 +115,11 @@ class FileProcess extends Nette\Object
 			Nette\Utils\FileSystem::createDir($dir);
 			$image->save($dir . DIRECTORY_SEPARATOR . $imageName, $this->optionFacade->getOption('image_quality'));
 		}
+	}
+
+	public function getSizeLimit()
+	{
+		return $this->fineUploader->getSizeLimit();
 	}
 
 }

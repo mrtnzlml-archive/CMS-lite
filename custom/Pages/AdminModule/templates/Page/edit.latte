@@ -6,51 +6,13 @@
 
 {block scripts}
 	{include parent}
-	{* FIXME: lépe (js:admin) *}
+	{* FIXME: co s tímto? *}
 	<script src="{$basePath}/js/jquery.fine-uploader/jquery.fine-uploader.min.js"></script>
-	<script>
-		$(function () {
-			$('#image-uploader').fineUploader({
-				//debug: true,
-				request: {
-					endpoint: {link pageForm-picturesUploader-upload!} //FIXME: via getParameterId
-				},
-				retry: {
-					enableAuto: true
-				},
-				failedUploadTextDisplay: {
-					mode: 'custom',
-					responseProperty: 'error'
-				},
-				validation: {
-					//allowedExtensions: ['pdf'],
-					//sizeLimit: 5242880 // 50 MB = 50 * 1024 * 1024 bytes
-				}
-			});
-
-			$('#file-uploader').fineUploader({
-				//debug: true,
-				request: {
-					endpoint: {link pageForm-filesUploader-upload!} //FIXME: via getParameterId
-				},
-				retry: {
-					enableAuto: true
-				},
-				failedUploadTextDisplay: {
-					mode: 'custom',
-					responseProperty: 'error'
-				},
-				validation: {
-					//allowedExtensions: ['pdf'],
-					//sizeLimit: 5242880 // 50 MB = 50 * 1024 * 1024 bytes
-				}
-			});
-		});
-	</script>
 {/block}
 
 {block styles}
 	{include parent}
+	{* FIXME: co s tímto? *}
 	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-new.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="{$basePath}/js/jquery.fine-uploader/fine-uploader-gallery.min.css">

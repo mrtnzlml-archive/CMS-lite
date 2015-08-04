@@ -1,4 +1,7 @@
-<div id="file-uploader">
+<div id="file-uploader"
+     data-ajax-handle="{link upload!}"
+     data-extensions="{$allowedExtensions}"
+     data-size-limit="{$sizeLimit}">
 	<script type="text/template" id="qq-template">
 		{include 'qq-file-template.latte'}
 	</script>
