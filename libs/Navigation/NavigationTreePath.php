@@ -37,7 +37,7 @@ class NavigationTreePath
 	protected $depth;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", options={"default": 0})
 	 * @var int
 	 */
 	protected $item_order = 0;
