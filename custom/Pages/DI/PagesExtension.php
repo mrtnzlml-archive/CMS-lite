@@ -44,7 +44,7 @@ class PagesExtension extends CompilerExtension implements IEntityProvider, IJsAd
 
 	public function getJsAdminScripts()
 	{
-		yield __DIR__ . '/../assets/grid.js';
+		yield __DIR__ . '/../assets/pages.js';
 	}
 
 }
