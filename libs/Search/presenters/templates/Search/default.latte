@@ -5,7 +5,9 @@
 		<div class="col-lg-7 box-default pt20 pl20 pr20">
 			<h3>Stránky</h3>
 			{foreach $result as $page}
-				<h4>{$page->title}</h4>
+				<a href="{plink :Pages:Admin:Page:edit $page->id}">
+					<h4>{$page->title}</h4>
+				</a>
 				<p>{$page->body}</p>
 			{/foreach}
 		</div>
