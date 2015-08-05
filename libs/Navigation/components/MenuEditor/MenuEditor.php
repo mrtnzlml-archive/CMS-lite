@@ -8,6 +8,7 @@ use Nette\Application\UI;
 use Nette\Application\UI\Control;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Strings;
 use Nextras\Application\UI\SecuredLinksControlTrait;
 use Pages\Category;
 use Pages\Page;
@@ -65,7 +66,9 @@ class MenuEditor extends Control
 			->setRequired('Zadejte prosím název nové navigace');
 		$form->addSubmit('create', 'Vytvořit navigaci');
 		$form->onSuccess[] = function ($_, ArrayHash $values) {
-			$navigation = (new Navigation)->setName($values->navigation);
+			$navigation = new Navigation;
+			$navigation->setName($values->navigation);
+			$navigation->setIdentifier(Strings::webalize($values->navigation));
 			$this->em->persist($navigation);
 			$this->em->flush($navigation);
 			$this->presenter->flashMessage('Nové menu bylo úspěšně vytvořeno.', Flashes::FLASH_SUCCESS);
