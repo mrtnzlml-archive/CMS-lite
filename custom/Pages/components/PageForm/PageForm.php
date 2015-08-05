@@ -11,11 +11,9 @@ use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
-use Pages\OpenGraph;
-use Pages\Page;
 use Pages\Category;
+use Pages\Page;
 use Pages\PageFacade;
-use Pages\Tag;
 use Url\Components\RedirectForm\IRedirectFormFactory;
 use Url\DuplicateRouteException;
 use Url\RedirectFacade;
@@ -125,7 +123,7 @@ class PageForm extends AControl
 	{
 		$form = new UI\Form;
 		$form->addProtection();
-		$form->addText('title', 'Název:')->setRequired('Je zapotřebí vyplnit název stránky.');
+		$form->addText('title', NULL)->setRequired('Je zapotřebí vyplnit název stránky.');
 		$form->addText('fakePath', 'URL stránky:')
 			->addRule(\App\Validator::FAKE_PATH, 'URL cesta může obsahovat pouze písmena, čísla, lomítko a pomlčku.');
 		$form->addTinyMCE('editor', NULL)
@@ -171,10 +169,10 @@ class PageForm extends AControl
 		$form->addTextArea('fcbk_description', 'Popis stránky v příspěvku na Facebooku:');
 
 		$this->setDefaults($form);
-		$form->addSubmit('saveAndRedirect', 'Uložit')->onClick[] = $this->savePageAndRedirect;
-		$form->addSubmit('saveAndStay', 'Uložit a zůstat')->onClick[] = $this->savePageAndStay;
-		$form->addSubmit('publish', 'Publikovat')->onClick[] = $this->publishPage;
-		$form->addSubmit('preview', 'Zobrazit stránku')->onClick[] = function (SubmitButton $sender) {
+		$form->addSubmit('saveAndRedirect', NULL)->onClick[] = $this->savePageAndRedirect;
+		$form->addSubmit('saveAndStay', NULL)->onClick[] = $this->savePageAndStay;
+		$form->addSubmit('publish', NULL)->onClick[] = $this->publishPage;
+		$form->addSubmit('preview', NULL)->onClick[] = function (SubmitButton $sender) {
 			$this->savePage($sender, TRUE);
 		};
 		return $form;
@@ -199,7 +197,6 @@ class PageForm extends AControl
 		try {
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
-			$this->fillEntityWithValues($entity, $values);
 			$this->pageFacade->onSave[] = function () use ($entity) {
 				$this->onSave($this, $entity);
 			};
@@ -222,7 +219,6 @@ class PageForm extends AControl
 		try {
 			$entity = $this->editablePage;
 			$values = $sender->getForm()->getValues();
-			$this->fillEntityWithValues($entity, $values);
 			$this->pageFacade->onPublish[] = function () use ($entity) {
 				$this->onPublish($this, $entity);
 			};
@@ -237,71 +233,6 @@ class PageForm extends AControl
 		$this->presenter->redirect('default');
 	}
 
-	private function fillEntityWithValues(Page $entity, ArrayHash $values)
-	{
-		$entity->setTitle($values->title);
-		$entity->setBody($values->editor);
-		$entity->setIndividualTitle($values->individualTitle);
-		$entity->setDescription($values->description);
-		$entity->setIndex($values->index);
-		$entity->setFollow($values->follow);
-		$entity->setIndividualCss($values->individual_css);
-		$entity->setProtected($values->password, $values->protected);
-
-		$entity->clearAuthors();
-		if (!in_array(NULL, $values->authors)) {
-			foreach ($values->authors as $authorId) {
-				/** @var User $authorRef */
-				$authorRef = $this->em->getPartialReference(User::class, $authorId);
-				$entity->addAuthor($authorRef);
-			}
-		}
-
-		$entity->clearCategories();
-		if (!in_array(NULL, $values->categories)) {
-			foreach ($values->categories as $categoryId) {
-				/** @var Category $categoryRef */
-				$categoryRef = $this->em->getPartialReference(Category::class, $categoryId);
-				$entity->addCategory($categoryRef);
-			}
-		}
-
-		//Save tags and remove old relations:
-		$knownTags = [];
-		/** @var Tag $tag */
-		foreach ($this->em->getRepository(Tag::class)->findAll() as $tag) {
-			$knownTags[$tag->getName()] = $tag;
-		}
-
-		$newTags = array_filter(array_unique(preg_split('/\s*,\s*/', $values->tags)));
-		foreach ($newTags as $tag) {
-			if (array_key_exists($tag, $knownTags)) {
-				$entity->addTag($knownTags[$tag]);
-			} else {
-				$tagEntity = (new Tag)->setName($tag);
-				$entity->addTag($tagEntity);
-			}
-		}
-		foreach ($knownTags as $key => $tag) {
-			if (!in_array($key, $newTags)) {
-				$entity->removeTag($tag);
-			}
-		}
-
-		//Save OG tags:
-		$ogs = $this->editablePage->getOpenGraphs();
-		$mapping = ['og:title' => 'fcbk_title', 'og:description' => 'fcbk_description'];
-		foreach ($mapping as $key => $value) {
-			if (array_key_exists($key, $ogs)) {
-				$ogs[$key]->content = $values[$value];
-				$entity->setOpenGraph($ogs[$key]);
-			} else { //new entry
-				$og = new OpenGraph($key, $values[$value]);
-				$entity->setOpenGraph($og);
-			}
-		}
-	}
-
 	private function setDefaults(UI\Form $form)
 	{
 		if ($this->editablePage !== NULL) { //EDITING
@@ -310,8 +241,8 @@ class PageForm extends AControl
 				'title' => $e->getTitle(),
 				'fakePath' => $e->getUrl() ? $e->getUrl()->getFakePath() : '',
 				'editor' => $e->getBody(),
-				'authors' => $e->getAuthorsIds(),
-				'categories' => $e->getCategoriesIds(),
+				'authors' => $e->getAuthorIds(),
+				'categories' => $e->getCategoryIds(),
 				'individualTitle' => $e->getIndividualTitle(),
 				'description' => $e->getDescription(),
 				'index' => $e->getIndex(),

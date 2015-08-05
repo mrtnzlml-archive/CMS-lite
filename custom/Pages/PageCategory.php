@@ -41,7 +41,7 @@ class PageCategory
 	 */
 	protected $pageOrder = 0;
 
-	public function setPage(Page $page)
+	public function setPage($page)
 	{
 		$this->page = $page;
 		return $this;

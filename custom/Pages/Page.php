@@ -39,11 +39,10 @@ use Users\User;
  * @method \Url\Url getUrl()
  * @method boolean getProtected()
  * @method string getPassword()
- *
- * @method addAuthor(User $author)
- * @method addFile(File $file)
- *
  * @method setRealAuthor(User $realAuthor)
+ * @method setPublishedAt(\DateTime $publishedAt)
+ *
+ * @method addFile(File $file)
  */
 class Page implements ILocaleAware
 {
@@ -147,7 +146,7 @@ class Page implements ILocaleAware
 	protected $realAuthor;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="PageCategory", mappedBy="page", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="PageCategory", mappedBy="page", cascade={"persist"}, orphanRemoval=TRUE)
 	 * @var PageCategory[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $pageCategories;
@@ -276,7 +275,7 @@ class Page implements ILocaleAware
 		);
 	}
 
-	public function getCategoriesIds()
+	public function getCategoryIds()
 	{
 		$categoriesIds = [];
 		/** @var PageCategory $category */
@@ -288,18 +287,41 @@ class Page implements ILocaleAware
 
 	public function clearCategories()
 	{
-		$this->categories->clear();
+		foreach ($this->pageCategories as $pageCategory) {
+			$this->pageCategories->removeElement($pageCategory);
+			$pageCategory->setPage(NULL);
+		}
+		return $this;
+	}
+
+	public function removePageCategory(PageCategory $pageCategory)
+	{
+		$this->pageCategories->removeElement($pageCategory);
+		$pageCategory->setPage(NULL);
+		return $this;
 	}
 
 	///// AUTHORS /////
 
-	public function getAuthorsIds()
+	public function getAuthorIds()
 	{
 		$authorIds = [];
 		foreach ($this->authors as $author) {
 			$authorIds[] = $author->id;
 		}
 		return $authorIds;
+	}
+
+	public function setAuthor(User $author)
+	{
+		if (!$this->authors->contains($author)) {
+			$this->authors->add($author);
+		}
+	}
+
+	public function removeAuthor(User $author)
+	{
+		$this->authors->removeElement($author);
 	}
 
 	public function clearAuthors()

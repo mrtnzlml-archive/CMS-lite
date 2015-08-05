@@ -53,7 +53,7 @@ class Category
 	protected $virtual = FALSE;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="PageCategory", mappedBy="category", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="PageCategory", mappedBy="category", cascade={"persist"}, orphanRemoval=TRUE)
 	 * @var PageCategory[]|\Doctrine\Common\Collections\ArrayCollection
 	 */
 	protected $pageCategories;
