@@ -20,6 +20,9 @@ class NavigationExtension extends CompilerExtension implements IEntityProvider
 	{
 		$builder = $this->getContainerBuilder();
 		$this->setPresenterMapping($builder, ['Navigation' => 'Navigation\\*Module\\Presenters\\*Presenter']);
+
+		$definition = $builder->getDefinition('latte.latteFactory');
+		$definition->addSetup('?->onCompile[] = function($engine) { Navigation\Latte\Menu::install($engine->getCompiler()); }', ['@self']);
 	}
 
 	/**

@@ -3,3 +3,4 @@ services:
 	- Navigation\IMainMenuFactory
 	- Navigation\IMenuEditorFactory
 	- Navigation\NavigationFacade
+	- Navigation\ICustomMenuFactory

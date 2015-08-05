@@ -35,10 +35,14 @@ class MenuEditor extends Control
 	/** @var NavigationItem */
 	private $item_root;
 
-	public function __construct(EntityManager $em, NavigationFacade $navigationFacade)
+	/** @deprecated */
+	private $menuFactory;
+
+	public function __construct(EntityManager $em, NavigationFacade $navigationFacade, ICustomMenuFactory $menuFactory)
 	{
 		$this->em = $em;
 		$this->navigationFacade = $navigationFacade;
+		$this->menuFactory = $menuFactory;
 	}
 
 	public function attached($presenter)
@@ -61,6 +65,14 @@ class MenuEditor extends Control
 			$this->template->menuItems = [];
 		}
 		$this->template->render(__DIR__ . '/MenuEditor.latte');
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function createComponentCustomMenu()
+	{
+		return $this->menuFactory->create();
 	}
 
 	public function createComponentNavigationCreate()
