@@ -9,7 +9,9 @@ use Nette\Application\UI\Control;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 use Nextras\Application\UI\SecuredLinksControlTrait;
+use Pages\Category;
 use Pages\Page;
+use Pages\Query\CategoryQuery;
 use Pages\Query\PagesQuery;
 
 class MenuEditor extends Control
@@ -103,7 +105,16 @@ class MenuEditor extends Control
 		foreach ($pages as $page) {
 			$items[$page->getId()] = $page->getTitle();
 		}
-		$form->addSelect('pages', 'Publikované stránky:', $items);
+		$form->addSelect('pages', 'Publikované stránky:', [NULL => 'Vyberte stránku'] + $items);
+
+		$categories = $this->em->getRepository(Category::class)->fetch(new CategoryQuery);
+		$items = [];
+		/** @var Category $category */
+		foreach ($categories as $category) {
+			$items[$category->getId()] = $category->getName();
+		}
+		$form->addSelect('categories', 'Kategorie:', [NULL => 'Vyberte kategorii'] + $items);
+
 		$form->addText('title', 'Alternativní název:');
 		$form->addText('href', 'URL adresa')
 			->addCondition($form::FILLED)
@@ -111,7 +122,12 @@ class MenuEditor extends Control
 		$form['title']->addConditionOn($form['href'], $form::FILLED)
 			->setRequired('Vyplňte prosím alternativní název odkazu.');
 
-		$form->onSuccess[] = function ($_, ArrayHash $values) {
+		$form->onSuccess[] = function (UI\Form $form, ArrayHash $values) {
+			if (!(bool)array_filter((array)$values)) { //form is empty
+				$form->addError('Vyberte prosím co chcete do menu přidat.');
+				return;
+			}
+
 			$menuItem = new NavigationItem;
 			if ($values->href) {
 				$menuItem->setName($values->title);

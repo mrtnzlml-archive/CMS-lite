@@ -20,7 +20,7 @@
 				{foreach $items as $item}
 					{?$entity = $item->entity}
 					<li n:class="$iterator->first ? first, $iterator->last ? last">
-						<a {if $entity->url}href="{plink $entity->url->absoluteDestination}"{/if}>
+						<a {if $entity->url}href="{plink $entity->url->absoluteDestination (expand) [id => $entity->url->internalId]}"{/if}>
 							{$entity->name}
 						</a>
 					</li>

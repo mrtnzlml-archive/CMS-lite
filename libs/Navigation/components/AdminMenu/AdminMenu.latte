@@ -10,7 +10,7 @@
 							<a {if $entity->externalUrl}
 								href="{$entity->externalUrl}"
 							{elseif $entity->url}
-								href="{plink $entity->url->absoluteDestination}"
+								href="{plink $entity->url->absoluteDestination (expand) [id => $entity->url->internalId]}"
 							{/if}
 									n:class="$entity->url ? ($presenter->isLinkCurrent($entity->url->absoluteDestination) ? 'active')">{$entity->name}</a>
 						</li>
@@ -27,7 +27,7 @@
 								{if $entity->externalUrl}
 									href="{$entity->externalUrl}"
 								{elseif $entity->url}
-									href="{plink $entity->url->absoluteDestination}"
+									href="{plink $entity->url->absoluteDestination (expand) [id => $entity->url->internalId]}"
 								{/if}
 								{ifset $menuItem->descendants}data-toggle="dropdown"{/ifset}>
 							<span class="icon {$entity->icon}"></span>
