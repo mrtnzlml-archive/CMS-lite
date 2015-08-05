@@ -132,11 +132,16 @@ class MenuEditor extends Control
 			if ($values->href) {
 				$menuItem->setName($values->title);
 				$menuItem->setExternalUrl($values->href);
-			} else {
+			} elseif ($values->pages) {
 				/** @var Page $page */
 				$page = $this->em->find(Page::class, $values->pages);
 				$menuItem->setName($values->title ?: $page->getTitle());
 				$menuItem->setUrl($page->getUrl());
+			} elseif ($values->categories) {
+				/** @var Category $category */
+				$category = $this->em->find(Category::class, $values->categories);
+				$menuItem->setName($values->title ?: $category->getName());
+				$menuItem->setUrl($category->getUrl());
 			}
 			$this->navigationFacade->createItem(
 				$menuItem,
