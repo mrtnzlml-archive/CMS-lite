@@ -21,6 +21,7 @@
 			{block menu}
 				{foreach $menuItems as $menuItem}
 					{?$entity = $menuItem->entity}
+					{* FIXME: linkCurrent *}
 					<li n:class="$entity->url ? ($presenter->isLinkCurrent($entity->url->getAbsoluteDestination(TRUE)) ? 'active')">
 						<a n:class="dropdown-toggle, $entity->url ? ($presenter->isLinkCurrent($entity->url->getAbsoluteDestination(TRUE)) ? 'active')"
 								{if $entity->externalUrl}

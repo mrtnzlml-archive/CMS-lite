@@ -18,7 +18,6 @@ class NavigationFacade extends Nette\Object
 	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
-		//TODO: cache
 	}
 
 	public function findRoot($navigation_id)
@@ -36,11 +35,11 @@ class NavigationFacade extends Nette\Object
 				sprintf('Category ID should be numeric, %s given.', gettype($itemId))
 			);
 		}
-		//FIXME: toto se musí trošku předělat (přiJOIN url adresy) a cache (?)
 		$query = $this->em->getRepository(NavigationItem::class)->createQuery('
-			SELECT n, IDENTITY(tree2.ancestor), IDENTITY(tree1.descendant) FROM Navigation\NavigationItem n
+			SELECT n, IDENTITY(tree2.ancestor), IDENTITY(tree1.descendant), url FROM Navigation\NavigationItem n
 			LEFT JOIN Navigation\NavigationTreePath tree1 WITH (n.id = tree1.descendant)
 			LEFT JOIN Navigation\NavigationTreePath tree2 WITH (tree2.descendant = tree1.descendant AND tree2.depth = 1)
+			LEFT JOIN n.url url
 		  	WHERE tree1.ancestor = ?1 AND tree1.depth > 0
 		  	ORDER BY tree1.item_order ASC
 		');
