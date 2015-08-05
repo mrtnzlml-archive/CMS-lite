@@ -9,7 +9,7 @@ use Nette;
 /**
  * @ORM\Entity
  */
-class PageCategoryTreePath extends Nette\Object
+class CategoryTreePath extends Nette\Object
 {
 
 	use Identifier;

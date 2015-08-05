@@ -71,12 +71,12 @@ class CategoryProcess extends Nette\Object
 				$id //internalId
 			));
 
-			$leaf = new PageCategoryTreePath($category, $category, 0);
+			$leaf = new CategoryTreePath($category, $category, 0);
 			$this->em->persist($leaf);
 			$this->em->flush($leaf);
 
 			if ($parent_id !== NULL) {
-				$table = $this->em->getClassMetadata(PageCategoryTreePath::class)->getTableName();
+				$table = $this->em->getClassMetadata(CategoryTreePath::class)->getTableName();
 				$connection = $this->em->getConnection();
 
 				$sql = <<<SQL
