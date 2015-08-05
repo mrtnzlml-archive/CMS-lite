@@ -9,7 +9,7 @@ use Nette;
 /**
  * @see http://blog.voracek.net/databaze/closure-table-stromy-v-mysql-trochu-jinak/
  */
-class PageCategoryProcess extends Nette\Object
+class CategoryProcess extends Nette\Object
 {
 
 	/** @var EntityManager */

@@ -1,6 +1,6 @@
 services:
 	- Pages\PageFacade
-	- Pages\PageCategoryProcess
+	- Pages\CategoryProcess
 	- Pages\Components\MultiEdit\IMultiEditFactory
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
