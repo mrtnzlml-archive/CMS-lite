@@ -55,7 +55,11 @@ class MenuEditor extends Control
 
 	public function render()
 	{
-		$this->template->menuItems = $this->navigationFacade->getItemTreeBelow($this->item_root->getId());
+		if ($this->item_root) {
+			$this->template->menuItems = $this->navigationFacade->getItemTreeBelow($this->item_root->getId());
+		} else { //new empty navigation
+			$this->template->menuItems = [];
+		}
 		$this->template->render(__DIR__ . '/MenuEditor.latte');
 	}
 
