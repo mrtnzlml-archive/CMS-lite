@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Files\File;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Kdyby\Doctrine\Entities\MagicAccessors;
+use Url;
 
 /**
  * @ORM\Entity
@@ -15,10 +16,12 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @method setName(string $name)
  * @method string getName()
  * @method setTextBefore(string $before)
+ * @method string getTextBefore()
  * @method setTextAfter(string $after)
+ * @method string getTextAfter()
  * @method boolean getVirtual()
- * @method setUrl(\Url\Url $url)
- * @method \Url\Url getUrl()
+ * @method setUrl(Url\Url $url)
+ * @method Url\Url getUrl()
  *
  * @method addFile(File $file)
  */
@@ -61,7 +64,7 @@ class Category
 	/**
 	 * @ORM\OneToOne(targetEntity="Url\Url", cascade={"persist"})
 	 * @ORM\JoinColumn(name="url_id", referencedColumnName="id", onDelete="SET NULL")
-	 * @var \Url\Url
+	 * @var Url\Url
 	 */
 	protected $url;
 

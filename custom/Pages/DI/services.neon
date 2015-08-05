@@ -1,6 +1,9 @@
 services:
 	- Pages\PageFacade
+	- Pages\CategoryFacade
 	- Pages\CategoryProcess
+	- Pages\Components\CategoryForm\ICategoryFormFactory
+	- Pages\Components\CategoryGrid\ICategoryGridFactory
 	- Pages\Components\MultiEdit\IMultiEditFactory
 	- Pages\Components\PageForm\IPageFormFactory
 	- Pages\Components\PagesGrid\IPagesGridFactory
@@ -8,5 +11,3 @@ services:
 	- Pages\Query\CategoryQuery
 	- class: Pages\Listeners\PageLoggerListener
 	  tags: [kdyby.subscriber]
-	- Pages\Components\CategoryGrid\ICategoryGridFactory
-	- Pages\Components\CategoryForm\ICategoryFormFactory

@@ -16,6 +16,16 @@ class CategoryFixture extends \Doctrine\Common\DataFixtures\AbstractFixture
 			$category = $process->createCategory(\Nette\Utils\Strings::firstUpper($faker->word), $this->lastId);
 			$this->lastId = $category->getId();
 			$this->addReference('category-' . $iterator, $category);
+			$manager->persist($category);
+			$manager->flush();
+
+			$category->setUrl(\Url\RouteGenerator::generate(
+				Nette\Utils\Strings::webalize($category->getName() . ' - ' . $iterator), //fakePath
+				'Pages:Front:Category:default', //destination
+				$category->getId() //internalId
+			));
+
+			$manager->flush();
 		}
 	}
 

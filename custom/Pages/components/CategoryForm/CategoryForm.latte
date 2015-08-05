@@ -1,1 +1,58 @@
-{control categoryForm}
+{form categoryForm}
+	<ul class="alert alert-danger" n:if="$form->errors">
+		<li n:foreach="$form->errors as $error">{$error}</li>
+	</ul>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label name /}
+				{input name, class => 'form-control', data-slug-to => 'fakePath'}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label fakePath /}
+				{input fakePath, class => 'form-control', id => 'fakePath'}
+			</div>
+		</div>
+	</div>
+	{*
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				{label parent /}
+				{input parent, class => 'form-control'}
+			</div>
+		</div>
+		<div class="col-lg-6">
+			&nbsp;
+		</div>
+	</div>
+	*}
+	<div class="form-group">
+		{label before /}
+		{input before}
+	</div>
+
+	{foreach $pages as $page}
+		<a href="{plink :Pages:Admin:Page:edit $page->id}">
+			<h3>{$page->title}</h3>
+		</a>
+		{$page->body|truncate:500}
+	{/foreach}
+
+	<div class="form-group">
+		{label before /}
+		{input after}
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="form-group">
+				{input send, class => "btn btn-default form-control"}
+			</div>
+		</div>
+	</div>
+{/form}
+
+{*{control picturesUploader}*}
