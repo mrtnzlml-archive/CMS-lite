@@ -59,6 +59,19 @@ class CategoryFacade extends Nette\Object
 		$this->onSave($this, $category);
 	}
 
+	public function recalculatePagesOrder(Category $category, array $pageIds)
+	{
+		$pageIds = array_values($pageIds); //reindex array [0 => ...]
+		foreach ($category->getPageCategories() as $pageCategory) {
+			$pageId = $pageCategory->getPage()->getId();
+			if (in_array($pageId, $pageIds)) {
+				$pageCategory->setPageOrder(array_search($pageId, $pageIds));
+				$this->em->persist($pageCategory);
+			}
+		}
+		$this->em->flush();
+	}
+
 
 	///// HELPERS /////
 

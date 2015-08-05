@@ -34,12 +34,20 @@
 		{input before}
 	</div>
 
-	{foreach $pages as $page}
-		<a href="{plink :Pages:Admin:Page:edit $page->id}">
-			<h3>{$page->title}</h3>
-		</a>
-		{$page->body|truncate:500}
-	{/foreach}
+	<div class="dd-category" data-ajax-handle="{link updatePagesOrder!}" data-control-prefix="{$control->uniqueId}">
+		<ol class="dd-list">
+			{foreach $pages as $page}
+				<li class="dd-item" data-id="{$page->id}">
+					<div class="dd-handle" style="height:auto">
+						<a class="dd-nodrag" href="{plink :Pages:Admin:Page:edit $page->id}">
+							<h3>{$page->title}</h3>
+						</a>
+						{$page->body|truncate:200}
+					</div>
+				</li>
+			{/foreach}
+		</ol>
+	</div>
 
 	<div class="form-group">
 		{label before /}

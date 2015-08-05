@@ -7,6 +7,7 @@ use App\Components\Flashes\Flashes;
 use Files\Components\IUploaderFactory;
 use Files\File;
 use Kdyby\Doctrine\EntityManager;
+use Navigation\Nestable;
 use Nette;
 use Nette\Application\Responses\JsonResponse;
 use Nette\Application\UI;
@@ -109,6 +110,14 @@ class CategoryForm extends AControl
 		};
 
 		return $control;
+	}
+
+	public function handleUpdatePagesOrder($json)
+	{
+		if (!$this->presenter->isAjax()) {
+			$this->redirect('this');
+		}
+		$this->categoryFacade->recalculatePagesOrder($this->categoryEntity, Nestable::resolveJson($json));
 	}
 
 }

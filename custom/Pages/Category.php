@@ -22,6 +22,7 @@ use Url;
  * @method boolean getVirtual()
  * @method setUrl(Url\Url $url)
  * @method Url\Url getUrl()
+ * @method PageCategory[] getPageCategories()
  *
  * @method addFile(File $file)
  */

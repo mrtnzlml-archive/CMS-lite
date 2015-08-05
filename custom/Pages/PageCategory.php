@@ -14,6 +14,9 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  *
  * @method setPageOrder(integer $order)
  * @method integer getPageOrder()
+ *
+ * @method Page getPage()
+ * @method Category getCategory()
  */
 class PageCategory
 {

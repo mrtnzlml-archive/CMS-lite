@@ -7,7 +7,7 @@ module.exports = (grunt) ->
           'temp/grunt/admin.css': [
             'vendor/selectize/dist/less/selectize.default.less'
             'vendor-client/admin/assets/less/style.less'
-            'vendor-client/admin/nestable.css'
+            'vendor-client/admin/nestable.less'
           ]
       front:
         files:

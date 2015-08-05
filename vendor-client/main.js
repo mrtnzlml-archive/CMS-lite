@@ -35,6 +35,21 @@ function initialize() {
 		});
 	});
 
+	$('.dd-category').nestable({
+		rootClass: 'dd-category',
+		maxDepth: 1
+	}).on('change', function (event) {
+		var list = event.length ? event : $(event.target);
+		var output = list.data('output');
+		var data = {};
+		data[list.data('control-prefix') + '-json'] = JSON.stringify(list.nestable('serialize'));
+		$.nette.ajax({
+			url: list.data('ajax-handle'),
+			type: 'post',
+			data: data
+		});
+	});
+
 	// generuje URL na zaklade zadavaneho titulku
 	$('input[data-slug-to]').keyup(function () {
 		var slugId = $(this).data('slug-to');
