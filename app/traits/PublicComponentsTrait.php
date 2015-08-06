@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Components;
 use Kdyby;
+use Navigation\ICustomMenuFactory;
 use Navigation\IMainMenuFactory;
 use WebFontLoader\Components\IWebFontLoaderFactory;
 
@@ -18,6 +19,12 @@ trait PublicComponentsTrait
 {
 
 	use Kdyby\Autowired\AutowireComponentFactories;
+
+	protected function createComponentCustomMenu(ICustomMenuFactory $factory)
+	{
+		return $factory->create();
+	}
+
 
 	protected function createComponentWebFontLoader(IWebFontLoaderFactory $factory)
 	{

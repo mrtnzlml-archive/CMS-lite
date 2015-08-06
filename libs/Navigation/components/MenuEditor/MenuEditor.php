@@ -2,10 +2,10 @@
 
 namespace Navigation;
 
+use App\Components\AControl;
 use App\Components\Flashes\Flashes;
 use Kdyby\Doctrine\EntityManager;
 use Nette\Application\UI;
-use Nette\Application\UI\Control;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
@@ -15,7 +15,7 @@ use Pages\Page;
 use Pages\Query\CategoryQuery;
 use Pages\Query\PagesQuery;
 
-class MenuEditor extends Control
+class MenuEditor extends AControl
 {
 
 	use SecuredLinksControlTrait;
@@ -35,14 +35,10 @@ class MenuEditor extends Control
 	/** @var NavigationItem */
 	private $item_root;
 
-	/** @deprecated */
-	private $menuFactory;
-
-	public function __construct(EntityManager $em, NavigationFacade $navigationFacade, ICustomMenuFactory $menuFactory)
+	public function __construct(EntityManager $em, NavigationFacade $navigationFacade)
 	{
 		$this->em = $em;
 		$this->navigationFacade = $navigationFacade;
-		$this->menuFactory = $menuFactory;
 	}
 
 	public function attached($presenter)
@@ -57,7 +53,7 @@ class MenuEditor extends Control
 		}
 	}
 
-	public function render()
+	public function render(array $parameters = NULL)
 	{
 		if ($this->item_root) {
 			$this->template->menuItems = $this->navigationFacade->getItemTreeBelow($this->item_root->getId());
@@ -65,14 +61,6 @@ class MenuEditor extends Control
 			$this->template->menuItems = [];
 		}
 		$this->template->render(__DIR__ . '/MenuEditor.latte');
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public function createComponentCustomMenu()
-	{
-		return $this->menuFactory->create();
 	}
 
 	public function createComponentNavigationCreate()

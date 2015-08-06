@@ -2,11 +2,12 @@
 
 namespace Navigation;
 
+use App\Components\AControl;
 use Kdyby\Doctrine\EntityManager;
 use Nette;
 use Nette\Application\UI;
 
-class AdminMenu extends UI\Control
+class AdminMenu extends AControl
 {
 
 	/** @var NavigationFacade */
@@ -22,7 +23,7 @@ class AdminMenu extends UI\Control
 		$this->em = $em;
 	}
 
-	public function render()
+	public function render(array $parameters = NULL)
 	{
 		/** @var NavigationItem $adminRoot */
 		$adminNavigation = $this->em->getRepository(Navigation::class)->findOneBy(['identifier' => 'admin']);

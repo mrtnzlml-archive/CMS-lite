@@ -10,29 +10,35 @@ use Nette\Application\UI;
 class CustomMenu extends UI\Control
 {
 
-	/** @var ReadOnlyCollectionWrapper */
-	private $navigation_items;
-
 	/** @var EntityManager */
 	private $em;
 
-	public function __construct(EntityManager $em)
+	/** @var NavigationFacade */
+	private $navigationFacade;
+
+	/** @var ReadOnlyCollectionWrapper */
+	private $navigationItems;
+
+	public function __construct(EntityManager $em, NavigationFacade $navigationFacade)
 	{
 		$this->em = $em;
-		$this->navigation_items = new ReadOnlyCollectionWrapper(new ArrayCollection([]));
+		$this->navigationFacade = $navigationFacade;
+		$this->navigationItems = new ReadOnlyCollectionWrapper(new ArrayCollection([]));
 	}
 
 	public function render()
 	{
-		$this->template->items = $this->navigation_items;
+		$this->template->items = $this->navigationItems;
 		$this->template->render(__DIR__ . '/CustomMenu.latte');
 	}
 
 	public function setIdentifier($identifier)
 	{
 		$navigation = $this->em->getRepository(Navigation::class)->findOneBy(['identifier' => $identifier]);
-		if ($navigation) {
-			$this->navigation_items = $navigation->items; //FIXME: bez kořene
+		$itemRoot = $this->navigationFacade->findRoot($navigation->getId());
+		$itemTree = $this->navigationFacade->getItemTreeBelow($itemRoot->getId());
+		if ($itemTree) {
+			$this->navigationItems = $itemTree;
 		}
 	}
 

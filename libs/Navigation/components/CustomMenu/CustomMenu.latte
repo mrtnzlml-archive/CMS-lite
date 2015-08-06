@@ -1,3 +1,20 @@
-{foreach $items as $item}
-	{dump $item}
-{/foreach}
+{block menu}
+	<ul>
+		{foreach $items as $item}
+			{?$entity = $item->entity}
+			{dump $entity}
+			<li>
+				{if $entity->externalUrl}
+					<a href="{$entity->externalUrl}">{$entity->name}</a>
+				{elseif $entity->url}
+					<a href="{plink $entity->url->absoluteDestination (expand) [id => $entity->url->internalId]}">
+						{$entity->name}
+					</a>
+				{/if}
+				{ifset $item->descendants}
+					{include this, items => $item->descendants}
+				{/ifset}
+			</li>
+		{/foreach}
+	</ul>
+{/block}
