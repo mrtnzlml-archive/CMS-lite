@@ -9,6 +9,9 @@ use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
 use Nextras;
 
+/**
+ * @property Nette\Bridges\ApplicationLatte\Template|\stdClass $template
+ */
 abstract class AControl extends Control implements IComponentTemplateProvider
 {
 
