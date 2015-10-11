@@ -3,4 +3,5 @@
 
 doctrine:
 	user: REPLACE
+	password: REPLACE
 	dbname: REPLACE
