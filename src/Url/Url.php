@@ -16,6 +16,7 @@ use Kdyby\Doctrine\Entities\MagicAccessors;
  * @method setInternalId(integer $internalId)
  * @method integer getInternalId()
  * @method setRedirectTo(Url $url)
+ * @method Url getRedirectTo()
  *
  * @ORM\HasLifecycleCallbacks
  */
@@ -50,7 +51,7 @@ class Url
 	protected $internalId = NULL;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Url", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Url", cascade={"persist"}, fetch="EAGER")
 	 * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
 	 * @var Url
 	 */

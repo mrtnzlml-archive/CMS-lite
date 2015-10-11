@@ -11,7 +11,7 @@ $configurator->setTempDirectory(__DIR__ . '/../temp');
 $loader = $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
 	->addDirectory(__DIR__ . '/../custom')
-	->addDirectory(__DIR__ . '/../libs')
+	->addDirectory(__DIR__ . '/../src')
 	->register();
 
 $configurator->onCompile[] = function ($_, \Nette\DI\Compiler $compiler) use ($loader) {

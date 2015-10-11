@@ -128,12 +128,12 @@ class AntRoute extends Application\Routers\RouteList
 		}
 
 		// 2) Extract parts of the destination
-		if ($destination->redirectTo === NULL) {
+		if ($destination->getRedirectTo() === NULL) {
 			$internalDestination = $destination->getDestination();
 			$internalId = $destination->getInternalId();
 		} else {
-			$internalDestination = $destination->redirectTo->getDestination();
-			$internalId = $destination->redirectTo->getInternalId();
+			$internalDestination = $destination->getRedirectTo()->getDestination();
+			$internalId = $destination->getRedirectTo()->getInternalId();
 		}
 		$pos = strrpos($internalDestination, ':');
 		$presenter = substr($internalDestination, 0, $pos);

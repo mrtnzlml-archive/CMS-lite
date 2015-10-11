@@ -23,7 +23,7 @@ application:
 	scanDirs:
 		- %appDir%
 		- %appDir%/../custom
-		- %appDir%/../libs
+		- %appDir%/../src
 
 
 di:
