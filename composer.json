@@ -23,10 +23,10 @@
     "nette/utils": "^2.3",
     "latte/latte": "^2.3",
     "tracy/tracy": "^2.3",
-    "kdyby/doctrine": "^3.0@dev",
+    "kdyby/doctrine": "^3.0",
     "kdyby/annotations": "^2.2",
     "kdyby/console": "^2.3",
-    "kdyby/events": "^2.4",
+    "kdyby/events": "^3.0",
     "texy/texy": "^2.6",
     "kdyby/translation": "^2.2",
     "janmarek/webloader": "^2.4",
@@ -38,17 +38,11 @@
     "kdyby/monolog": "^1.1",
     "nextras/secured-links": "^1.3",
     "oyejorge/less.php": "v1.7.0.4",
-    "carrooi/no-grid": "dev-composer"
+    "carrooi/no-grid": "^1.1"
   },
   "require-dev": {
     "mrtnzlml/testbench": "dev-master",
     "nette/tester": "^1.4",
     "kdyby/tester-extras": "@dev"
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/mrtnzlml/Nette-NoGrid"
-    }
-  ]
+  }
 }
