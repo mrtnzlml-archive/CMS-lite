@@ -51,7 +51,7 @@ class Category
 	protected $textAfter;
 
 	/**
-	 * @ORM\Column(type="boolean", nullable=FALSE, options={"default": 0})
+	 * @ORM\Column(type="boolean", name="`virtual`", nullable=FALSE, options={"default": 0})
 	 * @var bool
 	 */
 	protected $virtual = FALSE;
