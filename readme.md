@@ -1,4 +1,4 @@
-**Minimum requirements**: PHP 5.5+, MySQL 5.6+
+**Minimum requirements**: PHP 5.5.9+, MySQL 5.6+
 
 Installation
 ============
